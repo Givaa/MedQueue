@@ -1,8 +1,4 @@
-# FRAA
+# FRAA Team
 Progetto di Ingegneria del Software
 
-Questo progetto è stato realizzato in collaborazione con l'Università della Strada. Questo progetto è stato brevettato all'estero da un tizio che mi ha venduto una licenza in territorio internazionale.
-Se provate a forkarlo o altro verrete fucilati in territorio estero. Se lo stai leggendo probabilmente qualcuno di noi due è morto e penso proprio sia tu (o forse no).
-Tutto dipende dalle circostanze, quindi non copiare e fatti i cazzi tuoi.
-
-Cordiali Saluti, The FRAA Team
+MedQueue vuole offrire aiuto a tutti coloro che sono implicati nell’effettuazione di una prenotazione presso una struttura sanitaria: per i pazienti offre una piattaforma online su cui poter prenotare un appuntamento presso un ufficio ospedaliero convenzionato nel giorno desiderato, sempre che in quel giorno ci sia disponibilità, e quindi potersi presentare il giorno stesso presso l’ufficio, riducendo drasticamente le code e gli assembramenti. Per quanto riguarda gli impiegati, MedQueue mette a disposizione un software di gestione delle diverse code, in modo da gestire nel modo più corretto l’affluenza agli sportelli senza doversi preoccupare di eventuali priorità gestite in automatico dal sistema.
