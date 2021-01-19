@@ -2,14 +2,18 @@ package database;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DataAccess {
     private static String user="root";
     private static String password="angelo99";
 
 
+
+
     //Inserimento Utente
-    public static void insUtente(String CF,String nome,String cognome,String password,String e_mail,String numero_telefono,String data_nascita) throws IOException {
+    public  void insUtente(String CF,String nome,String cognome,String password,String e_mail,String numero_telefono,String data_nascita) throws IOException {
         try {
             //------COLLEGAMENTO COL DB-------
             String url = "jdbc:mysql://localhost:3306/medqueue?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
@@ -40,7 +44,7 @@ public class DataAccess {
 
     //Inserimento Prenotazione
 
-    public static void insPrenotazione(String data,String ora,Boolean convalida,String codicefiscale,int id_operazione,int id_struttura) throws IOException {
+    public  void insPrenotazione(String data,String ora,Boolean convalida,String codicefiscale,int id_operazione,int id_struttura) throws IOException {
         try {
             //------COLLEGAMENTO COL DB-------
             String url = "jdbc:mysql://localhost:3306/medqueue?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
@@ -72,7 +76,7 @@ public class DataAccess {
 
     //Inserimento Struttura
 
-    public static void insStruttura(String nome,String indirizzo,String numero_telefono) throws IOException {
+    public  void insStruttura(String nome,String indirizzo,String numero_telefono) throws IOException {
         try {
             //------COLLEGAMENTO COL DB-------
             String url = "jdbc:mysql://localhost:3306/medqueue?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
@@ -99,7 +103,7 @@ public class DataAccess {
 
     //Inserimento Operazione
 
-    public static void insOperazione(String tipo_operazione,String descrizione) throws IOException {
+    public  void insOperazione(String tipo_operazione,String descrizione) throws IOException {
         try {
             //------COLLEGAMENTO COL DB-------
             String url = "jdbc:mysql://localhost:3306/medqueue?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
@@ -124,7 +128,7 @@ public class DataAccess {
 
     //Inserimento Ambulatorio
 
-    public static void insAmbulatorio(String nome,int id_struttura) throws IOException {
+    public  void insAmbulatorio(String nome,int id_struttura) throws IOException {
         try {
             //------COLLEGAMENTO COL DB-------
             String url = "jdbc:mysql://localhost:3306/medqueue?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
@@ -150,7 +154,7 @@ public class DataAccess {
 
     //Inserimento Impiegato
 
-    public static void insImpiegato(String codicefiscale,String password,String nome,String cognome,String data_di_nascita,String email,String numero_tele,int id_struttura) throws IOException {
+    public  void insImpiegato(String codicefiscale,String password,String nome,String cognome,String data_di_nascita,String email,String numero_tele,int id_struttura) throws IOException {
         try {
             //------COLLEGAMENTO COL DB-------
             String url = "jdbc:mysql://localhost:3306/medqueue?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
@@ -179,4 +183,120 @@ public class DataAccess {
         }
         System.out.println("\nOperation done\n");
     }
+
+
+    //Prenotazioni dell'utente
+    public  ArrayList<PrenotazioneUtente> getPrenotazioniUtente(String cf){
+         ArrayList<PrenotazioneUtente> prenotazioni=new ArrayList<PrenotazioneUtente>();
+        try {
+            String url = "jdbc:mysql://localhost:3306/medqueue?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            Connection con = DriverManager.getConnection(url,user,password);
+            Statement st = con.createStatement();
+            String sql = "SELECT p.id,s.nome,o.tipo_operazione FROM Prenotazione p,Struttura s,Operazione o,Utente u WHERE u.codicefiscale='"+cf+"' && u.codicefiscale=p.codicefiscale && p.Id_Struttura=s.Id && p.Id_operazione=o.id";
+            ResultSet rs =st.executeQuery(sql);
+            while (rs.next()) {
+               prenotazioni.add(new PrenotazioneUtente(Integer.parseInt(rs.getString(1)),rs.getString(2),rs.getString(3)));
+            }
+
+            st.close();
+            con.close();
+        }
+        catch(SQLException e) {
+            System.err.println("SQLException:"+ e.getMessage());
+        }
+        System.out.println("\nOperation done\n");
+        return prenotazioni;
+    }
+
+    //Prenotazione
+    public  Prenotazione getDettagliPrenotazione(int id){
+        Prenotazione p=new Prenotazione();
+        try {
+            String url = "jdbc:mysql://localhost:3306/medqueue?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            Connection con = DriverManager.getConnection(url,user,password);
+            Statement st = con.createStatement();
+            String sql = "SELECT p.id,p.ora,p.data,s.nome,o.tipo_operazione FROM prenotazione p,struttura s,operazione o WHERE p.id='"+id+"' && p.id_struttura=s.id && p.id_operazione=o.id";
+            ResultSet rs =st.executeQuery(sql);
+            while (rs.next()) {
+                p.setId(Integer.parseInt(rs.getString(1)));
+                p.setOra(rs.getString(2));
+                p.setData(rs.getString(3));
+                p.setStruttura(rs.getString(4));
+                p.setOperazione(rs.getString(5));
+            }
+            st.close();
+            con.close();
+        }
+        catch(SQLException e) {
+            System.err.println("SQLException:"+ e.getMessage());
+        }
+        return p;
+    }
+
+    //Verifica account esistente
+    public  boolean verificaEsistenzaUtente(String cf){
+        boolean verifica=false;
+        try {
+            String url = "jdbc:mysql://localhost:3306/medqueue?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            Connection con = DriverManager.getConnection(url,user,password);
+            Statement st = con.createStatement();
+            String sql = "SELECT u.codicefiscale FROM utente u WHERE u.codicefiscale='"+cf+"'";
+            ResultSet rs =st.executeQuery(sql);
+            while (rs.next()) {
+                verifica=true;
+            }
+            st.close();
+            con.close();
+        }
+        catch(SQLException e) {
+            System.err.println("SQLException:"+ e.getMessage());
+        }
+        return verifica;
+    }
+
+    //Verifica Credenziali
+    public  boolean verificaDatiUtente(String cf,String password){
+        boolean verifica=false;
+        try {
+            String url = "jdbc:mysql://localhost:3306/medqueue?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            Connection con = DriverManager.getConnection(url,user,password);
+            Statement st = con.createStatement();
+            String sql = "SELECT u.codicefiscale,u.password FROM utente u WHERE u.codicefiscale='"+cf+"'&& u.password='"+password+"'";
+            ResultSet rs =st.executeQuery(sql);
+            while (rs.next()) {
+                verifica=true;
+            }
+            st.close();
+            con.close();
+        }
+        catch(SQLException e) {
+            System.err.println("SQLException:"+ e.getMessage());
+        }
+        return verifica;
+    }
+
+    //Convalida Prenotazione
+    public  void convalidaPrenotazione(int id){
+        try {
+            //------COLLEGAMENTO COL DB-------
+            String url = "jdbc:mysql://localhost:3306/medqueue?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            Connection con = DriverManager.getConnection(url,user,password);
+            Statement st = con.createStatement();
+            //------INSERIMENTO UTENTE-------
+            String sql = "UPDATE Prenotazione SET convalida=? WHERE id=?"; //preparo la stringa da mandare al db
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setBoolean(1,true);
+            ps.setInt(2,id);
+            //---------INVIO DATI AL DATABASE--------
+            if(ps.executeUpdate()<0) //invio al db la stringa insermineto utente
+                System.err.println("Update failed\n");
+            st.close();
+            con.close();
+        }
+        catch(SQLException e) {
+            System.err.println("SQLException:"+ e.getMessage());
+        }
+        System.out.println("\nOperation done\n");
+    }
+
 }
