@@ -1,9 +1,9 @@
-package database;
+package persistence;
 
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
+
 
 public class DataAccess {
     private static String user="root";
@@ -42,8 +42,7 @@ public class DataAccess {
         System.out.println("\nOperation done\n");
     }
 
-    //Inserimento Prenotazione
-
+    //Inserimento persistence.Prenotazione
     public  void insPrenotazione(String data,String ora,Boolean convalida,String codicefiscale,int id_operazione,int id_struttura) throws IOException {
         try {
             //------COLLEGAMENTO COL DB-------
@@ -75,7 +74,6 @@ public class DataAccess {
 
 
     //Inserimento Struttura
-
     public  void insStruttura(String nome,String indirizzo,String numero_telefono) throws IOException {
         try {
             //------COLLEGAMENTO COL DB-------
@@ -102,7 +100,6 @@ public class DataAccess {
 
 
     //Inserimento Operazione
-
     public  void insOperazione(String tipo_operazione,String descrizione) throws IOException {
         try {
             //------COLLEGAMENTO COL DB-------
@@ -127,7 +124,6 @@ public class DataAccess {
     }
 
     //Inserimento Ambulatorio
-
     public  void insAmbulatorio(String nome,int id_struttura) throws IOException {
         try {
             //------COLLEGAMENTO COL DB-------
@@ -153,7 +149,6 @@ public class DataAccess {
 
 
     //Inserimento Impiegato
-
     public  void insImpiegato(String codicefiscale,String password,String nome,String cognome,String data_di_nascita,String email,String numero_tele,int id_struttura) throws IOException {
         try {
             //------COLLEGAMENTO COL DB-------
@@ -185,7 +180,11 @@ public class DataAccess {
     }
 
 
-    //Prenotazioni dell'utente
+    /*
+    Metodo per ottenere la lista delle prenotazioni dell'utente, si utilizza una query basata sul codicefiscale.
+    La query restituira l'id della prenotazione il nome della struttura e il tipo di operazione
+    L'oggetto prenotazioneUtente rappresenta la singola prenotazione(id,nome_struttura,tipo_operazione) della lista prenotazioni
+     */
     public  ArrayList<PrenotazioneUtente> getPrenotazioniUtente(String cf){
          ArrayList<PrenotazioneUtente> prenotazioni=new ArrayList<PrenotazioneUtente>();
         try {
@@ -208,8 +207,12 @@ public class DataAccess {
         return prenotazioni;
     }
 
-    //Prenotazione
-    public  Prenotazione getDettagliPrenotazione(int id){
+    /*
+    Metodo per ottenere i dettagli di una prenotazione, si utilizza una query basata sul id prenotazione
+    La query restituira id,ora,data prenotazione nome struttura e tipo operazione
+    L'oggetto prenotazione rappresentera il dettaglio della prenotazione
+     */
+    public Prenotazione getDettagliPrenotazione(int id){
         Prenotazione p=new Prenotazione();
         try {
             String url = "jdbc:mysql://localhost:3306/medqueue?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
@@ -233,7 +236,11 @@ public class DataAccess {
         return p;
     }
 
-    //Verifica account esistente
+    /*
+    Metodo per verificare se esiste gia un utente nel database,si utilizza una query basata sul codicefiscale
+    Con la query verifichiano se nel database è presente un utente che possiede gia quel codice fiscale
+    Se la query non restituisce nulla return false altrimenti return true
+     */
     public  boolean verificaEsistenzaUtente(String cf){
         boolean verifica=false;
         try {
@@ -254,7 +261,11 @@ public class DataAccess {
         return verifica;
     }
 
-    //Verifica Credenziali
+    /*
+    Metodo per verificare se nel database esiste un utente che ha le credenziali(codicefiscale,password) richieste
+    Con la query verifichiamo se nel database è presente un utente con le determinate credenziali
+    Se la query non restituisce nulla return null altrimenti return true
+     */
     public  boolean verificaDatiUtente(String cf,String password){
         boolean verifica=false;
         try {
@@ -275,7 +286,7 @@ public class DataAccess {
         return verifica;
     }
 
-    //Convalida Prenotazione
+    //Metodo per convalidare una prenotazione
     public  void convalidaPrenotazione(int id){
         try {
             //------COLLEGAMENTO COL DB-------

@@ -1,4 +1,4 @@
-package database;
+package persistence;
 
 public class Prenotazione {
     private int id;
