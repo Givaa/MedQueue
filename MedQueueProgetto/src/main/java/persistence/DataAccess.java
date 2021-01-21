@@ -11,13 +11,16 @@ public class DataAccess {
     private static String password="angelo99";
 
 
+
+
     //Connessione
     public static boolean connect(String username, String psw) {
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            String url ="jdbc:mysql://localhost:3306/medqueue?serverTimezone=UTC&useLegacyDatetimeCode=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true";
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/medqueue?serverTimezone=UTC&useLegacyDatetimeCode=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true";
             con = DriverManager.getConnection(url,username,psw);
+            System.out.println("Connesso");
             return true;
         }
         catch(Exception e)
