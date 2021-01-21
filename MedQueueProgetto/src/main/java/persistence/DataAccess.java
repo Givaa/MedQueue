@@ -280,7 +280,6 @@ public class DataAccess {
     public  void convalidaPrenotazione(int id){
         try {
             Statement st = con.createStatement();
-            //------INSERIMENTO UTENTE-------
             String sql = "UPDATE Prenotazione SET convalida=? WHERE id=?"; //preparo la stringa da mandare al db
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setBoolean(1,true);
