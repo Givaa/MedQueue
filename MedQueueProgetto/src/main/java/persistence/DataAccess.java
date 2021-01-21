@@ -16,7 +16,7 @@ public class DataAccess {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String url ="jdbc:mysql://127.0.0.1:3306/NoteMarket?useSSL=false&serverTimezone=UTC";
+            String url ="jdbc:mysql://localhost:3306/medqueue?serverTimezone=UTC&useLegacyDatetimeCode=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true";
             con = DriverManager.getConnection(url,username,psw);
             return true;
         }
