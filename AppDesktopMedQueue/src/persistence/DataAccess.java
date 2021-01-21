@@ -17,8 +17,6 @@ public class DataAccess {
 
     }
 
-
-
     //Connessione
     public static boolean connect() {
 
@@ -65,8 +63,7 @@ public class DataAccess {
             if(ps.executeUpdate()<0) //invio al db la stringa insermineto utente
                 System.err.println("Update failed\n");
             st.close();
-        }
-        catch(SQLException e) {
+        } catch(SQLException e) {
             System.err.println("SQLException:"+ e.getMessage());
         }
         System.out.println("\nOperation done\n");
@@ -91,8 +88,7 @@ public class DataAccess {
             if(ps.executeUpdate()<0) //invio al db la stringa insermineto utente
                 System.err.println("Update failed\n");
             st.close();
-        }
-        catch(SQLException e) {
+        } catch(SQLException e) {
             System.err.println("SQLException:"+ e.getMessage());
         }
         System.out.println("\nOperation done\n");
@@ -110,11 +106,10 @@ public class DataAccess {
             ps.setString(2,indirizzo);
             ps.setString(3,numero_telefono);
             //---------INVIO DATI AL DATABASE--------
-            if(ps.executeUpdate()<0) //invio al db la stringa insermineto utente
+            if(ps.executeUpdate()<0) //invio al db la stringa inserimento utente
                 System.err.println("Update failed\n");
             st.close();
-        }
-        catch(SQLException e) {
+        } catch(SQLException e) {
             System.err.println("SQLException:"+ e.getMessage());
         }
         System.out.println("\nOperation done\n");
@@ -134,8 +129,7 @@ public class DataAccess {
             if(ps.executeUpdate()<0) //invio al db la stringa insermineto utente
                 System.err.println("Update failed\n");
             st.close();
-        }
-        catch(SQLException e) {
+        } catch(SQLException e) {
             System.err.println("SQLException:"+ e.getMessage());
         }
         System.out.println("\nOperation done\n");
@@ -168,7 +162,7 @@ public class DataAccess {
             Statement st = con.createStatement();
             //------INSERIMENTO UTENTE-------
             String sql = "INSERT INTO Impiegato VALUES (?,?,?,?,?,?,?,?)"; //preparo la stringa da mandare al db
-            Date d=Date.valueOf(data_di_nascita);
+            Date d = Date.valueOf(data_di_nascita);
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1,codicefiscale);
             ps.setString(2,password);
@@ -182,8 +176,7 @@ public class DataAccess {
             if(ps.executeUpdate()<0) //invio al db la stringa insermineto utente
                 System.err.println("Update failed\n");
             st.close();
-        }
-        catch(SQLException e) {
+        } catch(SQLException e) {
             System.err.println("SQLException:"+ e.getMessage());
         }
         System.out.println("\nOperation done\n");
@@ -206,8 +199,7 @@ public class DataAccess {
             }
 
             st.close();
-        }
-        catch(SQLException e) {
+        } catch(SQLException e) {
             System.err.println("SQLException:"+ e.getMessage());
         }
         System.out.println("\nOperation done\n");
@@ -233,8 +225,7 @@ public class DataAccess {
                 p.setOperazione(rs.getString(5));
             }
             st.close();
-        }
-        catch(SQLException e) {
+        } catch(SQLException e) {
             System.err.println("SQLException:"+ e.getMessage());
         }
         return p;
@@ -255,8 +246,7 @@ public class DataAccess {
                 verifica=true;
             }
             st.close();
-        }
-        catch(SQLException e) {
+        } catch(SQLException e) {
             System.err.println("SQLException:"+ e.getMessage());
         }
         return verifica;
@@ -273,13 +263,12 @@ public class DataAccess {
 
             Statement st = con.createStatement();
             String sql = "SELECT u.codicefiscale,u.password FROM impiegato u WHERE u.codicefiscale='"+cf+"'&& u.password='"+password+"'";
-            ResultSet rs =st.executeQuery(sql);
+            ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
                 verifica=true;
             }
             st.close();
-        }
-        catch(SQLException e) {
+        } catch(SQLException e) {
             System.err.println("SQLException:"+ e.getMessage());
         }
         return verifica;
@@ -301,8 +290,7 @@ public class DataAccess {
                 verifica=true;
             }
             st.close();
-        }
-        catch(SQLException e) {
+        } catch(SQLException e) {
             System.err.println("SQLException:"+ e.getMessage());
         }
         return verifica;
@@ -320,8 +308,7 @@ public class DataAccess {
             if(ps.executeUpdate()<0) //invio al db la stringa insermineto utente
                 System.err.println("Update failed\n");
             st.close();
-        }
-        catch(SQLException e) {
+        } catch(SQLException e) {
             System.err.println("SQLException:"+ e.getMessage());
         }
         System.out.println("\nOperation done\n");

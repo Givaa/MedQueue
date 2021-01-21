@@ -14,15 +14,13 @@ public class ProgrammaView extends JFrame{
 
     public static void main(String[] args) {
 
-        JTextField TF_CF=new JTextField(16);
-        JTextField TF_pass=new JTextField(32);
+        JTextField TF_CF = new JTextField(16);
+        JTextField TF_pass = new JTextField(32);
         JButton connect = new JButton("Connetti");
         connect.addActionListener(l -> {
             if(DataAccess.connect()) {
                 if(DataAccess.verificaDatiImpiegato(TF_CF.getText(),TF_pass.getText())==false)
                     JOptionPane.showMessageDialog(null, "Credenziali errate");
-
-
             } else {
                 JOptionPane.showMessageDialog(null, "Connessione non riuscita.");
             }
