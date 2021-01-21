@@ -10,16 +10,22 @@ public class DataAccess {
     private static String user="root";
     private static String password="root";
 
+    public static void main(String[] args){
+            connect();
+            System.out.println(verificaDatiImpiegato("aaaaa","angelo99"));
+            disconnect();
+
+    }
 
 
 
     //Connessione
-    public static boolean connect(String username, String psw) {
+    public static boolean connect() {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/medqueue?serverTimezone=UTC&useLegacyDatetimeCode=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true";
-            con = DriverManager.getConnection(url,username,psw);
+            con = DriverManager.getConnection(url,user,password);
             System.out.println("Connesso");
             return true;
         }
@@ -40,8 +46,8 @@ public class DataAccess {
         }
     }
 
-    //Inserimento Utente
-    public  void insUtente(String CF,String nome,String cognome,String password,String e_mail,String numero_telefono,String data_nascita) throws IOException {
+    //Inserimento Utente (Formato data: aaaa-mm-gg)
+    public static void insUtente(String CF,String nome,String cognome,String password,String e_mail,String numero_telefono,String data_nascita) throws IOException {
         try {
             Statement st = con.createStatement();
             //------INSERIMENTO UTENTE-------
@@ -66,8 +72,8 @@ public class DataAccess {
         System.out.println("\nOperation done\n");
     }
 
-    //Inserimento persistence.Prenotazione
-    public  void insPrenotazione(String data,String ora,Boolean convalida,String codicefiscale,int id_operazione,int id_struttura) throws IOException {
+    //Inserimento Prenotazione (Formato data: aaaa-mm-gg Formato ora: hh:mm:ss)
+    public static void insPrenotazione(String data,String ora,Boolean convalida,String codicefiscale,int id_operazione,int id_struttura) throws IOException {
         try {
             Statement st = con.createStatement();
             //------INSERIMENTO UTENTE-------
@@ -94,7 +100,7 @@ public class DataAccess {
 
 
     //Inserimento Struttura
-    public  void insStruttura(String nome,String indirizzo,String numero_telefono) throws IOException {
+    public static void insStruttura(String nome,String indirizzo,String numero_telefono) throws IOException {
         try {
             Statement st = con.createStatement();
             //------INSERIMENTO UTENTE-------
@@ -116,7 +122,7 @@ public class DataAccess {
 
 
     //Inserimento Operazione
-    public  void insOperazione(String tipo_operazione,String descrizione) throws IOException {
+    public static void insOperazione(String tipo_operazione,String descrizione) throws IOException {
         try {
             Statement st = con.createStatement();
             //------INSERIMENTO UTENTE-------
@@ -136,7 +142,7 @@ public class DataAccess {
     }
 
     //Inserimento Ambulatorio
-    public  void insAmbulatorio(String nome,int id_struttura) throws IOException {
+    public static void insAmbulatorio(String nome,int id_struttura) throws IOException {
         try {
             Statement st = con.createStatement();
             //------INSERIMENTO UTENTE-------
@@ -157,7 +163,7 @@ public class DataAccess {
 
 
     //Inserimento Impiegato
-    public  void insImpiegato(String codicefiscale,String password,String nome,String cognome,String data_di_nascita,String email,String numero_tele,int id_struttura) throws IOException {
+    public static void insImpiegato(String codicefiscale,String password,String nome,String cognome,String data_di_nascita,String email,String numero_tele,int id_struttura) throws IOException {
         try {
             Statement st = con.createStatement();
             //------INSERIMENTO UTENTE-------
@@ -189,7 +195,7 @@ public class DataAccess {
     La query restituira l'id della prenotazione il nome della struttura e il tipo di operazione
     L'oggetto prenotazioneUtente rappresenta la singola prenotazione(id,nome_struttura,tipo_operazione) della lista prenotazioni
      */
-    public  ArrayList<PrenotazioneUtente> getPrenotazioniUtente(String cf){
+    public static ArrayList<PrenotazioneUtente> getPrenotazioniUtente(String cf){
          ArrayList<PrenotazioneUtente> prenotazioni=new ArrayList<PrenotazioneUtente>();
         try {
             Statement st = con.createStatement();
@@ -213,7 +219,7 @@ public class DataAccess {
     La query restituira id,ora,data prenotazione nome struttura e tipo operazione
     L'oggetto prenotazione rappresentera il dettaglio della prenotazione
      */
-    public Prenotazione getDettagliPrenotazione(int id){
+    public static Prenotazione getDettagliPrenotazione(int id){
         Prenotazione p=new Prenotazione();
         try {
             Statement st = con.createStatement();
@@ -239,7 +245,7 @@ public class DataAccess {
     Con la query verifichiano se nel database è presente un utente che possiede gia quel codice fiscale
     Se la query non restituisce nulla return false altrimenti return true
      */
-    public  boolean verificaEsistenzaUtente(String cf){
+    public static boolean verificaEsistenzaUtente(String cf){
         boolean verifica=false;
         try {
             Statement st = con.createStatement();
@@ -257,11 +263,34 @@ public class DataAccess {
     }
 
     /*
+    Metodo per verificare se esiste l'impiegato nel database,si utilizza una query basata sul codicefiscale
+    Con la query verifichiano se nel database è presente un utente che possiede gia quel codice fiscale
+    Se la query non restituisce nulla return false altrimenti return true
+     */
+    public static boolean verificaDatiImpiegato(String cf,String password){
+        boolean verifica=false;
+        try {
+
+            Statement st = con.createStatement();
+            String sql = "SELECT u.codicefiscale,u.password FROM impiegato u WHERE u.codicefiscale='"+cf+"'&& u.password='"+password+"'";
+            ResultSet rs =st.executeQuery(sql);
+            while (rs.next()) {
+                verifica=true;
+            }
+            st.close();
+        }
+        catch(SQLException e) {
+            System.err.println("SQLException:"+ e.getMessage());
+        }
+        return verifica;
+    }
+
+    /*
     Metodo per verificare se nel database esiste un utente che ha le credenziali(codicefiscale,password) richieste
     Con la query verifichiamo se nel database è presente un utente con le determinate credenziali
     Se la query non restituisce nulla return null altrimenti return true
      */
-    public  boolean verificaDatiUtente(String cf,String password){
+    public static boolean verificaDatiUtente(String cf,String password){
         boolean verifica=false;
         try {
 
@@ -280,7 +309,7 @@ public class DataAccess {
     }
 
     //Metodo per convalidare una prenotazione
-    public  void convalidaPrenotazione(int id){
+    public static void convalidaPrenotazione(int id){
         try {
             Statement st = con.createStatement();
             String sql = "UPDATE Prenotazione SET convalida=? WHERE id=?"; //preparo la stringa da mandare al db
