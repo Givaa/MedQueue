@@ -8,7 +8,7 @@ public class DataAccess {
     private static Connection connection = null;
 
     private static String username = "root";
-    private static String psw = "angelo99";
+    private static String psw = "root";
 
     public static boolean connect() {
 
@@ -16,7 +16,6 @@ public class DataAccess {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/medqueue?serverTimezone=UTC&useLegacyDatetimeCode=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true";
             connection = DriverManager.getConnection(url,username,psw);
-            System.out.println("Connesso");
             return true;
         }
         catch(Exception e)
