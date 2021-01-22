@@ -141,6 +141,4 @@ public class DataAccess {
         }
         return operazioni;
     }
-
-
 }
