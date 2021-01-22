@@ -1,7 +1,0 @@
-{
-  "name": "vue-erogabilita",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "vue"
-}

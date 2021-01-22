@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">vue-erogabilita</string>
-    <string name="title_activity_main">vue-erogabilita</string>
-    <string name="package_name">it.ak12.erogabileapp</string>
-    <string name="custom_url_scheme">it.ak12.erogabileapp</string>
-</resources>
