@@ -24,8 +24,8 @@ public class LoginView{
         JLabel errore = new JLabel();
         errore.setForeground(Color.red); //Setto il colore del testo a rosso
         errore.setHorizontalAlignment(JLabel.CENTER); //Centro il testo nella JLabel
-        JLabel insCF = new JLabel("Inserire codice fiscale:");
-        JLabel insPass = new JLabel(" Inserire password");
+        JLabel insCF = new JLabel("Inserire codice fiscale: ");
+        JLabel insPass = new JLabel(" Inserire password: ");
 
         connect.addActionListener(l -> {
             if(DriverManagerConnectionPool.createDBConnection() == null) {
@@ -39,7 +39,7 @@ public class LoginView{
             }
         });
 
-        JCheckBox select = new JCheckBox("Show password");
+        JCheckBox select = new JCheckBox("Mostra password");
         select.setBackground(Color.white);
         select.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {

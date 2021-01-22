@@ -7,9 +7,9 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class ListPrenotazioniView {
-    private ArrayList<PrenotazioneBean> prenotazioni=new ArrayList<PrenotazioneBean>();
-    private JFrame frame=new JFrame();
-    private JLabel frase=new JLabel("Prenotazioni da servire");
+    private ArrayList<PrenotazioneBean> prenotazioni = new ArrayList<PrenotazioneBean>();
+    private JFrame frame = new JFrame();
+    private JLabel frase = new JLabel("Prenotazioni da servire");
 
 
     public static void main(String[] args){
@@ -35,11 +35,11 @@ public class ListPrenotazioniView {
         ImageIcon infermiera = new ImageIcon("src/image/frameIcon.png");
 
 
-        PrenotazioneBean p1=new PrenotazioneBean(1,"data","tempo",true,"codicefiscale 1",1,1);
-        PrenotazioneBean p2=new PrenotazioneBean(2,"data","tempo",true,"codicefiscale 2",1,1);
+        PrenotazioneBean p1 = new PrenotazioneBean(1,"data","tempo",true,"codicefiscale 1",1,1);
+        PrenotazioneBean p2 = new PrenotazioneBean(2,"data","tempo",true,"codicefiscale 2",1,1);
 
         frase.setFont(new Font(frase.getFont().getName(), frase.getFont().getStyle(), 20));
-        JPanel pannelloNord=new JPanel();
+        JPanel pannelloNord = new JPanel();
         pannelloNord.setLayout(new BoxLayout(pannelloNord, BoxLayout.X_AXIS));
         pannelloNord.add(Box.createRigidArea(new Dimension(10,0)));
         pannelloNord.add( new JLabel(immagine));
@@ -58,10 +58,10 @@ public class ListPrenotazioniView {
     }
 
     public JPanel bloccoPrenotazione(PrenotazioneBean prenotazione){
-        JPanel blocco=new JPanel(new GridLayout(2,1));
+        JPanel blocco = new JPanel(new GridLayout(2,1));
         blocco.setMaximumSize(new Dimension(100,100));
-        JLabel idPrenotazione= new JLabel(Integer.toString(prenotazione.getId()));
-        JLabel codiceFiscale=new JLabel(prenotazione.getCodicefiscale());
+        JLabel idPrenotazione = new JLabel(Integer.toString(prenotazione.getId()));
+        JLabel codiceFiscale = new JLabel(prenotazione.getCodicefiscale());
         idPrenotazione.setHorizontalAlignment(JLabel.CENTER);
         idPrenotazione.setFont(new Font(frase.getFont().getName(), frase.getFont().getStyle(), 30));
         codiceFiscale.setHorizontalAlignment(JLabel.CENTER);
@@ -75,7 +75,7 @@ public class ListPrenotazioniView {
 
 
     public void setPrenotazioni(ArrayList<PrenotazioneBean> p){
-        prenotazioni=p;
+        prenotazioni = p;
 
     }
 

@@ -8,11 +8,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class SelectQueueView {
-    private JFrame frame=new JFrame();
-    private JLabel sceltaCoda=new JLabel("Seleziona tipo d'operazione da gestire");
-    private JComboBox<String> operazioni=new JComboBox<String>();
-    private JPanel pannello1= new JPanel(new GridLayout(4,1));
-    private JButton bottone= new JButton("Invio");
+    private JFrame frame = new JFrame();
+    private JLabel sceltaCoda = new JLabel("Seleziona tipo d'operazione da gestire");
+    private JComboBox<String> operazioni = new JComboBox<String>();
+    private JPanel pannello1 = new JPanel(new GridLayout(4,1));
+    private JButton bottone = new JButton("Invio");
 
 
 
