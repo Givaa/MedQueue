@@ -4,6 +4,10 @@ import persistence.DataAccess;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class LoginView extends JFrame{
 
@@ -16,7 +20,7 @@ public class LoginView extends JFrame{
 
 
         JTextField TF_CF = new JTextField(16);
-        JTextField TF_pass = new JTextField(32);
+        JPasswordField TF_pass = new JPasswordField(32);
         JButton connect = new JButton("Connetti");
         JLabel errore=new JLabel();
         errore.setForeground(Color.red); //Setto il colore del testo a rosso
@@ -37,6 +41,23 @@ public class LoginView extends JFrame{
             }
         });
 
+        JCheckBox select = new JCheckBox("Show password");
+        select.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                if (!(e.getStateChange() == ItemEvent.SELECTED)) {
+                    TF_pass.setEchoChar('*');
+                } else {
+                    TF_pass.setEchoChar((char) 0);
+                }
+            }
+        });
+
+        TF_pass.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent event) {
+                if(event.getKeyCode() == KeyEvent.VK_ENTER)
+                    connect.doClick();
+            }
+        });
 
         ImageIcon immagine = new ImageIcon("src/image/LogoNoBG.png");
         Image image = immagine.getImage();
@@ -45,13 +66,14 @@ public class LoginView extends JFrame{
         JLabel contenitoreImmagine = new JLabel(immagine, JLabel.CENTER);
 
         JPanel pannello = new JPanel();
-        pannello.setLayout(new GridLayout(6,1));
+        pannello.setLayout(new GridLayout(7,1));
         pannello.setBackground( Color.white );
         pannello.setBorder(BorderFactory.createTitledBorder("Accesso"));
         pannello.add(insCF);
         pannello.add(TF_CF);
         pannello.add(insPass);
         pannello.add(TF_pass);
+        pannello.add(select);
         pannello.add(errore);
         pannello.add(connect);
 
@@ -62,6 +84,7 @@ public class LoginView extends JFrame{
         framePannello.setVisible(true);
         framePannello.setLocationRelativeTo(null);
         framePannello.setSize(400, 400);
+        framePannello.setLocationRelativeTo(null);
         framePannello.getContentPane().setBackground( Color.white );
         framePannello.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

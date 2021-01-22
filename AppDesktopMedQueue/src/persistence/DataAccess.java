@@ -8,14 +8,7 @@ import java.util.ArrayList;
 public class DataAccess {
     private static Connection con = null;
     private static String user="root";
-    private static String password="angelo99";
-
-    public static void main(String[] args){
-            connect();
-            System.out.println(verificaDatiImpiegato("aaaaaa","angelo99"));
-        disconnect();
-
-    }
+    private static String password="root";
 
     //Connessione
     public static boolean connect() {
@@ -24,7 +17,6 @@ public class DataAccess {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/medqueue?serverTimezone=UTC&useLegacyDatetimeCode=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true";
             con = DriverManager.getConnection(url,user,password);
-            System.out.println("Connesso");
             return true;
         }
         catch(Exception e)
