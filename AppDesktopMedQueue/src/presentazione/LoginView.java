@@ -11,7 +11,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 
-public class LoginView extends JFrame{
+public class LoginView{
 
     private static final long serialVersionUID = 1L;
     private static JFrame framePannello = new JFrame();
@@ -21,11 +21,11 @@ public class LoginView extends JFrame{
         JTextField TF_CF = new JTextField(16);
         JPasswordField TF_pass = new JPasswordField(32);
         JButton connect = new JButton("Connetti");
-        JLabel errore=new JLabel();
+        JLabel errore = new JLabel();
         errore.setForeground(Color.red); //Setto il colore del testo a rosso
         errore.setHorizontalAlignment(JLabel.CENTER); //Centro il testo nella JLabel
-        JLabel insCF= new JLabel("Inserire codice fiscale:");
-        JLabel insPass= new JLabel(" Inserire password");
+        JLabel insCF = new JLabel("Inserire codice fiscale:");
+        JLabel insPass = new JLabel(" Inserire password");
 
         connect.addActionListener(l -> {
             if(DriverManagerConnectionPool.createDBConnection() == null) {
@@ -35,8 +35,7 @@ public class LoginView extends JFrame{
                     new SelectQueueView().visible(true);
                     framePannello.setVisible(false);
                 }
-                else
-                    errore.setText("Credenziali errate");
+                else errore.setText("Credenziali errate");
             }
         });
 
