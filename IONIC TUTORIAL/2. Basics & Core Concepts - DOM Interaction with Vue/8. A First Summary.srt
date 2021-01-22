@@ -1,0 +1,485 @@
+1
+1
+
+00:00:02,310  -->  00:00:04,040
+<v Maximilian>So, now before we dive</v>
+2
+
+2
+
+00:00:04,040  -->  00:00:05,550
+into our first practice
+3
+
+3
+
+00:00:05,550  -->  00:00:07,970
+of those key features you learned about.
+4
+
+4
+
+00:00:07,970  -->  00:00:10,480
+It's all the time for our first brief summary
+5
+
+5
+
+00:00:10,480  -->  00:00:11,770
+of what we learned.
+6
+
+6
+
+00:00:11,770  -->  00:00:15,610
+And we mostly learned about how to create Vue apps
+7
+
+7
+
+00:00:15,610  -->  00:00:20,490
+and how to connect them to HTML code with mount.
+8
+
+8
+
+00:00:20,490  -->  00:00:24,340
+That you should use some unique CSS selector here,
+9
+
+9
+
+00:00:24,340  -->  00:00:27,930
+like here the ID selector because every Vue app
+10
+
+10
+
+00:00:27,930  -->  00:00:32,380
+can only be connected to one HTML element.
+11
+
+11
+
+00:00:32,380  -->  00:00:34,670
+And you also see already that
+12
+
+12
+
+00:00:34,670  -->  00:00:37,630
+if you control an element with Vue,
+13
+
+13
+
+00:00:37,630  -->  00:00:41,750
+like here, where we are controlling this section with Vue.
+14
+
+14
+
+00:00:41,750  -->  00:00:45,780
+You automatically also control all child elements,
+15
+
+15
+
+00:00:45,780  -->  00:00:48,530
+but not any elements outside
+16
+
+16
+
+00:00:48,530  -->  00:00:51,720
+of this Vue controlled section in this case.
+17
+
+17
+
+00:00:51,720  -->  00:00:55,860
+So one Vue app can control one part in the HTML code,
+18
+
+18
+
+00:00:55,860  -->  00:00:57,930
+but it then automatically controls
+19
+
+19
+
+00:00:57,930  -->  00:01:00,620
+all child elements as well.
+20
+
+20
+
+00:01:00,620  -->  00:01:04,680
+Well, and in this Vue controlled HTML code,
+21
+
+21
+
+00:01:04,680  -->  00:01:06,730
+you can use special features.
+22
+
+22
+
+00:01:06,730  -->  00:01:11,460
+Like this interpolation syntax with the double curly braces
+23
+
+23
+
+00:01:11,460  -->  00:01:15,460
+or this binding syntax, this binding directive
+24
+
+24
+
+00:01:15,460  -->  00:01:20,420
+with v-bind or v-html, as you also saw before.
+25
+
+25
+
+00:01:20,420  -->  00:01:22,970
+These are features which are available
+26
+
+26
+
+00:01:22,970  -->  00:01:26,520
+in that Vue controlled HTML code.
+27
+
+27
+
+00:01:26,520  -->  00:01:28,680
+Now you can output data in there,
+28
+
+28
+
+00:01:28,680  -->  00:01:32,860
+Therefore this interpolation, and this binding syntax
+29
+
+29
+
+00:01:32,860  -->  00:01:36,980
+is also summarized under the term data binding.
+30
+
+30
+
+00:01:36,980  -->  00:01:38,610
+Because we're binding data,
+31
+
+31
+
+00:01:38,610  -->  00:01:43,610
+which be managed in our Vue app to the HTML code,
+32
+
+32
+
+00:01:43,760  -->  00:01:45,650
+either with the interpolation
+33
+
+33
+
+00:01:45,650  -->  00:01:48,800
+or with the v-bind directive syntax.
+34
+
+34
+
+00:01:48,800  -->  00:01:50,700
+And that's the important thing.
+35
+
+35
+
+00:01:50,700  -->  00:01:54,010
+You pass an object to your Vue app,
+36
+
+36
+
+00:01:54,010  -->  00:01:55,980
+which you create with createApp.
+37
+
+37
+
+00:01:55,980  -->  00:01:59,110
+And this object configures this app.
+38
+
+38
+
+00:01:59,110  -->  00:02:02,130
+You can set various options for example,
+39
+
+39
+
+00:02:02,130  -->  00:02:05,540
+the data option or the methods option.
+40
+
+40
+
+00:02:05,540  -->  00:02:07,180
+Obviously we're going to learn about
+41
+
+41
+
+00:02:07,180  -->  00:02:08,790
+other options for the course.
+42
+
+42
+
+00:02:08,790  -->  00:02:11,840
+But these are two super important options
+43
+
+43
+
+00:02:11,840  -->  00:02:15,083
+which you will probably meet in any app you're building.
+44
+
+44
+
+00:02:16,350  -->  00:02:19,560
+The data option takes a function,
+45
+
+45
+
+00:02:19,560  -->  00:02:21,030
+therefore you can write it like this.
+46
+
+46
+
+00:02:21,030  -->  00:02:24,640
+Which should return an object full of data.
+47
+
+47
+
+00:02:24,640  -->  00:02:26,330
+Which will then be available
+48
+
+48
+
+00:02:26,330  -->  00:02:31,030
+in your Vue controlled HTML code, like vueLink here,
+49
+
+49
+
+00:02:31,030  -->  00:02:32,820
+and which can also be accessed
+50
+
+50
+
+00:02:32,820  -->  00:02:35,870
+from inside your other parts of the Vue app.
+51
+
+51
+
+00:02:35,870  -->  00:02:39,440
+Like the methods with the this keyword.
+52
+
+52
+
+00:02:39,440  -->  00:02:41,320
+Methods are also important.
+53
+
+53
+
+00:02:41,320  -->  00:02:43,630
+These are functions which you can call
+54
+
+54
+
+00:02:43,630  -->  00:02:47,920
+from inside your Vue controlled HTML code, for example.
+55
+
+55
+
+00:02:47,920  -->  00:02:50,120
+And that's what you'll learn about this far.
+56
+
+56
+
+00:02:51,030  -->  00:02:55,580
+Now, therefore, when we work with a framework like Vue,
+57
+
+57
+
+00:02:55,580  -->  00:02:59,960
+we typically say that we use a declarative approach
+58
+
+58
+
+00:02:59,960  -->  00:03:03,490
+or that Vue uses a declarative approach.
+59
+
+59
+
+00:03:03,490  -->  00:03:06,770
+And that's just a fancy way of saying we,
+60
+
+60
+
+00:03:06,770  -->  00:03:09,740
+as a developer define the goal.
+61
+
+61
+
+00:03:09,740  -->  00:03:12,310
+We define a template, you could say,
+62
+
+62
+
+00:03:12,310  -->  00:03:14,750
+of the content we wanna have.
+63
+
+63
+
+00:03:14,750  -->  00:03:19,350
+We mark the parts which are dynamic like this one,
+64
+
+64
+
+00:03:19,350  -->  00:03:21,610
+or like this href attribute here,
+65
+
+65
+
+00:03:21,610  -->  00:03:23,530
+which is bound with v-bind,
+66
+
+66
+
+00:03:23,530  -->  00:03:27,250
+and Vue will then do the rest for us.
+67
+
+67
+
+00:03:27,250  -->  00:03:29,200
+It does all the magic behind the scenes.
+68
+
+68
+
+00:03:29,200  -->  00:03:33,020
+It outputs concrete values here and here.
+69
+
+69
+
+00:03:33,020  -->  00:03:34,980
+And it updates the real DOM.
+70
+
+70
+
+00:03:34,980  -->  00:03:38,590
+Which is rendered to the screen and what the user sees
+71
+
+71
+
+00:03:38,590  -->  00:03:41,790
+behind the scenes on our behalf.
+72
+
+72
+
+00:03:41,790  -->  00:03:46,150
+So we, as a developer just define the final picture
+73
+
+73
+
+00:03:46,150  -->  00:03:48,920
+with the dynamic placeholders you could say,
+74
+
+74
+
+00:03:48,920  -->  00:03:51,039
+and we don't define all the steps
+75
+
+75
+
+00:03:51,039  -->  00:03:53,850
+of getting that picture onto the screen.
+76
+
+76
+
+00:03:53,850  -->  00:03:57,120
+That's what we do with a framework like Vue.
+77
+
+77
+
+00:03:57,120  -->  00:04:00,090
+And that's why we also typically say
+78
+
+78
+
+00:04:00,090  -->  00:04:02,960
+that Vue uses a declarative approach.
+79
+
+79
+
+00:04:02,960  -->  00:04:05,730
+We just declare our goal.
+80
+
+80
+
+00:04:05,730  -->  00:04:08,600
+We don't care about the steps of getting there.
+81
+
+81
+
+00:04:08,600  -->  00:04:10,263
+Now it's time to practice this.

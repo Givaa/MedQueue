@@ -1,0 +1,149 @@
+1
+1
+
+00:00:02,360  -->  00:00:04,220
+<v ->Now there is certainly a lot of magic</v>
+2
+
+2
+
+00:00:04,220  -->  00:00:05,630
+in there at the moment.
+3
+
+3
+
+00:00:05,630  -->  00:00:08,680
+But the key thing is that with Vue,
+4
+
+4
+
+00:00:08,680  -->  00:00:10,870
+we just find the end result,
+5
+
+5
+
+00:00:10,870  -->  00:00:15,130
+and we use these special features in the HTML code
+6
+
+6
+
+00:00:15,130  -->  00:00:20,130
+to connect HTML to data and logic managed in the Vue app.
+7
+
+7
+
+00:00:21,230  -->  00:00:22,700
+And we will learn about a lot
+8
+
+8
+
+00:00:22,700  -->  00:00:25,200
+of features Vue has to offer to us
+9
+
+9
+
+00:00:25,200  -->  00:00:27,990
+which allows to build any kind of app.
+10
+
+10
+
+00:00:27,990  -->  00:00:29,600
+And being able to do this
+11
+
+11
+
+00:00:29,600  -->  00:00:32,880
+and follow this declarative approach
+12
+
+12
+
+00:00:32,880  -->  00:00:35,400
+where we declared the result instead
+13
+
+13
+
+00:00:35,400  -->  00:00:37,160
+of the steps of getting there,
+14
+
+14
+
+00:00:37,160  -->  00:00:40,520
+that allows us to build super large applications
+15
+
+15
+
+00:00:40,520  -->  00:00:42,680
+without any issues.
+16
+
+16
+
+00:00:42,680  -->  00:00:44,920
+Whereas just JavaScript,
+17
+
+17
+
+00:00:44,920  -->  00:00:47,190
+if we would have a more complex app,
+18
+
+18
+
+00:00:47,190  -->  00:00:49,910
+would quickly run into problems.
+19
+
+19
+
+00:00:49,910  -->  00:00:53,180
+We would quickly face issues there in bigger apps
+20
+
+20
+
+00:00:53,180  -->  00:00:55,200
+if we would use just JavaScript,
+21
+
+21
+
+00:00:55,200  -->  00:00:58,570
+and writing an application that's error free
+22
+
+22
+
+00:00:58,570  -->  00:01:01,800
+and offers great performance would be difficult
+23
+
+23
+
+00:01:01,800  -->  00:01:03,690
+with just JavaScript.
+24
+
+24
+
+00:01:03,690  -->  00:01:05,910
+With Vue, it'll be easy.
+25
+
+25
+
+00:01:05,910  -->  00:01:08,710
+And in this course, you're going to learn all about Vue.

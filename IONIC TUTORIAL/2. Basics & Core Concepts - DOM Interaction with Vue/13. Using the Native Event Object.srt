@@ -1,0 +1,1037 @@
+1
+1
+
+00:00:02,110  -->  00:00:03,760
+<v Instructor>So this is taking shape.</v>
+2
+
+2
+
+00:00:03,760  -->  00:00:08,310
+Let's now enhanced his mini dummy app here a little bit.
+3
+
+3
+
+00:00:08,310  -->  00:00:12,650
+And let's add an input of type text here, just like this.
+4
+
+4
+
+00:00:12,650  -->  00:00:16,240
+And below that paragraph where I say Your Name
+5
+
+5
+
+00:00:16,240  -->  00:00:18,570
+and in here, I wanna output the username.
+6
+
+6
+
+00:00:18,570  -->  00:00:21,400
+But now the user should be able to enter the name
+7
+
+7
+
+00:00:21,400  -->  00:00:25,500
+in this input here, that's the new thing.
+8
+
+8
+
+00:00:25,500  -->  00:00:28,833
+So we can have a name field here in our data.
+9
+
+9
+
+00:00:29,730  -->  00:00:33,380
+Initially it could be empty or your name, whatever you want.
+10
+
+10
+
+00:00:33,380  -->  00:00:35,810
+And we can output the name here
+11
+
+11
+
+00:00:35,810  -->  00:00:37,453
+with the double curly braces.
+12
+
+12
+
+00:00:38,500  -->  00:00:40,600
+But now I also have this input here
+13
+
+13
+
+00:00:40,600  -->  00:00:44,030
+and whenever I type in here, I want to update the name,
+14
+
+14
+
+00:00:44,030  -->  00:00:46,473
+which is output in this paragraph.
+15
+
+15
+
+00:00:47,320  -->  00:00:48,823
+Now, how could we do that?
+16
+
+16
+
+00:00:50,330  -->  00:00:53,260
+Well, now that we learned about listening to events,
+17
+
+17
+
+00:00:53,260  -->  00:00:56,130
+we should have all the tools we need for that.
+18
+
+18
+
+00:00:56,130  -->  00:00:59,360
+We can add an event listener with v-on
+19
+
+19
+
+00:00:59,360  -->  00:01:02,270
+and now of course, I don't wanna listen to the click event,
+20
+
+20
+
+00:01:02,270  -->  00:01:04,360
+but to every keystroke.
+21
+
+21
+
+00:01:04,360  -->  00:01:07,170
+We could do it as with keyup or keydown,
+22
+
+22
+
+00:01:07,170  -->  00:01:10,220
+which all have their special behaviors.
+23
+
+23
+
+00:01:10,220  -->  00:01:15,220
+The best event to listen to on an input HTML element
+24
+
+24
+
+00:01:15,650  -->  00:01:17,640
+is the input event.
+25
+
+25
+
+00:01:17,640  -->  00:01:19,820
+Which is a default Dom event
+26
+
+26
+
+00:01:19,820  -->  00:01:23,650
+available on input elements, nothing Vue specific.
+27
+
+27
+
+00:01:23,650  -->  00:01:25,330
+You can listen to the input event
+28
+
+28
+
+00:01:25,330  -->  00:01:27,203
+in vanilla JavaScript as well.
+29
+
+29
+
+00:01:28,180  -->  00:01:32,280
+Here with v-on I'm telling Vue that I want to listen
+30
+
+30
+
+00:01:32,280  -->  00:01:36,270
+to this input event on this input element.
+31
+
+31
+
+00:01:36,270  -->  00:01:37,660
+And there for now, again,
+32
+
+32
+
+00:01:37,660  -->  00:01:41,020
+we can specify to code between these double quotes
+33
+
+33
+
+00:01:41,020  -->  00:01:44,330
+that should execute when an input event is admitted,
+34
+
+34
+
+00:01:44,330  -->  00:01:46,860
+which will be the case on every keystroke.
+35
+
+35
+
+00:01:46,860  -->  00:01:50,223
+That is how the input event is emitted by default.
+36
+
+36
+
+00:01:51,330  -->  00:01:53,350
+So now again, we could put the code in here
+37
+
+37
+
+00:01:53,350  -->  00:01:56,770
+or use this better approach of using a method.
+38
+
+38
+
+00:01:56,770  -->  00:02:00,333
+So I'll do that, add a little method here,
+39
+
+39
+
+00:02:00,333  -->  00:02:02,990
+setName could be the method name,
+40
+
+40
+
+00:02:02,990  -->  00:02:04,850
+because that's what we're going to do.
+41
+
+41
+
+00:02:04,850  -->  00:02:06,060
+Again, the name is up to you,
+42
+
+42
+
+00:02:06,060  -->  00:02:07,870
+but of course you wanna name the method
+43
+
+43
+
+00:02:07,870  -->  00:02:10,490
+such that it describes what it's going to do.
+44
+
+44
+
+00:02:10,490  -->  00:02:11,890
+So here I'll use setName
+45
+
+45
+
+00:02:13,250  -->  00:02:15,630
+and then I want to set this name.
+46
+
+46
+
+00:02:15,630  -->  00:02:20,530
+So this name property, which we added to our data object
+47
+
+47
+
+00:02:20,530  -->  00:02:23,150
+equal to what the user entered.
+48
+
+48
+
+00:02:23,150  -->  00:02:25,790
+And that's going to be a bit tricky, won't it?
+49
+
+49
+
+00:02:25,790  -->  00:02:28,280
+Because how do we know what the user entered?
+50
+
+50
+
+00:02:28,280  -->  00:02:30,510
+We know that the user entered something
+51
+
+51
+
+00:02:30,510  -->  00:02:32,560
+because we're listening to that event,
+52
+
+52
+
+00:02:32,560  -->  00:02:35,883
+but how do we get the concrete value the user entered?
+53
+
+53
+
+00:02:37,460  -->  00:02:41,680
+While there is a built in behavior built into JavaScript,
+54
+
+54
+
+00:02:41,680  -->  00:02:44,570
+not into Vue, which we can leverage.
+55
+
+55
+
+00:02:44,570  -->  00:02:48,440
+First of all, we can point at the setName method here,
+56
+
+56
+
+00:02:48,440  -->  00:02:52,410
+which is the method we wanna execute on every keystroke.
+57
+
+57
+
+00:02:52,410  -->  00:02:55,360
+And now there's a cool behavior in JavaScript,
+58
+
+58
+
+00:02:55,360  -->  00:02:59,010
+not in Vue, Vue just also is able to use it.
+59
+
+59
+
+00:02:59,010  -->  00:03:01,340
+When you add an event listener
+60
+
+60
+
+00:03:01,340  -->  00:03:04,180
+and you then point at a function that should be executed
+61
+
+61
+
+00:03:04,180  -->  00:03:05,780
+when that event occurs.
+62
+
+62
+
+00:03:05,780  -->  00:03:10,680
+That function will automatically get one argument.
+63
+
+63
+
+00:03:10,680  -->  00:03:12,130
+The browser will ensure
+64
+
+64
+
+00:03:12,130  -->  00:03:14,360
+that this argument is provided so to say.
+65
+
+65
+
+00:03:14,360  -->  00:03:16,760
+And that will be an object
+66
+
+66
+
+00:03:16,760  -->  00:03:19,373
+describing the event that occurred.
+67
+
+67
+
+00:03:21,760  -->  00:03:23,510
+So here in setName,
+68
+
+68
+
+00:03:23,510  -->  00:03:27,540
+we can accept this one argument, this one parameter.
+69
+
+69
+
+00:03:27,540  -->  00:03:29,440
+You can name it however you want,
+70
+
+70
+
+00:03:29,440  -->  00:03:32,223
+but you will always get this by the browser.
+71
+
+71
+
+00:03:33,410  -->  00:03:37,160
+We would have gotten this here for add and reduce as well.
+72
+
+72
+
+00:03:37,160  -->  00:03:38,640
+We just overrode it
+73
+
+73
+
+00:03:38,640  -->  00:03:42,530
+with our own custom argument, we're passing in.
+74
+
+74
+
+00:03:42,530  -->  00:03:44,640
+But since I'm not executing setName
+75
+
+75
+
+00:03:44,640  -->  00:03:47,470
+with parentheses here, but I am pointing edit,
+76
+
+76
+
+00:03:47,470  -->  00:03:48,890
+I don't override it.
+77
+
+77
+
+00:03:48,890  -->  00:03:53,160
+And I let the browser provide this default event object.
+78
+
+78
+
+00:03:53,160  -->  00:03:54,840
+And why is this useful?
+79
+
+79
+
+00:03:54,840  -->  00:03:57,330
+Because this default event object
+80
+
+80
+
+00:03:57,330  -->  00:04:00,250
+will be full of information about the event.
+81
+
+81
+
+00:04:00,250  -->  00:04:02,660
+And for example, it will give us information
+82
+
+82
+
+00:04:02,660  -->  00:04:07,020
+about the HTML element on which this event occurred,
+83
+
+83
+
+00:04:07,020  -->  00:04:09,100
+which is the input element.
+84
+
+84
+
+00:04:09,100  -->  00:04:13,760
+And we can then read the current value stored in this input
+85
+
+85
+
+00:04:13,760  -->  00:04:16,630
+from that input element.
+86
+
+86
+
+00:04:16,630  -->  00:04:19,460
+And we get access to the target off the event
+87
+
+87
+
+00:04:19,460  -->  00:04:23,120
+with events.target and that's vanilla JavaScript.
+88
+
+88
+
+00:04:23,120  -->  00:04:24,950
+This is nothing Vue specific.
+89
+
+89
+
+00:04:24,950  -->  00:04:28,430
+This would work in vanilla JavaScript as well.
+90
+
+90
+
+00:04:28,430  -->  00:04:30,760
+This gives us access to the element
+91
+
+91
+
+00:04:30,760  -->  00:04:32,290
+on which the event occurred.
+92
+
+92
+
+00:04:32,290  -->  00:04:34,520
+And this is the input element in this case,
+93
+
+93
+
+00:04:34,520  -->  00:04:37,020
+which will have a value property.
+94
+
+94
+
+00:04:37,020  -->  00:04:40,070
+Again, that's just vanilla javaScript
+95
+
+95
+
+00:04:40,070  -->  00:04:42,480
+and you can search for MDN input
+96
+
+96
+
+00:04:42,480  -->  00:04:46,090
+to find more documentation on this input element.
+97
+
+97
+
+00:04:46,090  -->  00:04:50,270
+And in here you will eventually somewhere find
+98
+
+98
+
+00:04:50,270  -->  00:04:54,040
+that this has a value property,
+99
+
+99
+
+00:04:54,040  -->  00:04:57,680
+which you can use to read what the user entered.
+100
+
+100
+
+00:04:57,680  -->  00:04:59,720
+So this will be the value to user entered,
+101
+
+101
+
+00:04:59,720  -->  00:05:03,110
+setName will be called on every input events.
+102
+
+102
+
+00:05:03,110  -->  00:05:06,850
+So on every keystroke and this should update the name,
+103
+
+103
+
+00:05:06,850  -->  00:05:09,980
+our data and it property here with every keystroke,
+104
+
+104
+
+00:05:09,980  -->  00:05:13,153
+with the value to user currently entered here.
+105
+
+105
+
+00:05:14,450  -->  00:05:16,600
+And then we're outputting name down there.
+106
+
+106
+
+00:05:16,600  -->  00:05:18,630
+And if we now save that in reload,
+107
+
+107
+
+00:05:18,630  -->  00:05:22,360
+I can enter Maximilian and you see how this updates
+108
+
+108
+
+00:05:22,360  -->  00:05:23,903
+in the paragraph below.
+109
+
+109
+
+00:05:25,780  -->  00:05:29,040
+And that's Vue's reactivity in action, again.
+110
+
+110
+
+00:05:29,040  -->  00:05:33,220
+It allows us to listen to this event and execute this code
+111
+
+111
+
+00:05:33,220  -->  00:05:36,540
+and it's then all the detects that name changed
+112
+
+112
+
+00:05:36,540  -->  00:05:39,470
+and updates it in the places on the page
+113
+
+113
+
+00:05:39,470  -->  00:05:41,710
+where updating is needed.
+114
+
+114
+
+00:05:41,710  -->  00:05:43,120
+And as a side note,
+115
+
+115
+
+00:05:43,120  -->  00:05:46,050
+if I inspect this here in the Chrome Dev Tools,
+116
+
+116
+
+00:05:46,050  -->  00:05:49,900
+there is something ever interesting which we can notice.
+117
+
+117
+
+00:05:49,900  -->  00:05:54,360
+If you watch this part on the right here this HTML code.
+118
+
+118
+
+00:05:54,360  -->  00:05:55,730
+You'll see that the parts
+119
+
+119
+
+00:05:55,730  -->  00:05:59,160
+that are rerendered the browser flash,
+120
+
+120
+
+00:05:59,160  -->  00:06:02,690
+you see the paragraph with my name flashes.
+121
+
+121
+
+00:06:02,690  -->  00:06:04,010
+Now you will also see
+122
+
+122
+
+00:06:04,010  -->  00:06:06,200
+that nothing else on the screen flashed.
+123
+
+123
+
+00:06:06,200  -->  00:06:08,300
+For example, the counter didn't flash.
+124
+
+124
+
+00:06:08,300  -->  00:06:12,370
+This counter only flashes. If I changed the counter.
+125
+
+125
+
+00:06:12,370  -->  00:06:13,600
+Now these are the parts
+126
+
+126
+
+00:06:13,600  -->  00:06:16,510
+which are actually rerendered on the screen.
+127
+
+127
+
+00:06:16,510  -->  00:06:20,710
+And you see that only the parts that really changed in code
+128
+
+128
+
+00:06:20,710  -->  00:06:23,940
+are rerendered on the screen and that's important.
+129
+
+129
+
+00:06:23,940  -->  00:06:27,770
+If Vue would update the entire screen,
+130
+
+130
+
+00:06:27,770  -->  00:06:30,720
+whenever something changed somewhere,
+131
+
+131
+
+00:06:30,720  -->  00:06:32,713
+this would be bad for performance.
+132
+
+132
+
+00:06:33,890  -->  00:06:36,810
+Instead Vue is really smart and it sees that
+133
+
+133
+
+00:06:36,810  -->  00:06:39,890
+with every keystroke here, only the name changes.
+134
+
+134
+
+00:06:39,890  -->  00:06:44,050
+And hence it only finds the places where I used the name,
+135
+
+135
+
+00:06:44,050  -->  00:06:47,260
+in this case, this paragraph and update stat
+136
+
+136
+
+00:06:47,260  -->  00:06:50,130
+and the rest is well left untouched.
+137
+
+137
+
+00:06:50,130  -->  00:06:53,763
+And hence we save performance or have a better performance.
+138
+
+138
+
+00:06:54,800  -->  00:06:58,210
+Now, this is how we can work with events.
+139
+
+139
+
+00:06:58,210  -->  00:07:02,540
+There's just one more note about this default event object.
+140
+
+140
+
+00:07:02,540  -->  00:07:06,310
+You could have a scenario that you need to call
+141
+
+141
+
+00:07:06,310  -->  00:07:09,170
+your method explicitly on your own here
+142
+
+142
+
+00:07:09,170  -->  00:07:11,760
+as we did it with add and reduce.
+143
+
+143
+
+00:07:11,760  -->  00:07:12,790
+For example,
+144
+
+144
+
+00:07:12,790  -->  00:07:16,420
+because you need to pass in some other argument,
+145
+
+145
+
+00:07:16,420  -->  00:07:19,913
+like second name, which I always want to use here.
+146
+
+146
+
+00:07:21,880  -->  00:07:26,880
+We could accept this here, second name or last name
+147
+
+147
+
+00:07:27,620  -->  00:07:30,730
+and then update name with whatever the user entered
+148
+
+148
+
+00:07:30,730  -->  00:07:35,623
+plus last name, maybe also add a white space in front of it.
+149
+
+149
+
+00:07:37,790  -->  00:07:40,920
+The problem with that is that we now no longer
+150
+
+150
+
+00:07:40,920  -->  00:07:45,120
+get this default event object as a first argument here.
+151
+
+151
+
+00:07:45,120  -->  00:07:49,130
+Now to still pass that in, there is a special variable,
+152
+
+152
+
+00:07:49,130  -->  00:07:51,100
+which you can use here in your template
+153
+
+153
+
+00:07:51,100  -->  00:07:53,570
+and that's dollar sign event.
+154
+
+154
+
+00:07:53,570  -->  00:07:57,470
+This is a reserved name and Vue gives this variable to you
+155
+
+155
+
+00:07:57,470  -->  00:08:01,630
+to give you access to this built in default event object,
+156
+
+156
+
+00:08:01,630  -->  00:08:04,560
+which you get automatically by the browser.
+157
+
+157
+
+00:08:04,560  -->  00:08:07,430
+So that you can use it here in this code as well.
+158
+
+158
+
+00:08:07,430  -->  00:08:12,050
+And for example, still pass it in as a first argument
+159
+
+159
+
+00:08:12,050  -->  00:08:13,693
+to setName, if you wanted to.
+160
+
+160
+
+00:08:14,740  -->  00:08:18,350
+So whenever you find yourself using an arguments here
+161
+
+161
+
+00:08:18,350  -->  00:08:21,510
+or you simply can't just point at a function
+162
+
+162
+
+00:08:21,510  -->  00:08:25,040
+for whatever reason and you need that built in event,
+163
+
+163
+
+00:08:25,040  -->  00:08:28,190
+you can access it with dollar sign event.
+164
+
+164
+
+00:08:28,190  -->  00:08:31,090
+But again, this is only needed if you're not just
+165
+
+165
+
+00:08:31,090  -->  00:08:33,970
+pointing at the method as we did it before.
+166
+
+166
+
+00:08:33,970  -->  00:08:38,300
+Hence now if a reload, this still all works as before,
+167
+
+167
+
+00:08:38,300  -->  00:08:41,280
+but now with help of dollar sign event.
+168
+
+168
+
+00:08:41,280  -->  00:08:42,860
+That's just in our side note,
+169
+
+169
+
+00:08:42,860  -->  00:08:46,040
+because sometimes this is exactly what you need
+170
+
+170
+
+00:08:46,040  -->  00:08:48,670
+to get access to both to build an event object
+171
+
+171
+
+00:08:48,670  -->  00:08:51,940
+you get automatically and still execute code
+172
+
+172
+
+00:08:51,940  -->  00:08:53,460
+on your own explicitly,
+173
+
+173
+
+00:08:53,460  -->  00:08:56,983
+for example, to pass in your own arguments.

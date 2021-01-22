@@ -1,0 +1,737 @@
+1
+1
+
+00:00:02,320  -->  00:00:05,190
+<v Instructor>Now binding inline styles dynamically</v>
+2
+
+2
+
+00:00:05,190  -->  00:00:07,820
+as we're doing it here works,
+3
+
+3
+
+00:00:07,820  -->  00:00:11,200
+but inline styles have a couple of disadvantages.
+4
+
+4
+
+00:00:11,200  -->  00:00:13,870
+They overrule all other styles,
+5
+
+5
+
+00:00:13,870  -->  00:00:15,970
+which sometimes is what you'll need,
+6
+
+6
+
+00:00:15,970  -->  00:00:17,980
+but often leads to problems.
+7
+
+7
+
+00:00:17,980  -->  00:00:21,610
+Therefore in modern web development and CSS,
+8
+
+8
+
+00:00:21,610  -->  00:00:25,040
+we typically don't use inline styles too often.
+9
+
+9
+
+00:00:25,040  -->  00:00:27,070
+So, let's actually get rid of that
+10
+
+10
+
+00:00:27,070  -->  00:00:29,580
+and let me instead show you something else.
+11
+
+11
+
+00:00:29,580  -->  00:00:32,930
+How we can bind CSS classes dynamically,
+12
+
+12
+
+00:00:32,930  -->  00:00:36,600
+because that's an alternative approach we could use here.
+13
+
+13
+
+00:00:36,600  -->  00:00:39,830
+Let's for a moment, go to styles, CSS,
+14
+
+14
+
+00:00:39,830  -->  00:00:42,270
+and let's add a new CSS class here,
+15
+
+15
+
+00:00:42,270  -->  00:00:45,780
+a new CSS as class selector, I'll name it active,
+16
+
+16
+
+00:00:45,780  -->  00:00:47,820
+but you can use any name you want.
+17
+
+17
+
+00:00:47,820  -->  00:00:50,890
+And the only rule or the only property
+18
+
+18
+
+00:00:50,890  -->  00:00:53,980
+I'll style in there is border color,
+19
+
+19
+
+00:00:53,980  -->  00:00:55,560
+which is set to red.
+20
+
+20
+
+00:00:55,560  -->  00:00:57,860
+Well actually to make it even easier to see,
+21
+
+21
+
+00:00:57,860  -->  00:01:00,330
+let me also change the background color to salmon
+22
+
+22
+
+00:01:01,675  -->  00:01:03,310
+but this is optional.
+23
+
+23
+
+00:01:03,310  -->  00:01:06,750
+So, now we have to this active CSS class here
+24
+
+24
+
+00:01:06,750  -->  00:01:10,340
+in the CSS file, which we can now close.
+25
+
+25
+
+00:01:10,340  -->  00:01:14,950
+And now let's say we wanna add this class dynamically
+26
+
+26
+
+00:01:15,820  -->  00:01:20,803
+to this div if boxASelected is true.
+27
+
+27
+
+00:01:21,810  -->  00:01:23,460
+So, therefore of course,
+28
+
+28
+
+00:01:23,460  -->  00:01:27,630
+we can bind the class attribute dynamically
+29
+
+29
+
+00:01:27,630  -->  00:01:32,463
+with V bind or this shorthand with just colon class.
+30
+
+30
+
+00:01:33,770  -->  00:01:37,600
+Now class of course needs a string now.
+31
+
+31
+
+00:01:37,600  -->  00:01:39,950
+The name of the class that should be added, for example,
+32
+
+32
+
+00:01:39,950  -->  00:01:44,070
+demo, which is responsible for this default box style,
+33
+
+33
+
+00:01:44,070  -->  00:01:46,730
+that's why I'm passing in a string here.
+34
+
+34
+
+00:01:46,730  -->  00:01:48,590
+But we could now make sure
+35
+
+35
+
+00:01:48,590  -->  00:01:51,350
+that we pass more than just that string
+36
+
+36
+
+00:01:51,350  -->  00:01:55,430
+if indeed box A is selected.
+37
+
+37
+
+00:01:55,430  -->  00:01:58,720
+So, if box A is selected here is true.
+38
+
+38
+
+00:01:58,720  -->  00:02:01,123
+And for that we could again check boxASelected,
+39
+
+39
+
+00:02:01,970  -->  00:02:05,870
+so, check this property in a ternary expression.
+40
+
+40
+
+00:02:05,870  -->  00:02:07,810
+We can use JavaScript here now
+41
+
+41
+
+00:02:07,810  -->  00:02:10,620
+because we're binding this with V bind.
+42
+
+42
+
+00:02:10,620  -->  00:02:15,620
+Check if that's true, if it is, we add demo and active.
+43
+
+43
+
+00:02:15,960  -->  00:02:17,030
+This needs to be a string
+44
+
+44
+
+00:02:17,030  -->  00:02:20,330
+because this is all evaluated as JavaScript here
+45
+
+45
+
+00:02:20,330  -->  00:02:22,910
+and we wanna return a string with these classes,
+46
+
+46
+
+00:02:22,910  -->  00:02:25,420
+two class if that is selected.
+47
+
+47
+
+00:02:25,420  -->  00:02:28,673
+Else, in this ternary expression, we'll just add to demo.
+48
+
+48
+
+00:02:29,690  -->  00:02:33,930
+So, that active is only added if box A is selected as true.
+49
+
+49
+
+00:02:33,930  -->  00:02:36,293
+And if I reload, this works.
+50
+
+50
+
+00:02:37,150  -->  00:02:40,950
+However, this is not the nicest code,
+51
+
+51
+
+00:02:40,950  -->  00:02:42,330
+it's a bit hard to read
+52
+
+52
+
+00:02:42,330  -->  00:02:46,110
+and imagine how difficult this would be to read
+53
+
+53
+
+00:02:46,110  -->  00:02:51,110
+if we had more classes that we wanna toggle dynamically.
+54
+
+54
+
+00:02:51,300  -->  00:02:54,470
+Thankfully, just as with style,
+55
+
+55
+
+00:02:54,470  -->  00:02:58,000
+Vue JS supports a special syntax,
+56
+
+56
+
+00:02:58,000  -->  00:03:01,050
+especially for the class attribute as well
+57
+
+57
+
+00:03:01,050  -->  00:03:03,930
+if you're binding it with V bind.
+58
+
+58
+
+00:03:03,930  -->  00:03:06,140
+You can pass an object here as well,
+59
+
+59
+
+00:03:06,140  -->  00:03:08,280
+which normally would not work.
+60
+
+60
+
+00:03:08,280  -->  00:03:11,800
+If you don't bind it, that does not make any sense.
+61
+
+61
+
+00:03:11,800  -->  00:03:16,100
+But if you do bind it Vue supports this object syntax
+62
+
+62
+
+00:03:16,100  -->  00:03:19,030
+and in there you can now add properties
+63
+
+63
+
+00:03:19,030  -->  00:03:23,880
+where the property names reflect your CSS classes
+64
+
+64
+
+00:03:23,880  -->  00:03:28,880
+and the values of those properties are true or false
+65
+
+65
+
+00:03:29,060  -->  00:03:31,610
+or a true, few or false the result,
+66
+
+66
+
+00:03:31,610  -->  00:03:34,510
+that indicates whether that class should be added.
+67
+
+67
+
+00:03:34,510  -->  00:03:36,810
+So, we could add demo as a key name,
+68
+
+68
+
+00:03:36,810  -->  00:03:39,770
+as a property name and set it to true
+69
+
+69
+
+00:03:39,770  -->  00:03:44,280
+so that demo is always added and add active
+70
+
+70
+
+00:03:44,280  -->  00:03:47,453
+and set the value of active to boxASelected
+71
+
+71
+
+00:03:48,610  -->  00:03:52,530
+so that the active class is added to this div
+72
+
+72
+
+00:03:52,530  -->  00:03:54,853
+if boxASelected is truthy.
+73
+
+73
+
+00:03:55,910  -->  00:03:57,410
+And if we saved it and reload,
+74
+
+74
+
+00:03:57,410  -->  00:03:59,690
+we've got the same behavior as before,
+75
+
+75
+
+00:03:59,690  -->  00:04:02,175
+but with much more readable code,
+76
+
+76
+
+00:04:02,175  -->  00:04:05,700
+especially if we add more and more classes here,
+77
+
+77
+
+00:04:05,700  -->  00:04:08,810
+this stays readable and stays maintainable,
+78
+
+78
+
+00:04:08,810  -->  00:04:11,213
+which of course is super important.
+79
+
+79
+
+00:04:12,340  -->  00:04:16,030
+And now we could do the same on the other divs as well.
+80
+
+80
+
+00:04:16,030  -->  00:04:17,840
+But actually before we do that,
+81
+
+81
+
+00:04:17,840  -->  00:04:20,250
+I wanna simplify that even more.
+82
+
+82
+
+00:04:20,250  -->  00:04:22,910
+Setting demo to true is a bit redundant,
+83
+
+83
+
+00:04:22,910  -->  00:04:25,620
+we always add to that class.
+84
+
+84
+
+00:04:25,620  -->  00:04:28,890
+So therefore, thankfully we can remove it from here,
+85
+
+85
+
+00:04:28,890  -->  00:04:30,690
+remove it from this object
+86
+
+86
+
+00:04:30,690  -->  00:04:33,570
+and instead add the class attribute like this
+87
+
+87
+
+00:04:33,570  -->  00:04:34,960
+and set it to demo
+88
+
+88
+
+00:04:34,960  -->  00:04:39,620
+and have our dynamically bound class attribute in addition.
+89
+
+89
+
+00:04:39,620  -->  00:04:42,260
+So, this one here is not dynamically bound,
+90
+
+90
+
+00:04:42,260  -->  00:04:44,170
+I'm not having a colon here.
+91
+
+91
+
+00:04:44,170  -->  00:04:47,020
+So, that's the regular class attribute
+92
+
+92
+
+00:04:47,020  -->  00:04:48,910
+and I'll set it to demo.
+93
+
+93
+
+00:04:48,910  -->  00:04:51,730
+And Vue will basically just recognize that
+94
+
+94
+
+00:04:51,730  -->  00:04:53,750
+and never change it.
+95
+
+95
+
+00:04:53,750  -->  00:04:56,150
+But then I also to bind class dynamically
+96
+
+96
+
+00:04:56,150  -->  00:05:00,200
+and what Vue will do is it will evaluate the result
+97
+
+97
+
+00:05:00,200  -->  00:05:02,740
+of this dynamic class binding
+98
+
+98
+
+00:05:02,740  -->  00:05:06,420
+and merge it with the hard-coded one here.
+99
+
+99
+
+00:05:06,420  -->  00:05:09,560
+With that if I reload, we get the same behavior as before,
+100
+
+100
+
+00:05:09,560  -->  00:05:13,590
+but with even less code or even easier to manage code,
+101
+
+101
+
+00:05:13,590  -->  00:05:14,423
+I should say.
+102
+
+102
+
+00:05:15,600  -->  00:05:19,620
+Well then of course, now we can easily bring that over
+103
+
+103
+
+00:05:19,620  -->  00:05:23,040
+to the other divs as well, if we want to
+104
+
+104
+
+00:05:23,040  -->  00:05:26,590
+and just check for boxBSelected and boxCSelected.
+105
+
+105
+
+00:05:30,070  -->  00:05:33,570
+And with that, we can highlight those boxes as well.
+106
+
+106
+
+00:05:33,570  -->  00:05:36,860
+We cannot unmark them at the moment,
+107
+
+107
+
+00:05:36,860  -->  00:05:40,430
+but still, this is how you can add dynamic classes
+108
+
+108
+
+00:05:40,430  -->  00:05:42,983
+and dynamic styling with Vue.
+109
+
+109
+
+00:05:44,600  -->  00:05:45,970
+Now, if you wanna make sure that users
+110
+
+110
+
+00:05:45,970  -->  00:05:49,770
+can actually toggle this and not just mark it as active,
+111
+
+111
+
+00:05:49,770  -->  00:05:52,810
+we can simply go to our code and change this a little bit
+112
+
+112
+
+00:05:52,810  -->  00:05:55,170
+and instead of setting this boxASelected
+113
+
+113
+
+00:05:55,170  -->  00:05:58,800
+to true all the time, I'll set it to the opposite
+114
+
+114
+
+00:05:58,800  -->  00:06:00,903
+of this boxASelected
+115
+
+115
+
+00:06:00,903  -->  00:06:04,840
+so that in the end, if box A was selected,
+116
+
+116
+
+00:06:04,840  -->  00:06:07,570
+if it was true, it's now false,
+117
+
+117
+
+00:06:07,570  -->  00:06:09,360
+thanks to this exclamation mark.
+118
+
+118
+
+00:06:09,360  -->  00:06:12,493
+And this false value is the new value for boxASelected,
+119
+
+119
+
+00:06:13,590  -->  00:06:17,100
+and I'll do the same for the other boxes.
+120
+
+120
+
+00:06:17,100  -->  00:06:19,840
+And with this simple adjustment,
+121
+
+121
+
+00:06:19,840  -->  00:06:23,190
+we ensure that this now is a toggleable,
+122
+
+122
+
+00:06:23,190  -->  00:06:26,760
+that we can toggle this and not just set it as active,
+123
+
+123
+
+00:06:26,760  -->  00:06:29,453
+but also set it as inactive.

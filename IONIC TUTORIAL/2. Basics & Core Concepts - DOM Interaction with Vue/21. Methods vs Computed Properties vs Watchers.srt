@@ -1,0 +1,341 @@
+1
+1
+
+00:00:01,532  -->  00:00:03,120
+<v Instructor>I know that there's,</v>
+2
+
+2
+
+00:00:03,120  -->  00:00:06,330
+Methods vs Computed vs Watchers thing.
+3
+
+3
+
+00:00:06,330  -->  00:00:08,000
+Can be very confusing.
+4
+
+4
+
+00:00:08,000  -->  00:00:10,240
+So it's time for a short summary.
+5
+
+5
+
+00:00:10,240  -->  00:00:15,070
+Methods can be used in your template to bind data,
+6
+
+6
+
+00:00:15,070  -->  00:00:17,800
+to use them in a interpolation, for example.
+7
+
+7
+
+00:00:17,800  -->  00:00:20,400
+To derive data that should be used in the template
+8
+
+8
+
+00:00:20,400  -->  00:00:22,120
+or for event binding.
+9
+
+9
+
+00:00:22,120  -->  00:00:24,290
+You can use methods for both.
+10
+
+10
+
+00:00:24,290  -->  00:00:27,120
+And if you use them in the data binding use case,
+11
+
+11
+
+00:00:27,120  -->  00:00:29,820
+so if you use them between curly braces, for example,
+12
+
+12
+
+00:00:29,820  -->  00:00:33,720
+to outsource logic from the template to your view instance,
+13
+
+13
+
+00:00:33,720  -->  00:00:35,360
+then the method is executed
+14
+
+14
+
+00:00:35,360  -->  00:00:38,500
+for every re-render cycle of the component.
+15
+
+15
+
+00:00:38,500  -->  00:00:40,110
+So whenever something changes
+16
+
+16
+
+00:00:40,110  -->  00:00:42,020
+and the template is re-evaluated,
+17
+
+17
+
+00:00:42,020  -->  00:00:44,170
+every method that's called in the template
+18
+
+18
+
+00:00:44,170  -->  00:00:45,400
+will be called again.
+19
+
+19
+
+00:00:45,400  -->  00:00:47,800
+That's what I showed you a couple of lectures ago.
+20
+
+20
+
+00:00:47,800  -->  00:00:48,910
+And therefore,
+21
+
+21
+
+00:00:48,910  -->  00:00:53,010
+you should use methods primarily for event binding.
+22
+
+22
+
+00:00:53,010  -->  00:00:54,620
+There it's a no brainer.
+23
+
+23
+
+00:00:54,620  -->  00:00:55,970
+You always use them
+24
+
+24
+
+00:00:55,970  -->  00:00:58,200
+or for data binding,
+25
+
+25
+
+00:00:58,200  -->  00:01:00,840
+so with double curly braces, for example,
+26
+
+26
+
+00:01:00,840  -->  00:01:03,570
+if you really want them to re-execute
+27
+
+27
+
+00:01:03,570  -->  00:01:05,961
+whenever something changes on the page.
+28
+
+28
+
+00:01:05,961  -->  00:01:08,060
+Otherwise, you use computed properties
+29
+
+29
+
+00:01:08,060  -->  00:01:10,470
+because those can only be used with data binding.
+30
+
+30
+
+00:01:10,470  -->  00:01:12,700
+You don't use them with event binding.
+31
+
+31
+
+00:01:12,700  -->  00:01:16,710
+And computed properties are great to derive data
+32
+
+32
+
+00:01:16,710  -->  00:01:19,920
+that's based on other data with the advantage
+33
+
+33
+
+00:01:19,920  -->  00:01:24,790
+that they will only be re-evaluated and re-executed by view
+34
+
+34
+
+00:01:24,790  -->  00:01:27,140
+if the dependent data changed.
+35
+
+35
+
+00:01:27,140  -->  00:01:30,630
+So if the data used inside of the computed property changed,
+36
+
+36
+
+00:01:30,630  -->  00:01:34,350
+they will not be re-evaluated if some other data changed.
+37
+
+37
+
+00:01:34,350  -->  00:01:39,350
+And therefore, use them for data that depends on other data.
+38
+
+38
+
+00:01:39,860  -->  00:01:40,920
+Last but not least,
+39
+
+39
+
+00:01:40,920  -->  00:01:44,060
+Watchers are not directly used in the template.
+40
+
+40
+
+00:01:44,060  -->  00:01:45,870
+You don't reference them there,
+41
+
+41
+
+00:01:45,870  -->  00:01:48,140
+but you can watch any property,
+42
+
+42
+
+00:01:48,140  -->  00:01:50,670
+even computed properties with them.
+43
+
+43
+
+00:01:50,670  -->  00:01:52,630
+And that allows you to run code
+44
+
+44
+
+00:01:52,630  -->  00:01:54,630
+in reaction to some change data.
+45
+
+45
+
+00:01:54,630  -->  00:01:57,050
+For example, to send the HTTP request,
+46
+
+46
+
+00:01:57,050  -->  00:01:59,820
+set a timer, stores something in local storage,
+47
+
+47
+
+00:01:59,820  -->  00:02:01,070
+whatever it is.
+48
+
+48
+
+00:02:01,070  -->  00:02:03,780
+So typically, you should use Watchers
+49
+
+49
+
+00:02:03,780  -->  00:02:06,550
+for any non data updates you wanna make.
+50
+
+50
+
+00:02:06,550  -->  00:02:09,180
+Whatever you got some behind the scenes work to do
+51
+
+51
+
+00:02:09,180  -->  00:02:11,040
+based on some changing data,
+52
+
+52
+
+00:02:11,040  -->  00:02:13,380
+you might wanna consider a Watcher.
+53
+
+53
+
+00:02:13,380  -->  00:02:15,080
+Amongst the free Watchers
+54
+
+54
+
+00:02:15,080  -->  00:02:17,820
+are probably the feature you'll use the least
+55
+
+55
+
+00:02:17,820  -->  00:02:20,860
+because you need methods all the time with event binding
+56
+
+56
+
+00:02:20,860  -->  00:02:23,540
+and computed properties for outputting data
+57
+
+57
+
+00:02:23,540  -->  00:02:24,953
+that depends on other data.

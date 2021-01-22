@@ -1,0 +1,719 @@
+1
+1
+
+00:00:02,150  -->  00:00:05,400
+<v ->Well, you could of course put your code in here.</v>
+2
+
+2
+
+00:00:05,400  -->  00:00:09,260
+Name plus Schwartz Muller, for example,
+3
+
+3
+
+00:00:09,260  -->  00:00:10,990
+you could put it in here.
+4
+
+4
+
+00:00:10,990  -->  00:00:14,180
+And if you do that, you avoid this problem.
+5
+
+5
+
+00:00:14,180  -->  00:00:17,300
+Now view is able to see what's getting used here
+6
+
+6
+
+00:00:17,300  -->  00:00:19,610
+and it will only updated this paragraph
+7
+
+7
+
+00:00:19,610  -->  00:00:22,106
+and only reevaluated if well,
+8
+
+8
+
+00:00:22,106  -->  00:00:24,380
+in this case name changed
+9
+
+9
+
+00:00:24,380  -->  00:00:26,500
+and output full name has never called
+10
+
+10
+
+00:00:26,500  -->  00:00:29,091
+and therefore will never be called by view.
+11
+
+11
+
+00:00:29,091  -->  00:00:33,110
+But now we have more logic in our HTML code
+12
+
+12
+
+00:00:33,110  -->  00:00:36,320
+and that's again, not good as you learned.
+13
+
+13
+
+00:00:36,320  -->  00:00:38,630
+So there is a third nice feature we can use,
+14
+
+14
+
+00:00:38,630  -->  00:00:40,193
+computed properties.
+15
+
+15
+
+00:00:41,550  -->  00:00:45,240
+Computed properties are essentially like methods
+16
+
+16
+
+00:00:45,240  -->  00:00:48,610
+with one important difference view will be aware
+17
+
+17
+
+00:00:48,610  -->  00:00:52,190
+of their dependencies and only reexecute them
+18
+
+18
+
+00:00:52,190  -->  00:00:54,453
+if one of the dependencies changed.
+19
+
+19
+
+00:00:55,330  -->  00:00:59,370
+Computed is the third big configuration option
+20
+
+20
+
+00:00:59,370  -->  00:01:02,640
+we learn about for the app we created.
+21
+
+21
+
+00:01:02,640  -->  00:01:04,200
+The first one was data.
+22
+
+22
+
+00:01:04,200  -->  00:01:05,850
+The second one was methods.
+23
+
+23
+
+00:01:05,850  -->  00:01:07,870
+The third one is computed.
+24
+
+24
+
+00:01:07,870  -->  00:01:10,560
+You can add it anywhere in this conflict object
+25
+
+25
+
+00:01:10,560  -->  00:01:13,770
+here I will add it between data at methods,
+26
+
+26
+
+00:01:13,770  -->  00:01:15,785
+but the position doesn't matter.
+27
+
+27
+
+00:01:15,785  -->  00:01:20,785
+So you add computed here and just like methods and data.
+28
+
+28
+
+00:01:20,950  -->  00:01:23,240
+This is not a name you can choose.
+29
+
+29
+
+00:01:23,240  -->  00:01:24,830
+That is a name you have to use
+30
+
+30
+
+00:01:24,830  -->  00:01:27,600
+because it's one of the key options,
+31
+
+31
+
+00:01:27,600  -->  00:01:31,640
+supported by view in view apps.
+32
+
+32
+
+00:01:31,640  -->  00:01:35,620
+Computed like methods wants an object.
+33
+
+33
+
+00:01:35,620  -->  00:01:38,745
+So you pass an object as a value to compute it.
+34
+
+34
+
+00:01:38,745  -->  00:01:41,070
+And now in computed,
+35
+
+35
+
+00:01:41,070  -->  00:01:45,430
+you define a bunch of methods just like in methods,
+36
+
+36
+
+00:01:45,430  -->  00:01:48,860
+but the methods you defined and computed will be called
+37
+
+37
+
+00:01:48,860  -->  00:01:50,760
+and executed differently.
+38
+
+38
+
+00:01:50,760  -->  00:01:53,989
+That's why we have these two different blocks.
+39
+
+39
+
+00:01:53,989  -->  00:01:58,000
+So here we could add a full name method,
+40
+
+40
+
+00:01:58,000  -->  00:02:02,250
+and I'm naming it full name and not output full name,
+41
+
+41
+
+00:02:02,250  -->  00:02:04,810
+even though I could, because that name is up to you,
+42
+
+42
+
+00:02:04,810  -->  00:02:08,360
+but I'm naming it like this because we're going to use this
+43
+
+43
+
+00:02:08,360  -->  00:02:11,480
+like a data property, not like a method,
+44
+
+44
+
+00:02:11,480  -->  00:02:13,570
+even though technically it is a method,
+45
+
+45
+
+00:02:13,570  -->  00:02:15,530
+but we're not going to use it as such.
+46
+
+46
+
+00:02:15,530  -->  00:02:16,990
+We're not going to call it.
+47
+
+47
+
+00:02:16,990  -->  00:02:20,450
+And therefore you should name your computed properties
+48
+
+48
+
+00:02:20,450  -->  00:02:23,623
+just as you would name your data properties.
+49
+
+49
+
+00:02:25,170  -->  00:02:26,630
+And now in here,
+50
+
+50
+
+00:02:26,630  -->  00:02:30,760
+we wanna return to value that eventually should be yielded
+51
+
+51
+
+00:02:30,760  -->  00:02:32,630
+by that computed property
+52
+
+52
+
+00:02:32,630  -->  00:02:35,800
+and there I'll just copy the exact same code
+53
+
+53
+
+00:02:35,800  -->  00:02:38,700
+I had in my output full name method.
+54
+
+54
+
+00:02:38,700  -->  00:02:42,360
+So I'll copy that code and put that in there.
+55
+
+55
+
+00:02:42,360  -->  00:02:45,890
+And now, as I mentioned, we can use this full name,
+56
+
+56
+
+00:02:45,890  -->  00:02:50,700
+computed property in our HTML code like this.
+57
+
+57
+
+00:02:50,700  -->  00:02:51,960
+And that's important.
+58
+
+58
+
+00:02:51,960  -->  00:02:55,460
+Not like this without parentheses,
+59
+
+59
+
+00:02:55,460  -->  00:02:57,010
+you don't call it
+60
+
+60
+
+00:02:57,010  -->  00:03:01,350
+you just point at it and view we'll call it for you.
+61
+
+61
+
+00:03:01,350  -->  00:03:05,010
+We use it just like we use data properties
+62
+
+62
+
+00:03:05,010  -->  00:03:07,060
+like to counter here.
+63
+
+63
+
+00:03:07,060  -->  00:03:10,870
+And that's why we should also name our computed properties
+64
+
+64
+
+00:03:10,870  -->  00:03:12,320
+like data properties,
+65
+
+65
+
+00:03:12,320  -->  00:03:15,670
+because we use them like properties like variables.
+66
+
+66
+
+00:03:15,670  -->  00:03:17,593
+We don't use them like functions.
+67
+
+67
+
+00:03:18,790  -->  00:03:21,300
+So full name here will be connected
+68
+
+68
+
+00:03:21,300  -->  00:03:23,460
+to this full name computed property
+69
+
+69
+
+00:03:23,460  -->  00:03:26,020
+so the name of course has to be equal.
+70
+
+70
+
+00:03:26,020  -->  00:03:28,761
+And now view will execute this for you.
+71
+
+71
+
+00:03:28,761  -->  00:03:30,380
+It will basically check
+72
+
+72
+
+00:03:30,380  -->  00:03:32,590
+if there is a full name data property.
+73
+
+73
+
+00:03:32,590  -->  00:03:34,260
+And if there isn't, it will check
+74
+
+74
+
+00:03:34,260  -->  00:03:36,940
+If there may be as a computed property with the name
+75
+
+75
+
+00:03:36,940  -->  00:03:39,410
+and if that's the case, it will execute it.
+76
+
+76
+
+00:03:39,410  -->  00:03:42,070
+And hence, if I saved us here in reload,
+77
+
+77
+
+00:03:42,070  -->  00:03:44,100
+we see nothing here initially.
+78
+
+78
+
+00:03:44,100  -->  00:03:45,980
+But as soon as I start typing,
+79
+
+79
+
+00:03:45,980  -->  00:03:48,570
+we see the full name show up again.
+80
+
+80
+
+00:03:48,570  -->  00:03:50,585
+So we've got the same behavior as before,
+81
+
+81
+
+00:03:50,585  -->  00:03:53,150
+but now with one important difference,
+82
+
+82
+
+00:03:53,150  -->  00:03:55,253
+let's check the developer tools again.
+83
+
+83
+
+00:03:56,680  -->  00:03:58,770
+In there If I reload,
+84
+
+84
+
+00:03:58,770  -->  00:04:03,250
+you will notice running again once initially of course,
+85
+
+85
+
+00:04:03,250  -->  00:04:07,020
+because it needs to evaluate the value returned by full name
+86
+
+86
+
+00:04:07,020  -->  00:04:09,923
+when the app is first rendered to discreet.
+87
+
+87
+
+00:04:10,788  -->  00:04:15,130
+But now if I cleared it, if I changed my counter,
+88
+
+88
+
+00:04:15,130  -->  00:04:18,450
+we don't see running again and keep in mind
+89
+
+89
+
+00:04:18,450  -->  00:04:20,450
+that with a method, we did see it,
+90
+
+90
+
+00:04:20,450  -->  00:04:22,860
+but now that's no longer the case.
+91
+
+91
+
+00:04:22,860  -->  00:04:25,540
+We only see it if we type here,
+92
+
+92
+
+00:04:25,540  -->  00:04:28,690
+which makes a lot of sense because here we really changed
+93
+
+93
+
+00:04:28,690  -->  00:04:31,550
+something that's being used in that computed property.
+94
+
+94
+
+00:04:31,550  -->  00:04:34,203
+We change the name with every keystroke.
+95
+
+95
+
+00:04:34,203  -->  00:04:37,030
+So with computer properties,
+96
+
+96
+
+00:04:37,030  -->  00:04:41,210
+view is aware of the dependencies
+97
+
+97
+
+00:04:41,210  -->  00:04:42,900
+off the computer properties.
+98
+
+98
+
+00:04:42,900  -->  00:04:46,460
+So in this case, that name is a dependency
+99
+
+99
+
+00:04:46,460  -->  00:04:50,760
+and it will cache the computed property value
+100
+
+100
+
+00:04:50,760  -->  00:04:54,460
+and only recalculate and reevaluate it
+101
+
+101
+
+00:04:54,460  -->  00:04:56,940
+if one of the dependencies in this case,
+102
+
+102
+
+00:04:56,940  -->  00:05:01,340
+the only dependency we have the name property changed.
+103
+
+103
+
+00:05:01,340  -->  00:05:04,410
+And that's the key difference for performance.
+104
+
+104
+
+00:05:04,410  -->  00:05:08,170
+It's better to use computer properties that methods
+105
+
+105
+
+00:05:08,170  -->  00:05:11,540
+for outputting values In most cases.
+106
+
+106
+
+00:05:11,540  -->  00:05:15,820
+only use methods if you know that you want to recalculate
+107
+
+107
+
+00:05:15,820  -->  00:05:19,460
+a value whenever anything on the page changed.
+108
+
+108
+
+00:05:19,460  -->  00:05:22,300
+In most scenarios, that will not be the case.
+109
+
+109
+
+00:05:22,300  -->  00:05:25,659
+You only want to recalculate a value
+110
+
+110
+
+00:05:25,659  -->  00:05:26,492
+if a dependency changed.
+111
+
+111
+
+00:05:26,492  -->  00:05:28,680
+And that's when computed properties shine.
+112
+
+112
+
+00:05:28,680  -->  00:05:32,560
+You still need methods either because you have something
+113
+
+113
+
+00:05:32,560  -->  00:05:36,040
+that you really want to reexecute whenever anything changed
+114
+
+114
+
+00:05:36,040  -->  00:05:39,860
+or more often, because you have events
+115
+
+115
+
+00:05:39,860  -->  00:05:43,450
+and you wanna trigger certain methods when an event occurs,
+116
+
+116
+
+00:05:43,450  -->  00:05:45,000
+that does not change.
+117
+
+117
+
+00:05:45,000  -->  00:05:47,490
+You still bind your events to methods.
+118
+
+118
+
+00:05:47,490  -->  00:05:50,330
+You don't bind events to computer properties.
+119
+
+119
+
+00:05:50,330  -->  00:05:53,120
+You really only use computer properties
+120
+
+120
+
+00:05:53,120  -->  00:05:56,453
+for outputting something like here, the full name.

@@ -1,0 +1,467 @@
+1
+1
+
+00:00:02,170  -->  00:00:03,400
+<v ->So at this point,</v>
+2
+
+2
+
+00:00:03,400  -->  00:00:07,780
+the good news is that we covered almost all important
+3
+
+3
+
+00:00:07,780  -->  00:00:10,687
+features and functionalities that are related to
+4
+
+4
+
+00:00:10,687  -->  00:00:12,210
+outputting data,
+5
+
+5
+
+00:00:12,210  -->  00:00:16,270
+namely interpolation and the v-bind directive.
+6
+
+6
+
+00:00:16,270  -->  00:00:19,030
+Also combined with the knowledge that you can output either
+7
+
+7
+
+00:00:19,030  -->  00:00:23,693
+data or the result of method calls like we're doing it here.
+8
+
+8
+
+00:00:25,430  -->  00:00:27,580
+Now there is one more feature,
+9
+
+9
+
+00:00:27,580  -->  00:00:30,350
+one more directive you should be aware of.
+10
+
+10
+
+00:00:30,350  -->  00:00:32,280
+Let's say one of the two goals,
+11
+
+11
+
+00:00:32,280  -->  00:00:33,900
+let's say course goal B
+12
+
+12
+
+00:00:33,900  -->  00:00:36,940
+is actually not just a simple string like this,
+13
+
+13
+
+00:00:36,940  -->  00:00:39,540
+but this is some HTML code.
+14
+
+14
+
+00:00:39,540  -->  00:00:40,700
+And this could be a scenario
+15
+
+15
+
+00:00:40,700  -->  00:00:42,202
+you have in application.
+16
+
+16
+
+00:00:42,202  -->  00:00:43,617
+Where you, for example,
+17
+
+17
+
+00:00:43,617  -->  00:00:46,970
+fetched a data and it should be output from a database
+18
+
+18
+
+00:00:46,970  -->  00:00:50,373
+and from there you're getting some structured HTML code.
+19
+
+19
+
+00:00:51,470  -->  00:00:54,870
+Now if you use HTML elements in this string,
+20
+
+20
+
+00:00:54,870  -->  00:00:58,010
+and you output this with interpolation.
+21
+
+21
+
+00:00:58,010  -->  00:01:00,260
+So with the double curly braces,
+22
+
+22
+
+00:01:00,260  -->  00:01:05,200
+you'll see that the HTML elements are just output as text.
+23
+
+23
+
+00:01:05,200  -->  00:01:08,800
+So they are not interpreted as HTML.
+24
+
+24
+
+00:01:08,800  -->  00:01:12,020
+And that actually is a useful security feature because it
+25
+
+25
+
+00:01:12,020  -->  00:01:14,890
+protects you against cross site scripting attacks.
+26
+
+26
+
+00:01:14,890  -->  00:01:16,123
+So this is good.
+27
+
+27
+
+00:01:17,490  -->  00:01:21,210
+But sometimes you want to output this as HTML
+28
+
+28
+
+00:01:21,210  -->  00:01:24,160
+and not as text that looks like HTML.
+29
+
+29
+
+00:01:24,160  -->  00:01:26,490
+And for that you've got another directive you can use.
+30
+
+30
+
+00:01:26,490  -->  00:01:30,070
+And that is the v-html directive.
+31
+
+31
+
+00:01:30,070  -->  00:01:31,760
+We saw v-bind before.
+32
+
+32
+
+00:01:31,760  -->  00:01:34,070
+V-bind can be used to bind,
+33
+
+33
+
+00:01:34,070  -->  00:01:37,090
+so to set the values of attributes.
+34
+
+34
+
+00:01:37,090  -->  00:01:38,295
+With v-html,
+35
+
+35
+
+00:01:38,295  -->  00:01:41,737
+you set the content between opening and closing text
+36
+
+36
+
+00:01:41,737  -->  00:01:42,857
+of an element,
+37
+
+37
+
+00:01:42,857  -->  00:01:44,703
+but you now tell Vue
+38
+
+38
+
+00:01:44,703  -->  00:01:48,620
+that the content should be interpreted as HTML.
+39
+
+39
+
+00:01:48,620  -->  00:01:50,241
+So it should not be output as text
+40
+
+40
+
+00:01:50,241  -->  00:01:53,520
+as it is with double curly braces.
+41
+
+41
+
+00:01:53,520  -->  00:01:56,760
+And therefore you no longer use double curly braces here,
+42
+
+42
+
+00:01:56,760  -->  00:02:00,150
+but instead, the value you pass to v-html
+43
+
+43
+
+00:02:00,150  -->  00:02:02,920
+between the double quotes here
+44
+
+44
+
+00:02:02,920  -->  00:02:06,030
+would be coarse goal B for example,
+45
+
+45
+
+00:02:06,030  -->  00:02:08,020
+or also if you want it to,
+46
+
+46
+
+00:02:08,020  -->  00:02:10,520
+the result of calling output goal.
+47
+
+47
+
+00:02:10,520  -->  00:02:12,480
+This also works.
+48
+
+48
+
+00:02:12,480  -->  00:02:14,070
+And if I now reload,
+49
+
+49
+
+00:02:14,070  -->  00:02:15,610
+you see from time to time,
+50
+
+50
+
+00:02:15,610  -->  00:02:17,863
+there's this dh2 tag.
+51
+
+51
+
+00:02:17,863  -->  00:02:19,550
+The text is just green,
+52
+
+52
+
+00:02:19,550  -->  00:02:21,960
+which is why you don't see it because of my styling,
+53
+
+53
+
+00:02:21,960  -->  00:02:25,300
+but this now is interpreted as HTML.
+54
+
+54
+
+00:02:25,300  -->  00:02:28,470
+And of course goal A is also interpreted as HTML,
+55
+
+55
+
+00:02:28,470  -->  00:02:31,560
+but in there I got no HTML text.
+56
+
+56
+
+00:02:31,560  -->  00:02:33,940
+So this is a feature you can use.
+57
+
+57
+
+00:02:33,940  -->  00:02:35,404
+I'm going to comment it out here,
+58
+
+58
+
+00:02:35,404  -->  00:02:37,290
+because we don't need it here,
+59
+
+59
+
+00:02:37,290  -->  00:02:39,160
+but I wanted to make you aware of it.
+60
+
+60
+
+00:02:39,160  -->  00:02:41,770
+If you get some contents stored in your Vue app,
+61
+
+61
+
+00:02:41,770  -->  00:02:46,770
+which contains HTML code, that should be treated as HTML.
+62
+
+62
+
+00:02:47,400  -->  00:02:50,620
+The v-html directive, which is built into Vue
+63
+
+63
+
+00:02:50,620  -->  00:02:52,260
+will help you with that.
+64
+
+64
+
+00:02:52,260  -->  00:02:55,440
+Now chances are, you'll not need it too often,
+65
+
+65
+
+00:02:55,440  -->  00:02:58,500
+and you should definitely not use it as a default.
+66
+
+66
+
+00:02:58,500  -->  00:03:01,970
+Because you can introduce security issues with that
+67
+
+67
+
+00:03:01,970  -->  00:03:04,530
+because you basically circumvent the built in
+68
+
+68
+
+00:03:04,530  -->  00:03:06,760
+cross site scripting attack protection
+69
+
+69
+
+00:03:06,760  -->  00:03:09,080
+you have with the double curly braces.
+70
+
+70
+
+00:03:09,080  -->  00:03:10,490
+But if you know what you're doing,
+71
+
+71
+
+00:03:10,490  -->  00:03:13,500
+and you need to output something as HTML,
+72
+
+72
+
+00:03:13,500  -->  00:03:16,940
+the v-html directive is your friend.
+73
+
+73
+
+00:03:16,940  -->  00:03:17,773
+Well,
+74
+
+74
+
+00:03:17,773  -->  00:03:20,880
+and these are some basics about working with the Vue app
+75
+
+75
+
+00:03:20,880  -->  00:03:23,480
+and outputting content with data,
+76
+
+76
+
+00:03:23,480  -->  00:03:25,700
+or with a method which you call.
+77
+
+77
+
+00:03:25,700  -->  00:03:26,880
+And therefore I'd say,
+78
+
+78
+
+00:03:26,880  -->  00:03:29,500
+next it's time to practice the subject.

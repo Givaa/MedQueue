@@ -1,0 +1,929 @@
+1
+1
+
+00:00:02,209  -->  00:00:03,320
+<v ->[Maximilian Schwarzmuller] So now we know how to</v>
+2
+
+2
+
+00:00:03,320  -->  00:00:04,500
+output data.
+3
+
+3
+
+00:00:04,500  -->  00:00:06,290
+In modern web applications,
+4
+
+4
+
+00:00:06,290  -->  00:00:08,560
+that's only half of what you do though.
+5
+
+5
+
+00:00:08,560  -->  00:00:11,020
+You also need to react to user input.
+6
+
+6
+
+00:00:11,020  -->  00:00:12,810
+You need to react to events.
+7
+
+7
+
+00:00:12,810  -->  00:00:15,260
+You wanna make dynamic pages.
+8
+
+8
+
+00:00:15,260  -->  00:00:18,290
+After all, this is one of the main reasons for using
+9
+
+9
+
+00:00:18,290  -->  00:00:19,760
+a framework like Vue.
+10
+
+10
+
+00:00:19,760  -->  00:00:22,810
+It makes building highly reactive and dynamic,
+11
+
+11
+
+00:00:22,810  -->  00:00:24,743
+web applications easier.
+12
+
+12
+
+00:00:25,700  -->  00:00:28,470
+Therefore, that's what we're going to focus on next,
+13
+
+13
+
+00:00:28,470  -->  00:00:31,220
+and attached you'll find a simple starting project,
+14
+
+14
+
+00:00:31,220  -->  00:00:34,040
+which is not too different from the one before.
+15
+
+15
+
+00:00:34,040  -->  00:00:36,730
+We just have a slightly different content.
+16
+
+16
+
+00:00:36,730  -->  00:00:39,350
+Still got a section with a different ID now,
+17
+
+17
+
+00:00:39,350  -->  00:00:43,510
+and in there we've got two buttons, add and remove.
+18
+
+18
+
+00:00:43,510  -->  00:00:47,130
+We also have a paragraph, where I output a counter,
+19
+
+19
+
+00:00:47,130  -->  00:00:49,290
+which is managed in his Vue app,
+20
+
+20
+
+00:00:49,290  -->  00:00:51,940
+which is created for you already.
+21
+
+21
+
+00:00:51,940  -->  00:00:55,020
+It's a very simple Vue app here, as you can tell,
+22
+
+22
+
+00:00:55,020  -->  00:00:57,500
+pretty empty, just has to state a method,
+23
+
+23
+
+00:00:57,500  -->  00:00:59,260
+where I returned my data,
+24
+
+24
+
+00:00:59,260  -->  00:01:01,570
+which only consists of a counter in the end,
+25
+
+25
+
+00:01:01,570  -->  00:01:03,480
+which is a number, starting at zero.
+26
+
+26
+
+00:01:03,480  -->  00:01:06,720
+And then mount this to the events section,
+27
+
+27
+
+00:01:06,720  -->  00:01:10,490
+which is this section that holds all that markup.
+28
+
+28
+
+00:01:10,490  -->  00:01:12,810
+Now at the moment, those buttons don't do anything.
+29
+
+29
+
+00:01:12,810  -->  00:01:16,210
+If I press them, you'll see that well, nothing happens.
+30
+
+30
+
+00:01:16,210  -->  00:01:18,610
+And that's exactly what we wanna work on.
+31
+
+31
+
+00:01:18,610  -->  00:01:21,400
+I wanna show you how you can react to user input,
+32
+
+32
+
+00:01:21,400  -->  00:01:24,520
+and how you now can really leverage Vue,
+33
+
+33
+
+00:01:24,520  -->  00:01:28,940
+to make a more interactive and reactive web application.
+34
+
+34
+
+00:01:28,940  -->  00:01:31,670
+Let's say, when this button, the add button,
+35
+
+35
+
+00:01:31,670  -->  00:01:33,220
+when this button is pressed,
+36
+
+36
+
+00:01:33,220  -->  00:01:35,937
+we wanna add one, to the counter.
+37
+
+37
+
+00:01:35,937  -->  00:01:40,040
+And the remove button, or reduce maybe.
+38
+
+38
+
+00:01:40,040  -->  00:01:42,040
+When the reduce button, is pressed,
+39
+
+39
+
+00:01:42,040  -->  00:01:45,720
+we wanna deduct one from the counter.
+40
+
+40
+
+00:01:45,720  -->  00:01:48,650
+Let's start with the add button, how could we do that?
+41
+
+41
+
+00:01:48,650  -->  00:01:51,050
+In regular JavaScript,
+42
+
+42
+
+00:01:51,050  -->  00:01:55,710
+we would get access to the button with document,
+43
+
+43
+
+00:01:55,710  -->  00:01:57,100
+get element by ID.
+44
+
+44
+
+00:01:57,100  -->  00:02:00,710
+If that button had an ID or with query selector,
+45
+
+45
+
+00:02:00,710  -->  00:02:03,190
+and selecting the first button we find,
+46
+
+46
+
+00:02:03,190  -->  00:02:05,080
+and we could add an EventListener,
+47
+
+47
+
+00:02:05,080  -->  00:02:07,070
+with the addEventListener method.
+48
+
+48
+
+00:02:07,070  -->  00:02:09,430
+That is how we would do it,
+49
+
+49
+
+00:02:09,430  -->  00:02:13,140
+in the vanilla JavaScript, without Vue.
+50
+
+50
+
+00:02:13,140  -->  00:02:14,410
+But we're using Vue,
+51
+
+51
+
+00:02:14,410  -->  00:02:16,530
+so that we don't have to do it like this,
+52
+
+52
+
+00:02:16,530  -->  00:02:20,310
+so that we don't have to, define step by step,
+53
+
+53
+
+00:02:20,310  -->  00:02:23,370
+what should happen, but that we instead can leverage,
+54
+
+54
+
+00:02:23,370  -->  00:02:26,850
+this declarative approach, and just declare,
+55
+
+55
+
+00:02:26,850  -->  00:02:31,110
+our end result and let Vue figure out how to get there.
+56
+
+56
+
+00:02:31,110  -->  00:02:32,810
+And therefore, thankfully,
+57
+
+57
+
+00:02:32,810  -->  00:02:36,455
+Vue gives us an easier way of adding EventListeners,
+58
+
+58
+
+00:02:36,455  -->  00:02:38,720
+to HTML elements.
+59
+
+59
+
+00:02:38,720  -->  00:02:41,730
+If we wanna add a click listener to this button,
+60
+
+60
+
+00:02:41,730  -->  00:02:44,660
+we can use a never Vue directive.
+61
+
+61
+
+00:02:44,660  -->  00:02:46,540
+We learned about V-bind.
+62
+
+62
+
+00:02:46,540  -->  00:02:51,250
+V-bind is helpful for setting the value of an attribute.
+63
+
+63
+
+00:02:51,250  -->  00:02:52,990
+Now for adding EventListeners,
+64
+
+64
+
+00:02:52,990  -->  00:02:56,720
+we have another directive, and that's the V-on directive,
+65
+
+65
+
+00:02:56,720  -->  00:03:00,003
+because we wanna react on, a certain event.
+66
+
+66
+
+00:03:00,910  -->  00:03:05,420
+V-on takes a so-called argument, after a colon,
+67
+
+67
+
+00:03:05,420  -->  00:03:08,970
+just like V-bind, took the attribute,
+68
+
+68
+
+00:03:08,970  -->  00:03:10,330
+which should be bound.
+69
+
+69
+
+00:03:10,330  -->  00:03:13,390
+V-on takes the event to which you wanna listen,
+70
+
+70
+
+00:03:13,390  -->  00:03:14,730
+after the colon.
+71
+
+71
+
+00:03:14,730  -->  00:03:16,023
+In this case, click.
+72
+
+72
+
+00:03:17,310  -->  00:03:20,120
+Now in case you're wondering to which events you can listen.
+73
+
+73
+
+00:03:20,120  -->  00:03:22,950
+Well, all the default events you can listen to
+74
+
+74
+
+00:03:22,950  -->  00:03:25,010
+on HTML elements.
+75
+
+75
+
+00:03:25,010  -->  00:03:29,670
+So that would be click, mouseenter, mouseleave,
+76
+
+76
+
+00:03:29,670  -->  00:03:31,650
+really anything you can listen to
+77
+
+77
+
+00:03:31,650  -->  00:03:33,570
+in vanilla JavaScript as well.
+78
+
+78
+
+00:03:33,570  -->  00:03:36,210
+Here, it's the click to which I wanna listen.
+79
+
+79
+
+00:03:36,210  -->  00:03:38,170
+And then after an equal sign,
+80
+
+80
+
+00:03:38,170  -->  00:03:40,900
+between the opening and closing double quotes,
+81
+
+81
+
+00:03:40,900  -->  00:03:43,660
+we now specify the code that should run,
+82
+
+82
+
+00:03:43,660  -->  00:03:45,210
+when the click occurs.
+83
+
+83
+
+00:03:45,210  -->  00:03:47,580
+And that could be counter plus, plus,
+84
+
+84
+
+00:03:47,580  -->  00:03:50,560
+which is the shortest form of writing and JavaScript,
+85
+
+85
+
+00:03:50,560  -->  00:03:53,090
+that we wanna to add one, to the counter.
+86
+
+86
+
+00:03:53,090  -->  00:03:57,520
+And that's just JavaScript code, nothing Vue specific.
+87
+
+87
+
+00:03:57,520  -->  00:04:00,660
+As with V-bind at the double curly braces,
+88
+
+88
+
+00:04:00,660  -->  00:04:03,149
+you can have simple JavaScript expressions,
+89
+
+89
+
+00:04:03,149  -->  00:04:06,320
+right here in your HTML code,
+90
+
+90
+
+00:04:06,320  -->  00:04:08,920
+in the parts that are managed by Vue.
+91
+
+91
+
+00:04:08,920  -->  00:04:11,170
+Like here with V-on.
+92
+
+92
+
+00:04:11,170  -->  00:04:14,310
+If I now save that in reload, I can click add,
+93
+
+93
+
+00:04:14,310  -->  00:04:17,270
+and you will see that the counter, gets bigger,
+94
+
+94
+
+00:04:17,270  -->  00:04:20,910
+every time I clicked this button, thanks to this code.
+95
+
+95
+
+00:04:20,910  -->  00:04:23,410
+Now try doing, well, basically the same,
+96
+
+96
+
+00:04:23,410  -->  00:04:26,693
+just with reducing the counter, on this button.
+97
+
+97
+
+00:04:28,520  -->  00:04:29,860
+Were you successful.
+98
+
+98
+
+00:04:29,860  -->  00:04:31,930
+Well, of course it shouldn't be too difficult,
+99
+
+99
+
+00:04:31,930  -->  00:04:33,670
+it's essentially the same code.
+100
+
+100
+
+00:04:33,670  -->  00:04:37,140
+We wanna react to a click event, with V-on click.
+101
+
+101
+
+00:04:37,140  -->  00:04:41,010
+And then here, we just have counter minus, minus,
+102
+
+102
+
+00:04:41,010  -->  00:04:44,140
+or the longer form would also work of course.
+103
+
+103
+
+00:04:44,140  -->  00:04:46,140
+It's totally up to you, what you write there.
+104
+
+104
+
+00:04:46,140  -->  00:04:48,440
+With that you can also reduce the counter.
+105
+
+105
+
+00:04:48,440  -->  00:04:51,070
+So now we can add, and reduce.
+106
+
+106
+
+00:04:51,070  -->  00:04:53,310
+And that's pretty, pretty nice.
+107
+
+107
+
+00:04:53,310  -->  00:04:58,050
+And this is, how we can listen to user events in Vue.
+108
+
+108
+
+00:04:58,050  -->  00:05:00,070
+And here's one super important thing,
+109
+
+109
+
+00:05:00,070  -->  00:05:01,490
+which is easy to overlook,
+110
+
+110
+
+00:05:01,490  -->  00:05:06,490
+which shows us why, we use Vue, and how powerful Vue is.
+111
+
+111
+
+00:05:07,890  -->  00:05:10,830
+You might notice that we don't have much code here,
+112
+
+112
+
+00:05:10,830  -->  00:05:15,600
+some HTML code, and definitely not a lot of JavaScript code.
+113
+
+113
+
+00:05:15,600  -->  00:05:19,860
+I mean, this here is all the JavaScript code we wrote.
+114
+
+114
+
+00:05:19,860  -->  00:05:23,710
+Yet, we have two EventListeners, and a counter that changes,
+115
+
+115
+
+00:05:23,710  -->  00:05:27,200
+and most importantly, and easy to overlook,
+116
+
+116
+
+00:05:27,200  -->  00:05:29,620
+we got a counter that's being output here,
+117
+
+117
+
+00:05:29,620  -->  00:05:32,890
+where the page the users sees,
+118
+
+118
+
+00:05:32,890  -->  00:05:35,700
+changes every time the counter changes.
+119
+
+119
+
+00:05:35,700  -->  00:05:39,150
+This minus six here, changes to a minus five,
+120
+
+120
+
+00:05:39,150  -->  00:05:40,370
+if I click the button,
+121
+
+121
+
+00:05:40,370  -->  00:05:43,810
+and that's not something which would normally happen
+122
+
+122
+
+00:05:43,810  -->  00:05:44,740
+in a webpage.
+123
+
+123
+
+00:05:44,740  -->  00:05:47,660
+You would need to write JavaScript code,
+124
+
+124
+
+00:05:47,660  -->  00:05:50,790
+that adds EventListeners, changes the counter.
+125
+
+125
+
+00:05:50,790  -->  00:05:52,930
+And then when the counter changes,
+126
+
+126
+
+00:05:52,930  -->  00:05:55,120
+reaches out to that paragraph,
+127
+
+127
+
+00:05:55,120  -->  00:05:58,110
+to change the value that's showing up there.
+128
+
+128
+
+00:05:58,110  -->  00:06:01,860
+And that's exactly what Vue does behind the scenes for you.
+129
+
+129
+
+00:06:01,860  -->  00:06:06,190
+That is the core asset of frameworks like Vue.
+130
+
+130
+
+00:06:06,190  -->  00:06:10,820
+You just declare, where you wanna have EventListeners,
+131
+
+131
+
+00:06:10,820  -->  00:06:13,210
+and where you wanna output values,
+132
+
+132
+
+00:06:13,210  -->  00:06:15,910
+and which values you should be aware of.
+133
+
+133
+
+00:06:15,910  -->  00:06:18,720
+And Vue us all the rest of adding
+134
+
+134
+
+00:06:18,720  -->  00:06:20,910
+and managing those listeners,
+135
+
+135
+
+00:06:20,910  -->  00:06:23,110
+updating the counter behind the scenes.
+136
+
+136
+
+00:06:23,110  -->  00:06:24,741
+And most importantly,
+137
+
+137
+
+00:06:24,741  -->  00:06:27,800
+detecting when the counter changes,
+138
+
+138
+
+00:06:27,800  -->  00:06:31,670
+and updating the parts of the real rendered page,
+139
+
+139
+
+00:06:31,670  -->  00:06:33,740
+where updating is needed,
+140
+
+140
+
+00:06:33,740  -->  00:06:35,600
+when that counter changes.
+141
+
+141
+
+00:06:35,600  -->  00:06:37,840
+This is what Vue does behind the scenes.
+142
+
+142
+
+00:06:37,840  -->  00:06:39,100
+This is a,
+143
+
+143
+
+00:06:39,100  -->  00:06:41,100
+core feature of Vue.
+144
+
+144
+
+00:06:41,100  -->  00:06:43,380
+This built in reactivity,
+145
+
+145
+
+00:06:43,380  -->  00:06:46,510
+it detects that the counter changes,
+146
+
+146
+
+00:06:46,510  -->  00:06:50,400
+when you click a button, and it's then finds the places,
+147
+
+147
+
+00:06:50,400  -->  00:06:52,980
+on the page where the counter is used,
+148
+
+148
+
+00:06:52,980  -->  00:06:55,440
+to update what the user sees,
+149
+
+149
+
+00:06:55,440  -->  00:06:58,690
+with JavaScript behind the scenes.
+150
+
+150
+
+00:06:58,690  -->  00:07:00,110
+I'm really emphasizing this
+151
+
+151
+
+00:07:00,110  -->  00:07:02,933
+because it's so important to understand what Vue does here,
+152
+
+152
+
+00:07:02,933  -->  00:07:05,740
+and hopefully why that's pretty amazing,
+153
+
+153
+
+00:07:05,740  -->  00:07:10,540
+and makes our life, as a developer, much, much easier.
+154
+
+154
+
+00:07:10,540  -->  00:07:13,320
+Well, and that's how we can get started with events in Vue.
+155
+
+155
+
+00:07:13,320  -->  00:07:15,520
+Now let's see what else we can do with them.

@@ -1,0 +1,171 @@
+1
+00:00:02,260 --> 00:00:09,220
+Das war es also für das Modul, und dies war natürlich ein riesiger Kursabschnitt. Da wir
+
+2
+00:00:09,220 --> 00:00:16,480
+alle wichtigen Grundlagen behandelt haben, müssen Sie wissen, wie Sie gelernt haben, wie die Interaktion mit dem
+
+3
+00:00:16,480 --> 00:00:24,940
+DOM funktioniert und wie View Vorlagen verwaltet, um dies zu ermöglichen Verwenden Sie bestimmte Ansichtsfunktionen, die dann auf der eigentlichen
+
+4
+00:00:24,940 --> 00:00:26,560
+Seite angezeigt werden.
+
+5
+00:00:27,520 --> 00:00:35,170
+Sie haben gelernt, dass die Ansicht die Kernidee hat, dass Sie das Ziel und nicht die einzelnen Schritte
+
+6
+00:00:35,350 --> 00:00:43,540
+definieren, sodass Sie diesem deklarativen Ansatz folgen, bei dem Sie definieren, wie Ihre Seite aussehen soll und welche Teile auf
+
+7
+00:00:43,540 --> 00:00:50,020
+der Seite dynamisch sein können, und sie die Abbildung anzeigen lassen wie man dorthin kommt.
+
+8
+00:00:50,920 --> 00:00:58,720
+Damit die Ansicht ihre Aufgabe erfüllen kann, müssen Sie Ihre Ansichts-App, Ihre Ansichtsinstanz und den tatsächlichen HTML-Code
+
+9
+00:00:58,720 --> 00:01:02,920
+mit der Mound-Methode verbinden, die Sie gesehen haben.
+
+10
+00:01:03,490 --> 00:01:10,930
+Anschließend können Sie einen Teil der Seite mit "Sehen Sie uns als Auswahl" auswählen und diesen Teil in
+
+11
+00:01:10,930 --> 00:01:18,150
+die Vorlage der Ansichts-App umwandeln, in der Sie all diese neuen Funktionen verwenden können, z. B. die
+
+12
+00:01:18,170 --> 00:01:20,410
+erlernten Daten- und Ereignisbindungsfunktionen Über.
+
+13
+00:01:21,280 --> 00:01:25,500
+Sie haben gelernt, dass Daten in dieser Vorlage ausgegeben werden können.
+
+14
+00:01:25,600 --> 00:01:34,060
+Verwenden Sie also im kontrollierten HTML-Code die doppelte geschweifte Klammer-Syntax für diese Interpolationssyntax, um nur Text auszugeben, der
+
+15
+00:01:34,420 --> 00:01:42,160
+sich im Laufe der Zeit an einer bestimmten Stelle außerhalb der Seite ändern kann, oder verwenden Sie
+
+16
+00:01:42,730 --> 00:01:48,040
+die V-Direktive, um HTML-Attribute an einen dynamischen Wert zu binden.
+
+17
+00:01:48,430 --> 00:01:56,890
+Sie lernen auch die Kurzschreibweise is is kennen, bei der anstelle des Bindungs-Doppelpunkts ein Attribut nur ein Doppelpunkt und
+
+18
+00:01:56,890 --> 00:02:03,160
+ein Attribut vorhanden ist, um dieses Attribut dann an einen dynamischen Wert zu binden.
+
+19
+00:02:04,060 --> 00:02:06,840
+Und wir können natürlich nicht nur Daten ausgeben.
+
+20
+00:02:06,970 --> 00:02:14,120
+Wir können Ereignisse mit dem V auch auf DirecTV oder in Kurzschrift hören.
+
+21
+00:02:15,100 --> 00:02:19,330
+Dies sind die leistungsstarken Kernfunktionen, um die es in der Ansicht geht.
+
+22
+00:02:19,570 --> 00:02:27,490
+Um diese Funktionen jedoch wirklich leistungsfähig und nützlicher zu machen, verlassen wir uns auf Ansichten, die in
+
+23
+00:02:27,490 --> 00:02:29,800
+ein Reaktivitätssystem integriert sind.
+
+24
+00:02:30,760 --> 00:02:38,140
+Das bedeutet einfach, dass wir das echte DOM aktualisieren, wenn sich einige Daten ändern, die Sie mit BINDE oder
+
+25
+00:02:38,140 --> 00:02:45,290
+doppelten geschweiften Klammern ausgeben, und Sie erfahren haben, dass Sie Daten registrieren können, die sich im Datenobjekt Ihrer
+
+26
+00:02:45,340 --> 00:02:51,310
+Ansichts-App ändern könnten, und dass Sie dies können Arbeiten Sie auch mit berechneten Eigenschaften und
+
+27
+00:02:51,490 --> 00:02:55,630
+Beobachtern, um die Ergebnisse dynamisch zu berechnen oder Code auszuführen.
+
+28
+00:02:55,630 --> 00:03:03,610
+Wenn sich einige Daten ändern und Worchester-Daten für Sie anzeigen, werden automatisch Änderungen für Sie erkannt und das DOM
+
+29
+00:03:03,820 --> 00:03:11,110
+und damit das, was der Benutzer auf der Seite sieht, aktualisiert, wenn solche Änderungen erkannt werden.
+
+30
+00:03:11,530 --> 00:03:17,320
+Das ist die wichtige Grundlage, die Sie für die Arbeit mit der Ansicht benötigen, aber es geht natürlich
+
+31
+00:03:17,320 --> 00:03:21,060
+nicht nur um die Ausgabe von Text oder Daten in Web-Apps.
+
+32
+00:03:21,070 --> 00:03:25,930
+Wir möchten natürlich auch, dass sie hübsch aussehen, und dazu gehört auch das Styling.
+
+33
+00:03:26,380 --> 00:03:33,550
+Und hier können Sie uns auch dabei helfen, ein dynamisches Styling zu erreichen, da wir natürlich auch
+
+34
+00:03:33,550 --> 00:03:38,200
+Sears 'Klassen oder Inline-Styles dynamisch mit dem Bind sagen können.
+
+35
+00:03:39,040 --> 00:03:47,050
+Außerdem haben Sie gelernt, dass die Ansicht über spezielle Syntaxen für Klassen und Inline-Stile verfügt, mit denen Sie dynamische Stile
+
+36
+00:03:47,050 --> 00:03:54,660
+zuweisen können, um dies mit dem Objekt oder Arason-Text, den ich in den letzten Vorlesungen behandelt habe, zu vereinfachen.
+
+37
+00:03:55,720 --> 00:03:57,300
+Das ist das Fundament.
+
+38
+00:03:57,310 --> 00:04:02,470
+Es ist natürlich nicht alles, was Sie wissen müssen, aber es ist die Grundlage für
+
+39
+00:04:02,470 --> 00:04:09,280
+den Rest des Kurses und Sie werden die Konzepte sehen, die im Abschnitt Diskurs in allen unseren Kursabschnitten vermittelt werden.
+
+40
+00:04:09,400 --> 00:04:11,320
+Stellen Sie also sicher, dass Sie dies verstehen.
+
+41
+00:04:11,500 --> 00:04:15,760
+Gehen Sie die Vorlesungen durch, die Ihnen an dieser Stelle möglicherweise nicht klar sind.
+
+42
+00:04:16,060 --> 00:04:23,020
+Und aufgrund von Herausforderungen und Übungen biete ich Ihnen in diesem Abschnitt an, damit Sie wirklich wissen, worum
+
+43
+00:04:23,020 --> 00:04:24,970
+es bei diesen Kernkonzepten geht.

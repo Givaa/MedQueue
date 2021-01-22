@@ -1,0 +1,821 @@
+1
+1
+
+00:00:02,160  -->  00:00:04,900
+<v Schwarzmüller>So, in order to get our hands dirty,</v>
+2
+
+2
+
+00:00:04,900  -->  00:00:08,890
+I prepared a very simple dummy project for you,
+3
+
+3
+
+00:00:08,890  -->  00:00:11,280
+You'll find it attached to this lecture
+4
+
+4
+
+00:00:11,280  -->  00:00:15,210
+as a zip file which you can download and extract,
+5
+
+5
+
+00:00:15,210  -->  00:00:16,900
+and in that extracted folder,
+6
+
+6
+
+00:00:16,900  -->  00:00:20,980
+you will find three files, an app.js file,
+7
+
+7
+
+00:00:20,980  -->  00:00:24,773
+an index.html file and a styles.css file.
+8
+
+8
+
+00:00:25,750  -->  00:00:28,730
+Now, here, I opened this extracted folder
+9
+
+9
+
+00:00:28,730  -->  00:00:31,794
+with Visual Studio Code, the code editor I'm
+10
+
+10
+
+00:00:31,794  -->  00:00:34,440
+going to use throughout this course.
+11
+
+11
+
+00:00:34,440  -->  00:00:38,752
+Now, you can use any code editor or IDE of your choice.
+12
+
+12
+
+00:00:38,752  -->  00:00:41,060
+You don't need a specific tool,
+13
+
+13
+
+00:00:41,060  -->  00:00:43,780
+but, I strongly recommend Visual Studio Code,
+14
+
+14
+
+00:00:43,780  -->  00:00:48,370
+which you can get for free from code.visualstudio.com.
+15
+
+15
+
+00:00:48,370  -->  00:00:51,440
+It's available for macOS, Windows and Linux,
+16
+
+16
+
+00:00:51,440  -->  00:00:53,640
+so you can use it on any platform,
+17
+
+17
+
+00:00:53,640  -->  00:00:58,620
+and you can simply download and install it from that page.
+18
+
+18
+
+00:00:58,620  -->  00:01:01,950
+And, once you did that, you can open the attached extracted
+19
+
+19
+
+00:01:01,950  -->  00:01:06,950
+folder with File, Open and then navigate to that folder
+20
+
+20
+
+00:01:07,650  -->  00:01:09,090
+and open it.
+21
+
+21
+
+00:01:09,090  -->  00:01:11,700
+You can close the welcome screen you might see
+22
+
+22
+
+00:01:11,700  -->  00:01:14,730
+in Visual Studio Code, and if you want to get the exact same
+23
+
+23
+
+00:01:14,730  -->  00:01:19,540
+look as I do, under View, Appearance, you can control which
+24
+
+24
+
+00:01:19,540  -->  00:01:23,460
+sidebars are visible or not visible, and I only have the
+25
+
+25
+
+00:01:23,460  -->  00:01:26,160
+sidebar and the editor area open.
+26
+
+26
+
+00:01:26,160  -->  00:01:29,040
+I, for example, don't have the activity bar,
+27
+
+27
+
+00:01:29,040  -->  00:01:30,880
+which you might still have.
+28
+
+28
+
+00:01:30,880  -->  00:01:35,880
+I am also zoomed in here, and under Code, Preferences,
+29
+
+29
+
+00:01:36,136  -->  00:01:41,136
+Color theme, I am using the Dark+ theme.
+30
+
+30
+
+00:01:41,170  -->  00:01:43,257
+Now, you can configure this however you want,
+31
+
+31
+
+00:01:43,257  -->  00:01:46,860
+but that is the style I am using.
+32
+
+32
+
+00:01:46,860  -->  00:01:50,120
+Now, with that, let's start writing some code
+33
+
+33
+
+00:01:50,120  -->  00:01:52,200
+and I will actually start
+34
+
+34
+
+00:01:52,200  -->  00:01:55,900
+by writing some non-view code first,
+35
+
+35
+
+00:01:55,900  -->  00:01:58,079
+so that we thereafter can see
+36
+
+36
+
+00:01:58,079  -->  00:02:02,683
+why using a framework like Vue.js might be a good idea.
+37
+
+37
+
+00:02:03,660  -->  00:02:06,070 line:15% 
+On this demo project which I prepared,
+38
+
+38
+
+00:02:06,070  -->  00:02:07,860 line:15% 
+we can add Goals,
+39
+
+39
+
+00:02:07,860  -->  00:02:10,120 line:15% 
+we've got a test goal at the moment,
+40
+
+40
+
+00:02:10,120  -->  00:02:12,216 line:15% 
+and we will delete that soon,
+41
+
+41
+
+00:02:12,216  -->  00:02:15,010
+but, now, whenever I add a new goal here,
+42
+
+42
+
+00:02:15,010  -->  00:02:16,864
+like 'Finish the course'
+43
+
+43
+
+00:02:16,864  -->  00:02:20,380
+I want to make sure when at 'Add Goal' is clicked,
+44
+
+44
+
+00:02:20,380  -->  00:02:23,835
+this goal appears in that list down there.
+45
+
+45
+
+00:02:23,835  -->  00:02:26,730
+In the index.html file, we've got some
+46
+
+46
+
+00:02:26,730  -->  00:02:30,420
+mark up for that input field label button,
+47
+
+47
+
+00:02:30,420  -->  00:02:33,260
+and then that list with the dummy list item,
+48
+
+48
+
+00:02:33,260  -->  00:02:35,100
+which we can delete now.
+49
+
+49
+
+00:02:35,100  -->  00:02:38,250
+And, I'm importing some styles which I prepared for you,
+50
+
+50
+
+00:02:38,250  -->  00:02:39,946
+we don't have to care about those,
+51
+
+51
+
+00:02:39,946  -->  00:02:42,860
+it's not a CSS course after all,
+52
+
+52
+
+00:02:42,860  -->  00:02:45,330
+but we do all the import app.js,
+53
+
+53
+
+00:02:45,330  -->  00:02:47,950
+and here we can write some some JavaScript code
+54
+
+54
+
+00:02:47,950  -->  00:02:51,270
+to fetch the user input when the button is clicked,
+55
+
+55
+
+00:02:51,270  -->  00:02:52,890
+create a new list item,
+56
+
+56
+
+00:02:52,890  -->  00:02:56,640
+and add that to that list of list items here.
+57
+
+57
+
+00:02:56,640  -->  00:02:58,795
+And, that's what I want to do first now,
+58
+
+58
+
+00:02:58,795  -->  00:03:02,870
+with just JavaScript, so without Vue.
+59
+
+59
+
+00:03:02,870  -->  00:03:04,550
+In app.js for that,
+60
+
+60
+
+00:03:04,550  -->  00:03:08,210
+we first of all need to get access to the input,
+61
+
+61
+
+00:03:08,210  -->  00:03:11,570
+so that we can read the entered value,
+62
+
+62
+
+00:03:11,570  -->  00:03:13,530
+we need to get access to the button,
+63
+
+63
+
+00:03:13,530  -->  00:03:17,198
+so that we can listen to click events on the button,
+64
+
+64
+
+00:03:17,198  -->  00:03:20,530
+and we need to get access to the unordered list here,
+65
+
+65
+
+00:03:20,530  -->  00:03:23,160
+so that we can add new list items.
+66
+
+66
+
+00:03:23,160  -->  00:03:25,490
+Therefore, I will create three constants here
+67
+
+67
+
+00:03:25,490  -->  00:03:26,630
+in app.js.
+68
+
+68
+
+00:03:26,630  -->  00:03:29,872
+The first one is the buttonEl constant, lets say,
+69
+
+69
+
+00:03:29,872  -->  00:03:32,310
+this name, of course, is up to you,
+70
+
+70
+
+00:03:32,310  -->  00:03:34,600
+where I use document.querySelector
+71
+
+71
+
+00:03:35,448  -->  00:03:38,974
+to select the only button we have on this page.
+72
+
+72
+
+00:03:38,974  -->  00:03:43,974
+So, now, pointer to that dom element, to that JavaScript
+73
+
+73
+
+00:03:44,670  -->  00:03:48,300
+object representation of that button element,
+74
+
+74
+
+00:03:48,300  -->  00:03:51,003
+Is stored in that buttonEl const.
+75
+
+75
+
+00:03:52,200  -->  00:03:53,930
+I'll do the same for the input element,
+76
+
+76
+
+00:03:53,930  -->  00:03:57,520
+with document.querySelector ('input')
+77
+
+77
+
+00:03:59,020  -->  00:04:04,020
+and also for the listEl with document.querySelector ('ul')
+78
+
+78
+
+00:04:06,350  -->  00:04:07,563
+for unread list.
+79
+
+79
+
+00:04:09,400  -->  00:04:13,540
+Now, we can add a click Lister with JavaScript
+80
+
+80
+
+00:04:13,540  -->  00:04:15,310
+to this button by reaching out to the
+81
+
+81
+
+00:04:15,310  -->  00:04:19,290
+buttonEl and calling addEventListener,
+82
+
+82
+
+00:04:19,290  -->  00:04:22,920
+where we then listen to the click event like this
+83
+
+83
+
+00:04:22,920  -->  00:04:25,080
+by passing click as a string,
+84
+
+84
+
+00:04:25,080  -->  00:04:26,603
+as a first argument.
+85
+
+85
+
+00:04:27,600  -->  00:04:29,900
+The second argument now needs to be the
+86
+
+86
+
+00:04:29,900  -->  00:04:34,270
+function that should be executed when the click occurs,
+87
+
+87
+
+00:04:34,270  -->  00:04:37,564
+For that, we can define a new function here,
+88
+
+88
+
+00:04:37,564  -->  00:04:40,543
+addGoal could be the name,
+89
+
+89
+
+00:04:41,430  -->  00:04:43,607
+which should be triggered upon a click,
+90
+
+90
+
+00:04:43,607  -->  00:04:47,140
+so here we can then point at addGoal.
+91
+
+91
+
+00:04:48,220  -->  00:04:51,550
+We don't execute it here, we just point at it
+92
+
+92
+
+00:04:51,550  -->  00:04:53,990
+by repeating its name, so that the function
+93
+
+93
+
+00:04:53,990  -->  00:04:57,590
+is executed for us when a click occurs,
+94
+
+94
+
+00:04:57,590  -->  00:04:59,710
+Now, in this function we want to get
+95
+
+95
+
+00:04:59,710  -->  00:05:01,670
+whatever the user entered.
+96
+
+96
+
+00:05:01,670  -->  00:05:04,640
+So, we can get the entered value by
+97
+
+97
+
+00:05:04,640  -->  00:05:09,640
+reaching out to inputEl.value, being an input element,
+98
+
+98
+
+00:05:09,970  -->  00:05:13,183
+at which were pointing here, it will have a value property
+99
+
+99
+
+00:05:13,183  -->  00:05:17,120
+that's vanilla JavaScript, that's built into JavaScript
+100
+
+100
+
+00:05:17,120  -->  00:05:20,560
+that we have this value property on input elements,
+101
+
+101
+
+00:05:20,560  -->  00:05:23,975
+where we then can extract the value the user entered
+102
+
+102
+
+00:05:23,975  -->  00:05:25,323
+into this input.
+103
+
+103
+
+00:05:26,670  -->  00:05:31,670
+And now, we can create a new list item element by calling
+104
+
+104
+
+00:05:34,090  -->  00:05:39,090
+document.createElement which is a built-in method provided
+105
+
+105
+
+00:05:39,420  -->  00:05:43,890
+by the browser, to create new dom elements programmatically
+106
+
+106
+
+00:05:43,890  -->  00:05:45,850
+with JavaScript.
+107
+
+107
+
+00:05:45,850  -->  00:05:48,760
+Here, we can provide 'li' to create a list item
+108
+
+108
+
+00:05:48,760  -->  00:05:53,210
+element, and then we can use that newly created list item
+109
+
+109
+
+00:05:53,210  -->  00:05:57,570
+element to set its text content, so the text between the
+110
+
+110
+
+00:05:57,570  -->  00:06:01,330
+opening and closing text, of that list item, equal to the
+111
+
+111
+
+00:06:01,330  -->  00:06:02,383
+entered value.
+112
+
+112
+
+00:06:03,380  -->  00:06:06,670
+And then, we can reach out to the listEl, so to
+113
+
+113
+
+00:06:06,670  -->  00:06:11,670
+our overall list, and call append or appendChild,
+114
+
+114
+
+00:06:12,310  -->  00:06:15,773
+both will work here, I'll go for appendChild,
+115
+
+115
+
+00:06:15,773  -->  00:06:18,540
+and append our list itemEl,
+116
+
+116
+
+00:06:18,540  -->  00:06:20,610
+which we just created.
+117
+
+117
+
+00:06:20,610  -->  00:06:25,140
+If we do all of that, and we reload I can add
+118
+
+118
+
+00:06:25,140  -->  00:06:28,230
+'Finish the course!' and add this goal.
+119
+
+119
+
+00:06:28,230  -->  00:06:33,230
+And thereafter, for example, also add 'Learn Vue!'
+120
+
+120
+
+00:06:33,380  -->  00:06:34,930
+as a goal.
+121
+
+121
+
+00:06:34,930  -->  00:06:37,650
+Now, let's say we also want to reset the input
+122
+
+122
+
+00:06:37,650  -->  00:06:40,900
+once a goal was added, we could do that by, again,
+123
+
+123
+
+00:06:40,900  -->  00:06:43,830
+using our inputEl and setting
+124
+
+124
+
+00:06:43,830  -->  00:06:46,080
+value equal to an empty string.
+125
+
+125
+
+00:06:46,080  -->  00:06:49,240
+This will set the value in the input element to an
+126
+
+126
+
+00:06:49,240  -->  00:06:52,200
+empty text, and therefore clears it.
+127
+
+127
+
+00:06:52,200  -->  00:06:54,700
+So, with that if we reload again,
+128
+
+128
+
+00:06:54,700  -->  00:06:57,080
+and I 'Finish the course!', now this would be
+129
+
+129
+
+00:06:57,080  -->  00:06:58,650
+cleared.
+130
+
+130
+
+00:06:58,650  -->  00:07:02,740
+Now, that's just JavaScript, no Vue in action,
+131
+
+131
+
+00:07:02,740  -->  00:07:07,500
+and it's obviously a very very very trivial demo website.
+132
+
+132
+
+00:07:07,500  -->  00:07:10,670
+Still, we will now use Vue and you'll thereafter
+133
+
+133
+
+00:07:10,670  -->  00:07:14,810
+see why Vue might be quite interesting, as it makes building
+134
+
+134
+
+00:07:14,810  -->  00:07:16,450
+websites more fun.
+135
+
+135
+
+00:07:16,450  -->  00:07:17,860
+I'll then also talk about the
+136
+
+136
+
+00:07:17,860  -->  00:07:20,840
+differences between Vue and this approach,
+137
+
+137
+
+00:07:20,840  -->  00:07:24,433
+but first of all, let's switch to Vue in the next lecture.

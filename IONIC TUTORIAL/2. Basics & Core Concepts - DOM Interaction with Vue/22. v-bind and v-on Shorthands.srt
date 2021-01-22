@@ -1,0 +1,221 @@
+1
+1
+
+00:00:02,090  -->  00:00:04,350
+<v ->So now, it's almost time to practice again,</v>
+2
+
+2
+
+00:00:04,350  -->  00:00:07,350
+but here's what important shorthand,
+3
+
+3
+
+00:00:07,350  -->  00:00:09,390
+one way of writing a bit shorter code
+4
+
+4
+
+00:00:09,390  -->  00:00:10,980
+which you should be aware of.
+5
+
+5
+
+00:00:10,980  -->  00:00:14,270
+Not directly related to computed properties and watchers,
+6
+
+6
+
+00:00:14,270  -->  00:00:16,470
+but to view in general.
+7
+
+7
+
+00:00:16,470  -->  00:00:18,780
+We used v-on quite a bit
+8
+
+8
+
+00:00:18,780  -->  00:00:22,390
+and before we also used v-bind, if you remember.
+9
+
+9
+
+00:00:22,390  -->  00:00:25,490
+Now, v-on and v-bind are so common
+10
+
+10
+
+00:00:25,490  -->  00:00:28,780
+that there are shorthands for them.
+11
+
+11
+
+00:00:28,780  -->  00:00:31,980
+Instead of using v-on:click, v-on:click,
+12
+
+12
+
+00:00:31,980  -->  00:00:34,680
+v-on:input and whatever you want to do.
+13
+
+13
+
+00:00:34,680  -->  00:00:38,830
+You can replace v-on colon, with an at symbol.
+14
+
+14
+
+00:00:38,830  -->  00:00:40,580
+And that's exactly the same thing.
+15
+
+15
+
+00:00:40,580  -->  00:00:43,960
+It's just a shorthand provided by view
+16
+
+16
+
+00:00:43,960  -->  00:00:46,653
+to make adding event listeners a bit easier.
+17
+
+17
+
+00:00:47,550  -->  00:00:50,320
+You can still combine this with modifiers
+18
+
+18
+
+00:00:50,320  -->  00:00:52,820
+and still do everything you did before,
+19
+
+19
+
+00:00:52,820  -->  00:00:56,660
+you just replace v-on colon with @,
+20
+
+20
+
+00:00:56,660  -->  00:00:59,290
+so that you have less code to write.
+21
+
+21
+
+00:00:59,290  -->  00:01:01,630
+It's up to you if you want to use that,
+22
+
+22
+
+00:01:01,630  -->  00:01:03,720
+you just should be consistent.
+23
+
+23
+
+00:01:03,720  -->  00:01:08,230
+So if you do use it, use it for all events, not just some.
+24
+
+24
+
+00:01:08,230  -->  00:01:10,520
+And I'm going to use it throughout the course, by the way.
+25
+
+25
+
+00:01:10,520  -->  00:01:12,993
+But you don't have to, it's just an alternative.
+26
+
+26
+
+00:01:13,910  -->  00:01:16,950
+We also have a shortcut for v-bind.
+27
+
+27
+
+00:01:16,950  -->  00:01:20,730
+If we had v-bind:value here,
+28
+
+28
+
+00:01:20,730  -->  00:01:24,100
+then we can actually also just omit v-bind
+29
+
+29
+
+00:01:24,100  -->  00:01:26,430
+and just have colon value
+30
+
+30
+
+00:01:26,430  -->  00:01:29,230
+for binding an attribute dynamically.
+31
+
+31
+
+00:01:29,230  -->  00:01:31,780
+So just colon, attribute name
+32
+
+32
+
+00:01:31,780  -->  00:01:35,230
+is a shorthand for v-bind colon attribute name
+33
+
+33
+
+00:01:35,230  -->  00:01:40,230
+and @event name is a shortcut for a v-on colon event name.
+34
+
+34
+
+00:01:41,620  -->  00:01:43,780
+Again, it's up to you, what you prefer,
+35
+
+35
+
+00:01:43,780  -->  00:01:45,310
+but you should be consistent
+36
+
+36
+
+00:01:45,310  -->  00:01:48,600
+and I'm going to use these shorthands throughout the course.
+37
+
+37
+
+00:01:48,600  -->  00:01:51,103
+There is no v-model shorthand, by the way.
