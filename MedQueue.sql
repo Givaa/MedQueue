@@ -3,63 +3,63 @@ CREATE DATABASE MedQueue;
 USE MedQueue;
 
 CREATE TABLE Utente(               
-CodiceFiscale varchar(25) not null,
-Password varchar(255) not null,
-Nome varchar(255) not null,
-Cognome varchar(255) not null,
-Data_di_Nascita date not null,
-Indirizzo_email varchar(255) not null,
-Numero_di_telefono varchar(255) not null,
+codiceFiscale varchar(25) not null,
+psw varchar(255) not null,
+nome varchar(255) not null,
+cognome varchar(255) not null,
+dataDiNascita date not null,
+indirizzoEmail varchar(255) not null,
+numeroDiTelefono varchar(255) not null,
 primary key(CodiceFiscale) );
 
 CREATE TABLE Struttura(
 Id integer auto_increment not null,
-Nome varchar(255) not null,
-Indirizzo varchar(255) not null,
-Numero_di_telefono varchar(255) not null,
+nome varchar(255) not null,
+indirizzo varchar(255) not null,
+numeroDiTelefono varchar(255) not null,
 primary key(id) );
 
 CREATE TABLE Impiegato(
-CodiceFiscale varchar(25) not null,
-Password varchar(255) not null,
-Nome varchar(255) not null,
-Cognome varchar(255) not null,
-Data_di_Nascita date not null,
-Indirizzo_email varchar(255) not null,
-Numero_di_telefono varchar(255) not null,
-Id_Struttura integer not null,
+codiceFiscale varchar(25) not null,
+password varchar(255) not null,
+nome varchar(255) not null,
+cognome varchar(255) not null,
+dataDiNascita date not null,
+indirizzoEmail varchar(255) not null,
+numeroDiTelefono varchar(255) not null,
+idStruttura integer not null,
 primary key(CodiceFiscale) ,
-foreign key(Id_Struttura) references Struttura(Id) ON UPDATE CASCADE ON DELETE CASCADE);
+foreign key(idStruttura) references Struttura(Id) ON UPDATE CASCADE ON DELETE CASCADE);
 
 CREATE TABLE Operazione(
 Id integer auto_increment not null,
-Tipo_Operazione varchar(255) not null,
-Descrizione varchar(255) not null,
+tipoOperazione varchar(255) not null,
+descrizione varchar(255) not null,
 primary key(id) );
 
 
 CREATE TABLE Prenotazione(
 Id integer auto_increment not null,
-Data date not null,
-Ora time not null,
-Convalida bool not null,
-CodiceFiscale varchar(255) not null,
-Id_Operazione integer not null,
-Id_Struttura integer not null,
+data date not null,
+ora time not null,
+convalida bool not null,
+codiceFiscale varchar(255) not null,
+idOperazione integer not null,
+idStruttura integer not null,
 primary key(Id),
-foreign key(CodiceFiscale) references Utente(CodiceFiscale) ON UPDATE CASCADE ON DELETE CASCADE,
-foreign key(Id_Operazione) references Operazione(Id) ON UPDATE CASCADE ON DELETE CASCADE,
-foreign key(Id_Struttura) references Struttura(Id) ON UPDATE CASCADE ON DELETE CASCADE );
+foreign key(codiceFiscale) references Utente(codiceFiscale) ON UPDATE CASCADE ON DELETE CASCADE,
+foreign key(idOperazione) references Operazione(Id) ON UPDATE CASCADE ON DELETE CASCADE,
+foreign key(idStruttura) references Struttura(Id) ON UPDATE CASCADE ON DELETE CASCADE );
 
 CREATE TABLE Ambulatorio(
 Id integer auto_increment not null,
-Nome varchar(255) not null,
-Id_Struttura integer not null,
+nome varchar(255) not null,
+idStruttura integer not null,
 primary key(Id),
-foreign key(Id_Struttura) references Struttura(Id) ON UPDATE CASCADE ON DELETE CASCADE );
+foreign key(idStruttura) references Struttura(Id) ON UPDATE CASCADE ON DELETE CASCADE );
 
 
-INSERT INTO Struttura(nome,indirizzo,Numero_di_telefono) VALUES
+INSERT INTO Struttura(nome, indirizzo, numeroDiTelefono) VALUES
 ('santobono','Via della Croce Rossa n. 8 Napoli (NA)','0812205111'),
 ('San Leonardo','Viale Europa n.8 Castellammare di Stabia NA','081872911');
 
@@ -70,7 +70,7 @@ INSERT INTO Impiegato VALUES
 ('ADRAMT99D13A587J','amato99','adriano','amato','1999/07/23','amatoadriano@gmail.com','3457892239',2);
 
 
-INSERT INTO Operazione(Tipo_Operazione,Descrizione) VALUES
+INSERT INTO Operazione(tipoOperazione, Descrizione) VALUES
 ('Pagamento Ticket','Pagamento Ticket per visita medica'),
 ('Prenotazione Ambulatorio','Richiesta prenotazione ambulatorio');
 
@@ -83,7 +83,7 @@ INSERT INTO Utente VALUES
 ('SQLRFL97R10F839D','raff97','Raffaele','Squillante','1997/10/10','raffaele.sq@gmail.com','3789292020');
 
 
-INSERT INTO Ambulatorio(Nome,Id_Struttura) VALUES
+INSERT INTO Ambulatorio(nome, idStruttura) VALUES
 ('Ortopedia','1'),
 ('Gineconologia','2'),
 ('Geriatria','1'),
@@ -95,7 +95,7 @@ INSERT INTO Ambulatorio(Nome,Id_Struttura) VALUES
 ('Cardiologia','1');
 
 
-INSERT INTO Prenotazione(Data,Ora,Convalida,CodiceFiscale,Id_Operazione,Id_struttura) VALUES
+INSERT INTO Prenotazione(data, ora, convalida, codiceFiscale, idOperazione, idStruttura) VALUES
 ('2021-01-22','12:30:00','0','MNDCMN97R22A509S','1','1'),
 ('2021-01-22','12:15:00','0','CCCNTN98H02F839V','1','1'),
 ('2021-01-22','12:00:00','0','CRLNTN92S15H703Q','2','1'),

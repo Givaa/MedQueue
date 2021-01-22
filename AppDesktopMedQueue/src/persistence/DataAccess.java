@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class DataAccess {
     private static Connection con = null;
     private static String user="root";
-    private static String password="angelo99";
+    private static String password="root";
 
     //Connessione
     public static boolean connect() {
@@ -53,7 +53,6 @@ public class DataAccess {
                 prenotazione.setId_operazione(Integer.parseInt(rs.getString(6)));
                 prenotazione.setId_struttura(Integer.parseInt(rs.getString(7)));
             }
-
             st.close();
         } catch(SQLException e) {
             System.err.println("SQLException:"+ e.getMessage());
@@ -113,7 +112,7 @@ public class DataAccess {
         try {
 
             Statement st = con.createStatement();
-            String sql = "SELECT i.codicefiscale,i.password FROM impiegato i WHERE i.codicefiscale='"+cf+"'&& i.password='"+password+"'";
+            String sql = "SELECT i.codiceFiscale,i.password FROM impiegato i WHERE i.codiceFiscale='"+cf+"'&& i.password='"+password+"'";
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
                 verifica=true;
@@ -130,7 +129,7 @@ public class DataAccess {
         ArrayList<String> operazioni=new ArrayList<String>();
         try {
             Statement st = con.createStatement();
-            String sql = "SELECT o.tipo_operazione From operazione o";
+            String sql = "SELECT o.tipoOperazione From operazione o";
             ResultSet rs =st.executeQuery(sql);
             while (rs.next()) {
                 operazioni.add(rs.getString(1));
