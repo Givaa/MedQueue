@@ -11,7 +11,7 @@ public class DriverManagerConnectionPool {
     private static List<Connection> freeDbConnections;
 
     static {
-        reeDbConnections = new LinkedList<Connection>();
+        freeDbConnections = new LinkedList<Connection>();
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
