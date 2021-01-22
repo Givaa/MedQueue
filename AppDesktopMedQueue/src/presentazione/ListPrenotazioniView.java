@@ -61,14 +61,14 @@ public class ListPrenotazioniView {
     public JPanel bloccoPrenotazione(PrenotazioneBean prenotazione){
         JPanel blocco=new JPanel(new GridLayout(2,1));
         blocco.setMaximumSize(new Dimension(100,100));
-        JLabel idPrenotazion= new JLabel(Integer.toString(prenotazione.getId()));
-        JLabel codicefiscale=new JLabel(prenotazione.getCodicefiscale());
-        idPrenotazion.setHorizontalAlignment(JLabel.CENTER);
-        idPrenotazion.setFont(new Font(frase.getFont().getName(), frase.getFont().getStyle(), 30));
-        codicefiscale.setHorizontalAlignment(JLabel.CENTER);
-        codicefiscale.setFont(new Font(frase.getFont().getName(), frase.getFont().getStyle(), 10));
-        blocco.add(idPrenotazion);
-        blocco.add(codicefiscale);
+        JLabel idPrenotazione= new JLabel(Integer.toString(prenotazione.getId()));
+        JLabel codiceFiscale=new JLabel(prenotazione.getCodicefiscale());
+        idPrenotazione.setHorizontalAlignment(JLabel.CENTER);
+        idPrenotazione.setFont(new Font(frase.getFont().getName(), frase.getFont().getStyle(), 30));
+        codiceFiscale.setHorizontalAlignment(JLabel.CENTER);
+        codiceFiscale.setFont(new Font(frase.getFont().getName(), frase.getFont().getStyle(), 10));
+        blocco.add(idPrenotazione);
+        blocco.add(codiceFiscale);
         blocco.setOpaque(true);
         blocco.setBackground(Color.ORANGE);
         return blocco;
