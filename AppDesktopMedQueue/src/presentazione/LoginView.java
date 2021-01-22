@@ -1,6 +1,7 @@
 package presentazione;
 
 import persistence.DataAccess;
+import persistence.DriverManagerConnectionPool;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,16 +9,15 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
 
 public class LoginView extends JFrame{
 
     private static final long serialVersionUID = 1L;
     private static JFrame framePannello = new JFrame();
 
-
-
     public static void main(String[] args) {
-        
+
         JTextField TF_CF = new JTextField(16);
         JPasswordField TF_pass = new JPasswordField(32);
         JButton connect = new JButton("Connetti");
@@ -28,15 +28,15 @@ public class LoginView extends JFrame{
         JLabel insPass= new JLabel(" Inserire password");
 
         connect.addActionListener(l -> {
-            if(DataAccess.connect()) {
-                if(DataAccess.verificaDatiImpiegato(TF_CF.getText(),TF_pass.getText())) {
+            if(DriverManagerConnectionPool.createDBConnection() == null) {
+                errore.setText("Errore nella connessione");
+            } else {
+                if(DataAccess.verificaDatiImpiegato(TF_CF.getText(), TF_pass.getText())) {
                     new SelectQueueView().visible(true);
                     framePannello.setVisible(false);
                 }
                 else
                     errore.setText("Credenziali errate");
-            } else {
-               errore.setText("Errore nella connessione");
             }
         });
 

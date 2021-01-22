@@ -7,41 +7,12 @@ import business.StrutturaBean;
 import java.sql.*;
 import java.util.ArrayList;
 
-
 public class DataAccess {
-    private static Connection con = null;
-    private static String user="root";
-    private static String password="root";
-
-    //Connessione
-    public static boolean connect() {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String url = "jdbc:mysql://localhost:3306/medqueue?serverTimezone=UTC&useLegacyDatetimeCode=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true";
-            con = DriverManager.getConnection(url,user,password);
-            return true;
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    //Disconnessione
-    public static String disconnect() {
-        try {
-            con.close();
-            return "Connessione chiusa correttamente.\n";
-        } catch (SQLException e) {
-            return "Chiusura connessione fallita.\n";
-        }
-    }
 
     public static PrenotazioneBean getPrenotazione(int id){
         PrenotazioneBean prenotazione=new PrenotazioneBean();
         try {
-            Statement st = con.createStatement();
+            Statement st = DriverManagerConnectionPool.getConnection().createStatement();
             String sql = "SELECT p.* FROM Prenotazione p WHERE p.id='"+id+"'";
             ResultSet rs =st.executeQuery(sql);
             while (rs.next()) {
@@ -63,7 +34,7 @@ public class DataAccess {
     public static StrutturaBean getStruttura(int id){
         StrutturaBean struttura=new StrutturaBean();
         try {
-            Statement st = con.createStatement();
+            Statement st = DriverManagerConnectionPool.getConnection().createStatement();
             String sql = "SELECT s.* FROM Struttura s WHERE s.id='"+id+"'";
             ResultSet rs =st.executeQuery(sql);
             while (rs.next()) {
@@ -84,7 +55,7 @@ public class DataAccess {
     public static OperazioneBean getOperazione(int id){
         OperazioneBean operazione =new OperazioneBean();
         try {
-            Statement st = con.createStatement();
+            Statement st = DriverManagerConnectionPool.getConnection().createStatement();
             String sql = "SELECT o.* FROM Operazione o WHERE o.id='"+id+"'";
             ResultSet rs =st.executeQuery(sql);
             while (rs.next()) {
@@ -110,8 +81,7 @@ public class DataAccess {
     public static boolean verificaDatiImpiegato(String cf,String password){
         boolean verifica=false;
         try {
-
-            Statement st = con.createStatement();
+            Statement st = DriverManagerConnectionPool.getConnection().createStatement();
             String sql = "SELECT i.codiceFiscale,i.password FROM impiegato i WHERE i.codiceFiscale='"+cf+"'&& i.password='"+password+"'";
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
@@ -128,7 +98,7 @@ public class DataAccess {
     public static ArrayList<String> getOperazioni(){
         ArrayList<String> operazioni=new ArrayList<String>();
         try {
-            Statement st = con.createStatement();
+            Statement st = DriverManagerConnectionPool.getConnection().createStatement();
             String sql = "SELECT o.tipoOperazione From operazione o";
             ResultSet rs =st.executeQuery(sql);
             while (rs.next()) {
