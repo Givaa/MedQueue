@@ -4,7 +4,6 @@ import business.OperazioneBean;
 import business.PrenotazioneBean;
 import business.StrutturaBean;
 
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
