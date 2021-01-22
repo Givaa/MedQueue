@@ -1,13 +1,13 @@
 package persistence;
 
-public class PrenotazioneUtente {
+public class PrenotazioneUtenteBean {
 
     private int id;
     private String struttura;
     private String operazione;
 
-    public PrenotazioneUtente() { }
-    public PrenotazioneUtente(int id, String struttura, String operazione) {
+    public PrenotazioneUtenteBean() { }
+    public PrenotazioneUtenteBean(int id, String struttura, String operazione) {
         this.id = id;
         this.struttura = struttura;
         this.operazione = operazione;
