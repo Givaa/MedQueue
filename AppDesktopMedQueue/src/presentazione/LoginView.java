@@ -26,7 +26,7 @@ public class LoginView extends JFrame{
 
         connect.addActionListener(l -> {
             if(DataAccess.connect()) {
-                if(DataAccess.verificaDatiImpiegato(TF_CF.getText(),TF_pass.getText())==true) {
+                if(DataAccess.verificaDatiImpiegato(TF_CF.getText(),TF_pass.getText())) {
                     new SelectQueueView().visible(true);
                     framePannello.setVisible(false);
                 }
