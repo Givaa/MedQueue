@@ -105,7 +105,3 @@ INSERT INTO Prenotazione(data, ora, convalida, codiceFiscale, idOperazione, idSt
 ('2021-01-22','9:30:00','0','SQLRFL97R10F839D','1','1'),
 ('2021-01-22','12:30:00','0','CRLNTN92S15H703Q','2','1'),
 ('2021-01-23','11:00:00','0','CCCNTN98H02F839V','1','1');
-
-
-
-

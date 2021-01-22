@@ -59,6 +59,7 @@ public class LoginView{
         });
 
         ImageIcon immagine = new ImageIcon("src/image/LogoNoBG.png");
+        ImageIcon infermiera = new ImageIcon("src/image/frameIcon.png");
         Image image = immagine.getImage();
         Image newimg = image.getScaledInstance(250, 180,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
         immagine = new ImageIcon(newimg);
@@ -86,6 +87,7 @@ public class LoginView{
         framePannello.setLocationRelativeTo(null);
         framePannello.getContentPane().setBackground( Color.white );
         framePannello.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        framePannello.setIconImage(infermiera.getImage());
 
     }
 

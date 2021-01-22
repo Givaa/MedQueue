@@ -44,6 +44,8 @@ public class PrenotazioneView {
         framePrenotazioni.add(pannello);
         framePrenotazioni.add(fine, BorderLayout.PAGE_END);
 
+        ImageIcon infermiera = new ImageIcon("src/image/frameIcon.png");
+
         framePrenotazioni.setVisible(true);
         framePrenotazioni.setSize(350,350);
         framePrenotazioni.setLocationRelativeTo(null);
@@ -51,6 +53,7 @@ public class PrenotazioneView {
         framePrenotazioni.setTitle("Dettaglio prenotazione");
         framePrenotazioni.setBackground(Color.white);
         framePrenotazioni.setResizable(false);
+        framePrenotazioni.setIconImage(infermiera.getImage());
 
     }
 }

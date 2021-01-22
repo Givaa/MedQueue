@@ -40,6 +40,9 @@ public class SelectQueueView {
             new ListPrenotazioniView().visible(true);
         });
 
+        ImageIcon infermiera = new ImageIcon("src/image/frameIcon.png");
+        frame.setIconImage(infermiera.getImage());
+
     }
 
     public void visible(boolean v){

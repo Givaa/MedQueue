@@ -32,6 +32,7 @@ public class ListPrenotazioniView {
         Image image = immagine.getImage();
         Image newimg = image.getScaledInstance(100, 80,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
         immagine = new ImageIcon(newimg);
+        ImageIcon infermiera = new ImageIcon("src/image/frameIcon.png");
 
 
         PrenotazioneBean p1=new PrenotazioneBean(1,"data","tempo",true,"codicefiscale 1",1,1);
@@ -53,9 +54,7 @@ public class ListPrenotazioniView {
         pannelloCentrale.add(bloccoPrenotazione(p2));
         frame.add(pannelloNord,BorderLayout.NORTH);
         frame.add(pannelloCentrale,BorderLayout.CENTER);
-
-
-
+        frame.setIconImage(infermiera.getImage());
     }
 
     public JPanel bloccoPrenotazione(PrenotazioneBean prenotazione){
