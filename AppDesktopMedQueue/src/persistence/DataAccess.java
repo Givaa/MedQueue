@@ -8,12 +8,12 @@ import java.util.ArrayList;
 public class DataAccess {
     private static Connection con = null;
     private static String user="root";
-    private static String password="root";
+    private static String password="angelo99";
 
     public static void main(String[] args){
             connect();
-            System.out.println(verificaDatiImpiegato("aaaaa","angelo99"));
-            disconnect();
+            System.out.println(verificaDatiImpiegato("aaaaaa","angelo99"));
+        disconnect();
 
     }
 
@@ -313,5 +313,23 @@ public class DataAccess {
         }
         System.out.println("\nOperation done\n");
     }
+
+    //Metodo per ottenere operazioni
+    public static ArrayList<String> getOperazioni(){
+        ArrayList<String> operazioni=new ArrayList<String>();
+        try {
+            Statement st = con.createStatement();
+            String sql = "SELECT o.tipo_operazione From operazione o";
+            ResultSet rs =st.executeQuery(sql);
+            while (rs.next()) {
+                operazioni.add(rs.getString(1));
+            }
+            st.close();
+        } catch(SQLException e) {
+            System.err.println("SQLException:"+ e.getMessage());
+        }
+        return operazioni;
+    }
+
 
 }
