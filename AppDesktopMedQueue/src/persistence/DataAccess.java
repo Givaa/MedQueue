@@ -10,11 +10,11 @@ import java.util.ArrayList;
 public class DataAccess {
 
     public static PrenotazioneBean getPrenotazione(int id){
-        PrenotazioneBean prenotazione=new PrenotazioneBean();
+        PrenotazioneBean prenotazione = new PrenotazioneBean();
         try {
             Statement st = DriverManagerConnectionPool.getConnection().createStatement();
             String sql = "SELECT p.* FROM Prenotazione p WHERE p.id='"+id+"'";
-            ResultSet rs =st.executeQuery(sql);
+            ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
                 prenotazione.setId(Integer.parseInt(rs.getString(1)));
                 prenotazione.setData(rs.getString(2));
@@ -36,7 +36,7 @@ public class DataAccess {
         try {
             Statement st = DriverManagerConnectionPool.getConnection().createStatement();
             String sql = "SELECT s.* FROM Struttura s WHERE s.id='"+id+"'";
-            ResultSet rs =st.executeQuery(sql);
+            ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
                 struttura.setId(Integer.parseInt(rs.getString(1)));
                 struttura.setNome(rs.getString(2));
@@ -57,7 +57,7 @@ public class DataAccess {
         try {
             Statement st = DriverManagerConnectionPool.getConnection().createStatement();
             String sql = "SELECT o.* FROM Operazione o WHERE o.id='"+id+"'";
-            ResultSet rs =st.executeQuery(sql);
+            ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
                 operazione.setId(Integer.parseInt(rs.getString(1)));
                 operazione.setTipo_operazione(rs.getString(2));
@@ -82,7 +82,7 @@ public class DataAccess {
         boolean verifica=false;
         try {
             Statement st = DriverManagerConnectionPool.getConnection().createStatement();
-            String sql = "SELECT i.codiceFiscale,i.password FROM impiegato i WHERE i.codiceFiscale='"+cf+"'&& i.password='"+password+"'";
+            String sql = "SELECT i.codiceFiscale,i.psw FROM impiegato i WHERE i.codiceFiscale='"+cf+"'&& i.psw='"+password+"'";
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
                 verifica=true;
@@ -100,7 +100,7 @@ public class DataAccess {
         try {
             Statement st = DriverManagerConnectionPool.getConnection().createStatement();
             String sql = "SELECT o.tipoOperazione From operazione o";
-            ResultSet rs =st.executeQuery(sql);
+            ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
                 operazioni.add(rs.getString(1));
             }
