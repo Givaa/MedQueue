@@ -38,7 +38,6 @@ Descrizione varchar(255) not null,
 primary key(id) );
 
 
-
 CREATE TABLE Prenotazione(
 Id integer auto_increment not null,
 Data date not null,
@@ -74,6 +73,38 @@ INSERT INTO Impiegato VALUES
 INSERT INTO Operazione(Tipo_Operazione,Descrizione) VALUES
 ('Pagamento Ticket','Pagamento Ticket per visita medica'),
 ('Prenotazione Ambulatorio','Richiesta prenotazione ambulatorio');
+
+
+INSERT INTO Utente VALUES
+('MNDCMN97R22A509S','carmine97','Carmine','Amendola','1997/10/22','carmine.amendola@gmail.com','3394787295'),
+('CCCNTN98H02F839V','antonio98','Antonio','Cacciapuoti','1998/06/02','antonio.cacc@gmail.com','3545253226'),
+('CRLNTN92S15H703Q','antonioc','Antonio','Cirilli','1992/11/15','a.cirilli@docenti.unisa.it','3545251111'),
+('DRGMRA99D09A509V','mario99','Mario','De Riggi','1999/04/09','mario.deriggi@gmail.com','3435678901'),
+('SQLRFL97R10F839D','raff97','Raffaele','Squillante','1997/10/10','raffaele.sq@gmail.com','3789292020');
+
+
+INSERT INTO Ambulatorio(Nome,Id_Struttura) VALUES
+('Ortopedia','1'),
+('Gineconologia','2'),
+('Geriatria','1'),
+('Medicina Legale','1'),
+('Neurologia','2'),
+('Radiologia','1'),
+('Pediatria','1'),
+('Oncologia','2'),
+('Cardiologia','1');
+
+
+INSERT INTO Prenotazione(Data,Ora,Convalida,CodiceFiscale,Id_Operazione,Id_struttura) VALUES
+('2021-01-22','12:30:00','0','MNDCMN97R22A509S','1','1'),
+('2021-01-22','12:15:00','0','CCCNTN98H02F839V','1','1'),
+('2021-01-22','12:00:00','0','CRLNTN92S15H703Q','2','1'),
+('2021-01-22','11:45:00','0','DRGMRA99D09A509V','2','2'),
+('2021-01-22','11:30:00','0','SQLRFL97R10F839D','1','2'),
+('2021-01-22','10:30:00','0','MNDCMN97R22A509S','1','2'),
+('2021-01-22','9:30:00','0','SQLRFL97R10F839D','1','1'),
+('2021-01-22','12:30:00','0','CRLNTN92S15H703Q','2','1'),
+('2021-01-23','11:00:00','0','CCCNTN98H02F839V','1','1');
 
 
 
