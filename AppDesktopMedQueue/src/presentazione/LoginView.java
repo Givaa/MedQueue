@@ -42,10 +42,11 @@ public class LoginView extends JFrame{
         });
 
         JCheckBox select = new JCheckBox("Show password");
+        select.setBackground(Color.white);
         select.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 if (!(e.getStateChange() == ItemEvent.SELECTED)) {
-                    TF_pass.setEchoChar('*');
+                    TF_pass.setEchoChar('•');
                 } else {
                     TF_pass.setEchoChar((char) 0);
                 }

@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PrenotazioneView {
-    public static void main(String[] args) {
+    public PrenotazioneView() {
         JLabel idPrenotazione = new JLabel("Id prenotazione: ");
         JTextField idPrenotazioneText = new JTextField();
         idPrenotazioneText.setEditable(false);

@@ -4,6 +4,8 @@ import persistence.DataAccess;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class SelectQueueView {
     private JFrame frame=new JFrame();
@@ -11,6 +13,8 @@ public class SelectQueueView {
     private JComboBox<String> operazioni=new JComboBox<String>();
     private JPanel pannello1= new JPanel(new GridLayout(4,1));
     private JButton bottone= new JButton("Invio");
+
+
 
     public SelectQueueView(){
         Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
@@ -31,6 +35,11 @@ public class SelectQueueView {
         pannello1.add(bottone);
         pannello1.setBackground( Color.white );
         frame.add(pannello1,BorderLayout.CENTER);
+
+        bottone.addActionListener(e->{
+            frame.setVisible(false);
+            new ListPrenotazioniView().visible(true);
+        });
 
     }
 
