@@ -66,7 +66,7 @@ INSERT INTO Struttura(nome,indirizzo,Numero_di_telefono) VALUES
 INSERT INTO Impiegato VALUES
 ('FLTNGL99A14L845J','angelo99','angelo','afeltra','1999/01/14','a.afeltra12@studenti.unisa.it','3394487295',1),
 ('FCLNDR99C12B963C','andrea99','andrea','fucile','1999/03/12','andrea.fucile@studenti.unisa.it','3394487394',1),
-('RPAGNN95D11A509B','giovannirapa95','giovanni','rapa','1995/01/16','g.rapa95@gmail.com','3394487293',2),
+('RPAGNN95D11A509B','lellolol22','giovanni','rapa','1995/01/16','g.rapa95@gmail.com','3394487293',2),
 ('ADRAMT99D13A587J','amato99','adriano','amato','1999/07/23','amatoadriano@gmail.com','3457892239',2);
 
 
@@ -78,7 +78,7 @@ INSERT INTO Operazione(Tipo_Operazione,Descrizione) VALUES
 INSERT INTO Utente VALUES
 ('MNDCMN97R22A509S','carmine97','Carmine','Amendola','1997/10/22','carmine.amendola@gmail.com','3394787295'),
 ('CCCNTN98H02F839V','antonio98','Antonio','Cacciapuoti','1998/06/02','antonio.cacc@gmail.com','3545253226'),
-('CRLNTN92S15H703Q','antonioc','Antonio','Cirilli','1992/11/15','a.cirilli@docenti.unisa.it','3545251111'),
+('CRLNTN92S15H703Q','antonioc','Antonio','Cirillo','1992/11/15','a.cirilli@docenti.unisa.it','3545251111'),
 ('DRGMRA99D09A509V','mario99','Mario','De Riggi','1999/04/09','mario.deriggi@gmail.com','3435678901'),
 ('SQLRFL97R10F839D','raff97','Raffaele','Squillante','1997/10/10','raffaele.sq@gmail.com','3789292020');
 
