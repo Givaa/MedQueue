@@ -1,5 +1,7 @@
 package persistence;
 
+import business.PrenotazioneBean;
+
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -203,8 +205,8 @@ public class DataAccess {
     La query restituira id,ora,data prenotazione nome struttura e tipo operazione
     L'oggetto prenotazione rappresentera il dettaglio della prenotazione
      */
-    public static Prenotazione getDettagliPrenotazione(int id){
-        Prenotazione p=new Prenotazione();
+    public static PrenotazioneBean getDettagliPrenotazione(int id){
+        PrenotazioneBean p=new PrenotazioneBean();
         try {
             Statement st = con.createStatement();
             String sql = "SELECT p.id,p.ora,p.data,s.nome,o.tipo_operazione FROM prenotazione p,struttura s,operazione o WHERE p.id='"+id+"' && p.id_struttura=s.id && p.id_operazione=o.id";
