@@ -17,14 +17,13 @@ public class SelectQueueView {
 
 
     public SelectQueueView(){
-        Dimension screenSize = Toolkit.getDefaultToolkit ( ).getScreenSize ( );
         frame.setTitle("MedQueue");
         frame.setSize(300,200);
         frame.setResizable(false);
         frame.setLayout(new BorderLayout());
         frame.getContentPane().setBackground( Color.white );
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocation ((screenSize.width/2)-(frame.getWidth()/2),(screenSize.height/2)-(frame.getHeight()/2)); //Posiziono il frame al centro dello schermo
+        frame.setLocationRelativeTo(null); //Posiziono il frame al centro dello schermo
         pannello1.setBorder(BorderFactory.createTitledBorder("Operazione"));
         //POPOLO JCOMBO BOX
         for(int i = 0; i< DataAccess.getOperazioni().size(); i++)

@@ -17,8 +17,7 @@ public class LoginView extends JFrame{
 
 
     public static void main(String[] args) {
-
-
+        
         JTextField TF_CF = new JTextField(16);
         JPasswordField TF_pass = new JPasswordField(32);
         JButton connect = new JButton("Connetti");
