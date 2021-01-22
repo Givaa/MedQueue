@@ -1,30 +1,33 @@
 package presentazione;
 
+import business.PrenotazioneBean;
+import persistence.DataAccess;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class PrenotazioneView {
-    public PrenotazioneView() {
+    private JFrame framePrenotazioni = new JFrame();
+    public PrenotazioneView(PrenotazioneBean p) {
         JLabel idPrenotazione = new JLabel("Id prenotazione: ");
-        JTextField idPrenotazioneText = new JTextField();
+        JTextField idPrenotazioneText = new JTextField(Integer.toString(p.getId()));
         idPrenotazioneText.setEditable(false);
         JLabel codiceFiscale = new JLabel("Codice fiscale: ");
-        JTextField codiceFiscaleText = new JTextField();
+        JTextField codiceFiscaleText = new JTextField(p.getCodicefiscale());
         codiceFiscaleText.setEditable(false);
         JLabel data = new JLabel("Data: ");
-        JTextField dataText = new JTextField();
+        JTextField dataText = new JTextField(p.getData());
         dataText.setEditable(false);
         JLabel ora = new JLabel("Ora: ");
-        JTextField oraText = new JTextField();
+        JTextField oraText = new JTextField(p.getTime());
         oraText.setEditable(false);
         JLabel tipoOperazione = new JLabel("Tipo operazione: ");
-        JTextField tipoOperazioneText = new JTextField();
+        JTextField tipoOperazioneText = new JTextField(DataAccess.getOperazione(p.getId_operazione()).getTipo_operazione());
         tipoOperazioneText.setEditable(false);
 
 
         JPanel pannello = new JPanel();
         pannello.setLayout(new GridLayout(5,1));
-        JFrame framePrenotazioni = new JFrame();
         pannello.setBorder(BorderFactory.createTitledBorder("Informazioni prenotazione"));
         pannello.setBackground( Color.white );
 
@@ -55,5 +58,9 @@ public class PrenotazioneView {
         framePrenotazioni.setResizable(false);
         framePrenotazioni.setIconImage(infermiera.getImage());
 
+    }
+
+    public void visible(boolean v){
+        framePrenotazioni.setVisible(v);
     }
 }

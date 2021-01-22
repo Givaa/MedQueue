@@ -37,7 +37,8 @@ public class SelectQueueView {
 
         bottone.addActionListener(e->{
             frame.setVisible(false);
-            new ListPrenotazioniView().visible(true);
+            ListPrenotazioniView view=new ListPrenotazioniView();
+            view.visible(true);
         });
 
         ImageIcon infermiera = new ImageIcon("src/image/frameIcon.png");
