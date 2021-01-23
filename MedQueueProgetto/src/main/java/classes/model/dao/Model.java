@@ -5,13 +5,13 @@ import java.util.Collection;
 
 public interface Model<T> {
 
-    T doRetrieveByKey(String code) throws SQLException;
+  T doRetrieveByKey(String code) throws SQLException;
 
-    Collection<T> doRetrieveAll(String order) throws SQLException;
+  Collection<T> doRetrieveAll(String order) throws SQLException;
 
-    void doSave(T param) throws SQLException;
+  void doSave(T param) throws SQLException;
 
-    void doUpdate(T param) throws SQLException;
+  void doUpdate(T param) throws SQLException;
 
-    void doDelete(T param) throws SQLException;
+  void doDelete(T param) throws SQLException;
 }

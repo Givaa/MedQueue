@@ -1,60 +1,64 @@
 package classes.model.bean.entity;
 
-
 public class OperazioneBean {
 
-    private int id;
-    private String tipoOperazione, descrizione;
-    private int idPrenotazione;
+  private int id;
+  private String tipoOperazione, descrizione;
+  private int idPrenotazione;
 
-    public OperazioneBean(String tipoOperazione, String descrizione, int idPrenotazione) {
-        this.tipoOperazione = tipoOperazione;
-        this.descrizione = descrizione;
-        this.idPrenotazione = idPrenotazione;
-    }
+  public OperazioneBean(String tipoOperazione, String descrizione, int idPrenotazione) {
+    this.tipoOperazione = tipoOperazione;
+    this.descrizione = descrizione;
+    this.idPrenotazione = idPrenotazione;
+  }
 
-    public OperazioneBean() {
-    }
+  public OperazioneBean() {}
 
-    public int getId() {
-        return id;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public String getTipoOperazione() {
-        return tipoOperazione;
-    }
+  public String getTipoOperazione() {
+    return tipoOperazione;
+  }
 
-    public void setTipoOperazione(String tipoOperazione) {
-        this.tipoOperazione = tipoOperazione;
-    }
+  public void setTipoOperazione(String tipoOperazione) {
+    this.tipoOperazione = tipoOperazione;
+  }
 
-    public String getDescrizione() {
-        return descrizione;
-    }
+  public String getDescrizione() {
+    return descrizione;
+  }
 
-    public void setDescrizione(String descrizione) {
-        this.descrizione = descrizione;
-    }
+  public void setDescrizione(String descrizione) {
+    this.descrizione = descrizione;
+  }
 
-    public int getIdPrenotazione() {
-        return idPrenotazione;
-    }
+  public int getIdPrenotazione() {
+    return idPrenotazione;
+  }
 
-    public void setIdPrenotazione(int idPrenotazione) {
-        this.idPrenotazione = idPrenotazione;
-    }
+  public void setIdPrenotazione(int idPrenotazione) {
+    this.idPrenotazione = idPrenotazione;
+  }
 
-    @Override
-    public String toString() {
-        return "OperazioneBean{" +
-                "id=" + id +
-                ", tipoOperazione='" + tipoOperazione + '\'' +
-                ", descrizione='" + descrizione + '\'' +
-                ", idPrenotazione=" + idPrenotazione +
-                '}';
-    }
+  @Override
+  public String toString() {
+    return "OperazioneBean{"
+        + "id="
+        + id
+        + ", tipoOperazione='"
+        + tipoOperazione
+        + '\''
+        + ", descrizione='"
+        + descrizione
+        + '\''
+        + ", idPrenotazione="
+        + idPrenotazione
+        + '}';
+  }
 }

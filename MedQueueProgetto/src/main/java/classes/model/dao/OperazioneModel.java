@@ -12,163 +12,162 @@ import java.util.LinkedList;
 
 public class OperazioneModel implements Model<OperazioneBean> {
 
-    private static final String nomeTabella = "operazione";
+  private static final String nomeTabella = "operazione";
 
-    @Override
-    public OperazioneBean doRetrieveByKey(String code) throws SQLException {
-        Connection con = null;
-        PreparedStatement ps = null;
+  @Override
+  public OperazioneBean doRetrieveByKey(String code) throws SQLException {
+    Connection con = null;
+    PreparedStatement ps = null;
 
-        OperazioneBean tmp = new OperazioneBean();
+    OperazioneBean tmp = new OperazioneBean();
 
-        String selectSQL = "SELECT * FROM " + nomeTabella + "WHERE id = ?";
+    String selectSQL = "SELECT * FROM " + nomeTabella + "WHERE id = ?";
 
-        try {
-            con = DriverManagerConnectionPool.getConnection();
-            ps = con.prepareStatement(selectSQL);
-            ps.setString(1, code);
+    try {
+      con = DriverManagerConnectionPool.getConnection();
+      ps = con.prepareStatement(selectSQL);
+      ps.setString(1, code);
 
-            ResultSet rs = ps.executeQuery();
+      ResultSet rs = ps.executeQuery();
 
-            while (rs.next()) {
-                tmp.setId(rs.getInt("id"));
-                tmp.setTipoOperazione(rs.getString("tipoOperazione"));
-                tmp.setDescrizione(rs.getString("descrizione"));
-                tmp.setIdPrenotazione(rs.getInt("idPrenotazione"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                DriverManagerConnectionPool.releaseConnection(con);
-            }
+      while (rs.next()) {
+        tmp.setId(rs.getInt("id"));
+        tmp.setTipoOperazione(rs.getString("tipoOperazione"));
+        tmp.setDescrizione(rs.getString("descrizione"));
+        tmp.setIdPrenotazione(rs.getInt("idPrenotazione"));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        if (ps != null) {
+          ps.close();
         }
-        return tmp;
+      } finally {
+        DriverManagerConnectionPool.releaseConnection(con);
+      }
+    }
+    return tmp;
+  }
+
+  @Override
+  public Collection<OperazioneBean> doRetrieveAll(String order) throws SQLException {
+    Connection con = null;
+    PreparedStatement ps = null;
+
+    Collection<OperazioneBean> result = new LinkedList<OperazioneBean>();
+
+    String selectSQL = "SELECT * FROM " + nomeTabella;
+
+    if (order != null && !order.equals("")) {
+      selectSQL += " ORDER BY " + order;
     }
 
-    @Override
-    public Collection<OperazioneBean> doRetrieveAll(String order) throws SQLException {
-        Connection con = null;
-        PreparedStatement ps = null;
+    try {
 
-        Collection<OperazioneBean> result = new LinkedList<OperazioneBean>();
+      con = DriverManagerConnectionPool.getConnection();
+      ps = con.prepareStatement(selectSQL);
 
-        String selectSQL = "SELECT * FROM " + nomeTabella;
+      ResultSet rs = ps.executeQuery();
+      OperazioneBean tmp = new OperazioneBean();
 
-        if (order != null && !order.equals("")) {
-            selectSQL += " ORDER BY " + order;
-        }
+      while (rs.next()) {
 
-        try {
+        tmp.setId(rs.getInt("id"));
+        tmp.setTipoOperazione(rs.getString("tipoOperazione"));
+        tmp.setDescrizione(rs.getString("descrizione"));
+        tmp.setIdPrenotazione(rs.getInt("idPrenotazione"));
+        result.add(tmp);
+      }
 
-            con = DriverManagerConnectionPool.getConnection();
-            ps = con.prepareStatement(selectSQL);
-
-            ResultSet rs = ps.executeQuery();
-            OperazioneBean tmp = new OperazioneBean();
-
-            while (rs.next()) {
-
-                tmp.setId(rs.getInt("id"));
-                tmp.setTipoOperazione(rs.getString("tipoOperazione"));
-                tmp.setDescrizione(rs.getString("descrizione"));
-                tmp.setIdPrenotazione(rs.getInt("idPrenotazione"));
-                result.add(tmp);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (ps != null)
-                    ps.close();
-            } finally {
-                DriverManagerConnectionPool.releaseConnection(con);
-            }
-        }
-
-        return result;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        if (ps != null) ps.close();
+      } finally {
+        DriverManagerConnectionPool.releaseConnection(con);
+      }
     }
 
-    @Override
-    public void doSave(OperazioneBean param) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
+    return result;
+  }
 
-        String insertSQL = "INSERT INTO " + nomeTabella + " VALUES (?, ?, ?)";
+  @Override
+  public void doSave(OperazioneBean param) throws SQLException {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
 
-        try {
-            connection = DriverManagerConnectionPool.getConnection();
-            preparedStatement = connection.prepareStatement(insertSQL);
-            preparedStatement.setString(1, param.getTipoOperazione());
-            preparedStatement.setString(2, param.getDescrizione());
-            preparedStatement.setInt(3, param.getIdPrenotazione());
+    String insertSQL = "INSERT INTO " + nomeTabella + " VALUES (?, ?, ?)";
 
-            preparedStatement.executeUpdate();
-        } finally {
-            try {
-                if (preparedStatement != null)
-                    preparedStatement.close();
-            } finally {
-                DriverManagerConnectionPool.releaseConnection(connection);
-            }
-        }
+    try {
+      connection = DriverManagerConnectionPool.getConnection();
+      preparedStatement = connection.prepareStatement(insertSQL);
+      preparedStatement.setString(1, param.getTipoOperazione());
+      preparedStatement.setString(2, param.getDescrizione());
+      preparedStatement.setInt(3, param.getIdPrenotazione());
+
+      preparedStatement.executeUpdate();
+    } finally {
+      try {
+        if (preparedStatement != null) preparedStatement.close();
+      } finally {
+        DriverManagerConnectionPool.releaseConnection(connection);
+      }
     }
+  }
 
-    @Override
-    public void doUpdate(OperazioneBean param) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
+  @Override
+  public void doUpdate(OperazioneBean param) throws SQLException {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
 
-        String deleteSQL = "UPDATE " + nomeTabella + " SET tipoOperazione = ?, descrizione = ?, idPrenotazione = ? WHERE id = ?";
+    String deleteSQL =
+        "UPDATE "
+            + nomeTabella
+            + " SET tipoOperazione = ?, descrizione = ?, idPrenotazione = ? WHERE id = ?";
 
-        try {
-            connection = DriverManagerConnectionPool.getConnection();
-            preparedStatement = connection.prepareStatement(deleteSQL);
-            preparedStatement.setString(1, param.getTipoOperazione());
-            preparedStatement.setString(2, param.getDescrizione());
-            preparedStatement.setInt(3, param.getIdPrenotazione());
-            preparedStatement.setInt(4, param.getId());
+    try {
+      connection = DriverManagerConnectionPool.getConnection();
+      preparedStatement = connection.prepareStatement(deleteSQL);
+      preparedStatement.setString(1, param.getTipoOperazione());
+      preparedStatement.setString(2, param.getDescrizione());
+      preparedStatement.setInt(3, param.getIdPrenotazione());
+      preparedStatement.setInt(4, param.getId());
 
-            preparedStatement.executeUpdate();
+      preparedStatement.executeUpdate();
 
-        } finally {
-            try {
-                if (preparedStatement != null)
-                    preparedStatement.close();
-            } finally {
-                DriverManagerConnectionPool.releaseConnection(connection);
-            }
-        }
-        return;
+    } finally {
+      try {
+        if (preparedStatement != null) preparedStatement.close();
+      } finally {
+        DriverManagerConnectionPool.releaseConnection(connection);
+      }
     }
+    return;
+  }
 
-    @Override
-    public void doDelete(OperazioneBean param) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
+  @Override
+  public void doDelete(OperazioneBean param) throws SQLException {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
 
-        String deleteSQL = "DELETE FROM " + nomeTabella + " WHERE id = ?";
+    String deleteSQL = "DELETE FROM " + nomeTabella + " WHERE id = ?";
 
-        try {
-            connection = DriverManagerConnectionPool.getConnection();
-            preparedStatement = connection.prepareStatement(deleteSQL);
-            preparedStatement.setInt(1, param.getId());
+    try {
+      connection = DriverManagerConnectionPool.getConnection();
+      preparedStatement = connection.prepareStatement(deleteSQL);
+      preparedStatement.setInt(1, param.getId());
 
-            preparedStatement.executeUpdate();
+      preparedStatement.executeUpdate();
 
-        } finally {
-            try {
-                if (preparedStatement != null)
-                    preparedStatement.close();
-            } finally {
-                DriverManagerConnectionPool.releaseConnection(connection);
-            }
-        }
-        return;
+    } finally {
+      try {
+        if (preparedStatement != null) preparedStatement.close();
+      } finally {
+        DriverManagerConnectionPool.releaseConnection(connection);
+      }
     }
+    return;
+  }
 }

@@ -12,160 +12,156 @@ import java.util.LinkedList;
 
 public class AmbulatoriModel implements Model<AmbulatoriBean> {
 
-    private static final String nomeTabella = "ambulatori";
+  private static final String nomeTabella = "ambulatori";
 
-    @Override
-    public AmbulatoriBean doRetrieveByKey(String id) throws SQLException {
-        Connection con = null;
-        PreparedStatement ps = null;
+  @Override
+  public AmbulatoriBean doRetrieveByKey(String id) throws SQLException {
+    Connection con = null;
+    PreparedStatement ps = null;
 
-        AmbulatoriBean tmp = new AmbulatoriBean();
+    AmbulatoriBean tmp = new AmbulatoriBean();
 
-        String selectSQL = "SELECT * FROM " + nomeTabella + "WHERE id = ?";
+    String selectSQL = "SELECT * FROM " + nomeTabella + "WHERE id = ?";
 
-        try {
-            con = DriverManagerConnectionPool.getConnection();
-            ps = con.prepareStatement(selectSQL);
-            ps.setString(1, id);
+    try {
+      con = DriverManagerConnectionPool.getConnection();
+      ps = con.prepareStatement(selectSQL);
+      ps.setString(1, id);
 
-            ResultSet rs = ps.executeQuery();
+      ResultSet rs = ps.executeQuery();
 
-            while (rs.next()) {
-                tmp.setId(rs.getInt("id"));
-                tmp.setNome(rs.getString("nome"));
-                tmp.setIdStruttura(rs.getInt("idStruttura"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                DriverManagerConnectionPool.releaseConnection(con);
-            }
+      while (rs.next()) {
+        tmp.setId(rs.getInt("id"));
+        tmp.setNome(rs.getString("nome"));
+        tmp.setIdStruttura(rs.getInt("idStruttura"));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        if (ps != null) {
+          ps.close();
         }
-        return tmp;
+      } finally {
+        DriverManagerConnectionPool.releaseConnection(con);
+      }
+    }
+    return tmp;
+  }
+
+  @Override
+  public Collection<AmbulatoriBean> doRetrieveAll(String order) throws SQLException {
+    Connection con = null;
+    PreparedStatement ps = null;
+
+    Collection<AmbulatoriBean> result = new LinkedList<AmbulatoriBean>();
+
+    String selectSQL = "SELECT * FROM " + nomeTabella;
+
+    if (order != null && !order.equals("")) {
+      selectSQL += " ORDER BY " + order;
     }
 
-    @Override
-    public Collection<AmbulatoriBean> doRetrieveAll(String order) throws SQLException {
-        Connection con = null;
-        PreparedStatement ps = null;
+    try {
 
-        Collection<AmbulatoriBean> result = new LinkedList<AmbulatoriBean>();
+      con = DriverManagerConnectionPool.getConnection();
+      ps = con.prepareStatement(selectSQL);
 
-        String selectSQL = "SELECT * FROM " + nomeTabella;
+      ResultSet rs = ps.executeQuery();
+      AmbulatoriBean tmp = new AmbulatoriBean();
 
-        if (order != null && !order.equals("")) {
-            selectSQL += " ORDER BY " + order;
-        }
+      while (rs.next()) {
 
-        try {
+        tmp.setId(rs.getInt("id"));
+        tmp.setNome(rs.getString("nome"));
+        tmp.setIdStruttura(rs.getInt("idStruttura"));
+        result.add(tmp);
+      }
 
-            con = DriverManagerConnectionPool.getConnection();
-            ps = con.prepareStatement(selectSQL);
-
-            ResultSet rs = ps.executeQuery();
-            AmbulatoriBean tmp = new AmbulatoriBean();
-
-            while (rs.next()) {
-
-                tmp.setId(rs.getInt("id"));
-                tmp.setNome(rs.getString("nome"));
-                tmp.setIdStruttura(rs.getInt("idStruttura"));
-                result.add(tmp);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (ps != null)
-                    ps.close();
-            } finally {
-                DriverManagerConnectionPool.releaseConnection(con);
-            }
-        }
-
-        return result;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        if (ps != null) ps.close();
+      } finally {
+        DriverManagerConnectionPool.releaseConnection(con);
+      }
     }
 
-    @Override
-    public void doSave(AmbulatoriBean param) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
+    return result;
+  }
 
-        String insertSQL = "INSERT INTO " + nomeTabella + " VALUES (?, ?, ?)";
+  @Override
+  public void doSave(AmbulatoriBean param) throws SQLException {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
 
-        try {
-            connection = DriverManagerConnectionPool.getConnection();
-            preparedStatement = connection.prepareStatement(insertSQL);
-            preparedStatement.setInt(1, param.getId());
-            preparedStatement.setString(2, param.getNome());
-            preparedStatement.setInt(3, param.getIdStruttura());
+    String insertSQL = "INSERT INTO " + nomeTabella + " VALUES (?, ?, ?)";
 
-            preparedStatement.executeUpdate();
-        } finally {
-            try {
-                if (preparedStatement != null)
-                    preparedStatement.close();
-            } finally {
-                DriverManagerConnectionPool.releaseConnection(connection);
-            }
-        }
+    try {
+      connection = DriverManagerConnectionPool.getConnection();
+      preparedStatement = connection.prepareStatement(insertSQL);
+      preparedStatement.setInt(1, param.getId());
+      preparedStatement.setString(2, param.getNome());
+      preparedStatement.setInt(3, param.getIdStruttura());
+
+      preparedStatement.executeUpdate();
+    } finally {
+      try {
+        if (preparedStatement != null) preparedStatement.close();
+      } finally {
+        DriverManagerConnectionPool.releaseConnection(connection);
+      }
     }
+  }
 
-    @Override
-    public void doUpdate(AmbulatoriBean param) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
+  @Override
+  public void doUpdate(AmbulatoriBean param) throws SQLException {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
 
-        String deleteSQL = "UPDATE " + nomeTabella + " SET nome = ?, idStruttura = ? WHERE id = ?";
+    String deleteSQL = "UPDATE " + nomeTabella + " SET nome = ?, idStruttura = ? WHERE id = ?";
 
-        try {
-            connection = DriverManagerConnectionPool.getConnection();
-            preparedStatement = connection.prepareStatement(deleteSQL);
-            preparedStatement.setString(1, param.getNome());
-            preparedStatement.setInt(2, param.getIdStruttura());
-            preparedStatement.setInt(3, param.getId());
+    try {
+      connection = DriverManagerConnectionPool.getConnection();
+      preparedStatement = connection.prepareStatement(deleteSQL);
+      preparedStatement.setString(1, param.getNome());
+      preparedStatement.setInt(2, param.getIdStruttura());
+      preparedStatement.setInt(3, param.getId());
 
-            preparedStatement.executeUpdate();
+      preparedStatement.executeUpdate();
 
-        } finally {
-            try {
-                if (preparedStatement != null)
-                    preparedStatement.close();
-            } finally {
-                DriverManagerConnectionPool.releaseConnection(connection);
-            }
-        }
-        return;
+    } finally {
+      try {
+        if (preparedStatement != null) preparedStatement.close();
+      } finally {
+        DriverManagerConnectionPool.releaseConnection(connection);
+      }
     }
+    return;
+  }
 
-    @Override
-    public void doDelete(AmbulatoriBean param) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
+  @Override
+  public void doDelete(AmbulatoriBean param) throws SQLException {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
 
-        String deleteSQL = "DELETE FROM " + nomeTabella + " WHERE id = ?";
+    String deleteSQL = "DELETE FROM " + nomeTabella + " WHERE id = ?";
 
-        try {
-            connection = DriverManagerConnectionPool.getConnection();
-            preparedStatement = connection.prepareStatement(deleteSQL);
-            preparedStatement.setInt(1, param.getId());
+    try {
+      connection = DriverManagerConnectionPool.getConnection();
+      preparedStatement = connection.prepareStatement(deleteSQL);
+      preparedStatement.setInt(1, param.getId());
 
-            preparedStatement.executeUpdate();
+      preparedStatement.executeUpdate();
 
-        } finally {
-            try {
-                if (preparedStatement != null)
-                    preparedStatement.close();
-            } finally {
-                DriverManagerConnectionPool.releaseConnection(connection);
-            }
-        }
-        return;
+    } finally {
+      try {
+        if (preparedStatement != null) preparedStatement.close();
+      } finally {
+        DriverManagerConnectionPool.releaseConnection(connection);
+      }
     }
+    return;
+  }
 }
