@@ -16,7 +16,8 @@ public class SelectQueueView {
 
 
 
-    public SelectQueueView(){
+    public SelectQueueView(JFrame viewPrecedente){
+        //Settaggi frame
         frame.setTitle("MedQueue");
         frame.setSize(300,200);
         frame.setResizable(false);
@@ -24,6 +25,10 @@ public class SelectQueueView {
         frame.getContentPane().setBackground( Color.white );
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null); //Posiziono il frame al centro dello schermo
+        ImageIcon infermiera = new ImageIcon("src/image/frameIcon.png");
+        frame.setIconImage(infermiera.getImage());
+
+        //Settaggio componenti frame
         pannello1.setBorder(BorderFactory.createTitledBorder("Operazione"));
         //POPOLO JCOMBO BOX
         for(int i = 0; i< DataAccess.getOperazioni().size(); i++)
@@ -35,14 +40,15 @@ public class SelectQueueView {
         pannello1.setBackground( Color.white );
         frame.add(pannello1,BorderLayout.CENTER);
 
-        bottone.addActionListener(e->{
+
+        bottone.addActionListener(e->{//ActionListener sul bottone invio
             frame.setVisible(false);
+            viewPrecedente.setVisible(false);
             ListPrenotazioniView view=new ListPrenotazioniView();
             view.visible(true);
         });
 
-        ImageIcon infermiera = new ImageIcon("src/image/frameIcon.png");
-        frame.setIconImage(infermiera.getImage());
+
 
     }
 
