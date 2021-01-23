@@ -1,14 +1,11 @@
 package classes.model.bean.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+
 import java.sql.Date;
 
-@Entity
 public class UtenteBean {
 
-    @Id @GeneratedValue
+
     private String codiceFiscale;
     private String password, nome, cognome;
     private Date dataDiNascita;
@@ -54,4 +51,17 @@ public class UtenteBean {
     public int getNumeroDiTelefono() { return numeroDiTelefono; }
 
     public void setNumeroDiTelefono(int numeroDiTelefono) { this.numeroDiTelefono = numeroDiTelefono; }
+
+    @Override
+    public String toString() {
+        return "UtenteBean{" +
+                "codiceFiscale='" + codiceFiscale + '\'' +
+                ", password='" + password + '\'' +
+                ", nome='" + nome + '\'' +
+                ", cognome='" + cognome + '\'' +
+                ", dataDiNascita=" + dataDiNascita +
+                ", email='" + email + '\'' +
+                ", numeroDiTelefono=" + numeroDiTelefono +
+                '}';
+    }
 }

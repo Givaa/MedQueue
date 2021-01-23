@@ -1,12 +1,10 @@
 package classes.model.bean.entity;
 
-import javax.persistence.*;
+
 import java.sql.Date;
 
-@Entity
 public class PrenotazioneBean {
 
-    @Id @GeneratedValue
     private int id;
     private String ora;
     private Date dataPrenotazione;
@@ -78,5 +76,18 @@ public class PrenotazioneBean {
 
     public void setConvalida(boolean convalida) {
         this.convalida = convalida;
+    }
+
+    @Override
+    public String toString() {
+        return "PrenotazioneBean{" +
+                "id=" + id +
+                ", ora='" + ora + '\'' +
+                ", dataPrenotazione=" + dataPrenotazione +
+                ", codiceFiscale='" + codiceFiscale + '\'' +
+                ", idOperazione=" + idOperazione +
+                ", idStruttura=" + idStruttura +
+                ", convalida=" + convalida +
+                '}';
     }
 }

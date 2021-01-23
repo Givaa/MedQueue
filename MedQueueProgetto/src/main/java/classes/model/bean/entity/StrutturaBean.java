@@ -1,13 +1,9 @@
 package classes.model.bean.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
-@Entity
+
 public class StrutturaBean {
 
-    @Id @GeneratedValue
     private int id;
     private String nome, indirizzo, numeroDiTelefono;
 

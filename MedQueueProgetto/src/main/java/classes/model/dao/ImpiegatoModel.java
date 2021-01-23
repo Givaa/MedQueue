@@ -73,9 +73,10 @@ public class ImpiegatoModel implements Model<ImpiegatoBean>{
             ps = con.prepareStatement(selectSQL);
 
             ResultSet rs = ps.executeQuery();
+            ImpiegatoBean tmp = new ImpiegatoBean();
 
             while(rs.next()){
-                ImpiegatoBean tmp = new ImpiegatoBean();
+
                 tmp.setCodiceFiscale(rs.getString("codiceFiscale"));
                 tmp.setPassword(rs.getString("password"));
                 tmp.setNome(rs.getString("nome"));

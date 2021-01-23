@@ -1,13 +1,10 @@
 package classes.model.bean.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.sql.Date;
 
-@Entity
+
 public class ImpiegatoBean {
 
-    @Id
     private String codiceFiscale;
     private String password, nome, cognome;
     private Date dataDiNascita;
@@ -79,5 +76,18 @@ public class ImpiegatoBean {
 
     public void setNumeroDiTelefono(String numeroDiTelefono) {
         this.numeroDiTelefono = numeroDiTelefono;
+    }
+
+    @Override
+    public String toString() {
+        return "ImpiegatoBean{" +
+                "codiceFiscale='" + codiceFiscale + '\'' +
+                ", password='" + password + '\'' +
+                ", nome='" + nome + '\'' +
+                ", cognome='" + cognome + '\'' +
+                ", dataDiNascita=" + dataDiNascita +
+                ", indirizzoEmail='" + indirizzoEmail + '\'' +
+                ", numeroDiTelefono='" + numeroDiTelefono + '\'' +
+                '}';
     }
 }

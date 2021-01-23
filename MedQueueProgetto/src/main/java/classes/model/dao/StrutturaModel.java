@@ -69,9 +69,10 @@ public class StrutturaModel implements Model<StrutturaBean> {
             ps = con.prepareStatement(selectSQL);
 
             ResultSet rs = ps.executeQuery();
+            StrutturaBean tmp = new StrutturaBean();
 
             while(rs.next()){
-                StrutturaBean tmp = new StrutturaBean();
+
                 tmp.setId(rs.getInt("id"));
                 tmp.setNome(rs.getString("nome"));
                 tmp.setIndirizzo(rs.getString("indirizzo"));
