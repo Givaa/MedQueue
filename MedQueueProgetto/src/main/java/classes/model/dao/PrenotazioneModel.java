@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class PrenotazioneModel implements Model<PrenotazioneBean> {
-    private static String nomeTabella = "prenotazioni";
+    private static final String nomeTabella = "prenotazione";
 
     @Override
     public PrenotazioneBean doRetrieveByKey(String id) throws SQLException{
