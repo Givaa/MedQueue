@@ -12,7 +12,7 @@ import java.util.LinkedList;
 
 public class ImpiegatoModel implements Model<ImpiegatoBean> {
 
-  private static final String nomeTabella = "Impiegato";
+  private static final String nomeTabella = "impiegato";
 
   @Override
   public ImpiegatoBean doRetrieveByKey(String codFisc) throws SQLException {

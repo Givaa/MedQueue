@@ -12,7 +12,7 @@ import java.util.LinkedList;
 
 public class AmbulatoriModel implements Model<AmbulatoriBean> {
 
-  private static final String nomeTabella = "ambulatori";
+  private static final String nomeTabella = "ambulatorio";
 
   @Override
   public AmbulatoriBean doRetrieveByKey(String id) throws SQLException {
