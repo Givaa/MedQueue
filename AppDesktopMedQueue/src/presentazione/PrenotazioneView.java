@@ -13,7 +13,7 @@ public class PrenotazioneView {
         JTextField idPrenotazioneText = new JTextField(Integer.toString(p.getId()));
         idPrenotazioneText.setEditable(false);
         JLabel codiceFiscale = new JLabel("Codice fiscale: ");
-        JTextField codiceFiscaleText = new JTextField(p.getCodicefiscale());
+        JTextField codiceFiscaleText = new JTextField(p.getCodiceFiscale());
         codiceFiscaleText.setEditable(false);
         JLabel data = new JLabel("Data: ");
         JTextField dataText = new JTextField(p.getData());
@@ -22,7 +22,7 @@ public class PrenotazioneView {
         JTextField oraText = new JTextField(p.getTime());
         oraText.setEditable(false);
         JLabel tipoOperazione = new JLabel("Tipo operazione: ");
-        JTextField tipoOperazioneText = new JTextField(DataAccess.getOperazione(p.getId_operazione()).getTipo_operazione());
+        JTextField tipoOperazioneText = new JTextField(DataAccess.getOperazione(p.getIdOperazione()).getTipoOperazione());
         tipoOperazioneText.setEditable(false);
 
 

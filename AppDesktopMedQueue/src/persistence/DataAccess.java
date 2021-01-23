@@ -20,9 +20,9 @@ public class DataAccess {
                 prenotazione.setData(rs.getString(2));
                 prenotazione.setTime(rs.getString(3));
                 prenotazione.setConvalida(Boolean.parseBoolean(rs.getString(4)));
-                prenotazione.setCodicefiscale(rs.getString(5));
-                prenotazione.setId_operazione(Integer.parseInt(rs.getString(6)));
-                prenotazione.setId_struttura(Integer.parseInt(rs.getString(7)));
+                prenotazione.setCodiceFiscale(rs.getString(5));
+                prenotazione.setIdOperazione(Integer.parseInt(rs.getString(6)));
+                prenotazione.setIdStruttura(Integer.parseInt(rs.getString(7)));
             }
             st.close();
         } catch(SQLException e) {
@@ -41,7 +41,7 @@ public class DataAccess {
                 struttura.setId(Integer.parseInt(rs.getString(1)));
                 struttura.setNome(rs.getString(2));
                 struttura.setIndirizzo(rs.getString(3));
-                struttura.setNumerotelefono(rs.getString(4));
+                struttura.setNumeroDiTelefono(rs.getString(4));
             }
 
             st.close();
@@ -60,7 +60,7 @@ public class DataAccess {
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
                 operazione.setId(Integer.parseInt(rs.getString(1)));
-                operazione.setTipo_operazione(rs.getString(2));
+                operazione.setTipoOperazione(rs.getString(2));
                 operazione.setDescrizione(rs.getString(3));
             }
 

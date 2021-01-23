@@ -3,6 +3,7 @@ package presentazione;
 import business.PrenotazioneBean;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -13,11 +14,11 @@ public class ListPrenotazioniView {
     private JFrame frame = new JFrame();
     private JLabel frase = new JLabel("Prenotazioni da servire");
     private JPanel pannelloNord = new JPanel();
-    private JPanel pannelloCentrale=new JPanel(new GridLayout(2,1));
-    private JPanel pannelloSud=new JPanel();
-    private JPanel lista1=new JPanel();
-    private JPanel lista2=new JPanel();
-    private JButton button=new JButton("Servi cliente");
+    private JPanel pannelloCentrale = new JPanel(new GridLayout(2,1));
+    private JPanel pannelloSud = new JPanel();
+    private JPanel lista1 = new JPanel();
+    private JPanel lista2 = new JPanel();
+    private JButton button = new JButton("Servi cliente");
     private int elementi;
 
 
@@ -45,8 +46,6 @@ public class ListPrenotazioniView {
         }
 
     }
-
-
 
 
     public ListPrenotazioniView(){
@@ -91,10 +90,11 @@ public class ListPrenotazioniView {
         pannelloCentrale.add(lista1);
         pannelloCentrale.add(lista2);
 
-        pannelloSud.setLayout(new BoxLayout(pannelloSud, BoxLayout.X_AXIS));
+        pannelloSud.setLayout(new BorderLayout());
         button.setPreferredSize(new Dimension(150,70));
         //centrare bottone e settare background bianco
-        pannelloSud.add(button);
+        pannelloSud.add(button, BorderLayout.CENTER);
+        pannelloSud.setBackground(Color.white);
 
         frame.add(pannelloNord,BorderLayout.NORTH);
         frame.add(pannelloCentrale,BorderLayout.CENTER);
@@ -115,7 +115,7 @@ public class ListPrenotazioniView {
         blocco.setLayout(new GridLayout(2,1));
         blocco.setMaximumSize(new Dimension(100,140));
         JLabel idPrenotazione = new JLabel(Integer.toString(prenotazione.getId()));
-        JLabel codiceFiscale = new JLabel(prenotazione.getCodicefiscale());
+        JLabel codiceFiscale = new JLabel(prenotazione.getCodiceFiscale());
         idPrenotazione.setHorizontalAlignment(JLabel.CENTER);
         idPrenotazione.setFont(new Font(frase.getFont().getName(), frase.getFont().getStyle(), 30));
         codiceFiscale.setHorizontalAlignment(JLabel.CENTER);
@@ -127,8 +127,8 @@ public class ListPrenotazioniView {
         return blocco;
     }
 
-//Metodo per generare la lista delle prenotazioni dal punto di vista visivo
-//Funge sia in avanti e in indiedro
+    //Metodo per generare la lista delle prenotazioni dal punto di vista visivo
+    //Funge sia in avanti e in indiedro
     public void setPrenotazioni(ArrayList<PrenotazioneBean> p){
         prenotazioni = p;
         lista1.removeAll();
