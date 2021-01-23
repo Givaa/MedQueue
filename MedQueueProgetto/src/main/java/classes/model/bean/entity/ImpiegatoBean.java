@@ -20,7 +20,8 @@ public class ImpiegatoBean {
         this.numeroDiTelefono = numeroDiTelefono;
     }
 
-    public ImpiegatoBean() {}
+    public ImpiegatoBean() {
+    }
 
     public String getCodiceFiscale() {
         return codiceFiscale;

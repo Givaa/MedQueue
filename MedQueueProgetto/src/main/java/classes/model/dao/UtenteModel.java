@@ -1,7 +1,6 @@
 package classes.model.dao;
 
 import classes.model.DriverManagerConnectionPool;
-import classes.model.bean.entity.PrenotazioneBean;
 import classes.model.bean.entity.UtenteBean;
 
 import java.sql.Connection;
@@ -30,7 +29,7 @@ public class UtenteModel implements Model<UtenteBean> {
 
             ResultSet rs = ps.executeQuery();
 
-            while( rs.next() ) {
+            while (rs.next()) {
                 tmp.setCodiceFiscale(rs.getString("codiceFiscale"));
                 tmp.setPassword(rs.getString("password"));
                 tmp.setNome(rs.getString("nome"));
@@ -42,7 +41,7 @@ public class UtenteModel implements Model<UtenteBean> {
             e.printStackTrace();
         } finally {
             try {
-                if ( ps != null ) {
+                if (ps != null) {
                     ps.close();
                 }
             } finally {
@@ -61,7 +60,7 @@ public class UtenteModel implements Model<UtenteBean> {
 
         String selectSQL = "SELECT * FROM " + nomeTabella;
 
-        if(order!=null && !order.equals("")){
+        if (order != null && !order.equals("")) {
             selectSQL += " ORDER BY " + order;
         }
 
@@ -73,7 +72,7 @@ public class UtenteModel implements Model<UtenteBean> {
             ResultSet rs = ps.executeQuery();
             UtenteBean tmp = new UtenteBean();
 
-            while(rs.next()){
+            while (rs.next()) {
                 tmp.setCodiceFiscale(rs.getString("codiceFiscale"));
                 tmp.setPassword(rs.getString("password"));
                 tmp.setNome(rs.getString("nome"));
@@ -167,7 +166,7 @@ public class UtenteModel implements Model<UtenteBean> {
         try {
             connection = DriverManagerConnectionPool.getConnection();
             preparedStatement = connection.prepareStatement(deleteSQL);
-            preparedStatement.setString(1, param.getCodiceFiscale() );
+            preparedStatement.setString(1, param.getCodiceFiscale());
 
             preparedStatement.executeUpdate();
 

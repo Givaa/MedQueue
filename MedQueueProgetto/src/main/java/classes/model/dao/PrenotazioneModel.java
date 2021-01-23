@@ -9,13 +9,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.List;
 
 public class PrenotazioneModel implements Model<PrenotazioneBean> {
     private static final String nomeTabella = "prenotazione";
 
     @Override
-    public PrenotazioneBean doRetrieveByKey(String id) throws SQLException{
+    public PrenotazioneBean doRetrieveByKey(String id) throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
 
@@ -30,7 +29,7 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
 
             ResultSet rs = ps.executeQuery();
 
-            while( rs.next() ) {
+            while (rs.next()) {
                 tmp.setId(rs.getInt("id"));
                 tmp.setOra(rs.getString("ora"));
                 tmp.setDataPrenotazione(rs.getDate("data"));
@@ -40,10 +39,10 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
                 tmp.setIdOperazione(rs.getInt("operazione"));
             }
         } catch (SQLException e) {
-        e.printStackTrace();
+            e.printStackTrace();
         } finally {
             try {
-                if ( ps != null ) {
+                if (ps != null) {
                     ps.close();
                 }
             } finally {
@@ -62,7 +61,7 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
 
         String selectSQL = "SELECT * FROM " + nomeTabella;
 
-        if(order!=null && !order.equals("")){
+        if (order != null && !order.equals("")) {
             selectSQL += " ORDER BY " + order;
         }
 
@@ -74,7 +73,7 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
             ResultSet rs = ps.executeQuery();
             PrenotazioneBean tmp = new PrenotazioneBean();
 
-            while(rs.next()){
+            while (rs.next()) {
 
                 tmp.setId(rs.getInt("id"));
                 tmp.setOra(rs.getString("ora"));
@@ -169,7 +168,7 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
         try {
             connection = DriverManagerConnectionPool.getConnection();
             preparedStatement = connection.prepareStatement(deleteSQL);
-            preparedStatement.setInt(1, param.getId() );
+            preparedStatement.setInt(1, param.getId());
 
             preparedStatement.executeUpdate();
 
@@ -201,7 +200,7 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
 
             ResultSet rs = ps.executeQuery();
 
-            while( rs.next() ) {
+            while (rs.next()) {
                 tmp.setId(rs.getInt("id"));
                 tmp.setOra(rs.getString("ora"));
                 tmp.setDataPrenotazione(rs.getDate("data"));
@@ -215,7 +214,7 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
             e.printStackTrace();
         } finally {
             try {
-                if ( ps != null ) {
+                if (ps != null) {
                     ps.close();
                 }
             } finally {

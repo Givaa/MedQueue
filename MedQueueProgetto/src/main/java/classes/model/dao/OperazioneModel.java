@@ -2,7 +2,6 @@ package classes.model.dao;
 
 import classes.model.DriverManagerConnectionPool;
 import classes.model.bean.entity.OperazioneBean;
-import classes.model.bean.entity.PrenotazioneBean;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,7 +30,7 @@ public class OperazioneModel implements Model<OperazioneBean> {
 
             ResultSet rs = ps.executeQuery();
 
-            while( rs.next() ) {
+            while (rs.next()) {
                 tmp.setId(rs.getInt("id"));
                 tmp.setTipoOperazione(rs.getString("tipoOperazione"));
                 tmp.setDescrizione(rs.getString("descrizione"));
@@ -41,7 +40,7 @@ public class OperazioneModel implements Model<OperazioneBean> {
             e.printStackTrace();
         } finally {
             try {
-                if ( ps != null ) {
+                if (ps != null) {
                     ps.close();
                 }
             } finally {
@@ -60,7 +59,7 @@ public class OperazioneModel implements Model<OperazioneBean> {
 
         String selectSQL = "SELECT * FROM " + nomeTabella;
 
-        if(order!=null && !order.equals("")){
+        if (order != null && !order.equals("")) {
             selectSQL += " ORDER BY " + order;
         }
 
@@ -72,7 +71,7 @@ public class OperazioneModel implements Model<OperazioneBean> {
             ResultSet rs = ps.executeQuery();
             OperazioneBean tmp = new OperazioneBean();
 
-            while(rs.next()){
+            while (rs.next()) {
 
                 tmp.setId(rs.getInt("id"));
                 tmp.setTipoOperazione(rs.getString("tipoOperazione"));
@@ -158,7 +157,7 @@ public class OperazioneModel implements Model<OperazioneBean> {
         try {
             connection = DriverManagerConnectionPool.getConnection();
             preparedStatement = connection.prepareStatement(deleteSQL);
-            preparedStatement.setInt(1, param.getId() );
+            preparedStatement.setInt(1, param.getId());
 
             preparedStatement.executeUpdate();
 

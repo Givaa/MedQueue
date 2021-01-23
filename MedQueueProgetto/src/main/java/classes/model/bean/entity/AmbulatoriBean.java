@@ -12,7 +12,8 @@ public class AmbulatoriBean {
         this.idStruttura = idStruttura;
     }
 
-    public AmbulatoriBean() {}
+    public AmbulatoriBean() {
+    }
 
     public int getId() {
         return id;

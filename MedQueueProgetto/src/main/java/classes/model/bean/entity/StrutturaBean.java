@@ -1,7 +1,6 @@
 package classes.model.bean.entity;
 
 
-
 public class StrutturaBean {
 
     private int id;
@@ -13,7 +12,8 @@ public class StrutturaBean {
         this.numeroDiTelefono = numeroDiTelefono;
     }
 
-    public StrutturaBean() {}
+    public StrutturaBean() {
+    }
 
     public int getId() {
         return id;

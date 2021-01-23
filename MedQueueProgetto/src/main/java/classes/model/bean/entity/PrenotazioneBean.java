@@ -22,7 +22,8 @@ public class PrenotazioneBean {
         this.convalida = convalida;
     }
 
-    public PrenotazioneBean(){}
+    public PrenotazioneBean() {
+    }
 
     public int getId() {
         return id;
@@ -40,7 +41,9 @@ public class PrenotazioneBean {
         this.ora = ora;
     }
 
-    public Date getDataPrenotazione() { return dataPrenotazione; }
+    public Date getDataPrenotazione() {
+        return dataPrenotazione;
+    }
 
     public void setDataPrenotazione(Date data) {
         this.dataPrenotazione = data;

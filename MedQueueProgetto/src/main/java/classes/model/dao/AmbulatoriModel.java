@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedList;
 
-public class AmbulatoriModel implements Model<AmbulatoriBean>{
+public class AmbulatoriModel implements Model<AmbulatoriBean> {
 
     private static final String nomeTabella = "ambulatori";
 
@@ -30,7 +30,7 @@ public class AmbulatoriModel implements Model<AmbulatoriBean>{
 
             ResultSet rs = ps.executeQuery();
 
-            while( rs.next() ) {
+            while (rs.next()) {
                 tmp.setId(rs.getInt("id"));
                 tmp.setNome(rs.getString("nome"));
                 tmp.setIdStruttura(rs.getInt("idStruttura"));
@@ -39,7 +39,7 @@ public class AmbulatoriModel implements Model<AmbulatoriBean>{
             e.printStackTrace();
         } finally {
             try {
-                if ( ps != null ) {
+                if (ps != null) {
                     ps.close();
                 }
             } finally {
@@ -58,7 +58,7 @@ public class AmbulatoriModel implements Model<AmbulatoriBean>{
 
         String selectSQL = "SELECT * FROM " + nomeTabella;
 
-        if(order!=null && !order.equals("")){
+        if (order != null && !order.equals("")) {
             selectSQL += " ORDER BY " + order;
         }
 
@@ -70,7 +70,7 @@ public class AmbulatoriModel implements Model<AmbulatoriBean>{
             ResultSet rs = ps.executeQuery();
             AmbulatoriBean tmp = new AmbulatoriBean();
 
-            while(rs.next()){
+            while (rs.next()) {
 
                 tmp.setId(rs.getInt("id"));
                 tmp.setNome(rs.getString("nome"));
@@ -154,7 +154,7 @@ public class AmbulatoriModel implements Model<AmbulatoriBean>{
         try {
             connection = DriverManagerConnectionPool.getConnection();
             preparedStatement = connection.prepareStatement(deleteSQL);
-            preparedStatement.setInt(1, param.getId() );
+            preparedStatement.setInt(1, param.getId());
 
             preparedStatement.executeUpdate();
 

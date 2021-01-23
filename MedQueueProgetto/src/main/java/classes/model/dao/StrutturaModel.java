@@ -1,7 +1,6 @@
 package classes.model.dao;
 
 import classes.model.DriverManagerConnectionPool;
-import classes.model.bean.entity.PrenotazioneBean;
 import classes.model.bean.entity.StrutturaBean;
 
 import java.sql.Connection;
@@ -30,7 +29,7 @@ public class StrutturaModel implements Model<StrutturaBean> {
 
             ResultSet rs = ps.executeQuery();
 
-            while( rs.next() ) {
+            while (rs.next()) {
                 tmp.setId(rs.getInt("id"));
                 tmp.setNome(rs.getString("nome"));
                 tmp.setIndirizzo(rs.getString("indirizzo"));
@@ -40,7 +39,7 @@ public class StrutturaModel implements Model<StrutturaBean> {
             e.printStackTrace();
         } finally {
             try {
-                if ( ps != null ) {
+                if (ps != null) {
                     ps.close();
                 }
             } finally {
@@ -59,7 +58,7 @@ public class StrutturaModel implements Model<StrutturaBean> {
 
         String selectSQL = "SELECT * FROM " + nomeTabella;
 
-        if(order!=null && !order.equals("")){
+        if (order != null && !order.equals("")) {
             selectSQL += " ORDER BY " + order;
         }
 
@@ -71,7 +70,7 @@ public class StrutturaModel implements Model<StrutturaBean> {
             ResultSet rs = ps.executeQuery();
             StrutturaBean tmp = new StrutturaBean();
 
-            while(rs.next()){
+            while (rs.next()) {
 
                 tmp.setId(rs.getInt("id"));
                 tmp.setNome(rs.getString("nome"));
@@ -157,7 +156,7 @@ public class StrutturaModel implements Model<StrutturaBean> {
         try {
             connection = DriverManagerConnectionPool.getConnection();
             preparedStatement = connection.prepareStatement(deleteSQL);
-            preparedStatement.setInt(1, param.getId() );
+            preparedStatement.setInt(1, param.getId());
 
             preparedStatement.executeUpdate();
 

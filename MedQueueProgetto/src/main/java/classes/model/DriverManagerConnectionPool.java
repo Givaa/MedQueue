@@ -11,11 +11,11 @@ public class DriverManagerConnectionPool {
     private static List<Connection> freeDbConnections;
 
     static {
-        reeDbConnections = new LinkedList<Connection>();
+        freeDbConnections = new LinkedList<Connection>();
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            System.out.println("DB driver not found:"+ e.getMessage());
+            System.out.println("DB driver not found:" + e.getMessage());
         }
     }
 
@@ -36,7 +36,7 @@ public class DriverManagerConnectionPool {
 
             newConnection.setAutoCommit(true);
             return newConnection;
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -46,7 +46,7 @@ public class DriverManagerConnectionPool {
         Connection connection;
 
         if (!freeDbConnections.isEmpty()) {
-            connection = (Connection) freeDbConnections.get(0);
+            connection = freeDbConnections.get(0);
             freeDbConnections.remove(0);
 
             try {
@@ -59,11 +59,11 @@ public class DriverManagerConnectionPool {
         } else {
             connection = createDBConnection();
         }
-		
+
         return connection;
     }
 
     public synchronized static void releaseConnection(Connection connection) throws SQLException {
-        if(connection != null) freeDbConnections.add(connection);
+        if (connection != null) freeDbConnections.add(connection);
     }
 }

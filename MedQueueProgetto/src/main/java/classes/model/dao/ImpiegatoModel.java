@@ -2,7 +2,6 @@ package classes.model.dao;
 
 import classes.model.DriverManagerConnectionPool;
 import classes.model.bean.entity.ImpiegatoBean;
-import classes.model.bean.entity.PrenotazioneBean;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +10,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedList;
 
-public class ImpiegatoModel implements Model<ImpiegatoBean>{
+public class ImpiegatoModel implements Model<ImpiegatoBean> {
 
     private static final String nomeTabella = "Impiegato";
 
@@ -31,7 +30,7 @@ public class ImpiegatoModel implements Model<ImpiegatoBean>{
 
             ResultSet rs = ps.executeQuery();
 
-            while( rs.next() ) {
+            while (rs.next()) {
                 tmp.setCodiceFiscale(rs.getString("codiceFiscale"));
                 tmp.setPassword(rs.getString("password"));
                 tmp.setNome(rs.getString("nome"));
@@ -44,7 +43,7 @@ public class ImpiegatoModel implements Model<ImpiegatoBean>{
             e.printStackTrace();
         } finally {
             try {
-                if ( ps != null ) {
+                if (ps != null) {
                     ps.close();
                 }
             } finally {
@@ -63,7 +62,7 @@ public class ImpiegatoModel implements Model<ImpiegatoBean>{
 
         String selectSQL = "SELECT * FROM " + nomeTabella;
 
-        if(order!=null && !order.equals("")){
+        if (order != null && !order.equals("")) {
             selectSQL += " ORDER BY " + order;
         }
 
@@ -75,7 +74,7 @@ public class ImpiegatoModel implements Model<ImpiegatoBean>{
             ResultSet rs = ps.executeQuery();
             ImpiegatoBean tmp = new ImpiegatoBean();
 
-            while(rs.next()){
+            while (rs.next()) {
 
                 tmp.setCodiceFiscale(rs.getString("codiceFiscale"));
                 tmp.setPassword(rs.getString("password"));
@@ -171,7 +170,7 @@ public class ImpiegatoModel implements Model<ImpiegatoBean>{
         try {
             connection = DriverManagerConnectionPool.getConnection();
             preparedStatement = connection.prepareStatement(deleteSQL);
-            preparedStatement.setString(1, param.getCodiceFiscale() );
+            preparedStatement.setString(1, param.getCodiceFiscale());
 
             preparedStatement.executeUpdate();
 
