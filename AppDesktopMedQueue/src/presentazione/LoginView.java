@@ -47,8 +47,11 @@ public class LoginView{
             if(DriverManagerConnectionPool.createDBConnection() == null) { //Creo la connessione con il db se non riesco stampo un messaggio di errore
                 errore.setText("Errore nella connessione");
             } else {
-                if(DataAccess.verificaDatiImpiegato(TF_CF.getText(), TF_pass.getText()))  //Verifico le credenziali dell'impiegato
-                    new SelectQueueView(framePannello).visible(true); //Creo la prossima view e la rendo visibile
+                if(DataAccess.verificaDatiImpiegato(TF_CF.getText(), TF_pass.getText())){  //Verifico le credenziali dell'impiegato
+                    new AccettazionePrenotazioneView().visible(true);
+                    TF_CF.setText("");
+                    TF_pass.setText("");
+                } //Creo la prossima view e la rendo visibile
                 else errore.setText("Credenziali errate"); //Messaggio d'errore nel caso in cui le credenziali del impiegato sono sbaglaite
             }
         });
@@ -99,6 +102,8 @@ public class LoginView{
         framePannello.setVisible(true);
 
     }
+
+
 
 
     public static void main(String[] args) {
