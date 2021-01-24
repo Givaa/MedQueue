@@ -14,11 +14,11 @@ public class AccettazionePrenotazioneView {
     private JPanel pannelloCoda=new JPanel();
     private ImageIcon immagine = new ImageIcon("src/image/frameIcon.png");
     private ImageIcon infermiera = new ImageIcon("src/image/frameIcon.png");
-    private JLabel impiegato=new JLabel("Nome Impiegato");
+    private JLabel impiegato=new JLabel("Nome impiegato");
     private JButton logout=new JButton("Logout");
-    private JLabel jl=new JLabel("Scegli prenotazioni operazione da gestire");
+    private JLabel jl=new JLabel("Scegli l'operazione da gestire: ");
     private JComboBox<String> operazioni = new JComboBox<String>();
-    private JButton selezionaCoda=new JButton("Seleziona Operazione");
+    private JButton selezionaCoda=new JButton("Seleziona operazione");
 
 
     private boolean servizioPrenotazione=false;
