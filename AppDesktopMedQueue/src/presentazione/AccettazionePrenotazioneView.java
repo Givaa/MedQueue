@@ -186,9 +186,7 @@ public class AccettazionePrenotazioneView {
         fine.addActionListener(e->{
             servizioPrenotazione=false;
             pannelloCentro.remove(2);
-            //Inserire il metodo cancellare prenotazione
-
-
+            DataAccess.deletePrenotazione(p.getId());
             pannelloCentro.add(setServiPrenotazione(tipoOperazioneText.getText()));
             frame.validate();
             logout.setEnabled(true);

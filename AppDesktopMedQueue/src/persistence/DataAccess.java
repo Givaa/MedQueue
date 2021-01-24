@@ -110,4 +110,17 @@ public class DataAccess {
         }
         return operazioni;
     }
+
+    public static void deletePrenotazione (int id){
+        try {
+            Statement st = DriverManagerConnectionPool.getConnection().createStatement();
+            String sql = "DELETE FROM prenotazione p WHERE p.id='"+id+"'";
+            PreparedStatement ps =  DriverManagerConnectionPool.getConnection().prepareStatement(sql);
+            if(ps.executeUpdate()<0)
+                System.err.println("Delete failed\n");
+            st.close();
+        } catch(SQLException e) {
+            System.err.println("SQLException:"+ e.getMessage());
+        }
+    }
 }
