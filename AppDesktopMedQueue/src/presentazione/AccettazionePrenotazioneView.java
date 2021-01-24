@@ -9,7 +9,8 @@ import persistence.DataAccess;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Locale;
+import java.util.TimerTask;
+import java.util.Timer;
 
 public class AccettazionePrenotazioneView {
 
@@ -27,8 +28,6 @@ public class AccettazionePrenotazioneView {
 
     private int idOperazione;
     private int idStruttura;
-    private int i = 0;
-
 
     private boolean servizioPrenotazione=false;
 
@@ -43,7 +42,6 @@ public class AccettazionePrenotazioneView {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setIconImage(infermiera.getImage());
-
 
 
         //Pannello Nord
@@ -182,11 +180,8 @@ public class AccettazionePrenotazioneView {
         pannelloCoda.add(jl);
         pannelloCoda.add(Box.createRigidArea(new Dimension(0,10)));
 
-        ArrayList<JButton> bottoni = new ArrayList<JButton>();
-
         for(int i = 0; i < listoperazioni.size(); i++) {
             JButton operazione = new JButton();
-            bottoni.add(operazione);
 
             operazione.setText(listoperazioni.get(i).getTipoOperazione() + ": " + DataAccess.numPrenotazioni(listoperazioni.get(i).getId(),idStruttura));
             operazione.setPreferredSize(new Dimension(230, 25));
@@ -204,15 +199,28 @@ public class AccettazionePrenotazioneView {
             });
             pannelloCoda.add(operazione);
             pannelloCoda.add(Box.createRigidArea(new Dimension(0,10)));
-
-
         }
+
+        Timer timer = new Timer(true);
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                Component[] comp = pannelloCoda.getComponents();
+                for (int i = 0, j = 0; i < comp.length; i++) {
+                    if (comp[i] instanceof JButton) {
+                        ((JButton) comp[i]).setText(listoperazioni.get(j).getTipoOperazione() + ": " + DataAccess.numPrenotazioni(listoperazioni.get(j).getId(), idStruttura));
+                        j++;
+                    }
+                }
+                frame.validate();
+            }
+
+        }, 10000, 10000);
 
         pannelloCoda.setBorder(BorderFactory.createMatteBorder(0,0,0,1,Color.gray));
         pannelloCoda.setOpaque(false);
         return pannelloCoda;
     }
-
 
 
     public void visible(boolean v){
