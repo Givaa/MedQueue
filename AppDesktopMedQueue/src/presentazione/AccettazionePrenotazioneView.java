@@ -13,6 +13,7 @@ public class AccettazionePrenotazioneView {
     private JPanel pannelloCentro=new JPanel();
     private JPanel pannelloCoda=new JPanel();
     private ImageIcon immagine = new ImageIcon("src/image/frameIcon.png");
+    private ImageIcon infermiera = new ImageIcon("src/image/frameIcon.png");
     private JLabel impiegato=new JLabel("Nome Impiegato");
     private JButton logout=new JButton("Logout");
     private JLabel jl=new JLabel("Scegli prenotazioni operazione da gestire");
@@ -31,6 +32,7 @@ public class AccettazionePrenotazioneView {
         frame.getContentPane().setBackground( Color.white );
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
+        frame.setIconImage(infermiera.getImage());
 
 
 
@@ -130,6 +132,7 @@ public class AccettazionePrenotazioneView {
             PrenotazioneBean p1 = new PrenotazioneBean(1,"data","tempo",true,"codicefiscale 1",1,1);
             pannelloCentro.add(setPrenotazione(p1));
             frame.validate();
+            logout.setEnabled(false);
         });
 
         return pannelloAccettazione;
@@ -188,6 +191,7 @@ public class AccettazionePrenotazioneView {
 
             pannelloCentro.add(setServiPrenotazione(tipoOperazioneText.getText()));
             frame.validate();
+            logout.setEnabled(true);
         });
 
         dettagliPrenotazione.setOpaque(false);

@@ -51,6 +51,7 @@ public class LoginView{
                     new AccettazionePrenotazioneView().visible(true);
                     TF_CF.setText("");
                     TF_pass.setText("");
+                    framePannello.setVisible(false);
                 } //Creo la prossima view e la rendo visibile
                 else errore.setText("Credenziali errate"); //Messaggio d'errore nel caso in cui le credenziali del impiegato sono sbaglaite
             }
