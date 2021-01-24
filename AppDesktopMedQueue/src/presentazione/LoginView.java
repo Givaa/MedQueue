@@ -20,8 +20,8 @@ public class LoginView{
     private JPasswordField TF_pass = new JPasswordField(32);
     private JButton connect = new JButton("Connetti");
     private JLabel errore = new JLabel();
-    private JLabel insCF = new JLabel("Inserire codice fiscale: ");
-    private JLabel insPass = new JLabel(" Inserire password: ");
+    private JLabel insCF = new JLabel("Inserisci il codice fiscale: ");
+    private JLabel insPass = new JLabel("Inserisci la password: ");
     private JCheckBox select = new JCheckBox("Mostra password");
     private ImageIcon immagine = new ImageIcon("src/image/LogoNoBG.png");
     private ImageIcon infermiera = new ImageIcon("src/image/frameIcon.png");

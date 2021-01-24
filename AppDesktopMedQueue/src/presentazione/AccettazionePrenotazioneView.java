@@ -9,6 +9,7 @@ import persistence.DataAccess;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class AccettazionePrenotazioneView {
 
@@ -26,6 +27,7 @@ public class AccettazionePrenotazioneView {
 
     private int idOperazione;
     private int idStruttura;
+    private int i = 0;
 
 
     private boolean servizioPrenotazione=false;
@@ -52,7 +54,7 @@ public class AccettazionePrenotazioneView {
         immagine = new ImageIcon(newimg);
         pannelloNord.add(Box.createRigidArea(new Dimension(30,0)));
         pannelloNord.add(new JLabel(immagine));
-        impiegato.setText(imp.getNome()+" "+imp.getCognome());
+        impiegato.setText(imp.getNome().substring(0,1).toUpperCase() + imp.getNome().substring(1).toLowerCase() + " " +imp.getCognome().substring(0,1).toUpperCase() + imp.getCognome().substring(1).toLowerCase());
         impiegato.setFont(new Font(impiegato.getFont().getName(), impiegato.getFont().getStyle(), 30));
         pannelloNord.add(Box.createRigidArea(new Dimension(280,0)));
         pannelloNord.add(impiegato);
@@ -111,7 +113,6 @@ public class AccettazionePrenotazioneView {
 
         return pannelloAccettazione;
     };
-
 
 
     public JPanel setPrenotazione(PrenotazioneBean p){
@@ -181,9 +182,12 @@ public class AccettazionePrenotazioneView {
         pannelloCoda.add(jl);
         pannelloCoda.add(Box.createRigidArea(new Dimension(0,10)));
 
+        ArrayList<JButton> bottoni = new ArrayList<JButton>();
 
-        for(int i = 0; i< listoperazioni.size(); i++) {
+        for(int i = 0; i < listoperazioni.size(); i++) {
             JButton operazione = new JButton();
+            bottoni.add(operazione);
+
             operazione.setText(listoperazioni.get(i).getTipoOperazione() + ": " + DataAccess.numPrenotazioni(listoperazioni.get(i).getId(),idStruttura));
             operazione.setPreferredSize(new Dimension(230, 25));
             operazione.setMaximumSize(operazione.getPreferredSize());
