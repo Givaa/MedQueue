@@ -32,7 +32,7 @@ public class SelectQueueView {
         pannello1.setBorder(BorderFactory.createTitledBorder("Operazione"));
         //POPOLO JCOMBO BOX
         for(int i = 0; i< DataAccess.getOperazioni().size(); i++)
-            operazioni.addItem(DataAccess.getOperazioni().get(i));
+            operazioni.addItem(DataAccess.getOperazioni().get(i).getTipoOperazione());
         pannello1.add(sceltaCoda);
         pannello1.add(operazioni);
         pannello1.add(new JLabel());

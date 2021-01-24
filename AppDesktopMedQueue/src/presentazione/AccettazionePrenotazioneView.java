@@ -1,29 +1,37 @@
 package presentazione;
 
+import business.Gestione;
+import business.ImpiegatoBean;
+import business.OperazioneBean;
 import business.PrenotazioneBean;
 import persistence.DataAccess;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class AccettazionePrenotazioneView {
 
     private JFrame frame=new JFrame();
     private JPanel pannelloNord=new JPanel();
     private JPanel pannelloCentro=new JPanel();
-    private JPanel pannelloCoda=new JPanel();
     private ImageIcon immagine = new ImageIcon("src/image/frameIcon.png");
     private ImageIcon infermiera = new ImageIcon("src/image/frameIcon.png");
-    private JLabel impiegato=new JLabel("Nome impiegato");
+    private JLabel impiegato=new JLabel();
     private JButton logout=new JButton("Logout");
     private JLabel jl=new JLabel("Scegli l'operazione da gestire: ");
     private JComboBox<String> operazioni = new JComboBox<String>();
     private JButton selezionaCoda=new JButton("Seleziona operazione");
+    private ArrayList<OperazioneBean> listoperazioni;
+
+    private int idOperazione;
+    private int idStruttura;
 
 
     private boolean servizioPrenotazione=false;
 
-    public AccettazionePrenotazioneView(){
+    public AccettazionePrenotazioneView(ImpiegatoBean imp){
+        idStruttura=imp.getIdStruttura();
         //Settaggi frame
         frame.setTitle("MedQueue");
         frame.setSize(1000,600);
@@ -44,50 +52,16 @@ public class AccettazionePrenotazioneView {
         immagine = new ImageIcon(newimg);
         pannelloNord.add(Box.createRigidArea(new Dimension(30,0)));
         pannelloNord.add(new JLabel(immagine));
+        impiegato.setText(imp.getNome()+" "+imp.getCognome());
         impiegato.setFont(new Font(impiegato.getFont().getName(), impiegato.getFont().getStyle(), 30));
         pannelloNord.add(Box.createRigidArea(new Dimension(280,0)));
         pannelloNord.add(impiegato);
         pannelloNord.add(Box.createRigidArea(new Dimension(250,0)));
         pannelloNord.add(logout);
 
-
-
-
+        listoperazioni=DataAccess.getOperazioni();
         pannelloCentro.setLayout(new BoxLayout(pannelloCentro, BoxLayout.X_AXIS));
-        pannelloCoda.setLayout(new BoxLayout(pannelloCoda, BoxLayout.Y_AXIS));
-        pannelloCoda.setPreferredSize(new Dimension(300,530));
-        pannelloCoda.setMaximumSize(pannelloCoda.getPreferredSize());
-        pannelloCoda.add(Box.createRigidArea(new Dimension(0,10)));
-        jl.setAlignmentX(Component.CENTER_ALIGNMENT);
-        pannelloCoda.add(jl);
-        pannelloCoda.add(Box.createRigidArea(new Dimension(0,10)));
-        operazioni.setPreferredSize(new Dimension(280,30));
-        operazioni.setMaximumSize(operazioni.getPreferredSize());
-        //POPOLO JCOMBO BOX
-        for(int i = 0; i< DataAccess.getOperazioni().size(); i++)
-            operazioni.addItem(DataAccess.getOperazioni().get(i));
-        pannelloCoda.add(operazioni);
-        pannelloCoda.add(Box.createRigidArea(new Dimension(0,400)));
-        selezionaCoda.setPreferredSize(new Dimension(200,30));
-        selezionaCoda.setMaximumSize(selezionaCoda.getPreferredSize());
-        selezionaCoda.setAlignmentX(Component.CENTER_ALIGNMENT);
-        selezionaCoda.setBorder(BorderFactory.createRaisedBevelBorder());
-        selezionaCoda.setBackground(Color.ORANGE);
-        pannelloCoda.add(selezionaCoda);
-        pannelloCoda.setBorder(BorderFactory.createMatteBorder(0,0,0,1,Color.gray));
-        pannelloCoda.setOpaque(false);
-        selezionaCoda.addActionListener(e->{//ActionListener sul bottone invio
-            if(!servizioPrenotazione){
-                if(pannelloCentro.getComponentCount()>2)
-                    pannelloCentro.remove(2);
-                    pannelloCentro.add(setServiPrenotazione(operazioni.getSelectedItem().toString()));
-                    frame.validate();
-            }
-        });
-
-
-
-        pannelloCentro.add(pannelloCoda);
+        pannelloCentro.add(pannelloCoda());
         pannelloCentro.add(Box.createRigidArea(new Dimension(10,0)));
         pannelloCentro.setOpaque(false);
 
@@ -109,7 +83,8 @@ public class AccettazionePrenotazioneView {
         pannelloAccettazione.setPreferredSize(new Dimension(690,530));
         pannelloAccettazione.setMaximumSize(pannelloAccettazione.getPreferredSize());
         pannelloAccettazione.add(Box.createRigidArea(new Dimension(0,20)));
-        JLabel coda=new JLabel("Stai gestendo le prenotazioni di tipo: "+tipoOperazione);
+        String[] splitString=tipoOperazione.split(":");
+        JLabel coda=new JLabel("Stai gestendo "+splitString[0]);
         coda.setFont(new Font(coda.getFont().getName(), impiegato.getFont().getStyle(), 15));
         coda.setAlignmentX(Component.CENTER_ALIGNMENT);
         pannelloAccettazione.add(coda);
@@ -124,15 +99,14 @@ public class AccettazionePrenotazioneView {
         pannelloAccettazione.setOpaque(false);
 
         accetta.addActionListener(e->{
-            servizioPrenotazione=true;
-            pannelloCentro.remove(2);
-            //Inserire il metodo accetto prenotazione
-
-            //Creo un oggetto per testare il funzionamento da eliminare in fase finale
-            PrenotazioneBean p1 = new PrenotazioneBean(1,"data","tempo",true,"codicefiscale 1",1,1);
-            pannelloCentro.add(setPrenotazione(p1));
-            frame.validate();
-            logout.setEnabled(false);
+            PrenotazioneBean p=Gestione.accettaPrenotazione(idOperazione,idStruttura);
+            if(p!=null) {
+                servizioPrenotazione = true;
+                pannelloCentro.remove(1);
+                pannelloCentro.add(setPrenotazione(p));
+                frame.validate();
+                logout.setEnabled(false);
+            }
         });
 
         return pannelloAccettazione;
@@ -185,8 +159,9 @@ public class AccettazionePrenotazioneView {
 
         fine.addActionListener(e->{
             servizioPrenotazione=false;
-            pannelloCentro.remove(2);
             DataAccess.deletePrenotazione(p.getId());
+            pannelloCentro.removeAll();
+            pannelloCentro.add(pannelloCoda());
             pannelloCentro.add(setServiPrenotazione(tipoOperazioneText.getText()));
             frame.validate();
             logout.setEnabled(true);
@@ -196,10 +171,50 @@ public class AccettazionePrenotazioneView {
         return dettagliPrenotazione;
     };
 
+    public JPanel pannelloCoda(){
+        JPanel pannelloCoda=new JPanel();
+        pannelloCoda.setLayout(new BoxLayout(pannelloCoda, BoxLayout.Y_AXIS));
+        pannelloCoda.setPreferredSize(new Dimension(300,530));
+        pannelloCoda.setMaximumSize(pannelloCoda.getPreferredSize());
+        pannelloCoda.add(Box.createRigidArea(new Dimension(0,10)));
+        jl.setAlignmentX(Component.CENTER_ALIGNMENT);
+        pannelloCoda.add(jl);
+        pannelloCoda.add(Box.createRigidArea(new Dimension(0,10)));
+
+
+        for(int i = 0; i< listoperazioni.size(); i++) {
+            JButton operazione = new JButton();
+            operazione.setText(listoperazioni.get(i).getTipoOperazione() + ": " + DataAccess.numPrenotazioni(listoperazioni.get(i).getId(),idStruttura));
+            operazione.setPreferredSize(new Dimension(230, 25));
+            operazione.setMaximumSize(operazione.getPreferredSize());
+            operazione.setName(Integer.toString(listoperazioni.get(i).getId()));
+            operazione.setAlignmentX(Component.CENTER_ALIGNMENT);
+            operazione.addActionListener(e -> {
+                if (!servizioPrenotazione) {
+                    if (pannelloCentro.getComponentCount() > 1)
+                        pannelloCentro.remove(1);
+                    pannelloCentro.add(setServiPrenotazione(operazione.getText()));
+                    idOperazione = Integer.parseInt(operazione.getName());
+                    frame.validate();
+                }
+            });
+            pannelloCoda.add(operazione);
+            pannelloCoda.add(Box.createRigidArea(new Dimension(0,10)));
+
+
+        }
+
+        pannelloCoda.setBorder(BorderFactory.createMatteBorder(0,0,0,1,Color.gray));
+        pannelloCoda.setOpaque(false);
+        return pannelloCoda;
+    }
+
+
 
     public void visible(boolean v){
         frame.setVisible(v);
     }
+
 
 
 }

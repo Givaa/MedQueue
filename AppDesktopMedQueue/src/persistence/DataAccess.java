@@ -1,5 +1,6 @@
 package persistence;
 
+import business.ImpiegatoBean;
 import business.OperazioneBean;
 import business.PrenotazioneBean;
 import business.StrutturaBean;
@@ -72,6 +73,29 @@ public class DataAccess {
 
     }
 
+    public static ImpiegatoBean getImpiegato(String codicefiscale){
+        ImpiegatoBean impiegato=new ImpiegatoBean();
+        try {
+            Statement st = DriverManagerConnectionPool.getConnection().createStatement();
+            String sql = "SELECT i.* FROM Impiegato i WHERE i.codiceFiscale='"+codicefiscale+"'";
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                impiegato.setCodicefiscale(rs.getString(1));
+                impiegato.setPassword(rs.getString(2));
+                impiegato.setNome(rs.getString(3));
+                impiegato.setCognome(rs.getString(4));
+                impiegato.setDataDiNascita(rs.getString(5));
+                impiegato.setIndirizzoEmail(rs.getString(6));
+                impiegato.setNumeroDiTelefono(rs.getString(7));
+                impiegato.setIdStruttura(Integer.parseInt(rs.getString(8)));
+            }
+            st.close();
+        } catch(SQLException e) {
+            System.err.println("SQLException:"+ e.getMessage());
+        }
+        return impiegato;
+    }
+
 
     /*
     Metodo per verificare se esiste l'impiegato nel database,si utilizza una query basata sul codicefiscale
@@ -95,14 +119,14 @@ public class DataAccess {
     }
 
     //Metodo per ottenere operazioni
-    public static ArrayList<String> getOperazioni(){
-        ArrayList<String> operazioni=new ArrayList<String>();
+    public static ArrayList<OperazioneBean> getOperazioni(){
+        ArrayList<OperazioneBean> operazioni=new ArrayList<OperazioneBean>();
         try {
             Statement st = DriverManagerConnectionPool.getConnection().createStatement();
-            String sql = "SELECT o.tipoOperazione From operazione o";
+            String sql = "SELECT o.* From operazione o";
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-                operazioni.add(rs.getString(1));
+                operazioni.add(new OperazioneBean(Integer.parseInt(rs.getString(1)),rs.getString(2),rs.getString(3)));
             }
             st.close();
         } catch(SQLException e) {
@@ -123,4 +147,46 @@ public class DataAccess {
             System.err.println("SQLException:"+ e.getMessage());
         }
     }
+
+    public static int numPrenotazioni(int id_operazione,int id_struttura){
+        int count=0;
+        try {
+            Statement st = DriverManagerConnectionPool.getConnection().createStatement();
+            String sql = "Select p.* From Prenotazione p Where  p.convalida='1' && p.idOperazione='"+id_operazione+"' && p.idStruttura='"+id_struttura+"'";
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                count++;
+            }
+            st.close();
+        } catch(SQLException e) {
+            System.err.println("SQLException:"+ e.getMessage());
+        }
+        return count;
+    }
+
+    public static PrenotazioneBean serviPrenotazione(int id_operazione,int id_struttura){
+        PrenotazioneBean prenotazione=new PrenotazioneBean();
+        try {
+            Statement st = DriverManagerConnectionPool.getConnection().createStatement();
+            String sql = "Select p.* From Prenotazione p Where  p.convalida='1' && p.idOperazione='"+id_operazione+"' && p.idStruttura='"+id_struttura+"' ORDER BY ora";
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                prenotazione.setId(Integer.parseInt(rs.getString(1)));
+                prenotazione.setData(rs.getString(2));
+                prenotazione.setTime(rs.getString(3));
+                prenotazione.setConvalida(Boolean.parseBoolean(rs.getString(4)));
+                prenotazione.setCodiceFiscale(rs.getString(5));
+                prenotazione.setIdOperazione(Integer.parseInt(rs.getString(6)));
+                prenotazione.setIdStruttura(Integer.parseInt(rs.getString(7)));
+                st.close();
+                return prenotazione;
+            }
+            st.close();
+        } catch(SQLException e) {
+            System.err.println("SQLException:"+ e.getMessage());
+        }
+        return null;
+    }
+
+
 }

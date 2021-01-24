@@ -48,7 +48,7 @@ public class LoginView{
                 errore.setText("Errore nella connessione");
             } else {
                 if(DataAccess.verificaDatiImpiegato(TF_CF.getText(), TF_pass.getText())){  //Verifico le credenziali dell'impiegato
-                    new AccettazionePrenotazioneView().visible(true);
+                    new AccettazionePrenotazioneView(DataAccess.getImpiegato(TF_CF.getText())).visible(true);
                     TF_CF.setText("");
                     TF_pass.setText("");
                     framePannello.setVisible(false);

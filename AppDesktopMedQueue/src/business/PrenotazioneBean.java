@@ -38,4 +38,17 @@ public class PrenotazioneBean {
     public void setCodiceFiscale(String codiceFiscale) { this.codiceFiscale = codiceFiscale; }
     public void setIdOperazione(int idOperazione) { this.idOperazione = idOperazione; }
     public void setIdStruttura(int idStruttura) { this.idStruttura = idStruttura; }
+
+    @Override
+    public String toString() {
+        return "PrenotazioneBean{" +
+                "id=" + id +
+                ", data='" + data + '\'' +
+                ", time='" + time + '\'' +
+                ", convalida=" + convalida +
+                ", codiceFiscale='" + codiceFiscale + '\'' +
+                ", idOperazione=" + idOperazione +
+                ", idStruttura=" + idStruttura +
+                '}';
+    }
 }
