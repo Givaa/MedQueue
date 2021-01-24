@@ -4,7 +4,7 @@ USE MedQueue;
 
 CREATE TABLE Utente(               
 codiceFiscale varchar(25) not null,
-psw varchar(255) not null,
+password varchar(255) not null,
 nome varchar(255) not null,
 cognome varchar(255) not null,
 dataDiNascita date not null,

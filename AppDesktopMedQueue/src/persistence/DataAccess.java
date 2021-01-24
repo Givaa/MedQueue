@@ -106,7 +106,7 @@ public class DataAccess {
         boolean verifica=false;
         try {
             Statement st = DriverManagerConnectionPool.getConnection().createStatement();
-            String sql = "SELECT i.codiceFiscale,i.password FROM impiegato i WHERE i.codiceFiscale='"+cf+"'&& i.password='"+password+"'";
+            String sql = "SELECT i.codiceFiscale,i.password FROM Impiegato i WHERE i.codiceFiscale='"+cf+"'&& i.password='"+password+"'";
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
                 verifica=true;
