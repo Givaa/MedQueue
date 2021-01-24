@@ -97,15 +97,11 @@ public class LoginView{
         pannelloaccesso.add(connect);
 
 
-
         framePannello.add(pannelloaccesso, BorderLayout.CENTER);
         framePannello.add(contenitoreImmagine, BorderLayout.NORTH);
         framePannello.setVisible(true);
 
     }
-
-
-
 
     public static void main(String[] args) {
         new LoginView();
