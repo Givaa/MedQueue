@@ -140,6 +140,17 @@ public class AccettazionePrenotazioneView {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
+
+
+                if(pannelloCentro.getComponentCount()>2){
+                    JPanel panel=(JPanel) pannelloCentro.getComponent(2);
+                    Component[] component=panel.getComponents();
+                    for (int i = 0, j = 0; i < component.length; i++) { //Ciclo for sul numero di componenti del pannello
+                        if (component[i] instanceof JButton) //Se la componente e un JButton aggiorno il testo (TipoOperazione: numero prenotazioni)
+                          aggiornoNumPrenotazioni(pannelloCoda,(JButton) component[i]);
+
+                    }
+                }else
                 aggiornoNumPrenotazioni(pannelloCoda, null); //Metodo per aggiornare il testo dei button
                 frame.validate(); //Aggiorno il frame
             }
@@ -183,6 +194,7 @@ public class AccettazionePrenotazioneView {
                     pannelloCentro.remove(2);//Rimuovo il pannello per l'accettazione
                 pannelloCentro.add(setPrenotazione(p)); //Aggiungo il panel contenente le informazioni sulla prenotazione generato tramite il metodo setPrenotazione
                 logout.setEnabled(false); //blocco il bottone per il logout
+                aggiornoNumPrenotazioni((JPanel) pannelloCentro.getComponent(0), null);
                 frame.validate(); //Aggiorno il frame
             }
         });
