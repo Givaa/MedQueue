@@ -26,7 +26,7 @@ public class AmbulatoriModel implements Model<AmbulatoriBean> {
     try {
       con = DriverManagerConnectionPool.getConnection();
       ps = con.prepareStatement(selectSQL);
-      ps.setString(1, id);
+      ps.setInt(1, Integer.parseInt(id) );
 
       ResultSet rs = ps.executeQuery();
 
