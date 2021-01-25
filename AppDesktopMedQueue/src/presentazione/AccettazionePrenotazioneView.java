@@ -26,7 +26,6 @@ public class AccettazionePrenotazioneView {
     private JLabel jl=new JLabel("Scegli l'operazione da gestire: ");
     private JComboBox<String> operazioni = new JComboBox<String>();
     private JButton selezionaCoda=new JButton("Seleziona operazione");
-    private JButton accetta=new JButton("Servi Prenotazione"); //Creo il bottone per accettare una prenotazione
     private ArrayList<OperazioneBean> listoperazioni;
     private int idOperazione;
     private int idStruttura;
@@ -81,9 +80,11 @@ public class AccettazionePrenotazioneView {
          */
         pannelloCentro.setLayout(new BoxLayout(pannelloCentro, BoxLayout.X_AXIS));//BoxLayout che posiziona gli elementi sull'asse X
         pannelloCentro.add(pannelloCoda()); //Aggiungo al pannello centrale il primo JPanel che conterra i button, viene generato nel metodo pannelloCoda()
-        pannelloCentro.add(Box.createRigidArea(new Dimension(10,0))); //Spazio vuoto che viene utilizzato per distanziare i 2 JPanel del pannelloCentro
+        pannelloCentro.add(Box.createRigidArea(new Dimension(100,0))); //Spazio vuoto che viene utilizzato per distanziare i 2 JPanel del pannelloCentro
         pannelloCentro.setOpaque(false); //Nascondo lo sfondo del JPanel
         //------------------Fine Pannello Centrale--------------------
+
+        System.out.println(pannelloCentro.getComponentCount());
 
         //Aggiungo al frame i 2 pannelli Nord e Centro
         frame.add(pannelloNord,BorderLayout.NORTH);
@@ -121,8 +122,8 @@ public class AccettazionePrenotazioneView {
             //ActionListener sul bottone
             operazione.addActionListener(e -> {
                 if (!servizioPrenotazione) { //Se non si sta servendo nessuna prenotazione e possibile cambiare la coda scelta
-                    if (pannelloCentro.getComponentCount() > 1) //if che ci permette di controllare se era stata gia scelta una coda
-                        pannelloCentro.remove(1); //rimuovo il pannello della coda scelta
+                    if (pannelloCentro.getComponentCount() > 2) //if che ci permette di controllare se era stata gia scelta una coda
+                        pannelloCentro.remove(2); //rimuovo il pannello della coda scelta
                     pannelloCentro.add(setServiPrenotazione(operazione.getText())); //Aggiungo un nuovo pannello per la nuova coda
                     idOperazione = Integer.parseInt(operazione.getName()); //Aggiorno l'id dell operazione gestita dall'utente in base al name assegnato al button
                     frame.validate(); //Aggiorno il frame
@@ -145,7 +146,6 @@ public class AccettazionePrenotazioneView {
 
         }, 10000, 10000);
 
-
         pannelloCoda.setBorder(BorderFactory.createMatteBorder(0,0,0,1,Color.gray)); //Creo un bordo a destra per il pannello
         pannelloCoda.setOpaque(false);//Setto lo sfondo del pannello opaco
         return pannelloCoda;
@@ -165,7 +165,7 @@ public class AccettazionePrenotazioneView {
         coda.setFont(new Font(coda.getFont().getName(), impiegato.getFont().getStyle(), 15)); //Modifico la size della scritta
         coda.setAlignmentX(Component.CENTER_ALIGNMENT); //Centro la scritta
         pannelloAccettazione.add(coda); //Aggiungo la scritta al pannello
-        //JButton accetta=new JButton("Servi Prenotazione"); //Creo il bottone per accettare una prenotazione
+        JButton accetta=new JButton("Servi Prenotazione"); //Creo il bottone per accettare una prenotazione
         //Setto le dimensioni del button
         accetta.setPreferredSize(new Dimension(200,80));
         accetta.setMaximumSize(accetta.getPreferredSize());
@@ -175,14 +175,15 @@ public class AccettazionePrenotazioneView {
         accetta.setAlignmentX(Component.CENTER_ALIGNMENT); //Centro il bottone
         pannelloAccettazione.add(accetta);//aggiungo il bottone al panel
         pannelloAccettazione.setOpaque(false);//Setto lo sfondo del panel trasparente
-
         accetta.addActionListener(e->{ //ActionListener sul bottone per accettare una prenotazione
             PrenotazioneBean p=Gestione.accettaPrenotazione(idOperazione,idStruttura); //Invoco il metodo per l'accettazione di una prenotazione
             if(p!=null) { //Se il metodo mi restituisce una prenotazione
                 servizioPrenotazione = true;  //Assegno alla true alla variabile che indica il servizio di una prenotazione
-                pannelloCentro.remove(1); //Rimovo il panel per l'accettazione di una prenotazione
+                if(pannelloCentro.getComponentCount()>2)
+                    pannelloCentro.remove(2);//Rimuovo il pannello per l'accettazione
                 pannelloCentro.add(setPrenotazione(p)); //Aggiungo il panel contenente le informazioni sulla prenotazione generato tramite il metodo setPrenotazione
                 logout.setEnabled(false); //blocco il bottone per il logout
+                aggiornoNumPrenotazioni((JPanel) pannelloCentro.getComponent(0));
                 frame.validate(); //Aggiorno il frame
             }
         });
@@ -250,7 +251,7 @@ public class AccettazionePrenotazioneView {
 
         fine.addActionListener(e->{ //ActionListener sul bottone per concludere il servizio
             servizioPrenotazione=false; //Assegno false alla variabile che indica che l'impiegato sta servendo il un impiegato
-            pannelloCentro.remove(1); //Rimuovo il pannello contenete le informazioni sulla prenotazione dal pannelloCentrale
+            pannelloCentro.remove(2); //Rimuovo il pannello contenete le informazioni sulla prenotazione dal pannelloCentrale
             pannelloCentro.add(setServiPrenotazione(tipoOperazioneText.getText())); //Aggiungo il pannello per l'accettazione di una prenotazione al pannelo centrale
             aggiornoNumPrenotazioni((JPanel) pannelloCentro.getComponent(0)); //Aggiorno in numero di prenotazioni per ogni coda
             logout.setEnabled(true);//riabilito il pulsante per il logout
