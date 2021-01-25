@@ -142,11 +142,14 @@ public class AccettazionePrenotazioneView {
             public void run() {
 
 
-                if(pannelloCentro.getComponentCount()>2){
-                    JPanel panel=(JPanel) pannelloCentro.getComponent(2);
+                if(pannelloCentro.getComponentCount()>2){ //se il pannello centrale e formato da 3 componenti
+                    JPanel panel=(JPanel) pannelloCentro.getComponent(2); //Prendiamo il terzo pannello
                     Component[] component=panel.getComponents();
-                    for (int i = 0, j = 0; i < component.length; i++) { //Ciclo for sul numero di componenti del pannello
-                        if (component[i] instanceof JButton) //Se la componente e un JButton aggiorno il testo (TipoOperazione: numero prenotazioni)
+                    //Ciclo for sul numero di componenti del pannello
+                    //Il doppio controllo in and ci assicura che il pannello preso sia quello che permette l'accettazione
+                    for (int i = 0, j = 0; i < component.length && component.length>2; i++) { //Ciclo for sul numero di componenti del pannello
+                        if (component[i] instanceof JButton)
+                            //Aggiornamento che permette di bloccare il bottone di accettazione in casso di 0 prenotazioni da servire
                           aggiornoNumPrenotazioni(pannelloCoda,(JButton) component[i]);
 
                     }
@@ -199,7 +202,7 @@ public class AccettazionePrenotazioneView {
             }
         });
 
-        aggiornoNumPrenotazioni((JPanel) pannelloCentro.getComponent(0), accetta);
+        aggiornoNumPrenotazioni((JPanel) pannelloCentro.getComponent(0), accetta); //se non ci sono prenotazioni da servire si blocca il bottone per accettare
 
         if(frame.getWindowListeners().length>0) { //Verifico se e stato assegnato qualche WindowsListener al frame
             /*L'esecuzione del if indica che il panel e stato generato dopo l'accettazione di una prenotazione
@@ -267,9 +270,28 @@ public class AccettazionePrenotazioneView {
             pannelloCentro.remove(2); //Rimuovo il pannello contenete le informazioni sulla prenotazione dal pannelloCentrale
             pannelloCentro.add(setServiPrenotazione(tipoOperazioneText.getText())); //Aggiungo il pannello per l'accettazione di una prenotazione al pannelo centrale
             logout.setEnabled(true);//riabilito il pulsante per il logout
+            //Sblocco la scelta coda in fase di servizio prenotazione
+            JPanel panel=(JPanel) pannelloCentro.getComponent(0); //Prendiamo il primo pannello
+            Component[] component=panel.getComponents();
+            for (int i = 0, j = 0; i < component.length; i++) { //Ciclo for sul numero di componenti del pannello
+                if (component[i] instanceof JButton)
+                    ((JButton)component[i]).setEnabled(true);
+
+            }
+            //-------------------------------------------------------
             frame.validate();//Aggiorno il frame
         });
 
+
+        //Blocco la scelta coda in fase di servizio prenotazione
+        JPanel panel=(JPanel) pannelloCentro.getComponent(0); //Prendiamo il primo pannello
+        Component[] component=panel.getComponents();
+        for (int i = 0, j = 0; i < component.length; i++) { //Ciclo for sul numero di componenti del pannello
+            if (component[i] instanceof JButton)
+                ((JButton)component[i]).setEnabled(false);
+
+        }
+        //-------------------------------------------------------
 
         //Blocco la chiusura del frame dirrettamente quando l'impiegato sta servendo ua prenotazione
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -298,7 +320,7 @@ public class AccettazionePrenotazioneView {
         }
 
         int j = 0;
-        for(int i : numeroPrenotazioni){
+        for(int i : numeroPrenotazioni){ //Sommiamo il numero di prenotazioni
             j += i;
         }
 
