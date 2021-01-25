@@ -26,6 +26,7 @@ public class AccettazionePrenotazioneView {
     private JLabel jl=new JLabel("Scegli l'operazione da gestire: ");
     private JComboBox<String> operazioni = new JComboBox<String>();
     private JButton selezionaCoda=new JButton("Seleziona operazione");
+    private JButton accetta=new JButton("Servi Prenotazione"); //Creo il bottone per accettare una prenotazione
     private ArrayList<OperazioneBean> listoperazioni;
     private int idOperazione;
     private int idStruttura;
@@ -91,7 +92,7 @@ public class AccettazionePrenotazioneView {
     }
 
 
-    //Metodo in cui viene generato il pannelloCoda che conterra n button ovvero le n code possibili da gestire
+    //Metodo in cui viene generato il pannelloCoda che conterrà n button ovvero le n code possibili da gestire
     private JPanel pannelloCoda(){
         JPanel pannelloCoda=new JPanel();
         pannelloCoda.setLayout(new BoxLayout(pannelloCoda, BoxLayout.Y_AXIS));//BoxLayout che posiziona gli elementi sull'asse Y
@@ -164,7 +165,7 @@ public class AccettazionePrenotazioneView {
         coda.setFont(new Font(coda.getFont().getName(), impiegato.getFont().getStyle(), 15)); //Modifico la size della scritta
         coda.setAlignmentX(Component.CENTER_ALIGNMENT); //Centro la scritta
         pannelloAccettazione.add(coda); //Aggiungo la scritta al pannello
-        JButton accetta=new JButton("Servi Prenotazione"); //Creo il bottone per accettare una prenotazione
+        //JButton accetta=new JButton("Servi Prenotazione"); //Creo il bottone per accettare una prenotazione
         //Setto le dimensioni del button
         accetta.setPreferredSize(new Dimension(200,80));
         accetta.setMaximumSize(accetta.getPreferredSize());
@@ -185,8 +186,6 @@ public class AccettazionePrenotazioneView {
                 frame.validate(); //Aggiorno il frame
             }
         });
-
-
 
         if(frame.getWindowListeners().length>0) { //Verifico se e stato assegnato qualche WindowsListener al frame
             /*L'esecuzione del if indica che il panel e stato generato dopo l'accettazione di una prenotazione
@@ -239,7 +238,7 @@ public class AccettazionePrenotazioneView {
         pannello.add(oraText);
         pannello.add(tipoOperazione);
         pannello.add(tipoOperazioneText);
-        //-----Fine Pannello conentente informazioni sulla prenotazione accettata------
+        //-----Fine Pannello contenente informazioni sulla prenotazione accettata------
 
         JButton fine = new JButton("Fine Servizio");//Button per terminare il servizio della prenotazione
         //Setto la dimensione del button
@@ -276,10 +275,12 @@ public class AccettazionePrenotazioneView {
     private void aggiornoNumPrenotazioni(JPanel pannelloCoda){
         //Ottengo tutte le componenti del pannello
         Component[] comp = pannelloCoda.getComponents();
+        ArrayList<Integer> numeroPrenotazioni = new ArrayList<Integer>();
         for (int i = 0, j = 0; i < comp.length; i++) { //Ciclo for sul numero di componenti del pannello
-            if (comp[i] instanceof JButton) { //Se la componente e un JButton aggiorno il testo (TipoOperazione: numero prenotazioni)
-                ((JButton) comp[i]).setText(listoperazioni.get(j).getTipoOperazione() + ": " + DataAccess.numPrenotazioni(listoperazioni.get(j).getId(), idStruttura));
-                j++;//La variabile j viene utilizzata poiche nel pannello non conterra solo JButton qundi lavoreremo su due array diversi
+            if (comp[i] instanceof JButton) {//Se la componente e un JButton aggiorno il testo (TipoOperazione: numero prenotazioni)
+                numeroPrenotazioni.add(DataAccess.numPrenotazioni(listoperazioni.get(j).getId(), idStruttura));
+                ((JButton) comp[i]).setText(listoperazioni.get(j).getTipoOperazione() + ": " + numeroPrenotazioni.get(j));
+                j++;//La variabile j viene utilizzata poichè nel pannello non conterrà solo JButton quindi lavoreremo su due array diversi
             }
         }
     }
@@ -291,7 +292,7 @@ public class AccettazionePrenotazioneView {
     private void handleClosing() {
             int answer = showWarningMessage();//Mostro all'impiegato la dialogBox
             switch (answer){
-                case JOptionPane.YES_OPTION: //Se clicca su cancel allora annumma l'operazione di chiusura del frame
+                case JOptionPane.YES_OPTION: //Se clicca su cancel allora annulla l'operazione di chiusura del frame
                     break;
 
                 case JOptionPane.NO_OPTION: //Se clicca su termina chiude il frame
@@ -302,12 +303,12 @@ public class AccettazionePrenotazioneView {
 
     //DialogBox
     private int showWarningMessage() {
-        String[] buttonLabels = new String[] {"Cancel", "Termina"};
+        String[] buttonLabels = new String[] {"Indietro", "Termina"};
         String defaultOption = buttonLabels[0];
         Icon icon = null;
 
         return JOptionPane.showOptionDialog(frame,
-                "Stai ancora servendo una prentoazione\n",
+                "Stai ancora servendo una prenotazione\n",
                 "Warning",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.WARNING_MESSAGE,
@@ -315,10 +316,5 @@ public class AccettazionePrenotazioneView {
                 buttonLabels,
                 defaultOption);
     }
-
-
-
-
-
 
 }

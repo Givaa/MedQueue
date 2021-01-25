@@ -13,9 +13,10 @@ public class DataAccess {
     public static PrenotazioneBean getPrenotazione(int id){
         PrenotazioneBean prenotazione = new PrenotazioneBean();
         try {
-            Statement st = DriverManagerConnectionPool.getConnection().createStatement();
-            String sql = "SELECT p.* FROM Prenotazione p WHERE p.id='"+id+"'";
-            ResultSet rs = st.executeQuery(sql);
+            String sql = "SELECT * FROM MedQueue.Prenotazione WHERE Prenotazione.Id = ?";
+            PreparedStatement query = DriverManagerConnectionPool.getConnection().prepareStatement(sql);
+            query.setInt(1, id);
+            ResultSet rs = query.executeQuery();
             while (rs.next()) {
                 prenotazione.setId(Integer.parseInt(rs.getString(1)));
                 prenotazione.setData(rs.getString(2));
@@ -25,8 +26,10 @@ public class DataAccess {
                 prenotazione.setIdOperazione(Integer.parseInt(rs.getString(6)));
                 prenotazione.setIdStruttura(Integer.parseInt(rs.getString(7)));
             }
-            st.close();
+            rs.close();
+            query.close();
         } catch(SQLException e) {
+            e.printStackTrace();
             System.err.println("SQLException:"+ e.getMessage());
         }
         return prenotazione;
@@ -35,18 +38,20 @@ public class DataAccess {
     public static StrutturaBean getStruttura(int id){
         StrutturaBean struttura=new StrutturaBean();
         try {
-            Statement st = DriverManagerConnectionPool.getConnection().createStatement();
-            String sql = "SELECT s.* FROM Struttura s WHERE s.id='"+id+"'";
-            ResultSet rs = st.executeQuery(sql);
+            String sql = "SELECT * FROM MedQueue.Struttura WHERE Struttura.Id = ?";
+            PreparedStatement query = DriverManagerConnectionPool.getConnection().prepareStatement(sql);
+            query.setInt(1, id);
+            ResultSet rs = query.executeQuery();
             while (rs.next()) {
                 struttura.setId(Integer.parseInt(rs.getString(1)));
                 struttura.setNome(rs.getString(2));
                 struttura.setIndirizzo(rs.getString(3));
                 struttura.setNumeroDiTelefono(rs.getString(4));
             }
-
-            st.close();
+            query.close();
+            rs.close();
         } catch(SQLException e) {
+            e.printStackTrace();
             System.err.println("SQLException:"+ e.getMessage());
         }
         return struttura;
@@ -56,17 +61,19 @@ public class DataAccess {
     public static OperazioneBean getOperazione(int id){
         OperazioneBean operazione =new OperazioneBean();
         try {
-            Statement st = DriverManagerConnectionPool.getConnection().createStatement();
-            String sql = "SELECT o.* FROM Operazione o WHERE o.id='"+id+"'";
-            ResultSet rs = st.executeQuery(sql);
+            String sql = "SELECT * FROM MedQueue.Operazione WHERE Operazione.Id = ?";
+            PreparedStatement query = DriverManagerConnectionPool.getConnection().prepareStatement(sql);
+            query.setInt(1, id);
+            ResultSet rs = query.executeQuery();
             while (rs.next()) {
                 operazione.setId(Integer.parseInt(rs.getString(1)));
                 operazione.setTipoOperazione(rs.getString(2));
                 operazione.setDescrizione(rs.getString(3));
             }
-
-            st.close();
+            query.close();
+            rs.close();
         } catch(SQLException e) {
+            e.printStackTrace();
             System.err.println("SQLException:"+ e.getMessage());
         }
         return operazione;
@@ -76,9 +83,10 @@ public class DataAccess {
     public static ImpiegatoBean getImpiegato(String codicefiscale){
         ImpiegatoBean impiegato=new ImpiegatoBean();
         try {
-            Statement st = DriverManagerConnectionPool.getConnection().createStatement();
-            String sql = "SELECT i.* FROM Impiegato i WHERE i.codiceFiscale='"+codicefiscale+"'";
-            ResultSet rs = st.executeQuery(sql);
+            String sql = "SELECT * FROM MedQueue.Impiegato WHERE Impiegato.codiceFiscale = ?";
+            PreparedStatement query = DriverManagerConnectionPool.getConnection().prepareStatement(sql);
+            query.setString(1, codicefiscale);
+            ResultSet rs = query.executeQuery();
             while (rs.next()) {
                 impiegato.setCodicefiscale(rs.getString(1));
                 impiegato.setPassword(rs.getString(2));
@@ -89,8 +97,10 @@ public class DataAccess {
                 impiegato.setNumeroDiTelefono(rs.getString(7));
                 impiegato.setIdStruttura(Integer.parseInt(rs.getString(8)));
             }
-            st.close();
+            query.close();
+            rs.close();
         } catch(SQLException e) {
+            e.printStackTrace();
             System.err.println("SQLException:"+ e.getMessage());
         }
         return impiegato;
@@ -105,14 +115,18 @@ public class DataAccess {
     public static boolean verificaDatiImpiegato(String cf,String password){
         boolean verifica=false;
         try {
-            Statement st = DriverManagerConnectionPool.getConnection().createStatement();
-            String sql = "SELECT i.codiceFiscale,i.password FROM Impiegato i WHERE i.codiceFiscale='"+cf+"'&& i.password='"+password+"'";
-            ResultSet rs = st.executeQuery(sql);
+            String sql = "SELECT Impiegato.codiceFiscale, Impiegato.password FROM MedQueue.Impiegato WHERE Impiegato.codiceFiscale = ? AND Impiegato.password = ?";
+            PreparedStatement query = DriverManagerConnectionPool.getConnection().prepareStatement(sql);
+            query.setString(1, cf);
+            query.setString(2, password);
+            ResultSet rs = query.executeQuery();
             while (rs.next()) {
                 verifica=true;
             }
-            st.close();
+            query.close();
+            rs.close();
         } catch(SQLException e) {
+            e.printStackTrace();
             System.err.println("SQLException:"+ e.getMessage());
         }
         return verifica;
@@ -122,14 +136,16 @@ public class DataAccess {
     public static ArrayList<OperazioneBean> getOperazioni(){
         ArrayList<OperazioneBean> operazioni=new ArrayList<OperazioneBean>();
         try {
-            Statement st = DriverManagerConnectionPool.getConnection().createStatement();
-            String sql = "SELECT o.* From operazione o";
-            ResultSet rs = st.executeQuery(sql);
+            String sql = "SELECT * FROM MedQueue.Operazione";
+            PreparedStatement query = DriverManagerConnectionPool.getConnection().prepareStatement(sql);
+            ResultSet rs = query.executeQuery();
             while (rs.next()) {
                 operazioni.add(new OperazioneBean(Integer.parseInt(rs.getString(1)),rs.getString(2),rs.getString(3)));
             }
-            st.close();
+            query.close();
+            rs.close();
         } catch(SQLException e) {
+            e.printStackTrace();
             System.err.println("SQLException:"+ e.getMessage());
         }
         return operazioni;
@@ -137,13 +153,13 @@ public class DataAccess {
 
     public static void deletePrenotazione (int id){
         try {
-            Statement st = DriverManagerConnectionPool.getConnection().createStatement();
-            String sql = "DELETE FROM prenotazione p WHERE p.id='"+id+"'";
-            PreparedStatement ps =  DriverManagerConnectionPool.getConnection().prepareStatement(sql);
-            if(ps.executeUpdate()<0)
-                System.err.println("Delete failed\n");
-            st.close();
+            String sql = "DELETE Prenotazione FROM MedQueue.Prenotazione WHERE Prenotazione.Id = ?";
+            PreparedStatement query = DriverManagerConnectionPool.getConnection().prepareStatement(sql);
+            query.setInt(1, id);
+            query.executeUpdate();
+            query.close();
         } catch(SQLException e) {
+            e.printStackTrace();
             System.err.println("SQLException:"+ e.getMessage());
         }
     }
@@ -151,14 +167,18 @@ public class DataAccess {
     public static int numPrenotazioni(int id_operazione,int id_struttura){
         int count=0;
         try {
-            Statement st = DriverManagerConnectionPool.getConnection().createStatement();
-            String sql = "Select p.* From Prenotazione p Where  p.convalida='1' && p.idOperazione='"+id_operazione+"' && p.idStruttura='"+id_struttura+"'";
-            ResultSet rs = st.executeQuery(sql);
+            String sql = "SELECT * FROM MedQueue.Prenotazione WHERE Prenotazione.convalida = 1 AND Prenotazione.idOperazione = ? AND Prenotazione.idStruttura = ?";
+            PreparedStatement query = DriverManagerConnectionPool.getConnection().prepareStatement(sql);
+            query.setInt(1, id_operazione);
+            query.setInt(2, id_struttura);
+            ResultSet rs = query.executeQuery();
             while (rs.next()) {
                 count++;
             }
-            st.close();
+            query.close();
+            rs.close();
         } catch(SQLException e) {
+            e.printStackTrace();
             System.err.println("SQLException:"+ e.getMessage());
         }
         return count;
@@ -167,9 +187,11 @@ public class DataAccess {
     public static PrenotazioneBean serviPrenotazione(int id_operazione,int id_struttura){
         PrenotazioneBean prenotazione=new PrenotazioneBean();
         try {
-            Statement st = DriverManagerConnectionPool.getConnection().createStatement();
-            String sql = "Select p.* From Prenotazione p Where  p.convalida='1' && p.idOperazione='"+id_operazione+"' && p.idStruttura='"+id_struttura+"' ORDER BY ora";
-            ResultSet rs = st.executeQuery(sql);
+            String sql = "SELECT * FROM MedQueue.Prenotazione WHERE Prenotazione.convalida = 1 AND Prenotazione.idOperazione = ? AND Prenotazione.idStruttura = ? ORDER BY ora";
+            PreparedStatement query = DriverManagerConnectionPool.getConnection().prepareStatement(sql);
+            query.setInt(1, id_operazione);
+            query.setInt(2, id_struttura);
+            ResultSet rs = query.executeQuery();
             while (rs.next()) {
                 prenotazione.setId(Integer.parseInt(rs.getString(1)));
                 prenotazione.setData(rs.getString(2));
@@ -178,15 +200,15 @@ public class DataAccess {
                 prenotazione.setCodiceFiscale(rs.getString(5));
                 prenotazione.setIdOperazione(Integer.parseInt(rs.getString(6)));
                 prenotazione.setIdStruttura(Integer.parseInt(rs.getString(7)));
-                st.close();
                 return prenotazione;
             }
-            st.close();
+            query.close();
+            rs.close();
         } catch(SQLException e) {
+            e.printStackTrace();
             System.err.println("SQLException:"+ e.getMessage());
         }
         return null;
     }
-
 
 }
