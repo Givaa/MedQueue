@@ -1,6 +1,5 @@
 package persistence;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -20,12 +19,10 @@ public class DriverManagerConnectionPool {
     }
   }
 
-  @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
   public DriverManagerConnectionPool() {
     freeDbConnections = new LinkedList<Connection>();
   }
 
-  @SuppressFBWarnings("DMI_CONSTANT_DB_PASSWORD")
   public static synchronized Connection createDbConnection() {
     try {
       Connection newConnection = null;
@@ -36,7 +33,7 @@ public class DriverManagerConnectionPool {
                   + "&useJDBCCompliantTimezoneShift=true&zeroDateTimeBehavior=convertToNull"
                   + "&autoReconnect=true&useSSL=false";
       String username = "root";
-      String password = "root";
+      String password = "angelo99";
 
       newConnection =
           DriverManager.getConnection(

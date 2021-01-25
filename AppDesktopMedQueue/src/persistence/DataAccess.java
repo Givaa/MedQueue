@@ -4,18 +4,21 @@ import business.ImpiegatoBean;
 import business.OperazioneBean;
 import business.PrenotazioneBean;
 import business.StrutturaBean;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * Classe che permette operazioni sul database
+ */
 public class DataAccess {
 
-  @SuppressFBWarnings({
-    "OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE",
-    "OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE"
-  })
+  /**
+   * Metodo che ci permettere di ottenere una prenotazione dal database in base all'id
+   * @param id id della prenotazione
+   * @return prenotazione
+   */
   public static PrenotazioneBean getPrenotazione(int id) {
     PrenotazioneBean prenotazione = new PrenotazioneBean();
     try {
@@ -41,10 +44,11 @@ public class DataAccess {
     return prenotazione;
   }
 
-  @SuppressFBWarnings({
-    "OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE",
-    "OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE"
-  })
+  /**
+   * Metodo che ci permette di ottenere una struttura ospedaliera dal database in base all'id
+   * @param id id della struttura ospedaliera
+   * @return struttura ospedaliera
+   */
   public static StrutturaBean getStruttura(int id) {
     StrutturaBean struttura = new StrutturaBean();
     try {
@@ -67,10 +71,11 @@ public class DataAccess {
     return struttura;
   }
 
-  @SuppressFBWarnings({
-    "OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE",
-    "OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE"
-  })
+  /**
+   * Metodo che ci permette di ottenere un operazione per cui l'utente si puo prenotare in base all'id
+   * @param id id dell'operazione
+   * @return operazione
+   */
   public static OperazioneBean getOperazione(int id) {
     OperazioneBean operazione = new OperazioneBean();
     try {
@@ -92,10 +97,11 @@ public class DataAccess {
     return operazione;
   }
 
-  @SuppressFBWarnings({
-    "OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE",
-    "OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE"
-  })
+  /**
+   * Metodo che restituisce un impiegato di una struttura ospedaliera in base al codicefiscale
+   * @param codicefiscale codice fiscale dell'impiegato
+   * @return impiegato
+   */
   public static ImpiegatoBean getImpiegato(String codicefiscale) {
     ImpiegatoBean impiegato = new ImpiegatoBean();
     try {
@@ -122,38 +128,10 @@ public class DataAccess {
     return impiegato;
   }
 
-  @SuppressFBWarnings({
-    "OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE",
-    "OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE"
-  })
-  public static boolean verificaDatiImpiegato(String cf, String password) {
-    boolean verifica = false;
-    try {
-      String sql =
-          "SELECT Impiegato.codiceFiscale, Impiegato.password "
-                  + "FROM MedQueue.Impiegato "
-                  + "WHERE Impiegato.codiceFiscale = ? AND Impiegato.password = ?";
-      PreparedStatement query = DriverManagerConnectionPool.getConnection().prepareStatement(sql);
-      query.setString(1, cf);
-      query.setString(2, password);
-      ResultSet rs = query.executeQuery();
-      while (rs.next()) {
-        verifica = true;
-      }
-      query.close();
-      rs.close();
-    } catch (SQLException e) {
-      e.printStackTrace();
-      System.err.println("SQLException:" + e.getMessage());
-    }
-    return verifica;
-  }
-
-  // Metodo per ottenere operazioni
-  @SuppressFBWarnings({
-    "OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE",
-    "OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE"
-  })
+  /**
+   * Metodo che restituisce tutte le operazioni per cui e possibilie prenotarsi
+   * @return lista operazioni
+   */
   public static ArrayList<OperazioneBean> getOperazioni() {
     ArrayList<OperazioneBean> operazioni = new ArrayList<OperazioneBean>();
     try {
@@ -175,7 +153,10 @@ public class DataAccess {
     return operazioni;
   }
 
-  @SuppressFBWarnings("OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE")
+  /**
+   * Metodo per cancellare una prenotazione dal database in base all'id
+   * @param id id della prenotazione da cancellare
+   */
   public static void deletePrenotazione(int id) {
     try {
       String sql = "DELETE Prenotazione FROM MedQueue.Prenotazione WHERE Prenotazione.Id = ?";
@@ -189,10 +170,12 @@ public class DataAccess {
     }
   }
 
-  @SuppressFBWarnings({
-    "OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE",
-    "OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE"
-  })
+  /**
+   * Metodo che restituisce il numero di prenotazioni da servire in base all'id dell'oprazione e l'id della struttura
+   * @param idOperazione id dell'operazione
+   * @param idStruttura id della struttura
+   * @return numero di prenotazioni da servire
+   */
   public static int numPrenotazioni(int idOperazione, int idStruttura) {
     int count = 0;
     try {
@@ -216,10 +199,12 @@ public class DataAccess {
     return count;
   }
 
-  @SuppressFBWarnings({
-    "OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE",
-    "OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE"
-  })
+  /**
+   * Metodo che restituisce la prima operazione da servire in base all'ora di prenotazione
+   * @param idOperazione id dell operazione per cui si vuole accettare una prenotazione
+   * @param idStruttura id della struttura per cui si vuole accettare una prenotazione
+   * @return prenotazione oppure null se non ce ne sono
+   */
   public static PrenotazioneBean serviPrenotazione(int idOperazione, int idStruttura) {
     PrenotazioneBean prenotazione = new PrenotazioneBean();
     try {

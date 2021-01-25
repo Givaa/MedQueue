@@ -29,6 +29,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import persistence.DataAccess;
 
+/**
+ * Classe che genera un frame che permette di selezionare la coda di prenotazioni da gestire,
+ * accettare e servire una prenotazione
+ */
 public class AccettazionePrenotazioneView {
 
   private final JFrame frame = new JFrame();
@@ -46,6 +50,13 @@ public class AccettazionePrenotazioneView {
       false; // Variabile booleana utilizzata per controllare se l'impiegato sta servendo una
   // prenotazione
 
+  /**
+   * Inizializzo un nuovo oggetto che mostrera un frame in cui sara possibile:
+   * 1. Selezionare una coda
+   * 2. Successivamente accettare una prenotazione
+   * 3. Successivamente servire una prenotazione
+   * @param imp Impiegato che accettera le prenotazioni
+   */
   public AccettazionePrenotazioneView(ImpiegatoBean imp) {
     idStruttura =
         imp.getIdStruttura(); // Salvo la struttura in cui lavora l'impiegato per poter ottenere le
@@ -131,14 +142,17 @@ public class AccettazionePrenotazioneView {
     // pannelloCentro
     pannelloCentro.setOpaque(false); // Nascondo lo sfondo del JPanel
     // ------------------Fine Pannello Centrale--------------------
-
-    System.out.println(pannelloCentro.getComponentCount());
+    
 
     // Aggiungo al frame i 2 pannelli Nord e Centro
     frame.add(pannelloNord, BorderLayout.NORTH);
     frame.add(pannelloCentro, BorderLayout.CENTER);
   }
 
+  /**
+   * Metodo che genera un pannello che ci permette di scegliere la coda da gestire
+   * @return pannello con le code da gestire
+   */
   // Metodo in cui viene generato il pannelloCoda che conterrà n button ovvero le n code possibili
   // da gestire
   private JPanel pannelloCoda() {
@@ -247,6 +261,11 @@ public class AccettazionePrenotazioneView {
     return pannelloCoda;
   }
 
+  /**
+   * Metodo che genera un pannello che ci permette di accettare una penotazione
+   * @param tipoOperazione operazione per la quale si vuole accettare una prenotazione
+   * @return pannello che permette di accettare una prenotazione
+   */
   // Metodo in cui viene genrato il pannello per l'accettazione di una prenotazione
   private JPanel setServiPrenotazione(String tipoOperazione) {
     JPanel pannelloAccettazione = new JPanel();
@@ -328,6 +347,11 @@ public class AccettazionePrenotazioneView {
     return pannelloAccettazione;
   }
 
+  /**
+   * Metodo che genera un pannello che mostra le informazioni sulla prenotazone accettate
+   * @param p prenotazione accettate
+   * @return pannello che mostra la prenotazione
+   */
   // Metodo che conterra informazioni sulla prenotazione accettata
   private JPanel setPrenotazione(PrenotazioneBean p) {
 
@@ -438,6 +462,11 @@ public class AccettazionePrenotazioneView {
     return dettagliPrenotazione;
   }
 
+  /**
+   * Metodo che ci permette di aggiornare il numero di prenotazioni in attesa di essere accettate
+   * @param pannelloCoda pannello che conterra i button per le code disponibili
+   * @param button button che ha la funzione di accettare una prenotazione se presente oppure null
+   */
   // Metodo per aggiornare il numero di prenotazioni per ogni coda
   private void aggiornoNumPrenotazioni(JPanel pannelloCoda, JButton button) {
     // Ottengo tutte le componenti del pannello
@@ -469,10 +498,17 @@ public class AccettazionePrenotazioneView {
     }
   }
 
+  /**
+   * Metodo per settare la visibilita del frame
+   * @param v true o false in base alle nostre esigenze
+   */
   public void visible(boolean v) {
     frame.setVisible(v);
   }
 
+  /**
+   * Metodo che processa la risposta scelta dall'utente ad una dialogbox
+   */
   private void handleClosing() {
     int answer = showWarningMessage(); // Mostro all'impiegato la dialogBox
     switch (answer) {
@@ -488,6 +524,10 @@ public class AccettazionePrenotazioneView {
     }
   }
 
+  /**
+   * Metodo che crea una dialogBox
+   * @return dialogBox
+   */
   // DialogBox
   private int showWarningMessage() {
     String[] buttonLabels = new String[] {"Indietro", "Termina"};

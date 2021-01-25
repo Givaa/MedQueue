@@ -16,9 +16,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import business.ImpiegatoBean;
 import persistence.DataAccess;
 import persistence.DriverManagerConnectionPool;
 
+/**
+ * Classe per generare un frame dove e possibile inserire le proprie credenziali ed eseguire un login
+ */
 public class LoginView {
 
   // Componenti della view
@@ -29,6 +34,9 @@ public class LoginView {
   private final JLabel errore = new JLabel();
   private ImageIcon immagine = new ImageIcon("src/image/LogoNoBG.png");
 
+  /**
+   * Inizializzo un nuovo oggetto LoginView che crea un frame di login
+   */
   @SuppressWarnings("checkstyle:Indentation")
   public LoginView() {
     // Settaggi frame
@@ -51,13 +59,13 @@ public class LoginView {
           if (DriverManagerConnectionPool.createDbConnection() == null) {
             errore.setText("Errore nella connessione");
           } else {
-            if (DataAccess.verificaDatiImpiegato(
-                codiceFiscale.getText(),
-                password.getText())) { // Verifico le credenziali dell'impiegato
-              new AccettazionePrenotazioneView(DataAccess.getImpiegato(codiceFiscale.getText()))
+            ImpiegatoBean impiegato=DataAccess.getImpiegato(codiceFiscale.getText());
+            if (impiegato.getPassword().equals(password.getText())) { // Verifico le credenziali dell'impiegato
+              new AccettazionePrenotazioneView(impiegato)
                   .visible(true);
               codiceFiscale.setText("");
               password.setText("");
+              errore.setText("");
               framePannello.setVisible(false);
             } else { // Creo la prossima view e la rendo visibile
               errore.setText("Credenziali errate");

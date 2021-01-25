@@ -21,7 +21,7 @@ public class ImpiegatoBean {
   public ImpiegatoBean() {}
 
   /**
-   * Inizzialissa un nuovo oggetto ImpiegatoBean settando gli attributi
+   * Inizzializza un nuovo oggetto ImpiegatoBean settando gli attributi
    * @param codicefiscale codicefiscale dell'impiegato
    * @param password password d'accesso al sistema dell'impiegato
    * @param nome nome impiegato
