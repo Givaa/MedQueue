@@ -66,7 +66,7 @@ INSERT INTO Struttura(nome, indirizzo, numeroDiTelefono) VALUES
 INSERT INTO Impiegato VALUES
 ('FLTNGL99A14L845J','angelo99','angelo','afeltra','1999/01/14','a.afeltra12@studenti.unisa.it','3394487295',1),
 ('FCLNDR99C12B963C','andrea99','andrea','fucile','1999/03/12','andrea.fucile@studenti.unisa.it','3394487394',1),
-('RPAGNN95D11A509B','lellolol22','giovanni','rapa','1995/01/16','g.rapa95@gmail.com','3394487293',2),
+('RPAGNN95D11A509B','lellolol22','giovanni','rapa','1995/01/16','g.rapa95@gmail.com','3394487293', 1),
 ('ADRAMT99D13A587J','amato99','adriano','amato','1999/07/23','amatoadriano@gmail.com','3457892239',2);
 
 

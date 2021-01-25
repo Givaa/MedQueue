@@ -80,7 +80,7 @@ public class AccettazionePrenotazioneView {
          */
         pannelloCentro.setLayout(new BoxLayout(pannelloCentro, BoxLayout.X_AXIS));//BoxLayout che posiziona gli elementi sull'asse X
         pannelloCentro.add(pannelloCoda()); //Aggiungo al pannello centrale il primo JPanel che conterra i button, viene generato nel metodo pannelloCoda()
-        pannelloCentro.add(Box.createRigidArea(new Dimension(100,0))); //Spazio vuoto che viene utilizzato per distanziare i 2 JPanel del pannelloCentro
+        pannelloCentro.add(Box.createRigidArea(new Dimension(10,0))); //Spazio vuoto che viene utilizzato per distanziare i 2 JPanel del pannelloCentro
         pannelloCentro.setOpaque(false); //Nascondo lo sfondo del JPanel
         //------------------Fine Pannello Centrale--------------------
 
@@ -140,11 +140,11 @@ public class AccettazionePrenotazioneView {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                aggiornoNumPrenotazioni(pannelloCoda); //Metodo per aggiornare il testo dei button
+                aggiornoNumPrenotazioni(pannelloCoda, null); //Metodo per aggiornare il testo dei button
                 frame.validate(); //Aggiorno il frame
             }
 
-        }, 10000, 10000);
+        }, 7000, 7000);
 
         pannelloCoda.setBorder(BorderFactory.createMatteBorder(0,0,0,1,Color.gray)); //Creo un bordo a destra per il pannello
         pannelloCoda.setOpaque(false);//Setto lo sfondo del pannello opaco
@@ -183,10 +183,11 @@ public class AccettazionePrenotazioneView {
                     pannelloCentro.remove(2);//Rimuovo il pannello per l'accettazione
                 pannelloCentro.add(setPrenotazione(p)); //Aggiungo il panel contenente le informazioni sulla prenotazione generato tramite il metodo setPrenotazione
                 logout.setEnabled(false); //blocco il bottone per il logout
-                aggiornoNumPrenotazioni((JPanel) pannelloCentro.getComponent(0));
                 frame.validate(); //Aggiorno il frame
             }
         });
+
+        aggiornoNumPrenotazioni((JPanel) pannelloCentro.getComponent(0), accetta);
 
         if(frame.getWindowListeners().length>0) { //Verifico se e stato assegnato qualche WindowsListener al frame
             /*L'esecuzione del if indica che il panel e stato generato dopo l'accettazione di una prenotazione
@@ -253,7 +254,6 @@ public class AccettazionePrenotazioneView {
             servizioPrenotazione=false; //Assegno false alla variabile che indica che l'impiegato sta servendo il un impiegato
             pannelloCentro.remove(2); //Rimuovo il pannello contenete le informazioni sulla prenotazione dal pannelloCentrale
             pannelloCentro.add(setServiPrenotazione(tipoOperazioneText.getText())); //Aggiungo il pannello per l'accettazione di una prenotazione al pannelo centrale
-            aggiornoNumPrenotazioni((JPanel) pannelloCentro.getComponent(0)); //Aggiorno in numero di prenotazioni per ogni coda
             logout.setEnabled(true);//riabilito il pulsante per il logout
             frame.validate();//Aggiorno il frame
         });
@@ -273,7 +273,7 @@ public class AccettazionePrenotazioneView {
     };
 
     //Metodo per aggiornare il numero di prenotazioni per ogni coda
-    private void aggiornoNumPrenotazioni(JPanel pannelloCoda){
+    private void aggiornoNumPrenotazioni(JPanel pannelloCoda, JButton button){
         //Ottengo tutte le componenti del pannello
         Component[] comp = pannelloCoda.getComponents();
         ArrayList<Integer> numeroPrenotazioni = new ArrayList<Integer>();
@@ -283,6 +283,16 @@ public class AccettazionePrenotazioneView {
                 ((JButton) comp[i]).setText(listoperazioni.get(j).getTipoOperazione() + ": " + numeroPrenotazioni.get(j));
                 j++;//La variabile j viene utilizzata poichè nel pannello non conterrà solo JButton quindi lavoreremo su due array diversi
             }
+        }
+
+        int j = 0;
+        for(int i : numeroPrenotazioni){
+            j += i;
+        }
+
+        if(button != null){
+            if(j == 0) button.setEnabled(false);
+            else button.setEnabled(true);
         }
     }
 
