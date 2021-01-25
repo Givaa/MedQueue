@@ -1,5 +1,8 @@
 package classes.model.bean.entity;
 
+/*
+Classe per rappresentare l'entità" "Ambulatori" del Database
+ */
 public class AmbulatoriBean {
 
   private int id;

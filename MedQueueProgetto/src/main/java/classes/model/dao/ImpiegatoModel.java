@@ -2,7 +2,6 @@ package classes.model.dao;
 
 import classes.model.DriverManagerConnectionPool;
 import classes.model.bean.entity.ImpiegatoBean;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,11 +20,11 @@ public class ImpiegatoModel implements Model<ImpiegatoBean> {
 
     ImpiegatoBean tmp = new ImpiegatoBean();
 
-    String selectSQL = "SELECT * FROM " + nomeTabella + "WHERE id = ?";
+    String selectSql = "SELECT * FROM " + nomeTabella + "WHERE id = ?";
 
     try {
       con = DriverManagerConnectionPool.getConnection();
-      ps = con.prepareStatement(selectSQL);
+      ps = con.prepareStatement(selectSql);
       ps.setString(1, codFisc);
 
       ResultSet rs = ps.executeQuery();
@@ -60,16 +59,16 @@ public class ImpiegatoModel implements Model<ImpiegatoBean> {
 
     Collection<ImpiegatoBean> result = new LinkedList<ImpiegatoBean>();
 
-    String selectSQL = "SELECT * FROM " + nomeTabella;
+    String selectSql = "SELECT * FROM " + nomeTabella;
 
     if (order != null && !order.equals("")) {
-      selectSQL += " ORDER BY " + order;
+      selectSql += " ORDER BY " + order;
     }
 
     try {
 
       con = DriverManagerConnectionPool.getConnection();
-      ps = con.prepareStatement(selectSQL);
+      ps = con.prepareStatement(selectSql);
 
       ResultSet rs = ps.executeQuery();
       ImpiegatoBean tmp = new ImpiegatoBean();
@@ -90,7 +89,9 @@ public class ImpiegatoModel implements Model<ImpiegatoBean> {
       e.printStackTrace();
     } finally {
       try {
-        if (ps != null) ps.close();
+        if (ps != null) {
+          ps.close();
+        }
       } finally {
         DriverManagerConnectionPool.releaseConnection(con);
       }
@@ -104,11 +105,11 @@ public class ImpiegatoModel implements Model<ImpiegatoBean> {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
-    String insertSQL = "INSERT INTO " + nomeTabella + " VALUES (?, ?, ?, ?, ?, ?, ?)";
+    String insertSql = "INSERT INTO " + nomeTabella + " VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();
-      preparedStatement = connection.prepareStatement(insertSQL);
+      preparedStatement = connection.prepareStatement(insertSql);
       preparedStatement.setString(1, param.getCodiceFiscale());
       preparedStatement.setString(2, param.getPassword());
       preparedStatement.setString(3, param.getNome());
@@ -120,7 +121,9 @@ public class ImpiegatoModel implements Model<ImpiegatoBean> {
       preparedStatement.executeUpdate();
     } finally {
       try {
-        if (preparedStatement != null) preparedStatement.close();
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
       } finally {
         DriverManagerConnectionPool.releaseConnection(connection);
       }
@@ -132,14 +135,15 @@ public class ImpiegatoModel implements Model<ImpiegatoBean> {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
-    String deleteSQL =
+    String deleteSql =
         "UPDATE "
             + nomeTabella
-            + " SET password = ?, nome = ?, cognome = ?, dataDiNascita = ?, indirizzoEmail = ?, numeroDiTelefono = ?  WHERE codiceFiscale = ?";
+            + " SET password = ?, nome = ?, cognome = ?, dataDiNascita = ?,"
+            + " indirizzoEmail = ?, numeroDiTelefono = ?  WHERE codiceFiscale = ?";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();
-      preparedStatement = connection.prepareStatement(deleteSQL);
+      preparedStatement = connection.prepareStatement(deleteSql);
       preparedStatement.setString(1, param.getPassword());
       preparedStatement.setString(2, param.getNome());
       preparedStatement.setString(3, param.getCognome());
@@ -152,7 +156,9 @@ public class ImpiegatoModel implements Model<ImpiegatoBean> {
 
     } finally {
       try {
-        if (preparedStatement != null) preparedStatement.close();
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
       } finally {
         DriverManagerConnectionPool.releaseConnection(connection);
       }
@@ -165,18 +171,20 @@ public class ImpiegatoModel implements Model<ImpiegatoBean> {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
-    String deleteSQL = "DELETE FROM " + nomeTabella + " WHERE codiceFiscale = ?";
+    String deleteSql = "DELETE FROM " + nomeTabella + " WHERE codiceFiscale = ?";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();
-      preparedStatement = connection.prepareStatement(deleteSQL);
+      preparedStatement = connection.prepareStatement(deleteSql);
       preparedStatement.setString(1, param.getCodiceFiscale());
 
       preparedStatement.executeUpdate();
 
     } finally {
       try {
-        if (preparedStatement != null) preparedStatement.close();
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
       } finally {
         DriverManagerConnectionPool.releaseConnection(connection);
       }

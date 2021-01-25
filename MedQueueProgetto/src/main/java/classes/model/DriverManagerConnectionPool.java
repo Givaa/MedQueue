@@ -23,13 +23,15 @@ public class DriverManagerConnectionPool {
     freeDbConnections = new LinkedList<Connection>();
   }
 
-  public static synchronized Connection createDBConnection() {
+  public static synchronized Connection createDbConnection() {
     try {
       Connection newConnection = null;
       String ip = "localhost";
       String port = "3306";
       String db =
-          "medqueue?serverTimezone=UTC&useLegacyDatetimeCode=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&useSSL=false";
+          "medqueue?serverTimezone=UTC&useLegacyDatetimeCode=false&"
+                  + "useUnicode=true&useJDBCCompliantTimezoneShift="
+                  + "true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&useSSL=false";
       String username = "root";
       String password = "root";
 
@@ -53,19 +55,23 @@ public class DriverManagerConnectionPool {
       freeDbConnections.remove(0);
 
       try {
-        if (connection.isClosed()) connection = getConnection();
+        if (connection.isClosed()) {
+          connection = getConnection();
+        }
       } catch (SQLException e) {
         connection.close();
         connection = getConnection();
       }
     } else {
-      connection = createDBConnection();
+      connection = createDbConnection();
     }
 
     return connection;
   }
 
   public static synchronized void releaseConnection(Connection connection) throws SQLException {
-    if (connection != null) freeDbConnections.add(connection);
+    if (connection != null) {
+      freeDbConnections.add(connection);
+    }
   }
 }

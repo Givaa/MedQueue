@@ -3,7 +3,9 @@ package classes.model.bean.entity;
 public class StrutturaBean {
 
   private int id;
-  private String nome, indirizzo, numeroDiTelefono;
+  private String nome;
+  private String indirizzo;
+  private String numeroDiTelefono;
 
   public StrutturaBean(String nome, String indirizzo, String numeroDiTelefono) {
     this.nome = nome;

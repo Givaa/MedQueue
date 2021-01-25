@@ -2,7 +2,6 @@ package classes.model.dao;
 
 import classes.model.DriverManagerConnectionPool;
 import classes.model.bean.entity.StrutturaBean;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,11 +19,11 @@ public class StrutturaModel implements Model<StrutturaBean> {
 
     StrutturaBean tmp = new StrutturaBean();
 
-    String selectSQL = "SELECT * FROM " + nomeTabella + "WHERE id = ?";
+    String selectSql = "SELECT * FROM " + nomeTabella + "WHERE id = ?";
 
     try {
       con = DriverManagerConnectionPool.getConnection();
-      ps = con.prepareStatement(selectSQL);
+      ps = con.prepareStatement(selectSql);
       ps.setString(1, code);
 
       ResultSet rs = ps.executeQuery();
@@ -56,16 +55,16 @@ public class StrutturaModel implements Model<StrutturaBean> {
 
     Collection<StrutturaBean> result = new LinkedList<StrutturaBean>();
 
-    String selectSQL = "SELECT * FROM " + nomeTabella;
+    String selectSql = "SELECT * FROM " + nomeTabella;
 
     if (order != null && !order.equals("")) {
-      selectSQL += " ORDER BY " + order;
+      selectSql += " ORDER BY " + order;
     }
 
     try {
 
       con = DriverManagerConnectionPool.getConnection();
-      ps = con.prepareStatement(selectSQL);
+      ps = con.prepareStatement(selectSql);
 
       ResultSet rs = ps.executeQuery();
       StrutturaBean tmp = new StrutturaBean();
@@ -83,7 +82,9 @@ public class StrutturaModel implements Model<StrutturaBean> {
       e.printStackTrace();
     } finally {
       try {
-        if (ps != null) ps.close();
+        if (ps != null) {
+          ps.close();
+        }
       } finally {
         DriverManagerConnectionPool.releaseConnection(con);
       }
@@ -97,11 +98,11 @@ public class StrutturaModel implements Model<StrutturaBean> {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
-    String insertSQL = "INSERT INTO " + nomeTabella + " VALUES (?, ?, ?)";
+    String insertSql = "INSERT INTO " + nomeTabella + " VALUES (?, ?, ?)";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();
-      preparedStatement = connection.prepareStatement(insertSQL);
+      preparedStatement = connection.prepareStatement(insertSql);
       preparedStatement.setString(1, param.getNome());
       preparedStatement.setString(2, param.getIndirizzo());
       preparedStatement.setString(3, param.getNumeroDiTelefono());
@@ -109,7 +110,9 @@ public class StrutturaModel implements Model<StrutturaBean> {
       preparedStatement.executeUpdate();
     } finally {
       try {
-        if (preparedStatement != null) preparedStatement.close();
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
       } finally {
         DriverManagerConnectionPool.releaseConnection(connection);
       }
@@ -136,7 +139,9 @@ public class StrutturaModel implements Model<StrutturaBean> {
 
     } finally {
       try {
-        if (preparedStatement != null) preparedStatement.close();
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
       } finally {
         DriverManagerConnectionPool.releaseConnection(connection);
       }
@@ -149,18 +154,20 @@ public class StrutturaModel implements Model<StrutturaBean> {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
-    String deleteSQL = "DELETE FROM " + nomeTabella + " WHERE id = ?";
+    String deleteSql = "DELETE FROM " + nomeTabella + " WHERE id = ?";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();
-      preparedStatement = connection.prepareStatement(deleteSQL);
+      preparedStatement = connection.prepareStatement(deleteSql);
       preparedStatement.setInt(1, param.getId());
 
       preparedStatement.executeUpdate();
 
     } finally {
       try {
-        if (preparedStatement != null) preparedStatement.close();
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
       } finally {
         DriverManagerConnectionPool.releaseConnection(connection);
       }

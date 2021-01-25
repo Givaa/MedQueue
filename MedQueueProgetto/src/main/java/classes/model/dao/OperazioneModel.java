@@ -2,7 +2,6 @@ package classes.model.dao;
 
 import classes.model.DriverManagerConnectionPool;
 import classes.model.bean.entity.OperazioneBean;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,12 +20,12 @@ public class OperazioneModel implements Model<OperazioneBean> {
 
     OperazioneBean tmp = new OperazioneBean();
 
-    String selectSQL = "SELECT * FROM " + nomeTabella + "WHERE id = ?";
+    String selectSql = "SELECT * FROM " + nomeTabella + "WHERE id = ?";
 
     try {
       con = DriverManagerConnectionPool.getConnection();
-      ps = con.prepareStatement(selectSQL);
-      ps.setString(1, code);
+      ps = con.prepareStatement(selectSql);
+      ps.setInt(1, Integer.parseInt(code));
 
       ResultSet rs = ps.executeQuery();
 
@@ -57,16 +56,16 @@ public class OperazioneModel implements Model<OperazioneBean> {
 
     Collection<OperazioneBean> result = new LinkedList<OperazioneBean>();
 
-    String selectSQL = "SELECT * FROM " + nomeTabella;
+    String selectSql = "SELECT * FROM " + nomeTabella;
 
     if (order != null && !order.equals("")) {
-      selectSQL += " ORDER BY " + order;
+      selectSql += " ORDER BY " + order;
     }
 
     try {
 
       con = DriverManagerConnectionPool.getConnection();
-      ps = con.prepareStatement(selectSQL);
+      ps = con.prepareStatement(selectSql);
 
       ResultSet rs = ps.executeQuery();
       OperazioneBean tmp = new OperazioneBean();
@@ -84,7 +83,9 @@ public class OperazioneModel implements Model<OperazioneBean> {
       e.printStackTrace();
     } finally {
       try {
-        if (ps != null) ps.close();
+        if (ps != null) {
+          ps.close();
+        }
       } finally {
         DriverManagerConnectionPool.releaseConnection(con);
       }
@@ -98,11 +99,11 @@ public class OperazioneModel implements Model<OperazioneBean> {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
-    String insertSQL = "INSERT INTO " + nomeTabella + " VALUES (?, ?, ?)";
+    String insertSql = "INSERT INTO " + nomeTabella + " VALUES (?, ?, ?)";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();
-      preparedStatement = connection.prepareStatement(insertSQL);
+      preparedStatement = connection.prepareStatement(insertSql);
       preparedStatement.setString(1, param.getTipoOperazione());
       preparedStatement.setString(2, param.getDescrizione());
       preparedStatement.setInt(3, param.getIdPrenotazione());
@@ -110,7 +111,9 @@ public class OperazioneModel implements Model<OperazioneBean> {
       preparedStatement.executeUpdate();
     } finally {
       try {
-        if (preparedStatement != null) preparedStatement.close();
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
       } finally {
         DriverManagerConnectionPool.releaseConnection(connection);
       }
@@ -122,14 +125,14 @@ public class OperazioneModel implements Model<OperazioneBean> {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
-    String deleteSQL =
+    String deleteSql =
         "UPDATE "
             + nomeTabella
             + " SET tipoOperazione = ?, descrizione = ?, idPrenotazione = ? WHERE id = ?";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();
-      preparedStatement = connection.prepareStatement(deleteSQL);
+      preparedStatement = connection.prepareStatement(deleteSql);
       preparedStatement.setString(1, param.getTipoOperazione());
       preparedStatement.setString(2, param.getDescrizione());
       preparedStatement.setInt(3, param.getIdPrenotazione());
@@ -139,7 +142,9 @@ public class OperazioneModel implements Model<OperazioneBean> {
 
     } finally {
       try {
-        if (preparedStatement != null) preparedStatement.close();
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
       } finally {
         DriverManagerConnectionPool.releaseConnection(connection);
       }
@@ -152,18 +157,20 @@ public class OperazioneModel implements Model<OperazioneBean> {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
-    String deleteSQL = "DELETE FROM " + nomeTabella + " WHERE id = ?";
+    String deleteSql = "DELETE FROM " + nomeTabella + " WHERE id = ?";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();
-      preparedStatement = connection.prepareStatement(deleteSQL);
+      preparedStatement = connection.prepareStatement(deleteSql);
       preparedStatement.setInt(1, param.getId());
 
       preparedStatement.executeUpdate();
 
     } finally {
       try {
-        if (preparedStatement != null) preparedStatement.close();
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
       } finally {
         DriverManagerConnectionPool.releaseConnection(connection);
       }

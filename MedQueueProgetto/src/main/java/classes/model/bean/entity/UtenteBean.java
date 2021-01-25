@@ -5,7 +5,9 @@ import java.sql.Date;
 public class UtenteBean {
 
   private String codiceFiscale;
-  private String password, nome, cognome;
+  private String password;
+  private String nome;
+  private String cognome;
   private Date dataDiNascita;
   private String email;
   private int numeroDiTelefono;

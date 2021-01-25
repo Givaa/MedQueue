@@ -2,7 +2,6 @@ package classes.model.dao;
 
 import classes.model.DriverManagerConnectionPool;
 import classes.model.bean.entity.AmbulatoriBean;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,12 +20,12 @@ public class AmbulatoriModel implements Model<AmbulatoriBean> {
 
     AmbulatoriBean tmp = new AmbulatoriBean();
 
-    String selectSQL = "SELECT * FROM " + nomeTabella + "WHERE id = ?";
+    String selectSql = "SELECT * FROM " + nomeTabella + "WHERE id = ?";
 
     try {
       con = DriverManagerConnectionPool.getConnection();
-      ps = con.prepareStatement(selectSQL);
-      ps.setInt(1, Integer.parseInt(id) );
+      ps = con.prepareStatement(selectSql);
+      ps.setInt(1, Integer.parseInt(id));
 
       ResultSet rs = ps.executeQuery();
 
@@ -56,16 +55,16 @@ public class AmbulatoriModel implements Model<AmbulatoriBean> {
 
     Collection<AmbulatoriBean> result = new LinkedList<AmbulatoriBean>();
 
-    String selectSQL = "SELECT * FROM " + nomeTabella;
+    String selectSql = "SELECT * FROM " + nomeTabella;
 
     if (order != null && !order.equals("")) {
-      selectSQL += " ORDER BY " + order;
+      selectSql += " ORDER BY " + order;
     }
 
     try {
 
       con = DriverManagerConnectionPool.getConnection();
-      ps = con.prepareStatement(selectSQL);
+      ps = con.prepareStatement(selectSql);
 
       ResultSet rs = ps.executeQuery();
       AmbulatoriBean tmp = new AmbulatoriBean();
@@ -82,7 +81,9 @@ public class AmbulatoriModel implements Model<AmbulatoriBean> {
       e.printStackTrace();
     } finally {
       try {
-        if (ps != null) ps.close();
+        if (ps != null) {
+          ps.close();
+        }
       } finally {
         DriverManagerConnectionPool.releaseConnection(con);
       }
@@ -96,11 +97,11 @@ public class AmbulatoriModel implements Model<AmbulatoriBean> {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
-    String insertSQL = "INSERT INTO " + nomeTabella + " VALUES (?, ?, ?)";
+    String insertSql = "INSERT INTO " + nomeTabella + " VALUES (?, ?, ?)";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();
-      preparedStatement = connection.prepareStatement(insertSQL);
+      preparedStatement = connection.prepareStatement(insertSql);
       preparedStatement.setInt(1, param.getId());
       preparedStatement.setString(2, param.getNome());
       preparedStatement.setInt(3, param.getIdStruttura());
@@ -108,7 +109,9 @@ public class AmbulatoriModel implements Model<AmbulatoriBean> {
       preparedStatement.executeUpdate();
     } finally {
       try {
-        if (preparedStatement != null) preparedStatement.close();
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
       } finally {
         DriverManagerConnectionPool.releaseConnection(connection);
       }
@@ -120,11 +123,11 @@ public class AmbulatoriModel implements Model<AmbulatoriBean> {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
-    String deleteSQL = "UPDATE " + nomeTabella + " SET nome = ?, idStruttura = ? WHERE id = ?";
+    String deleteSql = "UPDATE " + nomeTabella + " SET nome = ?, idStruttura = ? WHERE id = ?";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();
-      preparedStatement = connection.prepareStatement(deleteSQL);
+      preparedStatement = connection.prepareStatement(deleteSql);
       preparedStatement.setString(1, param.getNome());
       preparedStatement.setInt(2, param.getIdStruttura());
       preparedStatement.setInt(3, param.getId());
@@ -133,7 +136,9 @@ public class AmbulatoriModel implements Model<AmbulatoriBean> {
 
     } finally {
       try {
-        if (preparedStatement != null) preparedStatement.close();
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
       } finally {
         DriverManagerConnectionPool.releaseConnection(connection);
       }
@@ -146,18 +151,20 @@ public class AmbulatoriModel implements Model<AmbulatoriBean> {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
-    String deleteSQL = "DELETE FROM " + nomeTabella + " WHERE id = ?";
+    String deleteSql = "DELETE FROM " + nomeTabella + " WHERE id = ?";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();
-      preparedStatement = connection.prepareStatement(deleteSQL);
+      preparedStatement = connection.prepareStatement(deleteSql);
       preparedStatement.setInt(1, param.getId());
 
       preparedStatement.executeUpdate();
 
     } finally {
       try {
-        if (preparedStatement != null) preparedStatement.close();
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
       } finally {
         DriverManagerConnectionPool.releaseConnection(connection);
       }

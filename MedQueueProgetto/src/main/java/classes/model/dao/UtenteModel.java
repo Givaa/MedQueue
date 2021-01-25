@@ -2,7 +2,6 @@ package classes.model.dao;
 
 import classes.model.DriverManagerConnectionPool;
 import classes.model.bean.entity.UtenteBean;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,11 +19,11 @@ public class UtenteModel implements Model<UtenteBean> {
 
     UtenteBean tmp = new UtenteBean();
 
-    String selectSQL = "SELECT * FROM " + nomeTabella + "WHERE id = ?";
+    String selectSql = "SELECT * FROM " + nomeTabella + "WHERE id = ?";
 
     try {
       con = DriverManagerConnectionPool.getConnection();
-      ps = con.prepareStatement(selectSQL);
+      ps = con.prepareStatement(selectSql);
       ps.setString(1, code);
 
       ResultSet rs = ps.executeQuery();
@@ -58,16 +57,16 @@ public class UtenteModel implements Model<UtenteBean> {
 
     Collection<UtenteBean> result = new LinkedList<UtenteBean>();
 
-    String selectSQL = "SELECT * FROM " + nomeTabella;
+    String selectSql = "SELECT * FROM " + nomeTabella;
 
     if (order != null && !order.equals("")) {
-      selectSQL += " ORDER BY " + order;
+      selectSql += " ORDER BY " + order;
     }
 
     try {
 
       con = DriverManagerConnectionPool.getConnection();
-      ps = con.prepareStatement(selectSQL);
+      ps = con.prepareStatement(selectSql);
 
       ResultSet rs = ps.executeQuery();
       UtenteBean tmp = new UtenteBean();
@@ -86,7 +85,9 @@ public class UtenteModel implements Model<UtenteBean> {
       e.printStackTrace();
     } finally {
       try {
-        if (ps != null) ps.close();
+        if (ps != null) {
+          ps.close();
+        }
       } finally {
         DriverManagerConnectionPool.releaseConnection(con);
       }
@@ -100,11 +101,11 @@ public class UtenteModel implements Model<UtenteBean> {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
-    String insertSQL = "INSERT INTO " + nomeTabella + " VALUES (?, ?, ?, ?, ?, ?, ?)";
+    String insertSql = "INSERT INTO " + nomeTabella + " VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();
-      preparedStatement = connection.prepareStatement(insertSQL);
+      preparedStatement = connection.prepareStatement(insertSql);
       preparedStatement.setString(1, param.getCodiceFiscale());
       preparedStatement.setString(2, param.getPassword());
       preparedStatement.setString(3, param.getNome());
@@ -116,7 +117,9 @@ public class UtenteModel implements Model<UtenteBean> {
       preparedStatement.executeUpdate();
     } finally {
       try {
-        if (preparedStatement != null) preparedStatement.close();
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
       } finally {
         DriverManagerConnectionPool.releaseConnection(connection);
       }
@@ -128,14 +131,15 @@ public class UtenteModel implements Model<UtenteBean> {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
-    String deleteSQL =
+    String deleteSql =
         "UPDATE "
             + nomeTabella
-            + " SET password = ?, nome = ?, cognome = ?, dataDiNascita = ?, email = ?, numeroDiTelefono = ?  WHERE codiceFiscale = ?";
+            + " SET password = ?, nome = ?, cognome = ?,"
+                + " dataDiNascita = ?, email = ?, numeroDiTelefono = ?  WHERE codiceFiscale = ?";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();
-      preparedStatement = connection.prepareStatement(deleteSQL);
+      preparedStatement = connection.prepareStatement(deleteSql);
       preparedStatement.setString(1, param.getPassword());
       preparedStatement.setString(2, param.getNome());
       preparedStatement.setString(3, param.getCognome());
@@ -148,7 +152,9 @@ public class UtenteModel implements Model<UtenteBean> {
 
     } finally {
       try {
-        if (preparedStatement != null) preparedStatement.close();
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
       } finally {
         DriverManagerConnectionPool.releaseConnection(connection);
       }
@@ -161,18 +167,20 @@ public class UtenteModel implements Model<UtenteBean> {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
-    String deleteSQL = "DELETE FROM " + nomeTabella + " WHERE codiceFiscale = ?";
+    String deleteSql = "DELETE FROM " + nomeTabella + " WHERE codiceFiscale = ?";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();
-      preparedStatement = connection.prepareStatement(deleteSQL);
+      preparedStatement = connection.prepareStatement(deleteSql);
       preparedStatement.setString(1, param.getCodiceFiscale());
 
       preparedStatement.executeUpdate();
 
     } finally {
       try {
-        if (preparedStatement != null) preparedStatement.close();
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
       } finally {
         DriverManagerConnectionPool.releaseConnection(connection);
       }

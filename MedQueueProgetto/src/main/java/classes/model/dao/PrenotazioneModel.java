@@ -2,7 +2,6 @@ package classes.model.dao;
 
 import classes.model.DriverManagerConnectionPool;
 import classes.model.bean.entity.PrenotazioneBean;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,11 +19,11 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
 
     PrenotazioneBean tmp = new PrenotazioneBean();
 
-    String selectSQL = "SELECT * FROM " + nomeTabella + "WHERE id = ?";
+    String selectSql = "SELECT * FROM " + nomeTabella + "WHERE id = ?";
 
     try {
       con = DriverManagerConnectionPool.getConnection();
-      ps = con.prepareStatement(selectSQL);
+      ps = con.prepareStatement(selectSql);
       ps.setString(1, id);
 
       ResultSet rs = ps.executeQuery();
@@ -59,16 +58,16 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
 
     Collection<PrenotazioneBean> result = new LinkedList<PrenotazioneBean>();
 
-    String selectSQL = "SELECT * FROM " + nomeTabella;
+    String selectSql = "SELECT * FROM " + nomeTabella;
 
     if (order != null && !order.equals("")) {
-      selectSQL += " ORDER BY " + order;
+      selectSql += " ORDER BY " + order;
     }
 
     try {
 
       con = DriverManagerConnectionPool.getConnection();
-      ps = con.prepareStatement(selectSQL);
+      ps = con.prepareStatement(selectSql);
 
       ResultSet rs = ps.executeQuery();
       PrenotazioneBean tmp = new PrenotazioneBean();
@@ -89,7 +88,9 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
       e.printStackTrace();
     } finally {
       try {
-        if (ps != null) ps.close();
+        if (ps != null) {
+          ps.close();
+        }
       } finally {
         DriverManagerConnectionPool.releaseConnection(con);
       }
@@ -103,11 +104,11 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
-    String insertSQL = "INSERT INTO " + nomeTabella + " VALUES (?, ?, ?, ?, ?, ?)";
+    String insertSql = "INSERT INTO " + nomeTabella + " VALUES (?, ?, ?, ?, ?, ?)";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();
-      preparedStatement = connection.prepareStatement(insertSQL);
+      preparedStatement = connection.prepareStatement(insertSql);
       preparedStatement.setString(1, param.getOra());
       preparedStatement.setDate(2, param.getDataPrenotazione());
       preparedStatement.setString(3, param.getCodiceFiscale());
@@ -118,7 +119,9 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
       preparedStatement.executeUpdate();
     } finally {
       try {
-        if (preparedStatement != null) preparedStatement.close();
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
       } finally {
         DriverManagerConnectionPool.releaseConnection(connection);
       }
@@ -130,14 +133,15 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
-    String deleteSQL =
+    String deleteSql =
         "UPDATE "
             + nomeTabella
-            + " SET ora = ?, dataPrenotazione = ?, codiceFiscale = ?, idOperazione = ?, idStruttura = ?, convalida = ?  WHERE id = ?";
+            + " SET ora = ?, dataPrenotazione = ?, codiceFiscale = ?,"
+            + " idOperazione = ?, idStruttura = ?, convalida = ?  WHERE id = ?";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();
-      preparedStatement = connection.prepareStatement(deleteSQL);
+      preparedStatement = connection.prepareStatement(deleteSql);
       preparedStatement.setString(1, param.getOra());
       preparedStatement.setDate(2, param.getDataPrenotazione());
       preparedStatement.setString(3, param.getCodiceFiscale());
@@ -150,7 +154,9 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
 
     } finally {
       try {
-        if (preparedStatement != null) preparedStatement.close();
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
       } finally {
         DriverManagerConnectionPool.releaseConnection(connection);
       }
@@ -163,18 +169,20 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
-    String deleteSQL = "DELETE FROM " + nomeTabella + " WHERE id = ?";
+    String deleteSql = "DELETE FROM " + nomeTabella + " WHERE id = ?";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();
-      preparedStatement = connection.prepareStatement(deleteSQL);
+      preparedStatement = connection.prepareStatement(deleteSql);
       preparedStatement.setInt(1, param.getId());
 
       preparedStatement.executeUpdate();
 
     } finally {
       try {
-        if (preparedStatement != null) preparedStatement.close();
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
       } finally {
         DriverManagerConnectionPool.releaseConnection(connection);
       }
@@ -187,14 +195,13 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
     PreparedStatement ps = null;
 
     Collection<PrenotazioneBean> result = new LinkedList<PrenotazioneBean>();
-
     PrenotazioneBean tmp = new PrenotazioneBean();
 
-    String selectSQL = "SELECT * FROM " + nomeTabella + "WHERE codiceFiscale = ?";
+    String selectSql = "SELECT * FROM " + nomeTabella + "WHERE codiceFiscale = ?";
 
     try {
       con = DriverManagerConnectionPool.getConnection();
-      ps = con.prepareStatement(selectSQL);
+      ps = con.prepareStatement(selectSql);
       ps.setString(1, cf);
 
       ResultSet rs = ps.executeQuery();
@@ -218,6 +225,48 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
         }
       } finally {
         DriverManagerConnectionPool.releaseConnection(con);
+      }
+    }
+
+    return result;
+  }
+
+  public Collection<PrenotazioneBean> getCodaStruttura(int idStruttura) throws SQLException {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+
+    Collection<PrenotazioneBean> result = new LinkedList<PrenotazioneBean>();
+    PrenotazioneBean tmp = new PrenotazioneBean();
+
+    String selectPrenotazioniSql = "SELECT * FROM " + nomeTabella
+            + " WHERE idStruttura = ? ORDER BY ora";
+
+    try {
+      connection = DriverManagerConnectionPool.getConnection();
+      preparedStatement = connection.prepareStatement(selectPrenotazioniSql);
+
+      preparedStatement.setInt(1, idStruttura);
+      ResultSet rs = preparedStatement.executeQuery();
+
+      while (rs.next()) {
+        tmp.setId(rs.getInt("id"));
+        tmp.setOra(rs.getString("ora"));
+        tmp.setDataPrenotazione(rs.getDate("data"));
+        tmp.setCodiceFiscale(rs.getString("codiceFiscale"));
+        tmp.setConvalida(rs.getBoolean("convalida"));
+        tmp.setIdStruttura(rs.getInt("struttura"));
+        tmp.setIdOperazione(rs.getInt("operazione"));
+        result.add(tmp);
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
+      } finally {
+        DriverManagerConnectionPool.releaseConnection(connection);
       }
     }
 

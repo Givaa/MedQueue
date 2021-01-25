@@ -3,7 +3,8 @@ package classes.model.bean.entity;
 public class OperazioneBean {
 
   private int id;
-  private String tipoOperazione, descrizione;
+  private String tipoOperazione;
+  private String descrizione;
   private int idPrenotazione;
 
   public OperazioneBean(String tipoOperazione, String descrizione, int idPrenotazione) {
