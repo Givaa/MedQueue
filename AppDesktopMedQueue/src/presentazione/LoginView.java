@@ -1,5 +1,6 @@
 package presentazione;
 
+import entity.ImpiegatoBean;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -7,6 +8,7 @@ import java.awt.Image;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -16,13 +18,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-
-import entity.ImpiegatoBean;
 import persistence.DataAccess;
 import persistence.DriverManagerConnectionPool;
 
 /**
- * Classe per generare un frame dove e possibile inserire le proprie credenziali ed eseguire un login
+ * Classe per generare un frame dove e possibile inserire le proprie credenziali
+ * ed eseguire un login.
  */
 public class LoginView {
 
@@ -35,7 +36,7 @@ public class LoginView {
   private ImageIcon immagine = new ImageIcon("src/image/LogoNoBG.png");
 
   /**
-   * Inizializzo un nuovo oggetto LoginView che crea un frame di login
+   * Inizializzo un nuovo oggetto LoginView che crea un frame di login.
    */
   @SuppressWarnings("checkstyle:Indentation")
   public LoginView() {
@@ -56,12 +57,14 @@ public class LoginView {
 
     connect.addActionListener(
         l -> { // Action Listener sul bottone di connessione
-          if (DriverManagerConnectionPool.createDbConnection() == null) {
+          Connection connection = DriverManagerConnectionPool.createDbConnection();
+          if (connection == null) {
             errore.setText("Errore nella connessione");
           } else {
-            ImpiegatoBean impiegato=DataAccess.getImpiegato(codiceFiscale.getText());
-            if (impiegato.getPassword().equals(password.getText())) { // Verifico le credenziali dell'impiegato
-              new AccettazionePrenotazioneView(impiegato)
+            ImpiegatoBean impiegato = DataAccess.getImpiegato(codiceFiscale.getText());
+            // Verifico le credenziali dell'impiegato
+            if (impiegato.getPassword().equals(password.getText())) {
+              new AccettazionePrenotazioneView(impiegato, connection)
                   .visible(true);
               codiceFiscale.setText("");
               password.setText("");
@@ -76,8 +79,8 @@ public class LoginView {
 
     JCheckBox select = new JCheckBox("Mostra password");
     select.setBackground(Color.white); // setto il background della checkbox a bianco
-      // Listener sulla checkbox
-      select.addItemListener(
+    // Listener sulla checkbox
+    select.addItemListener(
               e -> {
                 if (!(e.getStateChange()
                     == ItemEvent.SELECTED)) { // Se la checkbox non e attiva nascondo la password

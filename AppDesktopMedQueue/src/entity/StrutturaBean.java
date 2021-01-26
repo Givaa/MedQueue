@@ -1,8 +1,6 @@
 package entity;
 
-/**
- * Classe che rappresenta una struttura ospedaliera
- */
+/** Classe che rappresenta una struttura ospedaliera. */
 public class StrutturaBean {
 
   private int id;
@@ -10,14 +8,13 @@ public class StrutturaBean {
   private String indirizzo;
   private String numeroDiTelefono;
 
-  /**
-   * Inizializza un nuovo oggetto StrutturaBean
-   */
+  /** Inizializza un nuovo oggetto StrutturaBean. */
   public StrutturaBean() {}
 
   /**
-   * Inizializza un nuovo oggetto StrutturaBean settando gli attributi
-   * @param id id della struttua
+   * Inizializza un nuovo oggetto StrutturaBean settando gli attributi.
+   *
+   * @param id id della struttura
    * @param nome nome della struttura
    * @param indirizzo indirizzo della struttura
    * @param numeroDiTelefono numero di telefono della struttura
@@ -30,7 +27,8 @@ public class StrutturaBean {
   }
 
   /**
-   * Metodo per ottenere l'id di una struttura
+   * Metodo per ottenere l'id di una struttura.
+   *
    * @return id struttura
    */
   public int getId() {
@@ -38,7 +36,8 @@ public class StrutturaBean {
   }
 
   /**
-   * Metodo per settare l'id ad un oggetto StrutturaBean
+   * Metodo per settare l'id ad un oggetto StrutturaBean.
+   *
    * @param id id della struttura
    */
   public void setId(int id) {
@@ -46,7 +45,8 @@ public class StrutturaBean {
   }
 
   /**
-   * Metodo per ottenere il nome di una struttura
+   * Metodo per ottenere il nome di una struttura.
+   *
    * @return nome della struttura
    */
   public String getNome() {
@@ -54,7 +54,8 @@ public class StrutturaBean {
   }
 
   /**
-   * Metodo per settare il nome ad un oggetto StrutturaBean
+   * Metodo per settare il nome ad un oggetto StrutturaBean.
+   *
    * @param nome nome della struttura
    */
   public void setNome(String nome) {
@@ -62,7 +63,8 @@ public class StrutturaBean {
   }
 
   /**
-   * Metodo che restituisce l'indirizzo della struttura
+   * Metodo che restituisce l'indirizzo della struttura.
+   *
    * @return indirizzo struttura
    */
   public String getIndirizzo() {
@@ -70,15 +72,17 @@ public class StrutturaBean {
   }
 
   /**
-   * Metodo per settare un indirizzo all'oggetto StrutturaBean
-   * @param indirizzo indririzzo della struttura
+   * Metodo per settare un indirizzo all'oggetto StrutturaBean.
+   *
+   * @param indirizzo indirizzo della struttura
    */
   public void setIndirizzo(String indirizzo) {
     this.indirizzo = indirizzo;
   }
 
   /**
-   * Metodo che restituisce in numero di telefono della struttura
+   * Metodo che restituisce in numero di telefono della struttura.
+   *
    * @return numero di telefono della struttura
    */
   public String getNumeroDiTelefono() {
@@ -86,7 +90,8 @@ public class StrutturaBean {
   }
 
   /**
-   * Metodo per settare il numero di telefono ad un oggetto StrutturaBean
+   * Metodo per settare il numero di telefono ad un oggetto StrutturaBean.
+   *
    * @param numeroDiTelefono numero di telefono
    */
   public void setNumeroDiTelefono(String numeroDiTelefono) {

@@ -13,6 +13,8 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -28,10 +30,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import persistence.DataAccess;
+import persistence.DriverManagerConnectionPool;
 
 /**
  * Classe che genera un frame che permette di selezionare la coda di prenotazioni da gestire,
- * accettare e servire una prenotazione
+ * accettare e servire una prenotazione.
  */
 public class AccettazionePrenotazioneView {
 
@@ -51,13 +54,14 @@ public class AccettazionePrenotazioneView {
   // prenotazione
 
   /**
-   * Inizializzo un nuovo oggetto che mostrera un frame in cui sara possibile:
-   * 1. Selezionare una coda
-   * 2. Successivamente accettare una prenotazione
-   * 3. Successivamente servire una prenotazione
+   * Inizializzo un nuovo oggetto che mostrerà un frame in cui sara possibile:
+   * 1. Selezionare una coda.
+   * 2. Successivamente accettare una prenotazione.
+   * 3. Successivamente servire una prenotazione.
+   *
    * @param imp Impiegato che accettera le prenotazioni
    */
-  public AccettazionePrenotazioneView(ImpiegatoBean imp) {
+  public AccettazionePrenotazioneView(ImpiegatoBean imp, Connection connection) {
     idStruttura =
         imp.getIdStruttura(); // Salvo la struttura in cui lavora l'impiegato per poter ottenere le
     // prenotazioni sono di quella struttura
@@ -118,7 +122,12 @@ public class AccettazionePrenotazioneView {
     // ActionListener sul pulsante di logout
     logout.addActionListener(
         e -> {
-          frame.setVisible(false); // nascondo il frame
+          try {
+            DriverManagerConnectionPool.releaseConnection(connection);
+          } catch (SQLException throwables) {
+            throwables.printStackTrace();
+          }
+          frame.dispose(); // Chiudo il frame
           new LoginView(); // Riapro il frame per l'autenticazione
         });
     // --------------------Fine Pannello Nord---------------------
@@ -142,7 +151,6 @@ public class AccettazionePrenotazioneView {
     // pannelloCentro
     pannelloCentro.setOpaque(false); // Nascondo lo sfondo del JPanel
     // ------------------Fine Pannello Centrale--------------------
-    
 
     // Aggiungo al frame i 2 pannelli Nord e Centro
     frame.add(pannelloNord, BorderLayout.NORTH);
@@ -150,7 +158,8 @@ public class AccettazionePrenotazioneView {
   }
 
   /**
-   * Metodo che genera un pannello che ci permette di scegliere la coda da gestire
+   * Metodo che genera un pannello che ci permette di scegliere la coda da gestire.
+   *
    * @return pannello con le code da gestire
    */
   // Metodo in cui viene generato il pannelloCoda che conterrà n button ovvero le n code possibili
@@ -262,7 +271,8 @@ public class AccettazionePrenotazioneView {
   }
 
   /**
-   * Metodo che genera un pannello che ci permette di accettare una penotazione
+   * Metodo che genera un pannello che ci permette di accettare una prenotazione.
+   *
    * @param tipoOperazione operazione per la quale si vuole accettare una prenotazione
    * @return pannello che permette di accettare una prenotazione
    */
@@ -336,8 +346,7 @@ public class AccettazionePrenotazioneView {
         (JPanel) pannelloCentro.getComponent(0),
         accetta); // se non ci sono prenotazioni da servire si blocca il bottone per accettare
 
-    if (frame.getWindowListeners().length
-        > 0) {
+    if (frame.getWindowListeners().length > 0) {
       frame.removeWindowListener(
           frame.getWindowListeners()[0]); // Rimuovo il listener che mostra la dialogBox
       frame.setDefaultCloseOperation(
@@ -348,7 +357,8 @@ public class AccettazionePrenotazioneView {
   }
 
   /**
-   * Metodo che genera un pannello che mostra le informazioni sulla prenotazone accettate
+   * Metodo che genera un pannello che mostra le informazioni sulla prenotazione accettata.
+   *
    * @param p prenotazione accettate
    * @return pannello che mostra la prenotazione
    */
@@ -463,7 +473,8 @@ public class AccettazionePrenotazioneView {
   }
 
   /**
-   * Metodo che ci permette di aggiornare il numero di prenotazioni in attesa di essere accettate
+   * Metodo che ci permette di aggiornare il numero di prenotazioni in attesa di essere accettate.
+   *
    * @param pannelloCoda pannello che conterra i button per le code disponibili
    * @param button button che ha la funzione di accettare una prenotazione se presente oppure null
    */
@@ -499,16 +510,15 @@ public class AccettazionePrenotazioneView {
   }
 
   /**
-   * Metodo per settare la visibilita del frame
+   * Metodo per settare la visibilità del frame.
+   *
    * @param v true o false in base alle nostre esigenze
    */
   public void visible(boolean v) {
     frame.setVisible(v);
   }
 
-  /**
-   * Metodo che processa la risposta scelta dall'utente ad una dialogbox
-   */
+  /** Metodo che assegna e processa la risposta scelta dall'utente ad una dialogbox. */
   private void handleClosing() {
     int answer = showWarningMessage(); // Mostro all'impiegato la dialogBox
     switch (answer) {
@@ -517,7 +527,7 @@ public class AccettazionePrenotazioneView {
         break;
 
       case JOptionPane.NO_OPTION: // Se clicca su termina chiude il frame
-        frame.dispose();
+        System.exit(0);
         break;
       default:
         break;
@@ -525,7 +535,8 @@ public class AccettazionePrenotazioneView {
   }
 
   /**
-   * Metodo che crea una dialogBox
+   * Metodo che crea una dialogBox.
+   *
    * @return dialogBox
    */
   // DialogBox

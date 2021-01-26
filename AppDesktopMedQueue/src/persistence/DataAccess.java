@@ -9,13 +9,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-/**
- * Classe che permette operazioni sul database
- */
+/** Classe che permette operazioni sul database. */
 public class DataAccess {
 
   /**
-   * Metodo che ci permettere di ottenere una prenotazione dal database in base all'id
+   * Metodo che ci permettere di ottenere una prenotazione dal database in base all'id.
+   *
    * @param id id della prenotazione
    * @return prenotazione
    */
@@ -45,7 +44,8 @@ public class DataAccess {
   }
 
   /**
-   * Metodo che ci permette di ottenere una struttura ospedaliera dal database in base all'id
+   * Metodo che ci permette di ottenere una struttura ospedaliera dal database in base all'id.
+   *
    * @param id id della struttura ospedaliera
    * @return struttura ospedaliera
    */
@@ -72,7 +72,9 @@ public class DataAccess {
   }
 
   /**
-   * Metodo che ci permette di ottenere un operazione per cui l'utente si puo prenotare in base all'id
+   * Metodo che ci permette di ottenere un operazione per cui l'utente si puo prenotare in base
+   * all'id.
+   *
    * @param id id dell'operazione
    * @return operazione
    */
@@ -98,7 +100,8 @@ public class DataAccess {
   }
 
   /**
-   * Metodo che restituisce un impiegato di una struttura ospedaliera in base al codicefiscale
+   * Metodo che restituisce un impiegato di una struttura ospedaliera in base al codice fiscale.
+   *
    * @param codicefiscale codice fiscale dell'impiegato
    * @return impiegato
    */
@@ -129,7 +132,8 @@ public class DataAccess {
   }
 
   /**
-   * Metodo che restituisce tutte le operazioni per cui e possibilie prenotarsi
+   * Metodo che restituisce tutte le operazioni per cui è possibile prenotarsi.
+   *
    * @return lista operazioni
    */
   public static ArrayList<OperazioneBean> getOperazioni() {
@@ -154,17 +158,18 @@ public class DataAccess {
   }
 
   /**
-   * Metodo per cancellare una prenotazione dal database in base all'id
+   * Metodo per cancellare una prenotazione dal database in base all'id.
+   *
    * @param id id della prenotazione da cancellare
    * @return 0 se la prenotazione non e stata cancellata 1 se la prentoazione e stata cancellata
    */
   public static int deletePrenotazione(int id) {
-    int delete=0;
+    int delete = 0;
     try {
       String sql = "DELETE Prenotazione FROM MedQueue.Prenotazione WHERE Prenotazione.Id = ?";
       PreparedStatement query = DriverManagerConnectionPool.getConnection().prepareStatement(sql);
       query.setInt(1, id);
-      delete=query.executeUpdate();
+      delete = query.executeUpdate();
       query.close();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -173,9 +178,10 @@ public class DataAccess {
     return delete;
   }
 
-
   /**
-   * Metodo che restituisce il numero di prenotazioni da servire in base all'id dell'oprazione e l'id della struttura
+   * Metodo che restituisce il numero di prenotazioni da servire in base all'id dell'oprazione e
+   * l'id della struttura.
+   *
    * @param idOperazione id dell'operazione
    * @param idStruttura id della struttura
    * @return numero di prenotazioni da servire
@@ -185,8 +191,8 @@ public class DataAccess {
     try {
       String sql =
           "SELECT * FROM MedQueue.Prenotazione WHERE Prenotazione.convalida = 1 "
-                  + "AND Prenotazione.idOperazione = ?"
-                  + " AND Prenotazione.idStruttura = ?";
+              + "AND Prenotazione.idOperazione = ?"
+              + " AND Prenotazione.idStruttura = ?";
       PreparedStatement query = DriverManagerConnectionPool.getConnection().prepareStatement(sql);
       query.setInt(1, idOperazione);
       query.setInt(2, idStruttura);
@@ -204,7 +210,8 @@ public class DataAccess {
   }
 
   /**
-   * Metodo che restituisce la prima operazione da servire in base all'ora di prenotazione
+   * Metodo che restituisce la prima operazione da servire in base all'ora della prenotazione.
+   *
    * @param idOperazione id dell operazione per cui si vuole accettare una prenotazione
    * @param idStruttura id della struttura per cui si vuole accettare una prenotazione
    * @return prenotazione oppure null se non ce ne sono
@@ -214,7 +221,7 @@ public class DataAccess {
     try {
       String sql =
           "SELECT * FROM MedQueue.Prenotazione WHERE Prenotazione.convalida = 1 AND "
-                  + "Prenotazione.idOperazione = ? AND Prenotazione.idStruttura = ? ORDER BY ora";
+              + "Prenotazione.idOperazione = ? AND Prenotazione.idStruttura = ? ORDER BY ora";
       PreparedStatement query = DriverManagerConnectionPool.getConnection().prepareStatement(sql);
       query.setInt(1, idOperazione);
       query.setInt(2, idStruttura);

@@ -1,20 +1,17 @@
 package entity;
 
-/**
- * Classe che rappresenta per quale operazione è possibile prendere una prentazione
- */
+/** Classe che rappresenta per quale operazione è possibile prendere una prenotazione. */
 public class OperazioneBean {
   private int id;
   private String tipoOperazione;
   private String descrizione;
 
-  /**
-   * Inizializza un nuovo oggetto OperazioneBean
-   */
+  /** Inizializza un nuovo oggetto OperazioneBean. */
   public OperazioneBean() {}
 
   /**
-   * Inizializza un nuovo ogetto OperazioneBean settando gli attributi
+   * Inizializza un nuovo oggetto OperazioneBean settando gli attributi.
+   *
    * @param id id dell'operazione
    * @param tipoOperazione tipo operazione
    * @param descrizione descrizione dell'operazione
@@ -26,7 +23,8 @@ public class OperazioneBean {
   }
 
   /**
-   * Metodo che ritorna l'id dell'operazione
+   * Metodo che ritorna l'id dell'operazione.
+   *
    * @return id operazione
    */
   public int getId() {
@@ -34,7 +32,8 @@ public class OperazioneBean {
   }
 
   /**
-   * Metodo che setta un id all'oggetto OperazioneBean
+   * Metodo che setta un id all'oggetto OperazioneBean.
+   *
    * @param id id dell'operazione
    */
   public void setId(int id) {
@@ -42,7 +41,8 @@ public class OperazioneBean {
   }
 
   /**
-   * Metodo che restituisce il tipo d'operazione
+   * Metodo che restituisce il tipo d'operazione.
+   *
    * @return tipo operazione
    */
   public String getTipoOperazione() {
@@ -50,7 +50,8 @@ public class OperazioneBean {
   }
 
   /**
-   * Metodo che setta un tipo operazione all'oggetto OperazioneBean
+   * Metodo che setta un tipo operazione all'oggetto OperazioneBean.
+   *
    * @param tipoOperazione tipo operazione
    */
   public void setTipoOperazione(String tipoOperazione) {
@@ -58,7 +59,8 @@ public class OperazioneBean {
   }
 
   /**
-   * Metodo che restituisce la descrizione dell'operazione
+   * Metodo che restituisce la descrizione dell'operazione.
+   *
    * @return descrizione operazione
    */
   public String getDescrizione() {
@@ -66,7 +68,8 @@ public class OperazioneBean {
   }
 
   /**
-   * Metodo che permette di settare la descrizione dell'operazione all'oggetto OperazioneBean
+   * Metodo che permette di settare la descrizione dell'operazione all'oggetto OperazioneBean.
+   *
    * @param descrizione descrizione operazione
    */
   public void setDescrizione(String descrizione) {

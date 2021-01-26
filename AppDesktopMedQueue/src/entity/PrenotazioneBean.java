@@ -1,8 +1,6 @@
 package entity;
 
-/**
- * Classe che rappresenta la prenotazione di un utente
- */
+/** Classe che rappresenta la prenotazione di un utente. */
 public class PrenotazioneBean {
   private int id;
   private String data;
@@ -12,13 +10,12 @@ public class PrenotazioneBean {
   private int idOperazione;
   private int idStruttura;
 
-  /**
-   * Inizializza un nuovo oggetto PrenotazioneBean
-   */
+  /** Inizializza un nuovo oggetto PrenotazioneBean. */
   public PrenotazioneBean() {}
 
   /**
-   * Inizializza un novo oggetto PrenotazioneBean settando gli attributi
+   * Inizializza un novo oggetto PrenotazioneBean settando gli attributi.
+   *
    * @param id id della prenotazione
    * @param data data per cui l'utente si è prenotato
    * @param time ora per cui l'utente si è prenotato
@@ -45,7 +42,8 @@ public class PrenotazioneBean {
   }
 
   /**
-   * Metodo per ottenere l'id della prenotazione
+   * Metodo per ottenere l'id della prenotazione.
+   *
    * @return id della prenotazione
    */
   public int getId() {
@@ -53,7 +51,8 @@ public class PrenotazioneBean {
   }
 
   /**
-   * Metodo che permette di settare l'id per un oggetto PrenotazioneBean
+   * Metodo che permette di settare l'id per un oggetto PrenotazioneBean.
+   *
    * @param id id della prenotazione
    */
   public void setId(int id) {
@@ -61,7 +60,8 @@ public class PrenotazioneBean {
   }
 
   /**
-   * Metodo che restituisce la data della prenotazione
+   * Metodo che restituisce la data della prenotazione.
+   *
    * @return data
    */
   public String getData() {
@@ -69,7 +69,8 @@ public class PrenotazioneBean {
   }
 
   /**
-   * Metodo che permette di settare la data per un oggetto PrenotazioneBean
+   * Metodo che permette di settare la data per un oggetto PrenotazioneBean.
+   *
    * @param data data della prenotazione
    */
   public void setData(String data) {
@@ -77,7 +78,8 @@ public class PrenotazioneBean {
   }
 
   /**
-   * Metodo che restituisce l'ora della prentozione
+   * Metodo che restituisce l'ora della prenotazione.
+   *
    * @return ora
    */
   public String getTime() {
@@ -85,7 +87,8 @@ public class PrenotazioneBean {
   }
 
   /**
-   * Metodo che permette di settare l'ora per un oggetto PrenotazioneBean
+   * Metodo che permette di settare l'ora per un oggetto PrenotazioneBean.
+   *
    * @param time ora della prenotazione
    */
   public void setTime(String time) {
@@ -93,7 +96,8 @@ public class PrenotazioneBean {
   }
 
   /**
-   * Metodo che restituisce la convalida della prenotazione
+   * Metodo che restituisce la convalida della prenotazione.
+   *
    * @return convalida
    */
   public boolean isConvalida() {
@@ -101,7 +105,8 @@ public class PrenotazioneBean {
   }
 
   /**
-   * Metodo che permette di settare la convalida per un oggetto PrenotazioneBean
+   * Metodo che permette di settare la convalida per un oggetto PrenotazioneBean.
+   *
    * @param convalida convalida della prenotazione
    */
   public void setConvalida(boolean convalida) {
@@ -109,7 +114,8 @@ public class PrenotazioneBean {
   }
 
   /**
-   * Metodo che restituisce il codicefiscale dell'utente che ha effettuato la prenotazione
+   * Metodo che restituisce il codice fiscale dell'utente che ha effettuato la prenotazione.
+   *
    * @return codicefiscale
    */
   public String getCodiceFiscale() {
@@ -117,7 +123,8 @@ public class PrenotazioneBean {
   }
 
   /**
-   * Metodo che permette di settare il codiceficale per un oggetto PrenotazioneBean
+   * Metodo che permette di settare il codice fiscale per un oggetto PrenotazioneBean.
+   *
    * @param codiceFiscale codicefiscale dell'utente che effettua la prenotazione
    */
   public void setCodiceFiscale(String codiceFiscale) {
@@ -125,7 +132,8 @@ public class PrenotazioneBean {
   }
 
   /**
-   * Metodo che restituisce l'id dell'operazione per cui l'utente si e prenotato
+   * Metodo che restituisce l'id dell'operazione per cui l'utente si e prenotato.
+   *
    * @return id operazione
    */
   public int getIdOperazione() {
@@ -133,7 +141,9 @@ public class PrenotazioneBean {
   }
 
   /**
-   * Metodo che permette di settare l'id dell operazione per cui si vuole prenotare per un oggetto PrenotazioneBean
+   * Metodo che permette di settare l'id dell'operazione per cui si vuole prenotare per un oggetto
+   * PrenotazioneBean.
+   *
    * @param idOperazione id dell'operazione per cui si vuole prenotare
    */
   public void setIdOperazione(int idOperazione) {
@@ -141,7 +151,8 @@ public class PrenotazioneBean {
   }
 
   /**
-   * Metodo che restituisce l'id della struttura per la quale l'utente si e prenotato
+   * Metodo che restituisce l'id della struttura per la quale l'utente si è prenotato.
+   *
    * @return id struttura
    */
   public int getIdStruttura() {
@@ -149,12 +160,12 @@ public class PrenotazioneBean {
   }
 
   /**
-   * Metodo che permette di settare l'id della struttura per cui l'utente vuole prenotarsi per un oggetto PrenotazioneBean
+   * Metodo che permette di settare l'id della struttura per la quale l'utente
+   * vuole prenotarsi ad un oggetto PrenotazioneBean.
+   *
    * @param idStruttura id della struttura per cui l'utente si vuole prenotare
    */
   public void setIdStruttura(int idStruttura) {
     this.idStruttura = idStruttura;
   }
-
-
 }

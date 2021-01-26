@@ -1,10 +1,7 @@
 package entity;
 
-/**
- * Classe che rappresenta l'impiegato ospedaliero
- */
+/** Classe che rappresenta l'impiegato ospedaliero. */
 public class ImpiegatoBean {
-
 
   private String codicefiscale;
   private String password;
@@ -15,21 +12,20 @@ public class ImpiegatoBean {
   private String numeroDiTelefono;
   private int idStruttura;
 
-  /**
-   * Inizzializza un nuovo oggetto ImpiegatoBean
-   */
+  /** Inizializza un nuovo oggetto ImpiegatoBean. */
   public ImpiegatoBean() {}
 
   /**
-   * Inizzializza un nuovo oggetto ImpiegatoBean settando gli attributi
-   * @param codicefiscale codicefiscale dell'impiegato
-   * @param password password d'accesso al sistema dell'impiegato
-   * @param nome nome impiegato
-   * @param cognome cognome impiegato
-   * @param dataDiNascita data di nascita dell'impiegato
-   * @param indirizzoEmail indirizzo email dell'impiegato
-   * @param numeroDiTelefono numero di telefono dell'impiegato
-   * @param idStruttura id della struttura per cui lavaora l'impiegato
+   * Inizializza un nuovo oggetto ImpiegatoBean settando gli attributi.
+   *
+   * @param codicefiscale codice fiscale dell'impiegato.
+   * @param password password d'accesso al sistema dell'impiegato.
+   * @param nome nome impiegato.
+   * @param cognome cognome impiegato.
+   * @param dataDiNascita data di nascita dell'impiegato.
+   * @param indirizzoEmail indirizzo email dell'impiegato.
+   * @param numeroDiTelefono numero di telefono dell'impiegato.
+   * @param idStruttura id della struttura per cui lavaora l'impiegato.
    */
   public ImpiegatoBean(
       String codicefiscale,
@@ -50,9 +46,9 @@ public class ImpiegatoBean {
     this.idStruttura = idStruttura;
   }
 
-
   /**
-   * Metodo che restituisce il codice fiscale dell'impigato
+   * Metodo che restituisce il codice fiscale dell'impiegato.
+   *
    * @return codicefiscale
    */
   public String getCodicefiscale() {
@@ -60,7 +56,8 @@ public class ImpiegatoBean {
   }
 
   /**
-   * Metodo per settare un codice fiscale all'oggetto ImpiegatoBean
+   * Metodo per settare un codice fiscale all'oggetto ImpiegatoBean.
+   *
    * @param codicefiscale codicefiscale dell'impiegato
    */
   public void setCodicefiscale(String codicefiscale) {
@@ -68,7 +65,8 @@ public class ImpiegatoBean {
   }
 
   /**
-   * Metodo che restituisce la password dell'impiegato
+   * Metodo che restituisce la password dell'impiegato.
+   *
    * @return password
    */
   public String getPassword() {
@@ -76,7 +74,8 @@ public class ImpiegatoBean {
   }
 
   /**
-   * Metodo per settare la password all'oggetto ImpiegatoBean
+   * Metodo per settare la password all'oggetto ImpiegatoBean.
+   *
    * @param password password dell'impiegato
    */
   public void setPassword(String password) {
@@ -84,7 +83,8 @@ public class ImpiegatoBean {
   }
 
   /**
-   * Metodo per ottenere il nome del impiegato
+   * Metodo per ottenere il nome del impiegato.
+   *
    * @return nome
    */
   public String getNome() {
@@ -92,7 +92,8 @@ public class ImpiegatoBean {
   }
 
   /**
-   * Metodo per settare il nome all'oggetto ImpiegatoBean
+   * Metodo per settare il nome all'oggetto ImpiegatoBean.
+   *
    * @param nome nome dell'impiegato
    */
   public void setNome(String nome) {
@@ -100,7 +101,8 @@ public class ImpiegatoBean {
   }
 
   /**
-   * Netodo che ritorna il cognome dell'impiegato
+   * Metodo che ritorna il cognome dell'impiegato.
+   *
    * @return cognome
    */
   public String getCognome() {
@@ -108,7 +110,8 @@ public class ImpiegatoBean {
   }
 
   /**
-   * Metodo per settare il cognome all'oggetto ImpiegatoBean
+   * Metodo per settare il cognome all'oggetto ImpiegatoBean.
+   *
    * @param cognome cognome dell'impiegato
    */
   public void setCognome(String cognome) {
@@ -116,7 +119,8 @@ public class ImpiegatoBean {
   }
 
   /**
-   * Metodo per ottenere la data di nascita dell'impiegato
+   * Metodo per ottenere la data di nascita dell'impiegato.
+   *
    * @return data di nascita
    */
   public String getDataDiNascita() {
@@ -124,7 +128,8 @@ public class ImpiegatoBean {
   }
 
   /**
-   * Metodo per settare la data di nascita all'oggetto ImpiegatoBean
+   * Metodo per settare la data di nascita all'oggetto ImpiegatoBean.
+   *
    * @param dataDiNascita data di nascita dell'impiegato
    */
   public void setDataDiNascita(String dataDiNascita) {
@@ -132,7 +137,8 @@ public class ImpiegatoBean {
   }
 
   /**
-   * Metodo per ottenere l'indirizzo email dell'impiegato
+   * Metodo per ottenere l'indirizzo email dell'impiegato.
+   *
    * @return indirizzo email
    */
   public String getIndirizzoEmail() {
@@ -140,7 +146,8 @@ public class ImpiegatoBean {
   }
 
   /**
-   * Metodo per settare l'indirizzo email all'oggetto ImpiegatoBean
+   * Metodo per settare l'indirizzo email all'oggetto ImpiegatoBean.
+   *
    * @param indirizzoEmail indirizzo email dell'impiegato
    */
   public void setIndirizzoEmail(String indirizzoEmail) {
@@ -148,7 +155,8 @@ public class ImpiegatoBean {
   }
 
   /**
-   * Metodo per ottenere il numero di telefono dell'impiegato
+   * Metodo per ottenere il numero di telefono dell'impiegato.
+   *
    * @return numero di telefono
    */
   public String getNumeroDiTelefono() {
@@ -156,7 +164,8 @@ public class ImpiegatoBean {
   }
 
   /**
-   * Metdodo per settare il numero di telefono all'oggetto ImpiegatoBean
+   * Metodo per settare il numero di telefono all'oggetto ImpiegatoBean.
+   *
    * @param numeroDiTelefono numero di telefondo dell'impiegato
    */
   public void setNumeroDiTelefono(String numeroDiTelefono) {
@@ -164,7 +173,8 @@ public class ImpiegatoBean {
   }
 
   /**
-   * Metodo per ottenere l'id della struttura dove lavora l'impiegato
+   * Metodo per ottenere l'id della struttura dove lavora l'impiegato.
+   *
    * @return id della struttura ospedaliera
    */
   public int getIdStruttura() {
@@ -172,7 +182,8 @@ public class ImpiegatoBean {
   }
 
   /**
-   * Metodo per settare l'id della struttura ospedaliera all'oggetto ImpiegatoBean
+   * Metodo per settare l'id della struttura ospedaliera all'oggetto ImpiegatoBean.
+   *
    * @param idStruttura id struttura ospedaliera dell'impeigato
    */
   public void setIdStruttura(int idStruttura) {
