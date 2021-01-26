@@ -66,7 +66,7 @@ export default defineComponent({
       },
       {
         title: 'Visualizza Prenotazioni',
-        url: '/folder/List',
+        url: '/test/ciao',
         iosIcon: listOutline,
         mdIcon: listSharp
       }
