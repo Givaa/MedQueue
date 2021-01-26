@@ -1,4 +1,4 @@
-package business;
+package entity;
 
 /**
  * Classe che rappresenta per quale operazione è possibile prendere una prentazione

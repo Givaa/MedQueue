@@ -1,9 +1,9 @@
 package presentazione;
 
 import business.Gestione;
-import business.ImpiegatoBean;
-import business.OperazioneBean;
-import business.PrenotazioneBean;
+import entity.ImpiegatoBean;
+import entity.OperazioneBean;
+import entity.PrenotazioneBean;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;

@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import business.ImpiegatoBean;
+import entity.ImpiegatoBean;
 import persistence.DataAccess;
 import persistence.DriverManagerConnectionPool;
 

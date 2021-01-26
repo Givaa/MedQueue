@@ -1,5 +1,6 @@
 package business;
 
+import entity.PrenotazioneBean;
 import persistence.DataAccess;
 
 /**

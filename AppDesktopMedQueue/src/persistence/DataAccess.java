@@ -1,9 +1,9 @@
 package persistence;
 
-import business.ImpiegatoBean;
-import business.OperazioneBean;
-import business.PrenotazioneBean;
-import business.StrutturaBean;
+import entity.ImpiegatoBean;
+import entity.OperazioneBean;
+import entity.PrenotazioneBean;
+import entity.StrutturaBean;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

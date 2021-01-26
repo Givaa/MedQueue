@@ -1,4 +1,4 @@
-package business;
+package entity;
 
 /**
  * Classe che rappresenta l'impiegato ospedaliero
