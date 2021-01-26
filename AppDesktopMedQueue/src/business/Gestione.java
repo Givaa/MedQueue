@@ -12,15 +12,15 @@ public class Gestione {
      * Metodo che permette di accettare una prenotazione convalidata
      * @param idOp id dell'operazione per cui si vuole accettare la prenotazione
      * @param idStruttura id della struttura per cui si vuole accettare la prenotazione
-     * @return prenotazione
+     * @return prenotazione o null se non ci sono prentoazioni
      */
   public static PrenotazioneBean accettaPrenotazione(int idOp, int idStruttura) {
-    PrenotazioneBean p = DataAccess.serviPrenotazione(idOp, idStruttura);
-    if (p != null) {
-        DataAccess.deletePrenotazione(p.getId());
-    } else {
-        return null;
-    }
-    return p;
+      PrenotazioneBean p = DataAccess.serviPrenotazione(idOp, idStruttura);
+      if (p != null) {
+          if (DataAccess.deletePrenotazione(p.getId()) > 0) {
+              return p;
+          }
+      }
+      return null;
   }
 }

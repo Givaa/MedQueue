@@ -156,19 +156,23 @@ public class DataAccess {
   /**
    * Metodo per cancellare una prenotazione dal database in base all'id
    * @param id id della prenotazione da cancellare
+   * @return 0 se la prenotazione non e stata cancellata 1 se la prentoazione e stata cancellata
    */
-  public static void deletePrenotazione(int id) {
+  public static int deletePrenotazione(int id) {
+    int delete=0;
     try {
       String sql = "DELETE Prenotazione FROM MedQueue.Prenotazione WHERE Prenotazione.Id = ?";
       PreparedStatement query = DriverManagerConnectionPool.getConnection().prepareStatement(sql);
       query.setInt(1, id);
-      query.executeUpdate();
+      delete=query.executeUpdate();
       query.close();
     } catch (SQLException e) {
       e.printStackTrace();
       System.err.println("SQLException:" + e.getMessage());
     }
+    return delete;
   }
+
 
   /**
    * Metodo che restituisce il numero di prenotazioni da servire in base all'id dell'oprazione e l'id della struttura
