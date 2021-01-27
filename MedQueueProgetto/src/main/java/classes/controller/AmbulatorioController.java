@@ -44,7 +44,7 @@ public class AmbulatorioController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/ambulatori")
-  public Collection<AmbulatoriBean> getAll(@RequestBody String order) throws SQLException {
+  public Collection<AmbulatoriBean> getAllAmbulatori(@RequestBody String order) throws SQLException {
     return ambulatorioModel.doRetrieveAll(order);
   }
 

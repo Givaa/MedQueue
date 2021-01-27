@@ -55,7 +55,7 @@ public class PrenotazioneController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/newPrenotazione")
-  public void newOperazione(PrenotazioneBean p) throws SQLException {
+  public void newPrenotazione(PrenotazioneBean p) throws SQLException {
     prenotazioneModel.doSave(p);
   }
 
@@ -67,7 +67,7 @@ public class PrenotazioneController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/deletePrenotazione")
-  public void deleteOperazione(PrenotazioneBean p) throws SQLException {
+  public void deletePrenotazione(PrenotazioneBean p) throws SQLException {
     prenotazioneModel.doDelete(p);
   }
 
@@ -79,7 +79,7 @@ public class PrenotazioneController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/updatePrenotazione")
-  public void updateOperazione(PrenotazioneBean p) throws SQLException {
+  public void updatePrenotazione(PrenotazioneBean p) throws SQLException {
     prenotazioneModel.doUpdate(p);
   }
 

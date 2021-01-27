@@ -53,7 +53,7 @@ public class StrutturaController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/newStruttura")
-  public void newOperazione(@RequestBody StrutturaBean s) throws SQLException {
+  public void newStruttura(@RequestBody StrutturaBean s) throws SQLException {
     strutturaModel.doSave(s);
   }
 
@@ -65,7 +65,7 @@ public class StrutturaController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/deleteStruttura")
-  public void deleteOperazione(@RequestBody StrutturaBean s) throws SQLException {
+  public void deleteStruttura(@RequestBody StrutturaBean s) throws SQLException {
     strutturaModel.doDelete(s);
   }
 
@@ -77,7 +77,7 @@ public class StrutturaController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/updateStruttura")
-  public void updateOperazione(@RequestBody StrutturaBean s) throws SQLException {
+  public void updateStruttura(@RequestBody StrutturaBean s) throws SQLException {
     strutturaModel.doUpdate(s);
   }
 }
