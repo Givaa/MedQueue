@@ -26,7 +26,7 @@ public class PrenotazioneController {
    * @throws ObjectNotFoundException per problemi di oggetto non trovato
    */
   @GetMapping("/prenotazione/{id}")
-  PrenotazioneBean getPrenotazioneById(String id) throws SQLException, ObjectNotFoundException {
+  public PrenotazioneBean getPrenotazioneById(String id) throws SQLException, ObjectNotFoundException {
     PrenotazioneBean p = prenotazioneModel.doRetrieveByKey(id);
     if (p != null) {
       return p;
@@ -43,7 +43,7 @@ public class PrenotazioneController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/prenotazioni")
-  Collection<PrenotazioneBean> getAllPrenotazioni(String order) throws SQLException {
+  public Collection<PrenotazioneBean> getAllPrenotazioni(String order) throws SQLException {
     return prenotazioneModel.doRetrieveAll(order);
   }
 
@@ -55,7 +55,7 @@ public class PrenotazioneController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/newPrenotazione")
-  void newOperazione(PrenotazioneBean p) throws SQLException {
+  public void newOperazione(PrenotazioneBean p) throws SQLException {
     prenotazioneModel.doSave(p);
   }
 
@@ -67,7 +67,7 @@ public class PrenotazioneController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/deletePrenotazione")
-  void deleteOperazione(PrenotazioneBean p) throws SQLException {
+  public void deleteOperazione(PrenotazioneBean p) throws SQLException {
     prenotazioneModel.doDelete(p);
   }
 
@@ -79,7 +79,7 @@ public class PrenotazioneController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/updatePrenotazione")
-  void updateOperazione(PrenotazioneBean p) throws SQLException {
+  public void updateOperazione(PrenotazioneBean p) throws SQLException {
     prenotazioneModel.doUpdate(p);
   }
 
@@ -91,7 +91,7 @@ public class PrenotazioneController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/prenotazioniUtente/{cf}")
-  Collection<PrenotazioneBean> getPrenotazioniByCodFisc(String cf) throws SQLException {
+  public Collection<PrenotazioneBean> getPrenotazioniByCodFisc(String cf) throws SQLException {
     return prenotazioneModel.getUtentePrenotazioni(cf);
   }
 }

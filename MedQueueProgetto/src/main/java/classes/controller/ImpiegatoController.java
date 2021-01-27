@@ -26,7 +26,7 @@ public class ImpiegatoController {
    * @throws ObjectNotFoundException per problemi di oggetto non trovato
    */
   @GetMapping("/impiegato/{cf}")
-  ImpiegatoBean getImpiegatoByCodFis(@PathVariable String cf)
+  public ImpiegatoBean getImpiegatoByCodFis(@PathVariable String cf)
       throws SQLException, ObjectNotFoundException {
     ImpiegatoBean b = impiegatoModel.doRetrieveByKey(cf);
 
@@ -45,7 +45,7 @@ public class ImpiegatoController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/impiegati")
-  Collection<ImpiegatoBean> getAllImpiegati(@RequestBody String order) throws SQLException {
+  public Collection<ImpiegatoBean> getAllImpiegati(@RequestBody String order) throws SQLException {
     return impiegatoModel.doRetrieveAll(order);
   }
 
@@ -56,7 +56,7 @@ public class ImpiegatoController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/newImpiegato")
-  void newImpiegato(@RequestBody ImpiegatoBean i) throws SQLException {
+  public void newImpiegato(@RequestBody ImpiegatoBean i) throws SQLException {
     impiegatoModel.doSave(i);
   }
 
@@ -68,7 +68,7 @@ public class ImpiegatoController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/deleteImpiegato")
-  void deleteImpiegato(@RequestBody ImpiegatoBean i) throws SQLException {
+  public void deleteImpiegato(@RequestBody ImpiegatoBean i) throws SQLException {
     impiegatoModel.doDelete(i);
   }
 
@@ -80,7 +80,7 @@ public class ImpiegatoController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/updateImpiegato")
-  void updateImpiegato(@RequestBody ImpiegatoBean i) throws SQLException {
+  public void updateImpiegato(@RequestBody ImpiegatoBean i) throws SQLException {
     impiegatoModel.doUpdate(i);
   }
 }

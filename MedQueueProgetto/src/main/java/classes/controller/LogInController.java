@@ -23,7 +23,7 @@ public class LogInController extends HttpServlet {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/login")
-  boolean login(@RequestBody String username, @RequestBody String password) throws SQLException {
+  public boolean login(@RequestBody String username, @RequestBody String password) throws SQLException {
     UtenteBean a = um.doRetrieveByKey(username);
 
     return a.getPassword().equals(password);

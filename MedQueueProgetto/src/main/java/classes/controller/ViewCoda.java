@@ -21,7 +21,7 @@ public class ViewCoda {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/visualizzaCoda/{id}")
-  Collection<PrenotazioneBean> getAllPrenotazioniByStruttura(@PathVariable int id)
+  public Collection<PrenotazioneBean> getAllPrenotazioniByStruttura(@PathVariable int id)
       throws SQLException {
     return prenotazioneModel.getCodaStruttura(id);
   }

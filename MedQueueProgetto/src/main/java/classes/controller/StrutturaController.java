@@ -24,7 +24,7 @@ public class StrutturaController {
    * @throws ObjectNotFoundException per problemi di oggetto non trovato
    */
   @GetMapping("/struttura/{id}")
-  StrutturaBean getStrutturaById(@PathVariable String id)
+  public StrutturaBean getStrutturaById(@PathVariable String id)
       throws SQLException, ObjectNotFoundException {
     StrutturaBean s = strutturaModel.doRetrieveByKey(id);
     if (s != null) {
@@ -42,7 +42,7 @@ public class StrutturaController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/strutture")
-  Collection<StrutturaBean> getAllStrutture(@RequestBody String order) throws SQLException {
+  public Collection<StrutturaBean> getAllStrutture(@RequestBody String order) throws SQLException {
     return strutturaModel.doRetrieveAll(order);
   }
 
@@ -53,7 +53,7 @@ public class StrutturaController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/newStruttura")
-  void newOperazione(@RequestBody StrutturaBean s) throws SQLException {
+  public void newOperazione(@RequestBody StrutturaBean s) throws SQLException {
     strutturaModel.doSave(s);
   }
 
@@ -65,7 +65,7 @@ public class StrutturaController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/deleteStruttura")
-  void deleteOperazione(@RequestBody StrutturaBean s) throws SQLException {
+  public void deleteOperazione(@RequestBody StrutturaBean s) throws SQLException {
     strutturaModel.doDelete(s);
   }
 
@@ -77,7 +77,7 @@ public class StrutturaController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/updateStruttura")
-  void updateOperazione(@RequestBody StrutturaBean s) throws SQLException {
+  public void updateOperazione(@RequestBody StrutturaBean s) throws SQLException {
     strutturaModel.doUpdate(s);
   }
 }

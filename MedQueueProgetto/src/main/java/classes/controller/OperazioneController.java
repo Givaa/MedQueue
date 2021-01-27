@@ -25,7 +25,7 @@ public class OperazioneController {
    * @throws ObjectNotFoundException per problemi di oggetto non trovato
    */
   @GetMapping("/operazione/{id}")
-  OperazioneBean getOperazioneById(@RequestBody String id)
+  public OperazioneBean getOperazioneById(@RequestBody String id)
       throws SQLException, ObjectNotFoundException {
     OperazioneBean op = operazioneModel.doRetrieveByKey(id);
     if (op != null) {
@@ -43,7 +43,7 @@ public class OperazioneController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/operazioni")
-  Collection<OperazioneBean> getAllOperazioni(@RequestBody String order) throws SQLException {
+  public Collection<OperazioneBean> getAllOperazioni(@RequestBody String order) throws SQLException {
     return operazioneModel.doRetrieveAll(order);
   }
 
@@ -55,7 +55,7 @@ public class OperazioneController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/newOperazione")
-  void newOperazione(@RequestBody OperazioneBean o) throws SQLException {
+  public void newOperazione(@RequestBody OperazioneBean o) throws SQLException {
     operazioneModel.doSave(o);
   }
 
@@ -67,7 +67,7 @@ public class OperazioneController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/deleteOperazione")
-  void deleteOperazione(@RequestBody OperazioneBean o) throws SQLException {
+  public void deleteOperazione(@RequestBody OperazioneBean o) throws SQLException {
     operazioneModel.doDelete(o);
   }
 

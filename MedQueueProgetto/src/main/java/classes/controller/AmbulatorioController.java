@@ -26,7 +26,7 @@ public class AmbulatorioController {
    * @throws ObjectNotFoundException problemi di oggetto non trovato
    */
   @GetMapping("/ambulatorio/{id}")
-  AmbulatoriBean getById(@PathVariable String id) throws SQLException, ObjectNotFoundException {
+  public AmbulatoriBean getById(@PathVariable String id) throws SQLException, ObjectNotFoundException {
     AmbulatoriBean a = ambulatorioModel.doRetrieveByKey(id);
 
     if (a != null) {
@@ -44,7 +44,7 @@ public class AmbulatorioController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/ambulatori")
-  Collection<AmbulatoriBean> getAll(@RequestBody String order) throws SQLException {
+  public Collection<AmbulatoriBean> getAll(@RequestBody String order) throws SQLException {
     return ambulatorioModel.doRetrieveAll(order);
   }
 
@@ -56,7 +56,7 @@ public class AmbulatorioController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/newAmbulatorio")
-  void newAmbulatorio(@RequestBody AmbulatoriBean a) throws SQLException {
+  public void newAmbulatorio(@RequestBody AmbulatoriBean a) throws SQLException {
     ambulatorioModel.doSave(a);
   }
 
@@ -68,7 +68,7 @@ public class AmbulatorioController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/removeAmbulatorio")
-  void deleteAmbulatorio(@RequestBody AmbulatoriBean a) throws SQLException {
+  public void deleteAmbulatorio(@RequestBody AmbulatoriBean a) throws SQLException {
     ambulatorioModel.doDelete(a);
   }
 
@@ -80,7 +80,7 @@ public class AmbulatorioController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/updateAmbulatorio")
-  void updateAmbulatorio(@RequestBody AmbulatoriBean a) throws SQLException {
+  public void updateAmbulatorio(@RequestBody AmbulatoriBean a) throws SQLException {
     ambulatorioModel.doUpdate(a);
   }
 }

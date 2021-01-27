@@ -24,7 +24,7 @@ public class UtenteController {
    * @throws ObjectNotFoundException per problemi di oggetto non trovato
    */
   @GetMapping("/utente/{cf}")
-  UtenteBean getUtenteByCodFisc(@PathVariable String cf)
+  public UtenteBean getUtenteByCodFisc(@PathVariable String cf)
       throws SQLException, ObjectNotFoundException {
     UtenteBean s = utenteModel.doRetrieveByKey(cf);
     if (s != null) {
@@ -42,7 +42,7 @@ public class UtenteController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/utenti")
-  Collection<UtenteBean> getAllUtenti(@RequestBody String order) throws SQLException {
+  public Collection<UtenteBean> getAllUtenti(@RequestBody String order) throws SQLException {
     return utenteModel.doRetrieveAll(order);
   }
 
@@ -53,7 +53,7 @@ public class UtenteController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/newUtente")
-  void newUtente(@RequestBody UtenteBean u) throws SQLException {
+  public void newUtente(@RequestBody UtenteBean u) throws SQLException {
     utenteModel.doSave(u);
   }
 
@@ -65,7 +65,7 @@ public class UtenteController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/deleteUtente")
-  void deleteUtente(@RequestBody UtenteBean u) throws SQLException {
+  public void deleteUtente(@RequestBody UtenteBean u) throws SQLException {
     utenteModel.doDelete(u);
   }
 
@@ -77,7 +77,7 @@ public class UtenteController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/updateUtente")
-  void updateUtente(@RequestBody UtenteBean u) throws SQLException {
+  public void updateUtente(@RequestBody UtenteBean u) throws SQLException {
     utenteModel.doUpdate(u);
   }
 }
