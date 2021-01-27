@@ -9,11 +9,21 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedList;
 
+/**
+ * Model per collegare la tabella "Utente" al backend.
+ */
 public class UtenteModel implements Model<UtenteBean> {
   private static final String nomeTabella = "utente";
 
+  /**
+   * Prelevamento singolo utente.
+   *
+   * @param cf chiave primaria dell'utente
+   * @return Utente avente quel codice fiscale
+   * @throws SQLException per problemi di esecuzione della query
+   */
   @Override
-  public UtenteBean doRetrieveByKey(String code) throws SQLException {
+  public UtenteBean doRetrieveByKey(String cf) throws SQLException {
     Connection con = null;
     PreparedStatement ps = null;
 
@@ -24,7 +34,7 @@ public class UtenteModel implements Model<UtenteBean> {
     try {
       con = DriverManagerConnectionPool.getConnection();
       ps = con.prepareStatement(selectSql);
-      ps.setString(1, code);
+      ps.setString(1, cf);
 
       ResultSet rs = ps.executeQuery();
 
@@ -50,6 +60,13 @@ public class UtenteModel implements Model<UtenteBean> {
     return tmp;
   }
 
+  /**
+   * Prelevamento di tutti gli utenti presenti nel DB.
+   *
+   * @param order Ordine per la visualizzazione della collezione
+   * @return Collezione di utenti
+   * @throws SQLException cf per problemi di esecuzione della query
+   */
   @Override
   public Collection<UtenteBean> doRetrieveAll(String order) throws SQLException {
     Connection con = null;
@@ -96,6 +113,12 @@ public class UtenteModel implements Model<UtenteBean> {
     return result;
   }
 
+  /**
+   * Inserimento nuovo utente nel DB.
+   *
+   * @param param Nuovo Utente
+   * @throws SQLException per problemi di esecuzione della query
+   */
   @Override
   public void doSave(UtenteBean param) throws SQLException {
     Connection connection = null;
@@ -126,6 +149,12 @@ public class UtenteModel implements Model<UtenteBean> {
     }
   }
 
+  /**
+   * Aggiornamento di un utente presente nel DB.
+   *
+   * @param param Utente da aggiornare
+   * @throws SQLException per problemi di esecuzione della query
+   */
   @Override
   public void doUpdate(UtenteBean param) throws SQLException {
     Connection connection = null;
@@ -162,6 +191,12 @@ public class UtenteModel implements Model<UtenteBean> {
     return;
   }
 
+  /**
+   * Rimozione di un utente presente nel DB.
+   *
+   * @param param Utente da rimuovere
+   * @throws SQLException per problemi di esecuzione della query
+   */
   @Override
   public void doDelete(UtenteBean param) throws SQLException {
     Connection connection = null;

@@ -6,6 +6,9 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Classe per creare la connessione al DB.
+ */
 public class DriverManagerConnectionPool {
 
   private static List<Connection> freeDbConnections;
@@ -19,10 +22,18 @@ public class DriverManagerConnectionPool {
     }
   }
 
+  /**
+   * Costruttore per il DriverManagerConnectionPool.
+   */
   public DriverManagerConnectionPool() {
     freeDbConnections = new LinkedList<Connection>();
   }
 
+  /**
+   * Creazione della connessione.
+   *
+   * @return connessione al DB
+   */
   public static synchronized Connection createDbConnection() {
     try {
       Connection newConnection = null;
@@ -47,6 +58,12 @@ public class DriverManagerConnectionPool {
     }
   }
 
+  /**
+   * Get per la connessione.
+   *
+   * @return Connessione al DB.
+   * @throws SQLException per problemi di esecuzione della query
+   */
   public static synchronized Connection getConnection() throws SQLException {
     Connection connection;
 
@@ -69,6 +86,12 @@ public class DriverManagerConnectionPool {
     return connection;
   }
 
+  /**
+   * Chiusura di una connessione.
+   *
+   * @param connection connessione da chiudere
+   * @throws SQLException per problemi di esecuzione della query
+   */
   public static synchronized void releaseConnection(Connection connection) throws SQLException {
     if (connection != null) {
       freeDbConnections.add(connection);

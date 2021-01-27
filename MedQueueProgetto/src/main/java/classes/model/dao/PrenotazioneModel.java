@@ -9,9 +9,19 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedList;
 
+/**
+ * Model per collegare la tabella "Prenotazione" al backend.
+ */
 public class PrenotazioneModel implements Model<PrenotazioneBean> {
   private static final String nomeTabella = "prenotazione";
 
+  /**
+   * Prelevamento singola prenotazione.
+   *
+   * @param id chiave primaria della prenotazione
+   * @return Prenotazione avente quell'id
+   * @throws SQLException per problemi di esecuzione della query
+   */
   @Override
   public PrenotazioneBean doRetrieveByKey(String id) throws SQLException {
     Connection con = null;
@@ -51,6 +61,13 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
     return tmp;
   }
 
+  /**
+   * Prelevamento di tutte le prenotazione.
+   *
+   * @param order Ordine per la visualizzazione della collezione
+   * @return Collezione di tutte le prenotazioni
+   * @throws SQLException per problemi di esecuzione della query
+   */
   @Override
   public Collection<PrenotazioneBean> doRetrieveAll(String order) throws SQLException {
     Connection con = null;
@@ -99,6 +116,12 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
     return result;
   }
 
+  /**
+   * Inserimento di una nuova prenotazione nel DB.
+   *
+   * @param param Nuova prenotazione
+   * @throws SQLException per problemi di esecuzione della query
+   */
   @Override
   public void doSave(PrenotazioneBean param) throws SQLException {
     Connection connection = null;
@@ -128,6 +151,12 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
     }
   }
 
+  /**
+   * Aggiornamento di una prenotazione presente nel DB.
+   *
+   * @param param Prenotazione da aggiornare
+   * @throws SQLException per problemi di esecuzione della query
+   */
   @Override
   public void doUpdate(PrenotazioneBean param) throws SQLException {
     Connection connection = null;
@@ -164,6 +193,12 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
     return;
   }
 
+  /**
+   * Rimozione di una prenotazione presente sul DB.
+   *
+   * @param param Prenotazione da rimuovere
+   * @throws SQLException per problemi di esecuzione della query
+   */
   @Override
   public void doDelete(PrenotazioneBean param) throws SQLException {
     Connection connection = null;
@@ -190,6 +225,13 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
     return;
   }
 
+  /**
+   * Metodo per prelevare tutte le prenotazioni di un utente.
+   *
+   * @param cf chiave primaria dell'utente di cui vogliamo prendere le prenotazioni
+   * @return Collezione di prenotazioni dell'utente avente quel codice fiscale
+   * @throws SQLException per problemi di esecuzione della query
+   */
   public Collection<PrenotazioneBean> getUtentePrenotazioni(String cf) throws SQLException {
     Connection con = null;
     PreparedStatement ps = null;
@@ -231,6 +273,13 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
     return result;
   }
 
+  /**
+   * Metodo per prelevare tutte le prenotazioni di una struttura.
+   *
+   * @param idStruttura chiave primaria della struttura di cui vogliamo la coda
+   * @return Collezione che rappresenta la coda della struttura
+   * @throws SQLException per problemi di esecuzione della query
+   */
   public Collection<PrenotazioneBean> getCodaStruttura(int idStruttura) throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;

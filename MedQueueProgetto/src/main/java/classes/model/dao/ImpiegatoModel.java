@@ -9,10 +9,20 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedList;
 
+/**
+ * Model per collegare la tabella "Impiegato" al backend.
+ */
 public class ImpiegatoModel implements Model<ImpiegatoBean> {
 
   private static final String nomeTabella = "impiegato";
 
+  /**
+   * Prelevamento singolo Impiegato.
+   *
+   * @param codFisc chiave primaria dell'impiegato
+   * @return Impiegato avente quel codice fiscale
+   * @throws SQLException per problemi di esecuzione della query
+   */
   @Override
   public ImpiegatoBean doRetrieveByKey(String codFisc) throws SQLException {
     Connection con = null;
@@ -52,6 +62,13 @@ public class ImpiegatoModel implements Model<ImpiegatoBean> {
     return tmp;
   }
 
+  /**
+   * Prelevamento di tutti gli impiegati.
+   *
+   * @param order Ordine per la visualizzazione della collezione
+   * @return Collection di impiegati
+   * @throws SQLException per problemi di esecuzione della query
+   */
   @Override
   public Collection<ImpiegatoBean> doRetrieveAll(String order) throws SQLException {
     Connection con = null;
@@ -100,6 +117,12 @@ public class ImpiegatoModel implements Model<ImpiegatoBean> {
     return result;
   }
 
+  /**
+   * Inserimento di un nuovo Impiegato.
+   *
+   * @param param Nuovo impiegato
+   * @throws SQLException per problemi di esecuzione della query
+   */
   @Override
   public void doSave(ImpiegatoBean param) throws SQLException {
     Connection connection = null;
@@ -130,6 +153,12 @@ public class ImpiegatoModel implements Model<ImpiegatoBean> {
     }
   }
 
+  /**
+   * Aggiornamento di un impiegato presente nel DB.
+   *
+   * @param param Impiegato da aggiornare
+   * @throws SQLException per problemi di esecuzione della query
+   */
   @Override
   public void doUpdate(ImpiegatoBean param) throws SQLException {
     Connection connection = null;
@@ -166,6 +195,12 @@ public class ImpiegatoModel implements Model<ImpiegatoBean> {
     return;
   }
 
+  /**
+   * Eliminazione di un impiegato presente nel DB.
+   *
+   * @param param Impiegato da eliminare
+   * @throws SQLException per problemi di esecuzione della query
+   */
   @Override
   public void doDelete(ImpiegatoBean param) throws SQLException {
     Connection connection = null;

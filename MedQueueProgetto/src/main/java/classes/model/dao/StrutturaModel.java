@@ -9,9 +9,19 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedList;
 
+/**
+ * Model per collegare la tabella "Struttura" al backend.
+ */
 public class StrutturaModel implements Model<StrutturaBean> {
   private static final String nomeTabella = "struttura";
 
+  /**
+   * Prelevamento singola struttura.
+   *
+   * @param code chiave primaria della struttura
+   * @return Struttura avente quell'id
+   * @throws SQLException per problemi di esecuzione della query
+   */
   @Override
   public StrutturaBean doRetrieveByKey(String code) throws SQLException {
     Connection con = null;
@@ -48,6 +58,13 @@ public class StrutturaModel implements Model<StrutturaBean> {
     return tmp;
   }
 
+  /**
+   * Prelevamento di tutte le Strutture nel DB.
+   *
+   * @param order Ordine per la visualizzazione della collezione
+   * @return Collezione di Strutture
+   * @throws SQLException per problemi di esecuzione della query
+   */
   @Override
   public Collection<StrutturaBean> doRetrieveAll(String order) throws SQLException {
     Connection con = null;
@@ -93,6 +110,12 @@ public class StrutturaModel implements Model<StrutturaBean> {
     return result;
   }
 
+  /**
+   * Inserimento nuova struttura nel DB.
+   *
+   * @param param Nuovo Struttura
+   * @throws SQLException per problemi di esecuzione della query
+   */
   @Override
   public void doSave(StrutturaBean param) throws SQLException {
     Connection connection = null;
@@ -119,17 +142,23 @@ public class StrutturaModel implements Model<StrutturaBean> {
     }
   }
 
+  /**
+   * Aggiornamento di una struttura presente nel DB.
+   *
+   * @param param Struttura da aggiornare
+   * @throws SQLException per problemi di esecuzione della query
+   */
   @Override
   public void doUpdate(StrutturaBean param) throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
-    String deleteSQL =
+    String deleteSql =
         "UPDATE " + nomeTabella + " SET nome = ?, indirizzo = ?, numeroDiTelefono = ? WHERE id = ?";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();
-      preparedStatement = connection.prepareStatement(deleteSQL);
+      preparedStatement = connection.prepareStatement(deleteSql);
       preparedStatement.setString(1, param.getNome());
       preparedStatement.setString(2, param.getIndirizzo());
       preparedStatement.setString(3, param.getNumeroDiTelefono());
@@ -149,6 +178,12 @@ public class StrutturaModel implements Model<StrutturaBean> {
     return;
   }
 
+  /**
+   * Rimozione di una struttura presente nel DB.
+   *
+   * @param param Struttura da rimuovere
+   * @throws SQLException per problemi di esecuzione della query
+   */
   @Override
   public void doDelete(StrutturaBean param) throws SQLException {
     Connection connection = null;

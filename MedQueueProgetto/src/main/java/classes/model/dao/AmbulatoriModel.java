@@ -9,10 +9,20 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedList;
 
+/**
+ * Model per collegare la tabella "Ambulatori" al backend.
+ */
 public class AmbulatoriModel implements Model<AmbulatoriBean> {
 
   private static final String nomeTabella = "ambulatorio";
 
+  /**
+   * Prelevamento singolo ambulatorio.
+   *
+   * @param id chiave primaria dell'ambulatorio
+   * @return Ambulatorio avente quell'id
+   * @throws SQLException per problemi di esecuzione della query
+   */
   @Override
   public AmbulatoriBean doRetrieveByKey(String id) throws SQLException {
     Connection con = null;
@@ -48,6 +58,13 @@ public class AmbulatoriModel implements Model<AmbulatoriBean> {
     return tmp;
   }
 
+  /**
+   * Prelevamento di tutti gli ambulatori presenti nel DB.
+   *
+   * @param order Ordine per la visualizzazione della collezione
+   * @return Collezione di ambulatori
+   * @throws SQLException per problemi di esecuzione della query
+   */
   @Override
   public Collection<AmbulatoriBean> doRetrieveAll(String order) throws SQLException {
     Connection con = null;
@@ -92,6 +109,12 @@ public class AmbulatoriModel implements Model<AmbulatoriBean> {
     return result;
   }
 
+  /**
+   * Insierimento di un nuovo ambulatorio nel DB.
+   *
+   * @param param Nuovo ambulatorio
+   * @throws SQLException per problemi di esecuzione della query
+   */
   @Override
   public void doSave(AmbulatoriBean param) throws SQLException {
     Connection connection = null;
@@ -118,6 +141,12 @@ public class AmbulatoriModel implements Model<AmbulatoriBean> {
     }
   }
 
+  /**
+   * Aggiornamento di un ambulatorio presente nel DB.
+   *
+   * @param param Ambulatorio da aggiornare
+   * @throws SQLException per problemi di esecuzione della query
+   */
   @Override
   public void doUpdate(AmbulatoriBean param) throws SQLException {
     Connection connection = null;
@@ -146,6 +175,12 @@ public class AmbulatoriModel implements Model<AmbulatoriBean> {
     return;
   }
 
+  /**
+   * Rimozione di un ambulatorio presente nel DB.
+   *
+   * @param param Ambulatorio da rimuovere
+   * @throws SQLException per problemi di esecuzione della query
+   */
   @Override
   public void doDelete(AmbulatoriBean param) throws SQLException {
     Connection connection = null;
