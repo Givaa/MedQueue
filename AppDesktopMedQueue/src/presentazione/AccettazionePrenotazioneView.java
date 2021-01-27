@@ -66,7 +66,7 @@ public class AccettazionePrenotazioneView {
         imp.getIdStruttura(); // Salvo la struttura in cui lavora l'impiegato per poter ottenere le
     // prenotazioni sono di quella struttura
     listoperazioni =
-        DataAccess.getOperazioni(); // Salvo le operazioni che potra gestire l'impiegato
+       Gestione.getListaOperazioni(); // Salvo le operazioni che potra gestire l'impiegato
 
     // Settaggi frame
     frame.setTitle("MedQueue");
@@ -197,7 +197,7 @@ public class AccettazionePrenotazioneView {
       operazione.setText(
           listoperazioni.get(i).getTipoOperazione()
               + ": "
-              + DataAccess.numPrenotazioni(listoperazioni.get(i).getId(), idStruttura));
+              + Gestione.getNumPrenotazioni(listoperazioni.get(i).getId(), idStruttura));
       // Modifico le dimensioni del button
       operazione.setPreferredSize(new Dimension(230, 25));
       operazione.setMaximumSize(operazione.getPreferredSize());
@@ -364,6 +364,7 @@ public class AccettazionePrenotazioneView {
    */
   // Metodo che conterra informazioni sulla prenotazione accettata
   private JPanel setPrenotazione(PrenotazioneBean p) {
+    MostraPrenotazioneAccettataView mostraPrenotazione=new MostraPrenotazioneAccettataView(p);
 
     // piu il button per finire il servizio della prenotazione
     JPanel pannello = new JPanel(); // Pannello che conterra informazioni sulla prenotazioe accetta
@@ -440,6 +441,7 @@ public class AccettazionePrenotazioneView {
             if (component[i] instanceof JButton) {
               component[i].setEnabled(true);
             }
+            mostraPrenotazione.getFrame().dispose();
           }
           // -------------------------------------------------------
           frame.validate(); // Aggiorno il frame
@@ -490,8 +492,7 @@ public class AccettazionePrenotazioneView {
           instanceof
           JButton) { // Se la componente e un JButton aggiorno il testo (TipoOperazione: numero
         // prenotazioni)
-        numeroPrenotazioni.add(
-            DataAccess.numPrenotazioni(listoperazioni.get(j).getId(), idStruttura));
+        numeroPrenotazioni.add(Gestione.getNumPrenotazioni(listoperazioni.get(j).getId(), idStruttura));
         ((JButton) comp[i])
             .setText(listoperazioni.get(j).getTipoOperazione() + ": " + numeroPrenotazioni.get(j));
         j++; // La variabile j viene utilizzata poichè nel pannello non conterrà solo JButton quindi
