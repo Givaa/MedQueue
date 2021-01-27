@@ -364,7 +364,7 @@ public class AccettazionePrenotazioneView {
    */
   // Metodo che conterra informazioni sulla prenotazione accettata
   private JPanel setPrenotazione(PrenotazioneBean p) {
-    MostraPrenotazioneAccettataView mostraPrenotazione=new MostraPrenotazioneAccettataView(p);
+
 
     // piu il button per finire il servizio della prenotazione
     JPanel pannello = new JPanel(); // Pannello che conterra informazioni sulla prenotazioe accetta
@@ -418,6 +418,7 @@ public class AccettazionePrenotazioneView {
     dettagliPrenotazione.add(pannello, BorderLayout.CENTER);
     dettagliPrenotazione.add(fine, BorderLayout.SOUTH);
 
+    MostraPrenotazioneAccettataView mostraPrenotazione = new MostraPrenotazioneAccettataView(p);
     fine.addActionListener(
         e -> { // ActionListener sul bottone per concludere il servizio
           servizioPrenotazione =
@@ -492,7 +493,8 @@ public class AccettazionePrenotazioneView {
           instanceof
           JButton) { // Se la componente e un JButton aggiorno il testo (TipoOperazione: numero
         // prenotazioni)
-        numeroPrenotazioni.add(Gestione.getNumPrenotazioni(listoperazioni.get(j).getId(), idStruttura));
+        numeroPrenotazioni.add(
+                Gestione.getNumPrenotazioni(listoperazioni.get(j).getId(), idStruttura));
         ((JButton) comp[i])
             .setText(listoperazioni.get(j).getTipoOperazione() + ": " + numeroPrenotazioni.get(j));
         j++; // La variabile j viene utilizzata poichè nel pannello non conterrà solo JButton quindi
