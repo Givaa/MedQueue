@@ -31,6 +31,8 @@
         <br>
         <IonButton @click="goReg"  color="primary">Registrati</IonButton>
         <IonButton @click="goLogin"  color="success">Accedi</IonButton>
+        <br>
+        <IonButton @click="goVisualizzazione"  color="warning">Visualizza Coda</IonButton>
       </div>
     </ion-content>
   </ion-page>
@@ -59,6 +61,10 @@ export default {
 
     goReg(){
       router.push("/Registrazione/Registrazione");
+    },
+
+    goVisualizzazione(){
+      router.push("/VisualizzazioneCoda/VisualizzaCoda");
     }
   }
 }

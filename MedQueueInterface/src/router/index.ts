@@ -11,7 +11,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import ('../views/Home.vue')
   },
   {
-    path: '/Visualizzazione Coda/:id',
+    path: '/VisualizzazioneCoda/:id',
     component: () => import ('../views/VisualizzaCoda.vue')
   },
   {
