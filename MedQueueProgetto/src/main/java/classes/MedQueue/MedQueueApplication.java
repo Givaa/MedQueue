@@ -14,12 +14,8 @@ import java.sql.SQLException;
 @RestController
 public class MedQueueApplication {
 
-    //public static void main(String[] args) { SpringApplication.run(MedQueueApplication.class, args); }
+    public static void main(String[] args) { SpringApplication.run(MedQueueApplication.class, args); }
 
-    @GetMapping("/hello")
-    public String sayHello(@RequestParam(value = "myName", defaultValue = "World") String name) {
-        return String.format("Hello %s!", name);
-    }
 
 
 }

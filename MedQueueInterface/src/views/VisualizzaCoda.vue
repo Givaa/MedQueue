@@ -17,18 +17,56 @@
       </ion-header>
       <div id="container">
         <strong class="capitalize">{{ $route.params.id }}</strong>
-        <p>Benvenuto </p>
+        <p>Coda ufficio</p>
       </div>
     </ion-content>
   </ion-page>
 </template>
 
-<script>
+<script lang="ts">
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+
 export default {
-  name: "test"
+  name: "visualizzaCoda",
+  components: {
+    IonButtons,
+    IonContent,
+    IonHeader,
+    IonMenuButton,
+    IonPage,
+    IonTitle,
+    IonToolbar
+  }
+
 }
 </script>
 
 <style scoped>
+#page{
+  background-color: blue;
+}
+#container {
+  text-align: center;
+  position: relative;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
 
+#container strong {
+  font-size: 20px;
+  line-height: 26px;
+}
+
+#container p {
+  font-size: 16px;
+  line-height: 22px;
+  color: #8c8c8c;
+  margin: 0;
+}
+
+#container a {
+  text-decoration: none;
+}
 </style>

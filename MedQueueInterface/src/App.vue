@@ -5,7 +5,6 @@
         <ion-content>
           <ion-list id="menu-list">
             <ion-list-header>MedQueue</ion-list-header>
-            <ion-note>Codice Fiscale</ion-note>
   
             <ion-menu-toggle auto-hide="false" v-for="(p, i) in appPages" :key="i">
               <ion-item @click="selectedIndex = i" router-direction="root" :router-link="p.url" lines="none" detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
@@ -38,8 +37,7 @@ export default defineComponent({
     IonList, 
     IonListHeader, 
     IonMenu, 
-    IonMenuToggle, 
-    IonNote, 
+    IonMenuToggle,
     IonRouterOutlet,
     IonSplitPane,
   },
@@ -48,25 +46,25 @@ export default defineComponent({
     const appPages = [
       {
         title:"Home",
-        url:"/folder/Home",
+        url:"/Home/Home",
         iosIcon: homeOutline,
         mdIcon: homeSharp
       },
       {
         title: 'Log In',
-        url: '/folder/Login',
+        url: '/Accesso/Accesso',
         iosIcon: logInOutline,
         mdIcon: logInSharp
       },
       {
         title: 'Sign in',
-        url: '/folder/Sign in',
+        url: '/Registrazione/Registrazione',
         iosIcon: pencilOutline,
         mdIcon: pencilSharp
       },
       {
-        title: 'Visualizza Prenotazioni',
-        url: '/test/ciao',
+        title: 'Visualizza Coda',
+        url: '/Visualizzazione Coda/Visualizza Coda',
         iosIcon: listOutline,
         mdIcon: listSharp
       }
