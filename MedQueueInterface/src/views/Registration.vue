@@ -83,7 +83,7 @@ img{
 }
 
 ion-content.background{
-  --background: url(../../public/assets/cartellina.svg)0 0/100% 100% no-repeat;
+  --background: url(../../public/assets/CartellinaAllungata.svg)0 0/100% 100% no-repeat;
 
 }
 #container {
