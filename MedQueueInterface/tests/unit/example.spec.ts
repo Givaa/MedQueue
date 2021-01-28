@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
-import Folder from '@/views/Folder.vue'
+import Folder from '@/views/Home.vue'
 
-describe('Folder.vue', () => {
+describe('Home.vue', () => {
   it('renders folder view', () => {
     const mockRoute = {
       params: {

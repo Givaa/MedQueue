@@ -1,23 +1,6 @@
 <template>
   <IonApp>
-    <IonSplitPane content-id="main-content">
-      <ion-menu content-id="main-content" type="overlay">
-        <ion-content>
-          <ion-list id="menu-list">
-            <ion-list-header>MedQueue</ion-list-header>
-            <ion-note>Codice Fiscale</ion-note>
-  
-            <ion-menu-toggle auto-hide="false" v-for="(p, i) in appPages" :key="i">
-              <ion-item @click="selectedIndex = i" router-direction="root" :router-link="p.url" lines="none" detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
-                <ion-icon slot="start" :ios="p.iosIcon" :md="p.mdIcon"></ion-icon>
-                <ion-label>{{ p.title }}</ion-label>
-              </ion-item>
-            </ion-menu-toggle>
-          </ion-list>
-        </ion-content>
-      </ion-menu>
-      <ion-router-outlet id="main-content"></ion-router-outlet>
-    </IonSplitPane>
+    <ion-router-outlet ></ion-router-outlet>
   </IonApp>
 </template>
 
@@ -30,43 +13,34 @@ import { homeOutline, homeSharp, logInOutline,  logInSharp, pencilOutline, penci
 export default defineComponent({
   name: 'App',
   components: {
-    IonApp, 
-    IonContent, 
-    IonIcon, 
-    IonItem, 
-    IonLabel, 
-    IonList, 
-    IonListHeader, 
-    IonMenu, 
-    IonMenuToggle, 
-    IonNote, 
+    IonApp,
     IonRouterOutlet,
-    IonSplitPane,
+
   },
   setup() {
     const selectedIndex = ref(0);
     const appPages = [
       {
         title:"Home",
-        url:"/folder/Home",
+        url:"/Home/Home",
         iosIcon: homeOutline,
         mdIcon: homeSharp
       },
-      {
+      /**{
         title: 'Log In',
-        url: '/folder/Login',
+        url: '/Accesso/Accesso',
         iosIcon: logInOutline,
         mdIcon: logInSharp
       },
       {
         title: 'Sign in',
-        url: '/folder/Sign in',
+        url: '/Registrazione/Registrazione',
         iosIcon: pencilOutline,
         mdIcon: pencilSharp
-      },
+      },*/
       {
-        title: 'Visualizza Prenotazioni',
-        url: '/test/ciao',
+        title: 'Visualizza Coda',
+        url: '/Visualizzazione Coda/Visualizza Coda',
         iosIcon: listOutline,
         mdIcon: listSharp
       }

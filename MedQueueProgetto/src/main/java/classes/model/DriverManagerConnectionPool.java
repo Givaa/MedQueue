@@ -45,6 +45,7 @@ public class DriverManagerConnectionPool {
                   + "true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&useSSL=false";
       String username = "root";
       String password = "root";
+      //String password= "kingzoro99";
 
       newConnection =
           DriverManager.getConnection(

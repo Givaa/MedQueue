@@ -1,5 +1,6 @@
 package presentazione;
 
+import business.Accesso;
 import entity.ImpiegatoBean;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -61,10 +62,10 @@ public class LoginView {
           if (connection == null) {
             errore.setText("Errore nella connessione");
           } else {
-            ImpiegatoBean impiegato = DataAccess.getImpiegato(codiceFiscale.getText());
             // Verifico le credenziali dell'impiegato
-            if (impiegato.getPassword().equals(password.getText())) {
-              new AccettazionePrenotazioneView(impiegato, connection)
+            Accesso accesso = new Accesso(codiceFiscale.getText());
+            if (accesso.verificaCredenziali(password.getText())) {
+              new AccettazionePrenotazioneView(accesso.getImpiegato(), connection)
                   .visible(true);
               codiceFiscale.setText("");
               password.setText("");
