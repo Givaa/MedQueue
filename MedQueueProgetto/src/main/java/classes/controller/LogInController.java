@@ -1,5 +1,6 @@
 package classes.controller;
 
+import classes.controller.exception.ErrorNewObjectException;
 import classes.model.bean.entity.UtenteBean;
 import classes.model.dao.UtenteModel;
 import java.sql.Date;
@@ -49,10 +50,35 @@ public class LogInController extends HttpServlet {
                         @RequestBody String nome, @RequestBody String cognome,
                         @RequestBody Date dataDiNascita, @RequestBody String email,
                         @RequestBody int numeroDiTelefono) throws SQLException {
-    UtenteBean a = new UtenteBean(codFisc, password, nome, cognome,
-            dataDiNascita, email, numeroDiTelefono);
-    um.doSave(a);
 
-    return true;
+    UtenteBean a = new UtenteBean();
+    String phoneNumber = String.valueOf(numeroDiTelefono);
+    Boolean checkMail;
+    Boolean checkName;
+    Boolean checkSurname;
+    Boolean checkPassword;
+    Boolean checkPhoneNumber;
+    Boolean checkCodFisc;
+
+    checkName = nome.matches("[A-Za-z]+$");
+    checkSurname = cognome.matches("[A-Za-z]+$");
+    checkPassword =
+            password.matches("(?=^.{8,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*$");
+    checkPhoneNumber = phoneNumber.matches("^[\\+][0-9]{10,12}");
+    checkCodFisc = codFisc.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
+    checkMail = email.matches("/\\S+@\\S+\\.\\S+/");
+
+
+    if (checkName && checkSurname && checkPassword
+            && checkPhoneNumber && checkCodFisc && checkMail) {
+      a = new UtenteBean(codFisc, password, nome, cognome,
+              dataDiNascita, email, numeroDiTelefono);
+      um.doSave(a);
+
+      return true;
+    } else {
+      throw new ErrorNewObjectException(a);
+    }
+
   }
 }

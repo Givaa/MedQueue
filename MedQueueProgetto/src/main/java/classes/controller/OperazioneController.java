@@ -1,5 +1,6 @@
 package classes.controller;
 
+import classes.controller.exception.ErrorNewObjectException;
 import classes.controller.exception.ObjectNotFoundException;
 import classes.model.bean.entity.OperazioneBean;
 import classes.model.dao.OperazioneModel;
@@ -27,12 +28,18 @@ public class OperazioneController {
   @GetMapping("/operazione/{id}")
   public OperazioneBean getOperazioneById(@RequestBody String id)
       throws SQLException, ObjectNotFoundException {
-    OperazioneBean op = operazioneModel.doRetrieveByKey(id);
-    if (op != null) {
-      return op;
-    } else {
-      throw new ObjectNotFoundException(op);
+
+    int idNumerico = Integer.parseInt(id);
+    if (idNumerico > 0) {
+      OperazioneBean op = operazioneModel.doRetrieveByKey(id);
+      if (op != null) {
+        return op;
+      } else {
+        throw new ObjectNotFoundException(op);
+      }
     }
+
+    return null;
   }
 
   /**
@@ -43,7 +50,8 @@ public class OperazioneController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/operazioni")
-  public Collection<OperazioneBean> getAllOperazioni(@RequestBody String order) throws SQLException {
+  public Collection<OperazioneBean> getAllOperazioni(@RequestBody String order) throws
+          SQLException {
     return operazioneModel.doRetrieveAll(order);
   }
 
@@ -55,8 +63,24 @@ public class OperazioneController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/newOperazione")
-  public void newOperazione(@RequestBody OperazioneBean o) throws SQLException {
-    operazioneModel.doSave(o);
+  public boolean newOperazione(@RequestBody OperazioneBean o) throws SQLException,
+          ErrorNewObjectException {
+
+    if (o != null) {
+      String tipoOp = o.getTipoOperazione();
+      String descrizione = o.getDescrizione();
+
+      Boolean checkTipoOp = tipoOp.matches("[a-z A-Z]+$");
+      Boolean checkDesc = descrizione.matches("[a-z A-Z]+$");
+      if (checkDesc && checkTipoOp) {
+        operazioneModel.doSave(o);
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      throw new ErrorNewObjectException(o);
+    }
   }
 
   /**
@@ -77,9 +101,24 @@ public class OperazioneController {
    *
    * @param o Operazione da aggiornare
    * @throws SQLException per problemi di esecuzione della query
+   * @return conferma/non conferma dell'aggiornamento dell'operazione
    */
   @GetMapping("/updateOperazione")
-  void updateOperazione(@RequestBody OperazioneBean o) throws SQLException {
-    operazioneModel.doUpdate(o);
+  public boolean updateOperazione(@RequestBody OperazioneBean o) throws SQLException {
+    if (operazioneModel.doRetrieveByKey(String.valueOf(o.getId())) != null) {
+      String tipoOp = o.getTipoOperazione();
+      String descrizione = o.getDescrizione();
+
+      Boolean checkTipoOp = tipoOp.matches("[a-z A-Z]+$");
+      Boolean checkDesc = descrizione.matches("[a-z A-Z]+$");
+      if (checkDesc && checkTipoOp) {
+        operazioneModel.doUpdate(o);
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      throw new ObjectNotFoundException(o);
+    }
   }
 }

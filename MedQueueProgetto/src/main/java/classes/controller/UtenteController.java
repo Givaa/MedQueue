@@ -1,5 +1,6 @@
 package classes.controller;
 
+import classes.controller.exception.ErrorNewObjectException;
 import classes.controller.exception.ObjectNotFoundException;
 import classes.model.bean.entity.UtenteBean;
 import classes.model.dao.UtenteModel;
@@ -43,6 +44,7 @@ public class UtenteController {
    */
   @GetMapping("/utenti")
   public Collection<UtenteBean> getAllUtenti(@RequestBody String order) throws SQLException {
+
     return utenteModel.doRetrieveAll(order);
   }
 
@@ -51,10 +53,44 @@ public class UtenteController {
    *
    * @param u Utente da inserire
    * @throws SQLException per problemi di esecuzione della query
+   * @return conferma/non conferma del salvataggio dell'utente
    */
   @GetMapping("/newUtente")
-  public void newUtente(@RequestBody UtenteBean u) throws SQLException {
-    utenteModel.doSave(u);
+  public boolean newUtente(@RequestBody UtenteBean u) throws SQLException,
+          ErrorNewObjectException {
+    if (u != null) {
+      String password = u.getPassword();
+      String cognome = u.getCognome();
+      String codFisc = u.getCodiceFiscale();
+      String nome = u.getNome();
+      String phoneNumber = String.valueOf(u.getNumeroDiTelefono());
+      String email = u.getEmail();
+
+      Boolean checkMail;
+      Boolean checkName;
+      Boolean checkSurname;
+      Boolean checkPassword;
+      Boolean checkPhoneNumber;
+      Boolean checkCodFisc;
+
+      checkName = nome.matches("[A-Za-z]+$");
+      checkSurname = cognome.matches("[A-Za-z]+$");
+      checkPassword =
+              password.matches("(?=^.{8,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*$");
+      checkPhoneNumber = phoneNumber.matches("^[\\+][0-9]{10,12}");
+      checkCodFisc = codFisc.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
+      checkMail = email.matches("/\\S+@\\S+\\.\\S+/");
+
+      if (checkName && checkSurname && checkPassword
+              && checkPhoneNumber && checkCodFisc && checkMail) {
+        utenteModel.doSave(u);
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      throw new ErrorNewObjectException(u);
+    }
   }
 
   /**
@@ -75,9 +111,41 @@ public class UtenteController {
    *
    * @param u Utente da aggiornare
    * @throws SQLException per problemi di esecuzione della query
+   * @return conferma/non conferma dell'aggiornamento dell'utente
    */
   @GetMapping("/updateUtente")
-  public void updateUtente(@RequestBody UtenteBean u) throws SQLException {
-    utenteModel.doUpdate(u);
+  public boolean updateUtente(@RequestBody UtenteBean u) throws SQLException {
+    if (u != null) {
+      String password = u.getPassword();
+      String cognome = u.getCognome();
+      String codFisc = u.getCodiceFiscale();
+      String nome = u.getNome();
+      String phoneNumber = String.valueOf(u.getNumeroDiTelefono());
+      String email = u.getEmail();
+
+      Boolean checkMail;
+      Boolean checkName;
+      Boolean checkSurname;
+      Boolean checkPassword;
+      Boolean checkPhoneNumber;
+      Boolean checkCodFisc;
+
+      checkName = nome.matches("[A-Za-z]+$");
+      checkSurname = cognome.matches("[A-Za-z]+$");
+      checkPassword =
+          password.matches("(?=^.{8,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*$");
+      checkPhoneNumber = phoneNumber.matches("^[\\+][0-9]{10,12}");
+      checkCodFisc = codFisc.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
+      checkMail = email.matches("/\\S+@\\S+\\.\\S+/");
+
+      if (checkName && checkSurname && checkPassword
+          && checkPhoneNumber && checkCodFisc && checkMail) {
+        utenteModel.doUpdate(u);
+        return true;
+      } else {
+        return false;
+      }
+    }
+    return false;
   }
 }
