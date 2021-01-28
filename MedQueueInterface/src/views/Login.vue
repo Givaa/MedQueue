@@ -5,21 +5,21 @@
         <ion-buttons slot="start">
           <ion-menu-button color="primary"></ion-menu-button>
         </ion-buttons>
-        <ion-title>{{ $route.params.id }}</ion-title>
+        <ion-title>Accesso</ion-title>
       </ion-toolbar>
     </ion-header>
 
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">{{ $route.params.id }}</ion-title>
+          <ion-title size="large">Accesso</ion-title>
         </ion-toolbar>
       </ion-header>
         <ion-content class="background">
           <div id="container">
             <img src="../../public/assets/logosvg_nobg.svg"/>
             <br>
-            <strong class="capitalize">{{ $route.params.id }}</strong>
+            <strong class="capitalize">Accesso</strong>
             <br>
             <br>
             <br>

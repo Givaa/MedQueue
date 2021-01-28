@@ -2,10 +2,8 @@
   <ion-page>
     <IonSplitPane content-id="main-content">
       <ion-menu content-id="main-content" type="overlay">
-
         <ion-list id="menu-list">
           <ion-list-header>MedQueue</ion-list-header>
-
           <ion-menu-toggle auto-hide="false" v-for="(p, i) in appPages" :key="i">
             <ion-item @click="selectedIndex = i" router-direction="root" :router-link="p.url" lines="none" detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
               <ion-icon slot="start" :ios="p.iosIcon" :md="p.mdIcon"></ion-icon>
@@ -21,16 +19,15 @@
             <ion-buttons slot="start">
               <ion-menu-button color="primary"></ion-menu-button>
             </ion-buttons>
-            <ion-title>{{ $route.params.id }}</ion-title>
+            <ion-title>Visualizza Coda</ion-title>
           </ion-toolbar>
         </ion-header>
         <div id="container">
-          <strong class="capitalize">{{ $route.params.id }}</strong>
+          <strong class="capitalize">Visualizza Coda</strong>
           <p>Coda ufficio</p>
         </div>
       </ion-content>
     </IonSplitPane>
-
   </ion-page>
 </template>
 
@@ -90,25 +87,25 @@ export default {
     const appPages = [
       {
         title:"Home",
-        url:"/Home/Home",
+        url:"/Home",
         iosIcon: homeOutline,
         mdIcon: homeSharp
       },
       /**{
         title: 'Log In',
-        url: '/Accesso/Accesso',
+        url: '/Accesso',
         iosIcon: logInOutline,
         mdIcon: logInSharp
       },
        {
         title: 'Sign in',
-        url: '/Registrazione/Registrazione',
+        url: '/Registrazione',
         iosIcon: pencilOutline,
         mdIcon: pencilSharp
       },*/
       {
         title: 'Visualizza Coda',
-        url: '/VisualizzazioneCoda/VisualizzaCoda',
+        url: '/VisualizzazioneCoda',
         iosIcon: listOutline,
         mdIcon: listSharp
       }

@@ -5,14 +5,14 @@
         <ion-buttons slot="start">
           <ion-menu-button color="primary"></ion-menu-button>
         </ion-buttons>
-        <ion-title>{{ $route.params.id }}</ion-title>
+        <ion-title>Home</ion-title>
       </ion-toolbar>
     </ion-header>
 
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">{{ $route.params.id }}</ion-title>
+          <ion-title size="large">Home</ion-title>
         </ion-toolbar>
       </ion-header>
       <div id="container">
@@ -56,15 +56,15 @@ export default {
   },
   methods:{
     goLogin(){
-      router.push("/Accesso/Accesso");
+      router.push("/Accesso");
     },
 
     goReg(){
-      router.push("/Registrazione/Registrazione");
+      router.push("/Registrazione");
     },
 
     goVisualizzazione(){
-      router.push("/VisualizzazioneCoda/VisualizzaCoda");
+      router.push("/VisualizzazioneCoda");
     }
   }
 }

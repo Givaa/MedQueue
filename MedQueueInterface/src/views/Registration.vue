@@ -5,14 +5,14 @@
         <ion-buttons slot="start">
           <ion-menu-button color="primary"></ion-menu-button>
         </ion-buttons>
-        <ion-title>{{ $route.params.id }}</ion-title>
+        <ion-title>Registrazione</ion-title>
       </ion-toolbar>
     </ion-header>
 
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">{{ $route.params.id }}</ion-title>
+          <ion-title size="large">Registrazione</ion-title>
         </ion-toolbar>
       </ion-header>
         <ion-content class="background">
@@ -30,7 +30,7 @@
             <ion-label>Password</ion-label>
             <ion-input type="password" placeholder="Password"></ion-input>
             <ion-label>Data di Nascita</ion-label>
-            <ion-datetime displayFormat="MM DD YY" placeholder="Data di nascita"></ion-datetime>
+            <ion-datetime displayFormat="DD MM YY" placeholder="Data di nascita"></ion-datetime>
             <ion-label>Indirizzo e-mail</ion-label>
             <ion-input placeholder="Indirizzo e-mail"></ion-input>
             <ion-label>Numero di telefono</ion-label>
@@ -118,9 +118,10 @@ ion-label{
 
 ion-input{
   color: black;
-  margin-left: 33%;
+  margin-left: 40%;
   position: center;
-  width: 32%;
+  min-width: 193px;
+  width: 20%;
 }
 
 ion-datetime{
