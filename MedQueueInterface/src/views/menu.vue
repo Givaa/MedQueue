@@ -1,26 +1,19 @@
 <template>
-  <ion-page>
-    <ion-split-pane>
-      <menu1></menu1>
-      <ion-content id="main-content">
-        <ion-header :translucent="true">
-          <ion-toolbar>
-            <ion-buttons slot="start">
-              <ion-menu-button color="primary"></ion-menu-button>
-            </ion-buttons>
-            <ion-title>Prenotazione</ion-title>
-          </ion-toolbar>
-        </ion-header>
-        <div id="container">
-          <strong class="capitalize">Prenota</strong>
-          <p>Prenota</p>
-        </div>
-      </ion-content>
-    </ion-split-pane>
-  </ion-page>
+    <ion-menu content-id="main-content" type="overlay">
+        <ion-list id="menu-list">
+          <ion-list-header>MedQueue</ion-list-header>
+          <ion-menu-toggle auto-hide="false" v-for="(p, i) in appPages" :key="i">
+            <ion-item @click="selectedIndex = i" router-direction="root" :router-link="p.url" lines="none" detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
+              <ion-icon slot="start" :ios="p.iosIcon" :md="p.mdIcon"></ion-icon>
+              <ion-label>{{ p.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+    </ion-menu>
+
 </template>
 
-<script lang="ts">
+<script>
 import {
   IonContent,
   IonIcon,
@@ -34,6 +27,7 @@ import {
   IonHeader,
   IonMenu,
   IonMenuButton,
+  IonMenuToggle,
   IonPage,
   IonTitle,
   IonToolbar
@@ -50,20 +44,18 @@ import {
   pencilSharp
 } from "ionicons/icons";
 import {useRoute} from "vue-router";
-import menu1 from "./menu.vue"
 
 export default {
-  name: "Prenotazione",
+  name: "menu",
   components: {
-    menu1,
-    IonSplitPane,
-    IonContent,
-    IonButtons,
-    IonHeader,
-    IonMenuButton,
-    IonPage,
-    IonTitle,
-    IonToolbar
+
+    IonIcon,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonListHeader,
+    IonMenuToggle,
+
   },
   setup() {
     const selectedIndex = ref(0);
@@ -75,23 +67,11 @@ export default {
         mdIcon: homeSharp
       },
       {
-        title: 'Log In',
+        title: 'Log in',
         url: '/Prenotazione',
         iosIcon: logInOutline,
         mdIcon: logInSharp
       },
-      /**{
-        title: 'Sign in',
-        url: '/Registrazione',
-        iosIcon: pencilOutline,
-        mdIcon: pencilSharp
-      },
-       {
-        title: 'Visualizza Coda',
-        url: '/VisualizzazioneCoda',
-        iosIcon: listOutline,
-        mdIcon: listSharp
-      }*/
     ];
 
     const path = window.location.pathname.split('folder/')[1];
@@ -112,7 +92,7 @@ export default {
       pencilSharp,
       listOutline,
       listSharp,
-      isSelected: (url: string) => url === route.path ? 'selected' : ''
+      isSelected: (url) => url === route.path ? 'selected' : ''
     }
   }
 

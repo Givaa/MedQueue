@@ -1,18 +1,7 @@
 <template>
   <ion-page>
     <IonSplitPane content-id="main-content">
-      <ion-menu content-id="main-content" type="overlay">
-        <ion-list id="menu-list">
-          <ion-list-header>MedQueue</ion-list-header>
-          <ion-menu-toggle auto-hide="false" v-for="(p, i) in appPages" :key="i">
-            <ion-item @click="selectedIndex = i" router-direction="root" :router-link="p.url" lines="none" detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
-              <ion-icon slot="start" :ios="p.iosIcon" :md="p.mdIcon"></ion-icon>
-              <ion-label>Home</ion-label>
-            </ion-item>
-          </ion-menu-toggle>
-        </ion-list>
-      </ion-menu>
-
+      <menu1></menu1>
       <ion-content id="main-content">
         <ion-header :translucent="true">
           <ion-toolbar>
@@ -62,23 +51,19 @@ import {
   pencilSharp
 } from "ionicons/icons";
 import {useRoute} from "vue-router";
+import menu1 from "./menu.vue"
+
 
 export default {
   name: "HomeUtente",
   components: {
+    menu1,
     IonContent,
-    IonIcon,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonListHeader,
-    IonMenuToggle,
     IonSplitPane,
-    IonMenu,
     IonButtons,
     IonHeader,
     IonMenuButton,
-    //IonPage,
+    IonPage,
     IonTitle,
     IonToolbar
   },
@@ -92,7 +77,7 @@ export default {
         mdIcon: homeSharp
       },
       {
-          title: 'Log In',
+          title: 'Log in',
           url: '/Prenotazione',
           iosIcon: logInOutline,
           mdIcon: logInSharp

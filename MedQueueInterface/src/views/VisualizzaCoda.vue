@@ -78,7 +78,7 @@ export default {
     IonButtons,
     IonHeader,
     IonMenuButton,
-    //IonPage,
+    IonPage,
     IonTitle,
     IonToolbar
   },
