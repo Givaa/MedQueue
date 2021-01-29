@@ -1,8 +1,6 @@
 <template>
   <ion-page>
-    <ion-split-pane>
-      <menu1></menu1>
-      <ion-content id="main-content">
+      <ion-content content="menu">
         <ion-header :translucent="true">
           <ion-toolbar>
             <ion-buttons slot="start">
@@ -11,52 +9,43 @@
             <ion-title>Prenotazione</ion-title>
           </ion-toolbar>
         </ion-header>
-        <div id="container">
-          <strong class="capitalize">Prenota</strong>
-          <p>Prenota</p>
-        </div>
+        <ion-content class="background">
+          <div id="container">
+            <img src="../../public/assets/logosvg_nobg.svg"/>
+            <br>
+            <strong class="capitalize">Prenota</strong>
+            <br>
+            <br>
+            <br>
+            <ion-label>Seleziona Struttura</ion-label>
+            <ion-input ></ion-input>
+            <br>
+            <br>
+            <ion-label>Password</ion-label>
+            <ion-input type="password" placeholder="Password"></ion-input>
+            <br>
+            <br>
+            <ion-button @click="goHomeUtente" color="success"> Accedi </ion-button>
+          </div>
+        </ion-content>
       </ion-content>
-    </ion-split-pane>
   </ion-page>
 </template>
 
 <script lang="ts">
 import {
   IonContent,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonListHeader,
-  IonRouterOutlet,
-  IonSplitPane,
   IonButtons,
   IonHeader,
-  IonMenu,
   IonMenuButton,
   IonPage,
   IonTitle,
   IonToolbar
 } from '@ionic/vue';
-import {ref} from "vue";
-import {
-  homeOutline,
-  homeSharp,
-  listOutline,
-  listSharp,
-  logInOutline,
-  logInSharp,
-  pencilOutline,
-  pencilSharp
-} from "ionicons/icons";
-import {useRoute} from "vue-router";
-import menu1 from "./menu.vue"
 
 export default {
   name: "Prenotazione",
   components: {
-    menu1,
-    IonSplitPane,
     IonContent,
     IonButtons,
     IonHeader,
@@ -65,64 +54,23 @@ export default {
     IonTitle,
     IonToolbar
   },
-  setup() {
-    const selectedIndex = ref(0);
-    const appPages = [
-      {
-        title:"Home",
-        url:"/HomeUtente",
-        iosIcon: homeOutline,
-        mdIcon: homeSharp
-      },
-      {
-        title: 'Log In',
-        url: '/Prenotazione',
-        iosIcon: logInOutline,
-        mdIcon: logInSharp
-      },
-      /**{
-        title: 'Sign in',
-        url: '/Registrazione',
-        iosIcon: pencilOutline,
-        mdIcon: pencilSharp
-      },
-       {
-        title: 'Visualizza Coda',
-        url: '/VisualizzazioneCoda',
-        iosIcon: listOutline,
-        mdIcon: listSharp
-      }*/
-    ];
-
-    const path = window.location.pathname.split('folder/')[1];
-    if (path !== undefined) {
-      selectedIndex.value = appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
-    }
-
-    const route = useRoute();
-
-    return {
-      selectedIndex,
-      appPages,
-      homeOutline,
-      homeSharp,
-      logInOutline,
-      logInSharp,
-      pencilOutline,
-      pencilSharp,
-      listOutline,
-      listSharp,
-      isSelected: (url: string) => url === route.path ? 'selected' : ''
-    }
-  }
 
 }
 </script>
 
 <style scoped>
-#page{
-  background-color: blue;
+
+img{
+  height: 200px;
+  width: 200px;
+  position: center;
 }
+
+ion-content.background{
+  --background: url(../../public/assets/CartellinaAllungata.svg)0 0/100% 100% no-repeat;
+
+}
+
 #container {
   text-align: center;
   position: relative;

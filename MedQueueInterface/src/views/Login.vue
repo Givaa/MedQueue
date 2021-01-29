@@ -2,9 +2,6 @@
   <ion-page>
     <ion-header :translucent="true">
       <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-menu-button color="primary"></ion-menu-button>
-        </ion-buttons>
         <ion-title>Accesso</ion-title>
       </ion-toolbar>
     </ion-header>
@@ -23,6 +20,7 @@
             <br>
             <br>
             <br>
+            <form>
             <ion-label>Codice Fiscale</ion-label>
             <ion-input placeholder="Codice Fiscale"></ion-input>
             <br>
@@ -31,7 +29,8 @@
             <ion-input type="password" placeholder="Password"></ion-input>
             <br>
             <br>
-            <ion-button @click="goHomeUtente" color="success"> Accedi </ion-button>
+              <ion-button @click="goHomeUtente">Accedi</ion-button>
+            </form>
           </div>
         </ion-content>
       </ion-content>
@@ -48,10 +47,8 @@ export default {
     IonButton,
     IonLabel,
     IonInput,
-    IonButtons,
     IonContent,
     IonHeader,
-    IonMenuButton,
     IonPage,
     IonTitle,
     IonToolbar

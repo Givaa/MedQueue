@@ -1,47 +1,64 @@
 <template>
-  <IonApp>
-    <IonSplitPane content-id="main-content">
-      <ion-menu content-id="main-content" type="overlay">
-        <ion-content>
-          <ion-list id="menu-list">
-            <ion-list-header >Medqueue</ion-list-header>
-            <ion-note></ion-note>
-
-            <ion-menu-toggle auto-hide="false" v-for="(p, i) in appPages" :key="i">
-              <ion-item @click="selectedIndex = i" router-direction="root" :router-link="p.url" lines="none" detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
-                <ion-icon slot="start" :ios="p.iosIcon" :md="p.mdIcon"></ion-icon>
-                <ion-label>{{ p.title }}</ion-label>
-              </ion-item>
-            </ion-menu-toggle>
-          </ion-list>
-        </ion-content>
-      </ion-menu>
-      <ion-router-outlet id="main-content"></ion-router-outlet>
-    </IonSplitPane>
-  </IonApp>
+  <ion-page>
+    <ion-content content="menu">
+      <ion-header :translucent="true">
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-menu-button color="primary"></ion-menu-button>
+          </ion-buttons>
+          <ion-title>Visualizza Prenotazioni</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <div id="container">
+        <strong class="capitalize">Prenotazioni</strong>
+        <p>Prenotazioni</p>
+      </div>
+    </ion-content>
+  </ion-page>
 </template>
 
 <script lang="ts">
-import { IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonNote, IonRouterOutlet, IonSplitPane } from '@ionic/vue';
-import { defineComponent, ref } from 'vue';
-import { useRoute } from 'vue-router';
-import { businessSharp, businessOutline, calendarOutline, calendarSharp,homeOutline, homeSharp, logInOutline,  logInSharp, pencilOutline, pencilSharp, listOutline, listSharp} from 'ionicons/icons';
+import {
+  IonContent,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonListHeader,
+  IonRouterOutlet,
+  IonSplitPane,
+  IonButtons,
+  IonHeader,
+  IonMenu,
+  IonMenuButton,
+  IonPage,
+  IonTitle,
+  IonToolbar
+} from '@ionic/vue';
+import {ref} from "vue";
+import {
+  homeOutline,
+  homeSharp,
+  listOutline,
+  listSharp,
+  logInOutline,
+  logInSharp,
+  pencilOutline,
+  pencilSharp
+} from "ionicons/icons";
+import {useRoute} from "vue-router";
+import menu1 from "./menu.vue"
 
-export default defineComponent({
-  name: 'App',
+export default {
+  name: "Prenotazione",
   components: {
-    IonApp,
     IonContent,
-    IonIcon,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonListHeader,
-    IonMenu,
-    IonMenuToggle,
-    IonNote,
-    IonRouterOutlet,
-
+    IonButtons,
+    IonHeader,
+    IonMenuButton,
+    IonPage,
+    IonTitle,
+    IonToolbar
   },
   setup() {
     const selectedIndex = ref(0);
@@ -53,33 +70,33 @@ export default defineComponent({
         mdIcon: homeSharp
       },
       {
-        title: 'Prenotazione',
+        title: 'Log In',
         url: '/Prenotazione',
-        iosIcon: calendarOutline,
-        mdIcon: calendarSharp
+        iosIcon: logInOutline,
+        mdIcon: logInSharp
       },
-      {
-        title: 'Visualizza Prenotazioni',
-        url: '/VisualizzaPrenotazioni',
+      /**{
+        title: 'Sign in',
+        url: '/Registrazione',
+        iosIcon: pencilOutline,
+        mdIcon: pencilSharp
+      },
+       {
+        title: 'Visualizza Coda',
+        url: '/VisualizzazioneCoda',
         iosIcon: listOutline,
         mdIcon: listSharp
-      },
-      {
-        title: 'Visualizza Coda',
-        url: '/VisualizzazioneCodaUtente',
-        iosIcon: businessOutline,
-        mdIcon: businessSharp
-      }
+      }*/
     ];
 
     const path = window.location.pathname.split('folder/')[1];
     if (path !== undefined) {
       selectedIndex.value = appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
-    
+
     const route = useRoute();
-    
-    return { 
+
+    return {
       selectedIndex,
       appPages,
       homeOutline,
@@ -90,17 +107,42 @@ export default defineComponent({
       pencilSharp,
       listOutline,
       listSharp,
-      calendarOutline,
-      calendarSharp,
-      businessOutline,
-      businessSharp,
       isSelected: (url: string) => url === route.path ? 'selected' : ''
     }
   }
-});
+
+}
 </script>
 
 <style scoped>
+#page{
+  background-color: blue;
+}
+#container {
+  text-align: center;
+  position: relative;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#container strong {
+  font-size: 20px;
+  line-height: 26px;
+}
+
+#container p {
+  font-size: 16px;
+  line-height: 22px;
+  color: #8c8c8c;
+  margin: 0;
+}
+
+#container a {
+  text-decoration: none;
+}
+
 ion-menu ion-content {
   --background: var(--ion-item-background, var(--ion-background-color, #fff));
 }

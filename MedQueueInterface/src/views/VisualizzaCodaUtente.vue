@@ -1,19 +1,23 @@
 <template>
-    <ion-menu content-id="main-content" type="overlay">
-        <ion-list id="menu-list">
-          <ion-list-header>MedQueue</ion-list-header>
-          <ion-menu-toggle auto-hide="false" v-for="(p, i) in appPages" :key="i">
-            <ion-item @click="selectedIndex = i" router-direction="root" :router-link="p.url" lines="none" detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
-              <ion-icon slot="start" :ios="p.iosIcon" :md="p.mdIcon"></ion-icon>
-              <ion-label>{{ p.title }}</ion-label>
-            </ion-item>
-          </ion-menu-toggle>
-        </ion-list>
-    </ion-menu>
-
+  <ion-page>
+    <ion-content id="main-content">
+      <ion-header :translucent="true">
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-menu-button color="primary"></ion-menu-button>
+          </ion-buttons>
+          <ion-title>Visualizza Coda</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <div id="container">
+        <strong class="capitalize">Visualizza Coda</strong>
+        <p>Coda ufficio</p>
+      </div>
+    </ion-content>
+  </ion-page>
 </template>
 
-<script>
+<script lang="ts">
 import {
   IonContent,
   IonIcon,
@@ -46,32 +50,41 @@ import {
 import {useRoute} from "vue-router";
 
 export default {
-  name: "menu",
+  name: "visualizzaCoda",
   components: {
-
-    IonIcon,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonListHeader,
-    IonMenuToggle,
-
+    IonContent,
+    IonHeader,
+    IonPage,
+    IonTitle,
+    IonToolbar
   },
   setup() {
     const selectedIndex = ref(0);
     const appPages = [
       {
         title:"Home",
-        url:"/HomeUtente",
+        url:"/Home",
         iosIcon: homeOutline,
         mdIcon: homeSharp
       },
-      {
-        title: 'Log in',
-        url: '/Prenotazione',
+      /**{
+        title: 'Log In',
+        url: '/Accesso',
         iosIcon: logInOutline,
         mdIcon: logInSharp
       },
+       {
+        title: 'Sign in',
+        url: '/Registrazione',
+        iosIcon: pencilOutline,
+        mdIcon: pencilSharp
+      },*/
+      {
+        title: 'Visualizza Coda',
+        url: '/VisualizzazioneCoda',
+        iosIcon: listOutline,
+        mdIcon: listSharp
+      }
     ];
 
     const path = window.location.pathname.split('folder/')[1];
@@ -92,12 +105,13 @@ export default {
       pencilSharp,
       listOutline,
       listSharp,
-      isSelected: (url) => url === route.path ? 'selected' : ''
+      isSelected: (url: string) => url === route.path ? 'selected' : ''
     }
   }
 
 }
 </script>
+
 
 <style scoped>
 #page{

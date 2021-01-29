@@ -1,8 +1,6 @@
 <template>
   <ion-page>
-    <IonSplitPane content-id="main-content">
-      <menu1></menu1>
-      <ion-content id="main-content">
+      <ion-content id="menu">
         <ion-header :translucent="true">
           <ion-toolbar>
             <ion-buttons slot="start">
@@ -12,11 +10,16 @@
           </ion-toolbar>
         </ion-header>
         <div id="container">
-          <strong class="capitalize">Home</strong>
-          <p>Home</p>
+          <img src="../../public/assets/logosvg_nobg.svg"/>
+          <br>
+          <strong class="capitalize">Benvenuto **Nome**</strong>
+          <p>Da qui puoi raggiungere tutte le funzionalità offerte agli utenti,</p>
+          <p>sia utilizzando questa schermata sia utlizzando il menù al lato</p>
+          <ion-button id="prenota" @click="goPrenotazione"></ion-button>
+          <ion-button id="guarda" @click="goLista"></ion-button>
+          <ion-button id="coda" @click="goCalendar"></ion-button>
         </div>
       </ion-content>
-    </IonSplitPane>
   </ion-page>
 </template>
 
@@ -37,7 +40,7 @@ import {
   IonMenuToggle,
   IonPage,
   IonTitle,
-  IonToolbar
+  IonToolbar,
 } from '@ionic/vue';
 import {ref} from "vue";
 import {
@@ -52,20 +55,31 @@ import {
 } from "ionicons/icons";
 import {useRoute} from "vue-router";
 import menu1 from "./menu.vue"
+import router from "@/router";
 
 
 export default {
   name: "HomeUtente",
   components: {
-    menu1,
     IonContent,
-    IonSplitPane,
     IonButtons,
     IonHeader,
     IonMenuButton,
     IonPage,
     IonTitle,
     IonToolbar
+  },
+  methods:{
+    goPrenotazione(){
+      router.push("/Prenotazione")
+    },
+    goLista(){
+      router.push("VisualizzaPrenotazioni")
+    },
+    goCalendar(){
+      router.push("/VisualizzazioneCodaUtente")
+    },
+
   },
   setup() {
     const selectedIndex = ref(0);
@@ -110,8 +124,29 @@ export default {
 </script>
 
 <style scoped>
-#page{
-  background-color: blue;
+
+img{
+  height: 200px;
+  width: 200px;
+  position: center;
+}
+
+ion-button{
+  height: 150px;
+  width: 150px;
+  padding: 10px;
+}
+
+ion-button#prenota{
+  --background: url(../../public/assets/calendar-outline.svg)0 0/100% 100% no-repeat;
+}
+ion-button#guarda{
+  --background: url(../../public/assets/list-outline.svg)0 0/100% 100% no-repeat;
+
+}
+ion-button#coda{
+  --background: url(../../public/assets/business-outline.svg)0 0/100% 100% no-repeat;
+
 }
 #container {
   text-align: center;

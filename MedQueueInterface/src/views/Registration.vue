@@ -2,9 +2,6 @@
   <ion-page>
     <ion-header :translucent="true">
       <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-menu-button color="primary"></ion-menu-button>
-        </ion-buttons>
         <ion-title>Registrazione</ion-title>
       </ion-toolbar>
     </ion-header>
@@ -21,6 +18,7 @@
             <br>
             <strong class="capitalize">Registrazione</strong>
             <br>
+            <form>
             <ion-label>Nome</ion-label>
             <ion-input placeholder="Nome"></ion-input>
             <ion-label>Cognome</ion-label>
@@ -35,7 +33,8 @@
             <ion-input placeholder="Indirizzo e-mail"></ion-input>
             <ion-label>Numero di telefono</ion-label>
             <ion-input placeholder="Numero di telefono"></ion-input>
-            <ion-button color="success"> Registrati </ion-button>
+            <ion-button type="submit" color="success"> Registrati </ion-button>
+            </form>
           </div>
         </ion-content>
     </ion-content>
@@ -63,10 +62,8 @@ export default {
     IonButton,
     IonLabel,
     IonInput,
-    IonButtons,
     IonContent,
     IonHeader,
-    IonMenuButton,
     IonPage,
     IonTitle,
     IonToolbar
