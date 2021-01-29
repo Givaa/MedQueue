@@ -1,5 +1,6 @@
 package classes.controller;
 
+import classes.controller.exception.ErrorNewObjectException;
 import classes.controller.exception.ObjectNotFoundException;
 import classes.model.bean.entity.ImpiegatoBean;
 import classes.model.dao.ImpiegatoModel;
@@ -28,13 +29,21 @@ public class ImpiegatoController {
   @GetMapping("/impiegato/{cf}")
   public ImpiegatoBean getImpiegatoByCodFis(@PathVariable String cf)
       throws SQLException, ObjectNotFoundException {
-    ImpiegatoBean b = impiegatoModel.doRetrieveByKey(cf);
 
-    if (b != null) {
-      return b;
+    Boolean checkCodFisc = cf.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
+
+    if (checkCodFisc) {
+      ImpiegatoBean b = impiegatoModel.doRetrieveByKey(cf);
+
+      if (b != null) {
+        return b;
+      } else {
+        throw new ObjectNotFoundException(b);
+      }
     } else {
-      throw new ObjectNotFoundException(b);
+      return null;
     }
+
   }
 
   /**
@@ -54,10 +63,45 @@ public class ImpiegatoController {
    *
    * @param i Impiegato da inserire
    * @throws SQLException per problemi di esecuzione della query
+   * @throws ErrorNewObjectException per problemi nell'input
+   * @return conferma/non conferma del salvataggio dell'impiegato
    */
   @GetMapping("/newImpiegato")
-  public void newImpiegato(@RequestBody ImpiegatoBean i) throws SQLException {
-    impiegatoModel.doSave(i);
+  public boolean newImpiegato(@RequestBody ImpiegatoBean i) throws SQLException,
+          ErrorNewObjectException {
+    if (i == null) {
+      throw new ErrorNewObjectException(i);
+    } else {
+      String codFisc = i.getCodiceFiscale();
+      String cognome = i.getCognome();
+      String nome = i.getNome();
+      String password = i.getPassword();
+      String email = i.getIndirizzoEmail();
+      String phoneNumber = i.getNumeroDiTelefono();
+
+      Boolean checkMail;
+      Boolean checkName;
+      Boolean checkSurname;
+      Boolean checkPassword;
+      Boolean checkPhoneNumber;
+      Boolean checkCodFisc;
+
+      checkName = nome.matches("[A-Za-z]+$");
+      checkSurname = cognome.matches("[A-Za-z]+$");
+      checkPassword =
+              password.matches("(?=^.{8,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*$");
+      checkPhoneNumber = phoneNumber.matches("^[\\+][0-9]{10,12}");
+      checkCodFisc = codFisc.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
+      checkMail = email.matches("/\\S+@\\S+\\.\\S+/");
+
+      if (checkName && checkSurname && checkPassword && checkPhoneNumber
+              && checkCodFisc && checkMail) {
+        impiegatoModel.doSave(i);
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 
   /**
@@ -78,9 +122,42 @@ public class ImpiegatoController {
    *
    * @param i Impiegato da inserire
    * @throws SQLException per problemi di esecuzione della query
+   * @return conferma/non conferma dell'aggiornamento dell'impiegato
    */
   @GetMapping("/updateImpiegato")
-  public void updateImpiegato(@RequestBody ImpiegatoBean i) throws SQLException {
-    impiegatoModel.doUpdate(i);
+  public boolean updateImpiegato(@RequestBody ImpiegatoBean i) throws SQLException {
+    if (impiegatoModel.doRetrieveByKey(i.getCodiceFiscale()) != null) {
+      String codFisc = i.getCodiceFiscale();
+      String cognome = i.getCognome();
+      String nome = i.getNome();
+      String password = i.getPassword();
+      String email = i.getIndirizzoEmail();
+      String phoneNumber = i.getNumeroDiTelefono();
+
+      Boolean checkMail;
+      Boolean checkName;
+      Boolean checkSurname;
+      Boolean checkPassword;
+      Boolean checkPhoneNumber;
+      Boolean checkCodFisc;
+
+      checkName = nome.matches("[A-Za-z]+$");
+      checkSurname = cognome.matches("[A-Za-z]+$");
+      checkPassword =
+              password.matches("(?=^.{8,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*$");
+      checkPhoneNumber = phoneNumber.matches("^[\\+][0-9]{10,12}");
+      checkCodFisc = codFisc.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
+      checkMail = email.matches("/\\S+@\\S+\\.\\S+/");
+
+      if (checkName && checkSurname && checkPassword && checkPhoneNumber
+              && checkCodFisc && checkMail) {
+        impiegatoModel.doUpdate(i);
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      throw new ObjectNotFoundException(i);
+    }
   }
 }

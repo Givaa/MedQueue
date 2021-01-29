@@ -21,7 +21,27 @@ const routes: Array<RouteRecordRaw> = [
   {
     path:'/Registrazione',
     component: () => import('../views/Registration.vue')
+  },
+
+  {
+    path: '/HomeUtente',
+    component: () => import('../views/HomeUtente.vue')
+  },
+
+  {
+    path:'/Prenotazione',
+    component: () => import('../views/Prenotazione.vue')
+  },
+  {
+    path:'/VisualizzaPrenotazioni',
+    component:()=>import('../views/VisualizzaPrenotazioni.vue')
+  },
+  {
+    path: '/VisualizzazioneCodaUtente',
+    component: () => import ('../views/VisualizzaCodaUtente.vue')
   }
+
+
 ]
 
 const router = createRouter({

@@ -1,5 +1,6 @@
 package classes.controller;
 
+import classes.controller.exception.ErrorNewObjectException;
 import classes.controller.exception.ObjectNotFoundException;
 import classes.model.bean.entity.StrutturaBean;
 import classes.model.dao.StrutturaModel;
@@ -51,10 +52,29 @@ public class StrutturaController {
    *
    * @param s Struttura da inserire
    * @throws SQLException per problemi di esecuzione della query
+   * @return conferma/non conferma del salvataggio della struttura
    */
   @GetMapping("/newStruttura")
-  public void newStruttura(@RequestBody StrutturaBean s) throws SQLException {
-    strutturaModel.doSave(s);
+  public boolean newStruttura(@RequestBody StrutturaBean s) throws SQLException,
+          ErrorNewObjectException{
+    if (s != null) {
+      String nome = s.getNome();
+      String indirizzo = s.getIndirizzo();
+      String numeroCell = s.getNumeroDiTelefono();
+
+      boolean checkNome = nome.matches("[A-Za-z]+$");
+      boolean checkIndirizzo = indirizzo.matches("^[A-Za-z0-9\\-\\s,\\/]*$");
+      boolean checkNumeroCell = numeroCell.matches("^[\\+][0-9]{10,12}");
+
+      if (checkIndirizzo && checkNome && checkNumeroCell) {
+        strutturaModel.doSave(s);
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      throw new ErrorNewObjectException(s);
+    }
   }
 
   /**
@@ -75,9 +95,27 @@ public class StrutturaController {
    *
    * @param s Struttura da aggiornare
    * @throws SQLException per problemi di esecuzione della query
+   * @return conferma/non conferma della modifica della struttura
    */
   @GetMapping("/updateStruttura")
-  public void updateStruttura(@RequestBody StrutturaBean s) throws SQLException {
-    strutturaModel.doUpdate(s);
+  public boolean updateStruttura(@RequestBody StrutturaBean s) throws SQLException {
+    if (s != null) {
+      String nome = s.getNome();
+      String indirizzo = s.getIndirizzo();
+      String numeroCell = s.getNumeroDiTelefono();
+
+      boolean checkNome = nome.matches("[A-Za-z]+$");
+      boolean checkIndirizzo = indirizzo.matches("^[A-Za-z0-9\\-\\s,\\/]*$");
+      boolean checkNumeroCell = numeroCell.matches("^[\\+][0-9]{10,12}");
+
+      if (checkIndirizzo && checkNome && checkNumeroCell) {
+        strutturaModel.doUpdate(s);
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      throw new ErrorNewObjectException(s);
+    }
   }
 }

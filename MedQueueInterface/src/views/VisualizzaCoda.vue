@@ -1,24 +1,8 @@
 <template>
   <ion-page>
-    <IonSplitPane content-id="main-content">
-      <ion-menu content-id="main-content" type="overlay">
-        <ion-list id="menu-list">
-          <ion-list-header>MedQueue</ion-list-header>
-          <ion-menu-toggle auto-hide="false" v-for="(p, i) in appPages" :key="i">
-            <ion-item @click="selectedIndex = i" router-direction="root" :router-link="p.url" lines="none" detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
-              <ion-icon slot="start" :ios="p.iosIcon" :md="p.mdIcon"></ion-icon>
-              <ion-label>{{ p.title }}</ion-label>
-            </ion-item>
-          </ion-menu-toggle>
-        </ion-list>
-      </ion-menu>
-
       <ion-content id="main-content">
         <ion-header :translucent="true">
           <ion-toolbar>
-            <ion-buttons slot="start">
-              <ion-menu-button color="primary"></ion-menu-button>
-            </ion-buttons>
             <ion-title>Visualizza Coda</ion-title>
           </ion-toolbar>
         </ion-header>
@@ -27,7 +11,6 @@
           <p>Coda ufficio</p>
         </div>
       </ion-content>
-    </IonSplitPane>
   </ion-page>
 </template>
 
@@ -67,18 +50,8 @@ export default {
   name: "visualizzaCoda",
   components: {
     IonContent,
-    IonIcon,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonListHeader,
-    IonMenuToggle,
-    IonSplitPane,
-    IonMenu,
-    IonButtons,
     IonHeader,
-    IonMenuButton,
-    //IonPage,
+    IonPage,
     IonTitle,
     IonToolbar
   },

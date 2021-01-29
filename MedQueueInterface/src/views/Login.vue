@@ -2,9 +2,6 @@
   <ion-page>
     <ion-header :translucent="true">
       <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-menu-button color="primary"></ion-menu-button>
-        </ion-buttons>
         <ion-title>Accesso</ion-title>
       </ion-toolbar>
     </ion-header>
@@ -23,6 +20,7 @@
             <br>
             <br>
             <br>
+            <form>
             <ion-label>Codice Fiscale</ion-label>
             <ion-input placeholder="Codice Fiscale"></ion-input>
             <br>
@@ -31,7 +29,8 @@
             <ion-input type="password" placeholder="Password"></ion-input>
             <br>
             <br>
-            <ion-button color="success"> Accedi </ion-button>
+              <ion-button @click="goHomeUtente">Accedi</ion-button>
+            </form>
           </div>
         </ion-content>
       </ion-content>
@@ -40,6 +39,7 @@
 
 <script lang="ts">
 import { IonButton,IonLabel, IonInput, IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import router from "@/router";
 
 export default {
   name: "Login",
@@ -47,13 +47,16 @@ export default {
     IonButton,
     IonLabel,
     IonInput,
-    IonButtons,
     IonContent,
     IonHeader,
-    IonMenuButton,
     IonPage,
     IonTitle,
     IonToolbar
+  },
+  methods: {
+    goHomeUtente() {
+      router.push("/HomeUtente");
+    }
   }
 }
 </script>
@@ -67,9 +70,10 @@ img{
 }
 
 ion-content.background{
-  --background: url(../../public/assets/cartellina.svg)0 0/100% 100% no-repeat;
+  --background: url(../../public/assets/CartellinaAllungata.svg)0 0/100% 100% no-repeat;
 
 }
+
 #container {
   text-align: center;
   position: relative;
@@ -102,8 +106,9 @@ ion-label{
 
 ion-input{
   color: black;
-  margin-left: 33%;
+  margin-left: 40%;
   position: center;
-  width: 32%;
+  min-width: 193px;
+  width: 20%;
 }
 </style>

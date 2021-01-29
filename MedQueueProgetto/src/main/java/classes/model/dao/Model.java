@@ -13,11 +13,11 @@ public interface Model<T> {
   /**
    * Prelevamento tramite chiave primaria.
    *
-   * @param code chiave primaria dell'oggetto
+   * @param id chiave primaria dell'oggetto
    * @return oggetto avente la chiave primaria indicata
    * @throws SQLException per problemi di esecuzione della query
    */
-  T doRetrieveByKey(String code) throws SQLException;
+  T doRetrieveByKey(String id) throws SQLException;
 
   /**
    * Prelevamento di tutti gli oggetti T dal DB.

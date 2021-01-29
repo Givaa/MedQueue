@@ -1,8 +1,12 @@
 package classes.controller;
 
+
+import classes.controller.exception.ErrorNewObjectException;
 import classes.controller.exception.ObjectNotFoundException;
 import classes.model.bean.entity.AmbulatoriBean;
+import classes.model.bean.entity.StrutturaBean;
 import classes.model.dao.AmbulatoriModel;
+import classes.model.dao.StrutturaModel;
 import java.sql.SQLException;
 import java.util.Collection;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AmbulatorioController {
 
   private final AmbulatoriModel ambulatorioModel = new AmbulatoriModel();
+  private final StrutturaModel strutturaModel = new StrutturaModel();
 
   /**
    * Metodo che permette di utilizzare il prelevamento per id dell'AmbulatoriModel.
@@ -26,14 +31,21 @@ public class AmbulatorioController {
    * @throws ObjectNotFoundException problemi di oggetto non trovato
    */
   @GetMapping("/ambulatorio/{id}")
-  public AmbulatoriBean getById(@PathVariable String id) throws SQLException, ObjectNotFoundException {
-    AmbulatoriBean a = ambulatorioModel.doRetrieveByKey(id);
+  public AmbulatoriBean getById(@PathVariable String id) throws SQLException,
+          ObjectNotFoundException {
+    int idNumerico = Integer.parseInt(id);
 
-    if (a != null) {
-      return a;
-    } else {
-      throw new ObjectNotFoundException(a);
+    if (idNumerico > 0) {
+      AmbulatoriBean a = ambulatorioModel.doRetrieveByKey(id);
+
+      if (a != null) {
+        return a;
+      } else {
+        throw new ObjectNotFoundException(a);
+      }
     }
+
+    return null;
   }
 
   /**
@@ -44,7 +56,8 @@ public class AmbulatorioController {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/ambulatori")
-  public Collection<AmbulatoriBean> getAllAmbulatori(@RequestBody String order) throws SQLException {
+  public Collection<AmbulatoriBean> getAllAmbulatori(@RequestBody String order)
+          throws SQLException {
     return ambulatorioModel.doRetrieveAll(order);
   }
 
@@ -54,10 +67,30 @@ public class AmbulatorioController {
    *
    * @param a Ambulatorio da inserire
    * @throws SQLException per problemi di esecuzione della query
+   * @throws ErrorNewObjectException per problemi nell'input
+   * @return conferma/non conferma del salvataggio dell'ambulatorio
    */
   @GetMapping("/newAmbulatorio")
-  public void newAmbulatorio(@RequestBody AmbulatoriBean a) throws SQLException {
-    ambulatorioModel.doSave(a);
+  public boolean newAmbulatorio(@RequestBody AmbulatoriBean a) throws SQLException,
+          ErrorNewObjectException {
+    if (a != null) {
+      StrutturaBean strutturaBean;
+      strutturaBean = strutturaModel.doRetrieveByKey(String.valueOf(a.getIdStruttura()));
+      String nome = a.getNome();
+
+      boolean checkNome = nome.matches("^[a-z ,.'-]+$");
+      boolean checkIdStruttura = strutturaBean != null;
+
+      if (checkNome && checkIdStruttura) {
+        ambulatorioModel.doSave(a);
+      } else {
+        return false;
+      }
+    } else {
+      throw new ErrorNewObjectException(a);
+    }
+
+    return true;
   }
 
   /**
@@ -78,9 +111,26 @@ public class AmbulatorioController {
    *
    * @param a Ambulatorio da aggiornare
    * @throws SQLException per problemi di esecuzione della query
+   * @return conferma/non conferma dell'aggiornamento dell'ambulatorio
    */
   @GetMapping("/updateAmbulatorio")
-  public void updateAmbulatorio(@RequestBody AmbulatoriBean a) throws SQLException {
-    ambulatorioModel.doUpdate(a);
+  public boolean updateAmbulatorio(@RequestBody AmbulatoriBean a) throws SQLException {
+    if (ambulatorioModel.doRetrieveByKey(String.valueOf(a.getId())) != null) {
+      StrutturaBean strutturaBean;
+      strutturaBean = strutturaModel.doRetrieveByKey(String.valueOf(a.getIdStruttura()));
+      String nome = a.getNome();
+
+      Boolean checkNome = nome.matches("^[a-z ,.'-]+$");
+      Boolean checkIdStruttura = strutturaBean != null;
+
+      if (checkNome && checkIdStruttura) {
+        ambulatorioModel.doUpdate(a);
+        return true;
+      }
+
+      return false;
+    }
+
+    return false;
   }
 }
