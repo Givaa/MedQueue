@@ -138,14 +138,14 @@ ion-button{
 }
 
 ion-button#prenota{
-  --background: url(../../public/assets/calendar-outline.svg)0 0/100% 100% no-repeat;
+  --background: url(../../public/assets/Prenotazioni.svg)0 0/100% 100% no-repeat;
 }
 ion-button#guarda{
-  --background: url(../../public/assets/list-outline.svg)0 0/100% 100% no-repeat;
+  --background: url(../../public/assets/VisualizzaPrenotazioni.svg)0 0/100% 100% no-repeat;
 
 }
 ion-button#coda{
-  --background: url(../../public/assets/business-outline.svg)0 0/100% 100% no-repeat;
+  --background: url(../../public/assets/VisualizzaCoda.svg)0 0/100% 100% no-repeat;
 
 }
 #container {

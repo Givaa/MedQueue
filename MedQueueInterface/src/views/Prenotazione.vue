@@ -36,7 +36,15 @@
             <ion-label>Seleziona Data</ion-label>
             <ion-datetime min="2021-01-29" max="2023" displayFormat="DD MM YY" placeholder="Data"></ion-datetime>
             <br>
-            <ion-button @click="goHomeUtente" color="success"> Accedi </ion-button>
+            <ion-label>Seleziona Orario</ion-label>
+            <ion-select placeholder="Orario">
+              <ion-select-option value="ora1">10:00</ion-select-option>
+              <ion-select-option value="ora2">11:00</ion-select-option>
+              <ion-select-option value="ora3">12:00</ion-select-option>
+              <ion-select-option value="ora4">13:00</ion-select-option>
+            </ion-select>
+            <br>
+            <ion-button @click="goHomeUtente" color="success"> Prenota </ion-button>
           </div>
         </ion-content>
       </ion-content>

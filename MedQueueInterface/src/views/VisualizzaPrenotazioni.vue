@@ -12,6 +12,40 @@
       <div id="container">
         <strong class="capitalize">Prenotazioni</strong>
         <p>Prenotazioni</p>
+        <ion-grid>
+          <ion-row id="top">
+            <ion-col>Data</ion-col>
+            <ion-col>Struttura</ion-col>
+            <ion-col>Tipo</ion-col>
+            <ion-col>Ora</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>13/02/2021</ion-col>
+            <ion-col>Caserta</ion-col>
+            <ion-col>Pagamento</ion-col>
+            <ion-col>11:30</ion-col>
+          </ion-row>
+            <ion-row>
+              <ion-col>13/02/2021</ion-col>
+              <ion-col>Caserta</ion-col>
+              <ion-col>Ritiro analisi</ion-col>
+              <ion-col>11:30</ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col>13/02/2021</ion-col>
+              <ion-col>Caserta</ion-col>
+              <ion-col>Ritiro cartella clinica</ion-col>
+              <ion-col>11:30</ion-col>
+            </ion-row>
+
+          <ion-row>
+            <ion-col>13/02/2021</ion-col>
+            <ion-col>Caserta</ion-col>
+            <ion-col>Ritiro cartella clinica</ion-col>
+            <ion-col>11:30</ion-col>
+          </ion-row>
+        </ion-grid>
       </div>
     </ion-content>
   </ion-page>
@@ -19,17 +53,12 @@
 
 <script lang="ts">
 import {
+  IonGrid,
+  IonRow,
+  IonCol,
   IonContent,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonListHeader,
-  IonRouterOutlet,
-  IonSplitPane,
   IonButtons,
   IonHeader,
-  IonMenu,
   IonMenuButton,
   IonPage,
   IonTitle,
@@ -52,6 +81,9 @@ import menu1 from "./menu.vue"
 export default {
   name: "Prenotazione",
   components: {
+    IonGrid,
+    IonRow,
+    IonCol,
     IonContent,
     IonButtons,
     IonHeader,
@@ -115,9 +147,11 @@ export default {
 </script>
 
 <style scoped>
-#page{
-  background-color: blue;
+
+ion-grid{
+  border:1px black;
 }
+
 #container {
   text-align: center;
   position: relative;
@@ -257,6 +291,10 @@ ion-note {
   font-size: 16px;
 
   color: var(--ion-color-medium-shade);
+}
+
+#top{
+  font-weight: bolder;
 }
 
 ion-item.selected {
