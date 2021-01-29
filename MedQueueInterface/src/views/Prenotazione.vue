@@ -18,12 +18,23 @@
             <br>
             <br>
             <ion-label>Seleziona Struttura</ion-label>
-            <ion-input ></ion-input>
+            <ion-select placeholder="Struttura">
+              <ion-select-option value="str1">Napoli</ion-select-option>
+              <ion-select-option value="str2">Caserta</ion-select-option>
+              <ion-select-option value="str3">Salerno</ion-select-option>
+              <ion-select-option value="str4">Avellino</ion-select-option>
+            </ion-select>
             <br>
+            <ion-label>Seleziona Operazione</ion-label>
+            <ion-select placeholder="Operazione">
+              <ion-select-option value="op1">Pagamento</ion-select-option>
+              <ion-select-option value="op2">Effettua prestazione</ion-select-option>
+              <ion-select-option value="op3">Ritiro analise</ion-select-option>
+              <ion-select-option value="op4">Ritito cartella clinica</ion-select-option>
+            </ion-select>
             <br>
-            <ion-label>Password</ion-label>
-            <ion-input type="password" placeholder="Password"></ion-input>
-            <br>
+            <ion-label>Seleziona Data</ion-label>
+            <ion-datetime min="2021-01-29" max="2023" displayFormat="DD MM YY" placeholder="Data di nascita"></ion-datetime>
             <br>
             <ion-button @click="goHomeUtente" color="success"> Accedi </ion-button>
           </div>
@@ -34,6 +45,10 @@
 
 <script lang="ts">
 import {
+  IonButton,
+  IonSelectOption,
+  IonSelect,
+  IonDatetime,
   IonContent,
   IonButtons,
   IonHeader,
@@ -42,10 +57,15 @@ import {
   IonTitle,
   IonToolbar
 } from '@ionic/vue';
+import router from "@/router";
 
 export default {
   name: "Prenotazione",
   components: {
+    IonButton,
+    IonSelectOption,
+    IonSelect,
+    IonDatetime,
     IonContent,
     IonButtons,
     IonHeader,
@@ -54,6 +74,11 @@ export default {
     IonTitle,
     IonToolbar
   },
+  methods: {
+    goHomeUtente() {
+      router.push("/HomeUtente");
+    }
+  }
 
 }
 </script>
@@ -214,5 +239,21 @@ ion-note {
 
 ion-item.selected {
   --color: var(--ion-color-primary);
+}
+
+ion-input{
+  color: black;
+  margin-left: 40%;
+  position: center;
+  min-width: 193px;
+  width: 20%;
+}
+
+ion-select{
+  color: black;
+  margin-left: 40%;
+  position: center;
+  min-width: 193px;
+  width: 20%;
 }
 </style>
