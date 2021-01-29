@@ -34,7 +34,7 @@
             </ion-select>
             <br>
             <ion-label>Seleziona Data</ion-label>
-            <ion-datetime min="2021-01-29" max="2023" displayFormat="DD MM YY" placeholder="Data di nascita"></ion-datetime>
+            <ion-datetime min="2021-01-29" max="2023" displayFormat="DD MM YY" placeholder="Data"></ion-datetime>
             <br>
             <ion-button @click="goHomeUtente" color="success"> Accedi </ion-button>
           </div>
@@ -106,6 +106,7 @@ ion-content.background{
 }
 
 #container strong {
+  color: black;
   font-size: 20px;
   line-height: 26px;
 }
@@ -241,6 +242,10 @@ ion-item.selected {
   --color: var(--ion-color-primary);
 }
 
+ion-label{
+  color: black;
+}
+
 ion-input{
   color: black;
   margin-left: 40%;
@@ -250,6 +255,14 @@ ion-input{
 }
 
 ion-select{
+  color: black;
+  margin-left: 40%;
+  position: center;
+  min-width: 193px;
+  width: 20%;
+}
+
+ion-datetime{
   color: black;
   margin-left: 40%;
   position: center;
