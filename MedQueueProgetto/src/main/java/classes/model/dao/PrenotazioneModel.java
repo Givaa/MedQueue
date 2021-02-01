@@ -239,7 +239,7 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
     Collection<PrenotazioneBean> result = new LinkedList<PrenotazioneBean>();
     PrenotazioneBean tmp = new PrenotazioneBean();
 
-    String selectSql = "SELECT * FROM " + nomeTabella + "WHERE codiceFiscale = ?";
+    String selectSql = "SELECT * FROM " + nomeTabella + " WHERE codiceFiscale = ?";
 
     try {
       con = DriverManagerConnectionPool.getConnection();

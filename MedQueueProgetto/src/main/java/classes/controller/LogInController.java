@@ -25,11 +25,11 @@ public class LogInController extends HttpServlet {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/login")
-  public boolean login(@RequestBody String username,
+  public UtenteBean login(@RequestBody String username,
                        @RequestBody String password) throws SQLException {
     UtenteBean a = um.doRetrieveByKey(username);
 
-    return a.getPassword().equals(password);
+    return a;
   }
 
   /**
@@ -46,7 +46,7 @@ public class LogInController extends HttpServlet {
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/signup")
-  public boolean signup(@RequestBody String codFisc, @RequestBody String password,
+  public UtenteBean signup(@RequestBody String codFisc, @RequestBody String password,
                         @RequestBody String nome, @RequestBody String cognome,
                         @RequestBody Date dataDiNascita, @RequestBody String email,
                         @RequestBody int numeroDiTelefono) throws SQLException {
@@ -75,7 +75,7 @@ public class LogInController extends HttpServlet {
               dataDiNascita, email, numeroDiTelefono);
       um.doSave(a);
 
-      return true;
+      return a;
     } else {
       throw new ErrorNewObjectException(a);
     }
