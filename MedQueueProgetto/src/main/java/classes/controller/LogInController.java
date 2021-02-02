@@ -6,6 +6,11 @@ import classes.model.dao.UtenteModel;
 import java.sql.Date;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServlet;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import jdk.jfr.ContentType;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import org.springframework.web.bind.annotation.*;
@@ -24,14 +29,18 @@ public class LogInController extends HttpServlet {
    * @return Permesso/Non permesso di accesso
    * @throws SQLException per problemi di esecuzione della query
    */
-  @PostMapping ("/login")
-  public UtenteBean login(@RequestBody String username,
-                       @RequestBody String password) throws SQLException {
+  @PostMapping (value="/login", produces= MediaType.APPLICATION_JSON_VALUE)
+  public UtenteBean login(@RequestBody String body) throws SQLException {
+    JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
+    String username = jsonObject.get("username").getAsString();
+    String password = jsonObject.get("password").getAsString();
+
     UtenteBean a = um.doRetrieveByKey(username);
 
     if(password.equals(a.getPassword())){
     return a;
-    }else{
+    }
+    else{
      return null;
     }
   }

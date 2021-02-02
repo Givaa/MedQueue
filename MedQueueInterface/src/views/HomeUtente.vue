@@ -12,7 +12,7 @@
         <div id="container">
           <img src="../../public/assets/logosvg_nobg.svg"/>
           <br>
-          <strong class="capitalize">Benvenuto **Nome**</strong>
+          <strong class="capitalize">Benvenuto {{nome}}</strong>
           <p>Da qui puoi raggiungere tutte le funzionalità offerte agli utenti,</p>
           <p>sia utilizzando questa schermata sia utlizzando il menù al lato</p>
           <ion-button id="prenota" @click="goPrenotazione"></ion-button>
@@ -68,6 +68,11 @@ export default {
     IonPage,
     IonTitle,
     IonToolbar
+  },
+  data(){
+    return{
+      nome:sessionStorage.getItem("nome")
+    }
   },
   methods:{
     goPrenotazione(){

@@ -9,7 +9,7 @@ export default {
             },{
                 crossDomain:true,
                 headers:{
-                    'Content-Type': 'multipart/form-data',
+                    'Content-Type': 'application/json',
                 }
                 }
             ).then(response => response.data);

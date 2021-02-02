@@ -13,7 +13,7 @@ import java.util.LinkedList;
  * Model per collegare la tabella "Utente" al backend.
  */
 public class UtenteModel implements Model<UtenteBean> {
-  private static final String nomeTabella = "utente";
+  private static final String nomeTabella = "medqueue.utente";
 
   /**
    * Prelevamento singolo utente.
@@ -29,7 +29,7 @@ public class UtenteModel implements Model<UtenteBean> {
 
     UtenteBean tmp = new UtenteBean();
 
-    String selectSql = "SELECT * FROM " + nomeTabella + "WHERE id = ?";
+    String selectSql = "SELECT * FROM " + nomeTabella + " WHERE codiceFiscale = ?";
 
     try {
       con = DriverManagerConnectionPool.getConnection();
@@ -44,7 +44,7 @@ public class UtenteModel implements Model<UtenteBean> {
         tmp.setNome(rs.getString("nome"));
         tmp.setCognome(rs.getString("cognome"));
         tmp.setDataDiNascita(rs.getDate("dataDiNascita"));
-        tmp.setEmail(rs.getString("email"));
+        tmp.setEmail(rs.getString("indirizzoEmail"));
       }
     } catch (SQLException e) {
       e.printStackTrace();
