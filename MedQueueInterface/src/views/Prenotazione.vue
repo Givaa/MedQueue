@@ -52,7 +52,6 @@
 </template>
 
 <script lang="ts">
-import loginAxios from "../axios/login"
 import {
   IonButton,
   IonSelectOption,
@@ -88,20 +87,6 @@ export default {
     goHomeUtente() {
       router.push("/HomeUtente");
     },
-
-    async onSubmit(data) {
-      loginAxios.login(data.username, data.password)
-          .then((response) => {
-            sessionStorage.setItem("codiceFiscale", response.codiceFiscale);
-            sessionStorage.setItem("password", response.password);
-            sessionStorage.setItem("nome", response.nome);
-            sessionStorage.setItem("cognome", response.cognome);
-            sessionStorage.setItem("dataDiNascita", response.dataDiNascita);
-            sessionStorage.setItem("email", response.email);
-            sessionStorage.setItem("numeroDiTelefono", response.numeroDiTelefono);
-            window.location.reload();
-          })
-    }
   }
 }
 </script>

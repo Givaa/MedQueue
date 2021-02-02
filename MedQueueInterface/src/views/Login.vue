@@ -22,14 +22,14 @@
             <br>
             <form>
             <ion-label>Codice Fiscale</ion-label>
-            <ion-input placeholder="Codice Fiscale"></ion-input>
+            <ion-input id="username" placeholder="Codice Fiscale"></ion-input>
             <br>
             <br>
             <ion-label>Password</ion-label>
-            <ion-input type="password" placeholder="Password"></ion-input>
+            <ion-input id="password" type="password" placeholder="Password"></ion-input>
             <br>
             <br>
-              <ion-button @click="goHomeUtente">Accedi</ion-button>
+              <ion-button @click="onSubmit()">Accedi</ion-button>
             </form>
           </div>
         </ion-content>
@@ -37,7 +37,8 @@
   </ion-page>
 </template>
 
-<script lang="ts">
+<script>
+import loginAxios from "../axios/login.js"
 import { IonButton,IonLabel, IonInput, IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
 import router from "@/router";
 
@@ -56,6 +57,21 @@ export default {
   methods: {
     goHomeUtente() {
       router.push("/HomeUtente");
+    },
+
+    async onSubmit(data){
+      loginAxios.login(data.username, data.password)
+      .then((response) => {
+        sessionStorage.setItem("codiceFiscale", response.codiceFiscale);
+        sessionStorage.setItem("password", response.password);
+        sessionStorage.setItem("nome", response.nome);
+        sessionStorage.setItem("cognome", response.cognome);
+        sessionStorage.setItem("dataDiNascita", response.dataDiNascita);
+        sessionStorage.setItem("email", response.email);
+        sessionStorage.setItem("numeroDiTelefono", response.numeroDiTelefono);
+
+        router.push("/HomeUtente")
+      })
     }
   }
 }

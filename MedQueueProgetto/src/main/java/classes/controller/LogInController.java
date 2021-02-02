@@ -6,11 +6,11 @@ import classes.model.dao.UtenteModel;
 import java.sql.Date;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServlet;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+
+import org.springframework.web.bind.annotation.*;
 
 /** Classe che ci permette di effettuare il login al sito. */
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class LogInController extends HttpServlet {
 
@@ -24,12 +24,16 @@ public class LogInController extends HttpServlet {
    * @return Permesso/Non permesso di accesso
    * @throws SQLException per problemi di esecuzione della query
    */
-  @GetMapping("/login")
+  @PostMapping ("/login")
   public UtenteBean login(@RequestBody String username,
                        @RequestBody String password) throws SQLException {
     UtenteBean a = um.doRetrieveByKey(username);
 
+    if(password.equals(a.getPassword())){
     return a;
+    }else{
+     return null;
+    }
   }
 
   /**
