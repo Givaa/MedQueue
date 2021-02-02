@@ -22,11 +22,11 @@
             <br>
             <form>
             <ion-label>Codice Fiscale</ion-label>
-            <ion-input id="username" placeholder="Codice Fiscale"></ion-input>
+            <ion-input id="username" v-model="loginForm.username" placeholder="Codice Fiscale"></ion-input>
             <br>
             <br>
             <ion-label>Password</ion-label>
-            <ion-input id="password" type="password" placeholder="Password"></ion-input>
+            <ion-input id="password" type="password" v-model="loginForm.password" placeholder="Password"></ion-input>
             <br>
             <br>
               <ion-button @click="onSubmit()">Accedi</ion-button>
@@ -44,6 +44,14 @@ import router from "@/router";
 
 export default {
   name: "Login",
+  data(){
+    return {
+      loginForm: {
+        username: "",
+        password:""
+      }
+    }
+  },
   components: {
     IonButton,
     IonLabel,
@@ -59,8 +67,8 @@ export default {
       router.push("/HomeUtente");
     },
 
-    async onSubmit(data){
-      loginAxios.login(data.username, data.password)
+    async onSubmit(){
+      loginAxios.login(this.loginForm.username, this.loginForm.password)
       .then((response) => {
         sessionStorage.setItem("codiceFiscale", response.codiceFiscale);
         sessionStorage.setItem("password", response.password);

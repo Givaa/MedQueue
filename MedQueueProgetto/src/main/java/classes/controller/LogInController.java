@@ -6,11 +6,11 @@ import classes.model.dao.UtenteModel;
 import java.sql.Date;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServlet;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import org.springframework.web.bind.annotation.*;
 
 /** Classe che ci permette di effettuare il login al sito. */
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class LogInController extends HttpServlet {
 
