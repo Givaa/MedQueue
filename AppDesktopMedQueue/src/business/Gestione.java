@@ -1,24 +1,35 @@
 package business;
 
-import entity.OperazioneBean;
-import entity.PrenotazioneBean;
-import java.util.ArrayList;
-import persistence.DataAccess;
+import bean.OperazioneBean;
+import bean.PrenotazioneBean;
 
-/** Classe che conterrà tutte le operazioni che l'impiegato puo effettuare. * */
-public class Gestione {
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import persistence.DaoInterface;
+import persistence.DataAccess;
+import persistence.DriverManagerConnectionPool;
+
+/** Classe che conterrà tutte le operazioni che l'impiegato puo effettuare. **/
+public class Gestione implements GestioneInterface{
+  private DaoInterface dao=new DataAccess();
+
+  public Gestione(){}
 
   /**
-   * Metodo che permette di accettare una prenotazione convalidata.
+   * Metodo di business che permette di accettare una prenotazione convalidata.
    *
-   * @param idOp id dell'operazione per cui si vuole accettare la prenotazione.
-   * @param idStruttura id della struttura per cui si vuole accettare la prenotazione.
-   * @return prenotazione o null se non c'è una prenotazione.
+   * @param idOp id dell'operazione della collezione Operazione
+   * @param idStruttura id della struttura della collezione Struttura
+   * @return prenotazione della collezione Prenotazione che ha come idOperazione l'idOperazione
+   * passato come parametro, come idStruttura l'idStruttura passato come parametro e convalida a true
    */
-  public static PrenotazioneBean accettaPrenotazione(int idOp, int idStruttura) {
-    PrenotazioneBean p = DataAccess.serviPrenotazione(idOp, idStruttura);
+  public  PrenotazioneBean accettaPrenotazione(int idOp, int idStruttura) {
+    PrenotazioneBean p = dao.serviPrenotazione(idOp, idStruttura);
     if (p != null) {
-      if (DataAccess.deletePrenotazione(p.getId()) > 0) {
+      if (dao.deletePrenotazione(p.getId()) > 0) {
         return p;
       }
     }
@@ -28,20 +39,31 @@ public class Gestione {
   /**
    * Metodo che restituisce il numero di prenotazioni da accettare.
    *
-   * @param idOperazione id della operazione
-   * @param idStruttura id della struttura
-   * @return numero prenotazioni
+   * @param idOperazione id dell'operazione della collezione Operazione
+   * @param idStruttura id della struttura della collezione Struttura
+   * @return size delle prenotazioni della collezione prenotazione che hanno come idStruttura l'idStruttura
+   * passato come parametro, come idOperazione l'idOperazione passato come parametro e convalida a true
    */
-  public static int getNumPrenotazioni(int idOperazione, int idStruttura) {
-    return DataAccess.numPrenotazioni(idOperazione, idStruttura);
+  public int getNumPrenotazioni(int idOperazione, int idStruttura) {
+    return dao.numPrenotazioni(idOperazione, idStruttura);
   }
 
   /**
-   * Metodo che la lista di operazioni che l'impiegato può servire.
+   * Metodo di business che mostra all'impiegato le operazioni che puo servire.
    *
-   * @return lista operazioni
+   * @return operazioni della collezione Operazione
    */
-  public static ArrayList<OperazioneBean> getListaOperazioni() {
-    return DataAccess.getOperazioni();
+  public ArrayList<OperazioneBean> getListaOperazioni() {
+    return dao.getOperazioni();
   }
+
+  /**
+   * Metodo di business che permette di scegliere all'impiegato un operazione da gestire.
+   * @param id id dell'operazione della collezione Operazione
+   * @return operazione della collezione Operazione che ha come id, l'id passato come parametro
+   */
+  public OperazioneBean getOperazione(int id) {
+    return dao.getOperazione(id);
+    }
+
 }

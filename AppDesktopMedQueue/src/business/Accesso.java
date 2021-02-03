@@ -1,57 +1,33 @@
 package business;
 
-import entity.ImpiegatoBean;
+import bean.ImpiegatoBean;
+import persistence.DaoInterface;
 import persistence.DataAccess;
 
 /** Classe per verificare le credenziali di un impiegato. */
-public class Accesso {
+public class Accesso implements AccessoInterface {
+  DaoInterface daoOperation=new DataAccess();
 
-  private ImpiegatoBean impiegato;
-
-  /**
-   * Inizializzo un oggetto Accesso con il codice fiscale.
-   *
-   * @param username codicefiscale impiegato
-   */
-  public Accesso(String username) {
-    this.impiegato = DataAccess.getImpiegato(username);
-  }
+  public Accesso(){}
 
   /**
-   * Inizializza un nuovo oggetto passando un impiegato.
+   * Metodo di business che verifica le credenziali di un impiegato.
    *
-   * @param impiegato impiegato
+   * @param cf codice fiscale dell'impiegato
+   * @param pass password dell'impiegato
+   * @return l'impiegato della collezione Impiegato che ha come codice fiscale il codice fiscale
+   * passato come parametro al metodo e come password la password passata al metodo,
+   * oppure null se le credenziali sono sbagliate
    */
-  public Accesso(ImpiegatoBean impiegato) {
-    this.impiegato = impiegato;
+  public ImpiegatoBean verificaCredenziali(String cf, String pass){
+    ImpiegatoBean impiegato=daoOperation.getImpiegato(cf);
+    if(impiegato!=null){
+      if(impiegato.getPassword().equals(pass))
+        return impiegato;
+      else
+        return null;
+    }
+    return null;
   }
 
-  /**
-   * Ritorna l'impiegato di cui si vuole verificare l'accesso.
-   *
-   * @return impiegato
-   */
-  public ImpiegatoBean getImpiegato() {
-    return impiegato;
-  }
-
-  /**
-   * Setta l'impiegato ad un nuovo oggetto Accesso.
-   *
-   * @param username username dell'impiegato
-   */
-  public void setImpiegato(String username) {
-    this.impiegato = DataAccess.getImpiegato(username);
-  }
-
-  /**
-   * Verifica se la password dell'impiegato che vuole eseguire l'accesso e uguale alla password
-   * inserita.
-   *
-   * @param password la password che verrà verificata
-   * @return un booleano true o false
-   */
-  public boolean verificaCredenziali(String password) {
-    return password.equals(impiegato.getPassword());
-  }
 }

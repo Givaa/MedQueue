@@ -3,58 +3,58 @@ CREATE DATABASE MedQueue;
 USE MedQueue;
 
 CREATE TABLE Utente(               
-codiceFiscale varchar(25) not null,
-password varchar(255) not null,
-nome varchar(255) not null,
-cognome varchar(255) not null,
+codiceFiscale varchar(16) not null,
+password varchar(50) not null,
+nome varchar(50) not null,
+cognome varchar(50) not null,
 dataDiNascita date not null,
 indirizzoEmail varchar(255) not null,
-numeroDiTelefono varchar(255) not null,
+numeroDiTelefono varchar(14) not null,
 primary key(CodiceFiscale) );
 
 CREATE TABLE Struttura(
-Id integer auto_increment not null,
-nome varchar(255) not null,
-indirizzo varchar(255) not null,
-numeroDiTelefono varchar(255) not null,
+Id int auto_increment not null,
+nome varchar(50) not null,
+indirizzo varchar(100) not null,
+numeroDiTelefono long not null,
 primary key(id) );
 
 CREATE TABLE Impiegato(
-codiceFiscale varchar(25) not null,
-password varchar(255) not null,
-nome varchar(255) not null,
-cognome varchar(255) not null,
+codiceFiscale varchar(16) not null,
+password varchar(50) not null,
+nome varchar(50) not null,
+cognome varchar(50) not null,
 dataDiNascita date not null,
 indirizzoEmail varchar(255) not null,
-numeroDiTelefono varchar(255) not null,
-idStruttura integer not null,
+numeroDiTelefono varchar(14) not null,
+idStruttura int not null,
 primary key(CodiceFiscale) ,
 foreign key(idStruttura) references Struttura(Id) ON UPDATE CASCADE ON DELETE CASCADE);
 
 CREATE TABLE Operazione(
-Id integer auto_increment not null,
-tipoOperazione varchar(255) not null,
+Id int auto_increment not null,
+tipoOperazione varchar(50) not null,
 descrizione varchar(255) not null,
 primary key(id) );
 
 
 CREATE TABLE Prenotazione(
-Id integer auto_increment not null,
+Id int auto_increment not null,
 data date not null,
 ora time not null,
 convalida bool not null,
-codiceFiscale varchar(255) not null,
-idOperazione integer not null,
-idStruttura integer not null,
+codiceFiscale varchar(16) not null,
+idOperazione int not null,
+idStruttura int not null,
 primary key(Id),
 foreign key(codiceFiscale) references Utente(codiceFiscale) ON UPDATE CASCADE ON DELETE CASCADE,
 foreign key(idOperazione) references Operazione(Id) ON UPDATE CASCADE ON DELETE CASCADE,
 foreign key(idStruttura) references Struttura(Id) ON UPDATE CASCADE ON DELETE CASCADE );
 
 CREATE TABLE Ambulatorio(
-Id integer auto_increment not null,
-nome varchar(255) not null,
-idStruttura integer not null,
+Id int auto_increment not null,
+nome varchar(50) not null,
+idStruttura int not null,
 primary key(Id),
 foreign key(idStruttura) references Struttura(Id) ON UPDATE CASCADE ON DELETE CASCADE );
 

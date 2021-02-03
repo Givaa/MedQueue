@@ -1,24 +1,27 @@
 package persistence;
 
-import entity.ImpiegatoBean;
-import entity.OperazioneBean;
-import entity.PrenotazioneBean;
-import entity.StrutturaBean;
+import bean.ImpiegatoBean;
+import bean.OperazioneBean;
+import bean.PrenotazioneBean;
+import bean.StrutturaBean;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 /** Classe che permette operazioni sul database. */
-public class DataAccess {
+public class DataAccess implements DaoInterface{
+
+  public DataAccess(){}
 
   /**
    * Metodo che ci permettere di ottenere una prenotazione dal database in base all'id.
    *
-   * @param id id della prenotazione
-   * @return prenotazione
+   * @param id id della prenotazione che si vuole prelevare dalla collezione Prenotazione
+   * @return prenotazione della collezione Prenotazione che ha come id, l'id passato come parametro al metodo
+   *
    */
-  public static PrenotazioneBean getPrenotazione(int id) {
+  public PrenotazioneBean getPrenotazione(int id) {
     PrenotazioneBean prenotazione = new PrenotazioneBean();
     try {
       String sql = "SELECT * FROM MedQueue.Prenotazione WHERE Prenotazione.Id = ?";
@@ -26,13 +29,13 @@ public class DataAccess {
       query.setInt(1, id);
       ResultSet rs = query.executeQuery();
       while (rs.next()) {
-        prenotazione.setId(Integer.parseInt(rs.getString(1)));
-        prenotazione.setData(rs.getString(2));
-        prenotazione.setTime(rs.getString(3));
-        prenotazione.setConvalida(Boolean.parseBoolean(rs.getString(4)));
+        prenotazione.setId(rs.getInt(1));
+        prenotazione.setData(rs.getDate(2));
+        prenotazione.setTime(rs.getTime(3));
+        prenotazione.setConvalida(rs.getBoolean(4));
         prenotazione.setCodiceFiscale(rs.getString(5));
-        prenotazione.setIdOperazione(Integer.parseInt(rs.getString(6)));
-        prenotazione.setIdStruttura(Integer.parseInt(rs.getString(7)));
+        prenotazione.setIdOperazione(rs.getInt(6));
+        prenotazione.setIdStruttura(rs.getInt(7));
       }
       rs.close();
       query.close();
@@ -46,10 +49,10 @@ public class DataAccess {
   /**
    * Metodo che ci permette di ottenere una struttura ospedaliera dal database in base all'id.
    *
-   * @param id id della struttura ospedaliera
-   * @return struttura ospedaliera
+   * @param id id della struttura ospedaliera che si vuole prelevare dalla collezione Struttura
+   * @return struttura ospedaliera della collezione Struttura che ha come id, l'id passato come parametro
    */
-  public static StrutturaBean getStruttura(int id) {
+  public StrutturaBean getStruttura(int id) {
     StrutturaBean struttura = new StrutturaBean();
     try {
       String sql = "SELECT * FROM MedQueue.Struttura WHERE Struttura.Id = ?";
@@ -57,7 +60,7 @@ public class DataAccess {
       query.setInt(1, id);
       ResultSet rs = query.executeQuery();
       while (rs.next()) {
-        struttura.setId(Integer.parseInt(rs.getString(1)));
+        struttura.setId(rs.getInt(1));
         struttura.setNome(rs.getString(2));
         struttura.setIndirizzo(rs.getString(3));
         struttura.setNumeroDiTelefono(rs.getString(4));
@@ -75,10 +78,10 @@ public class DataAccess {
    * Metodo che ci permette di ottenere un operazione per cui l'utente si puo prenotare in base
    * all'id.
    *
-   * @param id id dell'operazione
-   * @return operazione
+   * @param id id dell'operazione che si vuole prelevare dalla collezione Operazione
+   * @return operazione della collezione Operazione che ha come id, l'id passato come parametro al metodo
    */
-  public static OperazioneBean getOperazione(int id) {
+  public OperazioneBean getOperazione(int id) {
     OperazioneBean operazione = new OperazioneBean();
     try {
       String sql = "SELECT * FROM MedQueue.Operazione WHERE Operazione.Id = ?";
@@ -86,7 +89,7 @@ public class DataAccess {
       query.setInt(1, id);
       ResultSet rs = query.executeQuery();
       while (rs.next()) {
-        operazione.setId(Integer.parseInt(rs.getString(1)));
+        operazione.setId(rs.getInt(1));
         operazione.setTipoOperazione(rs.getString(2));
         operazione.setDescrizione(rs.getString(3));
       }
@@ -102,10 +105,10 @@ public class DataAccess {
   /**
    * Metodo che restituisce un impiegato di una struttura ospedaliera in base al codice fiscale.
    *
-   * @param codicefiscale codice fiscale dell'impiegato
-   * @return impiegato
+   * @param codicefiscale codice fiscale dell'impiegato che si vuole prelevare dalla collezione Impiegato
+   * @return impiegato della collezione Impiegato che ha come codice fiscale, il codice fiscale passato come parametro al metodo
    */
-  public static ImpiegatoBean getImpiegato(String codicefiscale) {
+  public ImpiegatoBean getImpiegato(String codicefiscale) {
     ImpiegatoBean impiegato = new ImpiegatoBean();
     try {
       String sql = "SELECT * FROM MedQueue.Impiegato WHERE Impiegato.codiceFiscale = ?";
@@ -117,7 +120,7 @@ public class DataAccess {
         impiegato.setPassword(rs.getString(2));
         impiegato.setNome(rs.getString(3));
         impiegato.setCognome(rs.getString(4));
-        impiegato.setDataDiNascita(rs.getString(5));
+        impiegato.setDataDiNascita(rs.getDate(5));
         impiegato.setIndirizzoEmail(rs.getString(6));
         impiegato.setNumeroDiTelefono(rs.getString(7));
         impiegato.setIdStruttura(Integer.parseInt(rs.getString(8)));
@@ -134,9 +137,9 @@ public class DataAccess {
   /**
    * Metodo che restituisce tutte le operazioni per cui è possibile prenotarsi.
    *
-   * @return lista operazioni
+   * @return tutte le operazioni che fanno parte della collezione Operazione
    */
-  public static ArrayList<OperazioneBean> getOperazioni() {
+  public ArrayList<OperazioneBean> getOperazioni() {
     ArrayList<OperazioneBean> operazioni = new ArrayList<OperazioneBean>();
     try {
       String sql = "SELECT * FROM MedQueue.Operazione";
@@ -145,7 +148,7 @@ public class DataAccess {
       while (rs.next()) {
         operazioni.add(
             new OperazioneBean(
-                Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3)));
+               rs.getInt(1), rs.getString(2), rs.getString(3)));
       }
       query.close();
       rs.close();
@@ -160,10 +163,10 @@ public class DataAccess {
   /**
    * Metodo per cancellare una prenotazione dal database in base all'id.
    *
-   * @param id id della prenotazione da cancellare
-   * @return 0 se la prenotazione non e stata cancellata 1 se la prentoazione e stata cancellata
+   * @param id id della prenotazione della collezione prenotazione da cancellare
+   * @return 0 se la prenotazione non è stata cancellata, 1 se la prentoazione è stata cancellata
    */
-  public static int deletePrenotazione(int id) {
+  public int deletePrenotazione(int id) {
     int delete = 0;
     try {
       String sql = "DELETE Prenotazione FROM MedQueue.Prenotazione WHERE Prenotazione.Id = ?";
@@ -182,11 +185,12 @@ public class DataAccess {
    * Metodo che restituisce il numero di prenotazioni da servire in base all'id dell'oprazione e
    * l'id della struttura.
    *
-   * @param idOperazione id dell'operazione
-   * @param idStruttura id della struttura
-   * @return numero di prenotazioni da servire
+   * @param idOperazione id dell'operazione della collezione Operazione
+   * @param idStruttura id della struttura della collezione Struttura
+   * @return size delle prenotazioni della collezione Prenotazione che hanno come idStruttura l'idStruttura
+   * passato come parametro, come idOperazione l'idOperazione passato come parametro e con la convalida a true
    */
-  public static int numPrenotazioni(int idOperazione, int idStruttura) {
+  public int numPrenotazioni(int idOperazione, int idStruttura) {
     int count = 0;
     try {
       String sql =
@@ -212,11 +216,15 @@ public class DataAccess {
   /**
    * Metodo che restituisce la prima operazione da servire in base all'ora della prenotazione.
    *
-   * @param idOperazione id dell operazione per cui si vuole accettare una prenotazione
-   * @param idStruttura id della struttura per cui si vuole accettare una prenotazione
-   * @return prenotazione oppure null se non ce ne sono
+   * @param idOperazione id dell'operazione della collezione Operazione
+   * @param idStruttura id della struttura della collezione Struttura
+   * @return prenotazione della collezione Prenotazione che hanno come idStruttura l'idStruttura
+   * passato come parametro, come idOperazione l'idOperazione passato come parametro, con convalida a true
+   * ed e la prima in odrine d'orario
+   *
+   *
    */
-  public static PrenotazioneBean serviPrenotazione(int idOperazione, int idStruttura) {
+  public PrenotazioneBean serviPrenotazione(int idOperazione, int idStruttura) {
     PrenotazioneBean prenotazione = new PrenotazioneBean();
     try {
       String sql =
@@ -228,12 +236,12 @@ public class DataAccess {
       ResultSet rs = query.executeQuery();
       while (rs.next()) {
         prenotazione.setId(Integer.parseInt(rs.getString(1)));
-        prenotazione.setData(rs.getString(2));
-        prenotazione.setTime(rs.getString(3));
+        prenotazione.setData(rs.getDate(2));
+        prenotazione.setTime(rs.getTime(3));
         prenotazione.setConvalida(Boolean.parseBoolean(rs.getString(4)));
         prenotazione.setCodiceFiscale(rs.getString(5));
-        prenotazione.setIdOperazione(Integer.parseInt(rs.getString(6)));
-        prenotazione.setIdStruttura(Integer.parseInt(rs.getString(7)));
+        prenotazione.setIdOperazione(rs.getInt(6));
+        prenotazione.setIdStruttura(rs.getInt(7));
         query.close();
         return prenotazione;
       }
