@@ -13,7 +13,7 @@ numeroDiTelefono long not null,
 primary key(CodiceFiscale) );
 
 CREATE TABLE Struttura(
-Id int auto_increment not null,
+id int auto_increment not null,
 nome varchar(50) not null,
 indirizzo varchar(100) not null,
 numeroDiTelefono long not null,
@@ -32,14 +32,14 @@ primary key(CodiceFiscale) ,
 foreign key(idStruttura) references Struttura(Id) ON UPDATE CASCADE ON DELETE CASCADE);
 
 CREATE TABLE Operazione(
-Id int auto_increment not null,
+id int auto_increment not null,
 tipoOperazione varchar(50) not null,
 descrizione varchar(255) not null,
 primary key(id) );
 
 
 CREATE TABLE Prenotazione(
-Id int auto_increment not null,
+id int auto_increment not null,
 data date not null,
 ora time not null,
 convalida bool not null,
@@ -52,7 +52,7 @@ foreign key(idOperazione) references Operazione(Id) ON UPDATE CASCADE ON DELETE 
 foreign key(idStruttura) references Struttura(Id) ON UPDATE CASCADE ON DELETE CASCADE );
 
 CREATE TABLE Ambulatorio(
-Id int auto_increment not null,
+id int auto_increment not null,
 nome varchar(50) not null,
 idStruttura int not null,
 primary key(Id),

@@ -30,7 +30,7 @@ public class OperazioneModel implements Model<OperazioneBean> {
 
     OperazioneBean tmp = new OperazioneBean();
 
-    String selectSql = "SELECT * FROM " + nomeTabella + "WHERE id = ?";
+    String selectSql = "SELECT * FROM " + nomeTabella + " WHERE id = ?";
 
     try {
       con = DriverManagerConnectionPool.getConnection();

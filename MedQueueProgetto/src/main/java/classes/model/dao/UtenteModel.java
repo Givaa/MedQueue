@@ -45,6 +45,7 @@ public class UtenteModel implements Model<UtenteBean> {
         tmp.setCognome(rs.getString("cognome"));
         tmp.setDataDiNascita(rs.getDate("dataDiNascita"));
         tmp.setEmail(rs.getString("indirizzoEmail"));
+        tmp.setNumeroDiTelefono(rs.getString("numeroDiTelefono"));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -94,7 +95,8 @@ public class UtenteModel implements Model<UtenteBean> {
         tmp.setNome(rs.getString("nome"));
         tmp.setCognome(rs.getString("cognome"));
         tmp.setDataDiNascita(rs.getDate("dataDiNascita"));
-        tmp.setEmail(rs.getString("email"));
+        tmp.setEmail(rs.getString("indirizzoEmail"));
+        tmp.setNumeroDiTelefono(rs.getString("numeroDiTelefono"));
         result.add(tmp);
       }
 
@@ -135,7 +137,7 @@ public class UtenteModel implements Model<UtenteBean> {
       preparedStatement.setString(4, param.getCognome());
       preparedStatement.setDate(5, param.getDataDiNascita());
       preparedStatement.setString(6, param.getEmail());
-      preparedStatement.setInt(7, param.getNumeroDiTelefono());
+      preparedStatement.setString(7, param.getNumeroDiTelefono());
 
       preparedStatement.executeUpdate();
     } finally {
@@ -164,7 +166,8 @@ public class UtenteModel implements Model<UtenteBean> {
         "UPDATE "
             + nomeTabella
             + " SET password = ?, nome = ?, cognome = ?,"
-                + " dataDiNascita = ?, email = ?, numeroDiTelefono = ?  WHERE codiceFiscale = ?";
+            + " dataDiNascita = ?, indirizzoEmail = ?, numeroDiTelefono = ?"
+            + "  WHERE codiceFiscale = ?";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();
@@ -174,7 +177,7 @@ public class UtenteModel implements Model<UtenteBean> {
       preparedStatement.setString(3, param.getCognome());
       preparedStatement.setDate(4, param.getDataDiNascita());
       preparedStatement.setString(5, param.getEmail());
-      preparedStatement.setInt(6, param.getNumeroDiTelefono());
+      preparedStatement.setString(6, param.getNumeroDiTelefono());
       preparedStatement.setString(7, param.getCodiceFiscale());
 
       preparedStatement.executeUpdate();

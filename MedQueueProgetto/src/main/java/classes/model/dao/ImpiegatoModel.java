@@ -47,6 +47,7 @@ public class ImpiegatoModel implements Model<ImpiegatoBean> {
         tmp.setDataDiNascita(rs.getDate("dataDiNascita"));
         tmp.setIndirizzoEmail(rs.getString("indirizzoEmail"));
         tmp.setNumeroDiTelefono(rs.getString("numeroDiTelefono"));
+        tmp.setIdStruttura(rs.getInt("idStruttura"));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -99,6 +100,7 @@ public class ImpiegatoModel implements Model<ImpiegatoBean> {
         tmp.setDataDiNascita(rs.getDate("dataDiNascita"));
         tmp.setIndirizzoEmail(rs.getString("indirizzoEmail"));
         tmp.setNumeroDiTelefono(rs.getString("numeroDiTelefono"));
+        tmp.setIdStruttura(rs.getInt("idStruttura"));
         result.add(tmp);
       }
 
@@ -128,7 +130,7 @@ public class ImpiegatoModel implements Model<ImpiegatoBean> {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
-    String insertSql = "INSERT INTO " + nomeTabella + " VALUES (?, ?, ?, ?, ?, ?, ?)";
+    String insertSql = "INSERT INTO " + nomeTabella + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();
@@ -140,6 +142,7 @@ public class ImpiegatoModel implements Model<ImpiegatoBean> {
       preparedStatement.setDate(5, param.getDataDiNascita());
       preparedStatement.setString(6, param.getIndirizzoEmail());
       preparedStatement.setString(7, param.getNumeroDiTelefono());
+      preparedStatement.setInt(8, param.getIdStruttura());
 
       preparedStatement.executeUpdate();
     } finally {
@@ -168,7 +171,8 @@ public class ImpiegatoModel implements Model<ImpiegatoBean> {
         "UPDATE "
             + nomeTabella
             + " SET password = ?, nome = ?, cognome = ?, dataDiNascita = ?,"
-            + " indirizzoEmail = ?, numeroDiTelefono = ?  WHERE codiceFiscale = ?";
+            + " indirizzoEmail = ?, numeroDiTelefono = ?,"
+            + "idStruttura = ?  WHERE codiceFiscale = ?";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();
@@ -179,7 +183,8 @@ public class ImpiegatoModel implements Model<ImpiegatoBean> {
       preparedStatement.setDate(4, param.getDataDiNascita());
       preparedStatement.setString(5, param.getIndirizzoEmail());
       preparedStatement.setString(6, param.getNumeroDiTelefono());
-      preparedStatement.setString(7, param.getCodiceFiscale());
+      preparedStatement.setInt(7, param.getIdStruttura());
+      preparedStatement.setString(8, param.getCodiceFiscale());
 
       preparedStatement.executeUpdate();
 

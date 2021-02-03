@@ -7,11 +7,18 @@ import classes.model.bean.entity.PrenotazioneBean;
 import classes.model.bean.entity.StrutturaBean;
 import classes.model.dao.OperazioneModel;
 import classes.model.dao.PrenotazioneModel;
+
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 
 import classes.model.dao.StrutturaModel;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -28,13 +35,17 @@ public class PrenotazioneController {
   /**
    * Metodo che permette di utilizzare il prelevamento per id del PrenotazioneModel.
    *
-   * @param id Chiave primaria della Prenotazione
+   * @param body corpo della richiesta preso in input
    * @return Prenotazione avente l'id passato
    * @throws SQLException per problemi di esecuzione della query
    * @throws ObjectNotFoundException per problemi di oggetto non trovato
    */
   @GetMapping("/prenotazione/{id}")
-  public PrenotazioneBean getPrenotazioneById(String id) throws SQLException, ObjectNotFoundException {
+  public PrenotazioneBean getPrenotazioneById(@RequestBody String body) throws SQLException,
+          ObjectNotFoundException {
+    JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
+    String id = jsonObject.get("idPrenotazioneGet").getAsString();
+
     PrenotazioneBean p = prenotazioneModel.doRetrieveByKey(id);
     if (p != null) {
       return p;
@@ -46,12 +57,14 @@ public class PrenotazioneController {
   /**
    * Metodo che permette di utilizzare il prelevamento di tutti gli oggetti del PrenotazioneModel.
    *
-   * @param order Ordine in cui si vuole visualizzare la collezione
+   * @param body corpo della richiesta preso in input
    * @return Collezione di Prenotazione
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/prenotazioni")
-  public Collection<PrenotazioneBean> getAllPrenotazioni(String order) throws SQLException {
+  public Collection<PrenotazioneBean> getAllPrenotazioni(@RequestBody String body) throws SQLException {
+    JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
+    String order = jsonObject.get("ordinePrenotazioni").getAsString();
     return prenotazioneModel.doRetrieveAll(order);
   }
 
@@ -59,33 +72,39 @@ public class PrenotazioneController {
    * Metodo che permette di utilizzare l'inserimento di una nuova prenotazione tramite
    * PrenotazioneModel.
    *
-   * @param p Prenotazione da inserire
+   * @param body corpo della richiesta preso in input
    * @throws SQLException per problemi di esecuzione della query
+   * @throws ParseException per problemi di parse
+   * @throws ErrorNewObjectException per problemi di creazione di un oggetto
    * @return conferma/non conferma del salvataggio della prenotazione
    */
   @GetMapping("/newPrenotazione")
-  public boolean newPrenotazione(PrenotazioneBean p) throws SQLException {
-    if ( p != null ) {
-      StrutturaBean s;
-      OperazioneBean o;
-      String cf = p.getCodiceFiscale();
-      String ora = p.getOra();
-      o = operazioneModel.doRetrieveByKey(String.valueOf(p.getIdOperazione()));
-      s = strutturaModel.doRetrieveByKey(String.valueOf(p.getIdStruttura()));
+  public boolean newPrenotazione(@RequestBody String body) throws SQLException,
+          ParseException, ErrorNewObjectException {
+    JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
+    String cf = jsonObject.get("newPrenotazioniCf").getAsString();
+    String ora = jsonObject.get("newPrenotazioniOra").getAsString();
+    String idOp = jsonObject.get("newPrenotazioniIdOp").getAsString();
+    String idS = jsonObject.get("newPrenotazioniIdS").getAsString();
+    String data = jsonObject.get("newPrenotazioneData").getAsString();
+    Date dataPrenotazione = (Date) new SimpleDateFormat("yyyy/mm/gg").parse(data);
 
-      boolean checkCodFisc = cf.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
-      boolean checkOra = ora.matches("^([0-1][0-9]|[2][0-3]):([0-5][0-9])$");
-      boolean checkOperazione = o != null;
-      boolean checkStruttura = s != null;
+    StrutturaBean s;
+    OperazioneBean o;
+    o = operazioneModel.doRetrieveByKey(idOp);
+    s = strutturaModel.doRetrieveByKey(String.valueOf(idS));
 
-      if (checkCodFisc && checkOra && checkOperazione && checkStruttura) {
-        prenotazioneModel.doSave(p);
-        return true;
-      } else {
-        return false;
-      }
+    boolean checkCodFisc = cf.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
+    boolean checkOra = ora.matches("^([0-1][0-9]|[2][0-3]):([0-5][0-9])$");
+    boolean checkOperazione = o != null;
+    boolean checkStruttura = s != null;
+
+    if (checkCodFisc && checkOra && checkOperazione && checkStruttura) {
+      prenotazioneModel.doSave(new PrenotazioneBean(ora, dataPrenotazione, cf,
+              Integer.valueOf(idOp), Integer.valueOf(idS), false));
+      return true;
     } else {
-      throw new ErrorNewObjectException(p);
+        throw new ErrorNewObjectException(new PrenotazioneBean());
     }
   }
 
@@ -93,29 +112,43 @@ public class PrenotazioneController {
    * Metodo che permette di utilizzare l'eliminazione di una prenotazione presente sul DB tramite
    * PrenotazioneModel.
    *
-   * @param p Prenotazione da eliminare
+   * @param body corpo della richiesta preso in input
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/deletePrenotazione")
-  public void deletePrenotazione(PrenotazioneBean p) throws SQLException {
-    prenotazioneModel.doDelete(p);
+  public void deletePrenotazione(@RequestBody String body) throws SQLException {
+    JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
+    String id = jsonObject.get("deletePrenotazioniId").getAsString();
+    prenotazioneModel.doDelete(prenotazioneModel.doRetrieveByKey(id));
   }
 
   /**
    * Metodo che permette di utilizzare l'aggiornamento di una prenotazione presente sul DB tramite
    * PrenotazioneModel.
    *
-   * @param p Prenotazione da aggiornare
+   * @param body corpo della richiesta preso in input
    * @throws SQLException per problemi di esecuzione della query
+   * @throws ParseException per problemi di parse
    * @return conferma/non conferma dell'aggiornamento
    */
   @GetMapping("/updatePrenotazione")
-  public boolean updatePrenotazione(PrenotazioneBean p) throws SQLException {
+  public boolean updatePrenotazione(@RequestBody String body) throws SQLException,
+          ParseException {
+    JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
+    String id = jsonObject.get("updatePrenotazioniId").getAsString();
+    String cf = jsonObject.get("updatePrenotazioniCf").getAsString();
+    String ora = jsonObject.get("updatePrenotazioniOra").getAsString();
+    String idOp = jsonObject.get("updatePrenotazioniIdOp").getAsString();
+    String idS = jsonObject.get("updatePrenotazioniIdS").getAsString();
+    String data = jsonObject.get("updatePrenotazioneData").getAsString();
+    Date dataPrenotazione = (Date) new SimpleDateFormat("yyyy/mm/gg").parse(data);
+    Boolean cv = jsonObject.get("updatePrenotazioneConvalida").getAsBoolean();
+    PrenotazioneBean p = prenotazioneModel.doRetrieveByKey(id);
+
+
     if (p != null) {
       StrutturaBean b;
       OperazioneBean o;
-      String cf = p.getCodiceFiscale();
-      String ora = p.getOra();
       o = operazioneModel.doRetrieveByKey(String.valueOf(p.getIdOperazione()));
       b = strutturaModel.doRetrieveByKey(String.valueOf(p.getIdStruttura()));
 
@@ -123,6 +156,12 @@ public class PrenotazioneController {
       boolean checkOra = ora.matches("^([0-1][0-9]|[2][0-3]):([0-5][0-9])$");
 
       if (checkCodFisc && checkOra && b != null && o != null) {
+        p.setDataPrenotazione(dataPrenotazione);
+        p.setConvalida(cv);
+        p.setCodiceFiscale(cf);
+        p.setIdStruttura(Integer.valueOf(idS));
+        p.setIdOperazione(Integer.valueOf(idOp));
+        p.setOra(ora);
         prenotazioneModel.doUpdate(p);
         return true;
       } else {
@@ -136,12 +175,14 @@ public class PrenotazioneController {
   /**
    * Metodo che permette di avere tutte le prenotazione di un utente in base al suo Codice Fiscale.
    *
-   * @param cf Codice Fiscale dell'utente
+   * @param body corpo della richiesta preso in input
    * @return Prenotazioni di quell'utente
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/prenotazioniUtente/{cf}")
-  public Collection<PrenotazioneBean> getPrenotazioniByCodFisc(String cf) throws SQLException {
+  public Collection<PrenotazioneBean> getPrenotazioniByCodFisc(@RequestBody String body) throws SQLException {
+    JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
+    String cf = jsonObject.get("getPrenotazioniByCf").getAsString();
     return prenotazioneModel.getUtentePrenotazioni(cf);
   }
 }

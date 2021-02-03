@@ -29,7 +29,7 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
 
     PrenotazioneBean tmp = new PrenotazioneBean();
 
-    String selectSql = "SELECT * FROM " + nomeTabella + "WHERE id = ?";
+    String selectSql = "SELECT * FROM " + nomeTabella + " WHERE id = ?";
 
     try {
       con = DriverManagerConnectionPool.getConnection();
@@ -44,8 +44,8 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
         tmp.setDataPrenotazione(rs.getDate("data"));
         tmp.setCodiceFiscale(rs.getString("codiceFiscale"));
         tmp.setConvalida(rs.getBoolean("convalida"));
-        tmp.setIdStruttura(rs.getInt("struttura"));
-        tmp.setIdOperazione(rs.getInt("operazione"));
+        tmp.setIdStruttura(rs.getInt("idStruttura"));
+        tmp.setIdOperazione(rs.getInt("idOperazione"));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -96,8 +96,8 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
         tmp.setDataPrenotazione(rs.getDate("data"));
         tmp.setCodiceFiscale(rs.getString("codiceFiscale"));
         tmp.setConvalida(rs.getBoolean("convalida"));
-        tmp.setIdStruttura(rs.getInt("struttura"));
-        tmp.setIdOperazione(rs.getInt("operazione"));
+        tmp.setIdStruttura(rs.getInt("idStruttura"));
+        tmp.setIdOperazione(rs.getInt("idOperazione"));
         result.add(tmp);
       }
 
@@ -132,12 +132,12 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
     try {
       connection = DriverManagerConnectionPool.getConnection();
       preparedStatement = connection.prepareStatement(insertSql);
-      preparedStatement.setString(1, param.getOra());
-      preparedStatement.setDate(2, param.getDataPrenotazione());
-      preparedStatement.setString(3, param.getCodiceFiscale());
-      preparedStatement.setInt(4, param.getIdOperazione());
-      preparedStatement.setInt(5, param.getIdStruttura());
-      preparedStatement.setBoolean(6, param.isConvalida());
+      preparedStatement.setDate(1, param.getDataPrenotazione());
+      preparedStatement.setString(2, param.getOra());
+      preparedStatement.setBoolean(3, param.isConvalida());
+      preparedStatement.setString(4, param.getCodiceFiscale());
+      preparedStatement.setInt(5, param.getIdOperazione());
+      preparedStatement.setInt(6, param.getIdStruttura());
 
       preparedStatement.executeUpdate();
     } finally {
@@ -254,8 +254,8 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
         tmp.setDataPrenotazione(rs.getDate("data"));
         tmp.setCodiceFiscale(rs.getString("codiceFiscale"));
         tmp.setConvalida(rs.getBoolean("convalida"));
-        tmp.setIdStruttura(rs.getInt("struttura"));
-        tmp.setIdOperazione(rs.getInt("operazione"));
+        tmp.setIdStruttura(rs.getInt("idStruttura"));
+        tmp.setIdOperazione(rs.getInt("idOperazione"));
         result.add(tmp);
       }
     } catch (SQLException e) {
@@ -303,8 +303,8 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
         tmp.setDataPrenotazione(rs.getDate("data"));
         tmp.setCodiceFiscale(rs.getString("codiceFiscale"));
         tmp.setConvalida(rs.getBoolean("convalida"));
-        tmp.setIdStruttura(rs.getInt("struttura"));
-        tmp.setIdOperazione(rs.getInt("operazione"));
+        tmp.setIdStruttura(rs.getInt("idStruttura"));
+        tmp.setIdOperazione(rs.getInt("idOperazione"));
         result.add(tmp);
       }
     } catch (SQLException e) {

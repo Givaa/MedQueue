@@ -40,9 +40,9 @@ public class AmbulatoriModel implements Model<AmbulatoriBean> {
       ResultSet rs = ps.executeQuery();
 
       while (rs.next()) {
-        tmp.setId(rs.getInt("id"));
-        tmp.setNome(rs.getString("nome"));
-        tmp.setIdStruttura(rs.getInt("idStruttura"));
+        tmp.setId(rs.getInt("Id"));
+        tmp.setNome(rs.getString("Nome"));
+        tmp.setIdStruttura(rs.getInt("Id_Struttura"));
       }
     } catch (SQLException e) {
       e.printStackTrace();

@@ -14,6 +14,7 @@ public class ImpiegatoBean {
   private Date dataDiNascita;
   private String indirizzoEmail;
   private String numeroDiTelefono;
+  private int idStruttura;
 
   /**
    * Costruttore dell'oggetto ImpiegatoBean.
@@ -25,6 +26,7 @@ public class ImpiegatoBean {
    * @param dataDiNascita Data di nascita dell'impiegato
    * @param indirizzoEmail Indirizzo Email dell'impiegato
    * @param numeroDiTelefono Numero di telefono dell'impiegato.
+   * @param idStruttura id della struttura dell'impiegato
    */
   public ImpiegatoBean(
       String codiceFiscale,
@@ -33,7 +35,8 @@ public class ImpiegatoBean {
       String cognome,
       Date dataDiNascita,
       String indirizzoEmail,
-      String numeroDiTelefono) {
+      String numeroDiTelefono,
+      int idStruttura) {
     this.codiceFiscale = codiceFiscale;
     this.password = password;
     this.nome = nome;
@@ -41,6 +44,7 @@ public class ImpiegatoBean {
     this.dataDiNascita = dataDiNascita;
     this.indirizzoEmail = indirizzoEmail;
     this.numeroDiTelefono = numeroDiTelefono;
+    this.idStruttura = idStruttura;
   }
 
   /**
@@ -172,6 +176,25 @@ public class ImpiegatoBean {
    */
   public void setNumeroDiTelefono(String numeroDiTelefono) {
     this.numeroDiTelefono = numeroDiTelefono;
+  }
+
+  /**
+   * Prelevamento della chiave esterna che si riferisce
+   * alla struttura.
+   *
+   * @return chiave esterna della struttura
+   */
+  public int getIdStruttura() {
+    return idStruttura;
+  }
+
+  /**
+   * Impostazione della chiave esterna della struttura.
+   *
+   * @param idStruttura nuova chiave esterna della struttura
+   */
+  public void setIdStruttura(int idStruttura) {
+    this.idStruttura = idStruttura;
   }
 
   /**

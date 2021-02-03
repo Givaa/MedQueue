@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"classes.controller"},{"l":"classes.controller.exception"},{"l":"classes.MedQueue"},{"l":"classes.model"},{"l":"classes.model.bean.entity"},{"l":"classes.model.dao"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"classes.controller"},{"l":"classes.controller.exception"},{"l":"classes.MedQueue"},{"l":"classes.model"},{"l":"classes.model.bean.entity"},{"l":"classes.model.dao"},{"l":"config"}];updateSearchResults();

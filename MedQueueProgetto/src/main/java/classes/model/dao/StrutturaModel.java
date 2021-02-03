@@ -29,7 +29,7 @@ public class StrutturaModel implements Model<StrutturaBean> {
 
     StrutturaBean tmp = new StrutturaBean();
 
-    String selectSql = "SELECT * FROM " + nomeTabella + "WHERE id = ?";
+    String selectSql = "SELECT * FROM " + nomeTabella + " WHERE id = ?";
 
     try {
       con = DriverManagerConnectionPool.getConnection();
@@ -87,7 +87,6 @@ public class StrutturaModel implements Model<StrutturaBean> {
       StrutturaBean tmp = new StrutturaBean();
 
       while (rs.next()) {
-
         tmp.setId(rs.getInt("id"));
         tmp.setNome(rs.getString("nome"));
         tmp.setIndirizzo(rs.getString("indirizzo"));

@@ -6,6 +6,9 @@ import classes.model.bean.entity.OperazioneBean;
 import classes.model.dao.OperazioneModel;
 import java.sql.SQLException;
 import java.util.Collection;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,17 +23,18 @@ public class OperazioneController {
   /**
    * Metodo che permette di utilizzare il prelevamento per id dell'OperazioneModel.
    *
-   * @param id Chiave primaria dell'operazione
+   * @param body corpo della richiesta preso in input
    * @return Operazione avente l'id passato
    * @throws SQLException per problemi di esecuzione della query
    * @throws ObjectNotFoundException per problemi di oggetto non trovato
    */
   @GetMapping("/operazione/{id}")
-  public OperazioneBean getOperazioneById(@RequestBody String id)
+  public OperazioneBean getOperazioneById(@RequestBody String body)
       throws SQLException, ObjectNotFoundException {
+    JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
+    String id = jsonObject.get("idOperazioneGet").getAsString();
 
-    int idNumerico = Integer.parseInt(id);
-    if (idNumerico > 0) {
+    if (! id.equals("0")) {
       OperazioneBean op = operazioneModel.doRetrieveByKey(id);
       if (op != null) {
         return op;
@@ -45,13 +49,15 @@ public class OperazioneController {
   /**
    * Metodo che permette di utilizzare il prelevamento di tutti gli oggetti dell'OperazioneModel.
    *
-   * @param order Ordine in cui si vuole visualizzare la collezione
+   * @param body corpo della richiesta preso in input
    * @return Collezione di Operazioni
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/operazioni")
-  public Collection<OperazioneBean> getAllOperazioni(@RequestBody String order) throws
+  public Collection<OperazioneBean> getAllOperazioni(@RequestBody String body) throws
           SQLException {
+    JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
+    String order = jsonObject.get("ordineOperazioni").getAsString();
     return operazioneModel.doRetrieveAll(order);
   }
 
@@ -59,27 +65,25 @@ public class OperazioneController {
    * Metodo che permette di utilizzare l'inserimento di una nuova operazione tramite
    * OperazioneModel.
    *
-   * @param o Operazione da inserire
+   * @param body corpo della richiesta preso in input
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/newOperazione")
-  public boolean newOperazione(@RequestBody OperazioneBean o) throws SQLException,
+  public boolean newOperazione(@RequestBody String body) throws SQLException,
           ErrorNewObjectException {
 
-    if (o != null) {
-      String tipoOp = o.getTipoOperazione();
-      String descrizione = o.getDescrizione();
+    JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
 
-      Boolean checkTipoOp = tipoOp.matches("[a-z A-Z]+$");
-      Boolean checkDesc = descrizione.matches("[a-z A-Z]+$");
-      if (checkDesc && checkTipoOp) {
-        operazioneModel.doSave(o);
-        return true;
-      } else {
-        return false;
-      }
+    String tipoOp = jsonObject.get("newOperazioneTipoOp").getAsString();
+    String descrizione = jsonObject.get("newOperazioneDesc").getAsString();
+
+    Boolean checkTipoOp = tipoOp.matches("[a-z A-Z]+$");
+    Boolean checkDesc = descrizione.matches("[a-z A-Z]+$");
+    if (checkDesc && checkTipoOp) {
+      operazioneModel.doSave(new OperazioneBean(tipoOp, descrizione));
+      return true;
     } else {
-      throw new ErrorNewObjectException(o);
+      throw new ErrorNewObjectException(new OperazioneBean());
     }
   }
 
@@ -87,31 +91,41 @@ public class OperazioneController {
    * Metodo che permette di utilizzare l'eliminazione di un operazione presente sul DB tramite
    * OperazioneModel.
    *
-   * @param o Operazione da eliminare
+   * @param body corpo della richiesta preso in input
    * @throws SQLException per problemi di esecuzione della query
    */
   @GetMapping("/deleteOperazione")
-  public void deleteOperazione(@RequestBody OperazioneBean o) throws SQLException {
-    operazioneModel.doDelete(o);
+  public void deleteOperazione(@RequestBody String body) throws SQLException {
+    JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
+    String id = jsonObject.get("idOperazioneRemove").getAsString();
+    operazioneModel.doDelete(operazioneModel.doRetrieveByKey(id));
   }
 
   /**
    * Metodo che permette di utilizzare l'aggiornamento di un operazione presente sul DB tramite
    * OperazioneModel.
    *
-   * @param o Operazione da aggiornare
+   * @param body corpo della richiesta preso in input
    * @throws SQLException per problemi di esecuzione della query
    * @return conferma/non conferma dell'aggiornamento dell'operazione
    */
   @GetMapping("/updateOperazione")
-  public boolean updateOperazione(@RequestBody OperazioneBean o) throws SQLException {
-    if (operazioneModel.doRetrieveByKey(String.valueOf(o.getId())) != null) {
-      String tipoOp = o.getTipoOperazione();
-      String descrizione = o.getDescrizione();
+  public boolean updateOperazione(@RequestBody String body) throws SQLException {
 
+    JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
+
+    String tipoOp = jsonObject.get("updateOperazioneTipoOp").getAsString();
+    String descrizione = jsonObject.get("updateOperazioneDesc").getAsString();
+    String id = jsonObject.get("updateOperazioneId").getAsString();
+
+    OperazioneBean o = operazioneModel.doRetrieveByKey(id);
+
+    if ( o != null) {
       Boolean checkTipoOp = tipoOp.matches("[a-z A-Z]+$");
       Boolean checkDesc = descrizione.matches("[a-z A-Z]+$");
       if (checkDesc && checkTipoOp) {
+        o.setTipoOperazione(tipoOp);
+        o.setDescrizione(descrizione);
         operazioneModel.doUpdate(o);
         return true;
       } else {

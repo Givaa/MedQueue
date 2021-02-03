@@ -13,7 +13,7 @@ public class UtenteBean {
   private String cognome;
   private Date dataDiNascita;
   private String email;
-  private int numeroDiTelefono;
+  private String numeroDiTelefono;
 
   /**
    * Costruttore dell'oggetto UtenteBean.
@@ -33,7 +33,7 @@ public class UtenteBean {
       String cognome,
       Date dataDiNascita,
       String email,
-      int numeroDiTelefono) {
+      String numeroDiTelefono) {
     this.codiceFiscale = codiceFiscale;
     this.password = password;
     this.nome = nome;
@@ -161,7 +161,7 @@ public class UtenteBean {
    *
    * @return numero di telefono dell'utente
    */
-  public int getNumeroDiTelefono() {
+  public String getNumeroDiTelefono() {
     return numeroDiTelefono;
   }
 
@@ -170,7 +170,7 @@ public class UtenteBean {
    *
    * @param numeroDiTelefono nuovo numero di telefono dell'utente
    */
-  public void setNumeroDiTelefono(int numeroDiTelefono) {
+  public void setNumeroDiTelefono(String numeroDiTelefono) {
     this.numeroDiTelefono = numeroDiTelefono;
   }
 

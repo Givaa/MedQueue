@@ -13,12 +13,10 @@ public class AmbulatoriBean {
    * Costruttore dell'oggetto AmbulatoriBean.
    *
    * @param nome Nome della struttura
-   * @param id Chiave primaria dell'ambulatorio
    * @param idStruttura Chiave primaria della struttura
    */
-  public AmbulatoriBean(String nome, int id, int idStruttura) {
+  public AmbulatoriBean(String nome, int idStruttura) {
     this.nome = nome;
-    this.id = id;
     this.idStruttura = idStruttura;
   }
 

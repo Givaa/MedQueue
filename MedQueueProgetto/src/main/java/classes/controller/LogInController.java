@@ -5,6 +5,8 @@ import classes.model.bean.entity.UtenteBean;
 import classes.model.dao.UtenteModel;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServlet;
 
 import com.google.gson.JsonObject;
@@ -24,8 +26,7 @@ public class LogInController extends HttpServlet {
   /**
    * Metodo che controlla le credenziali inviate.
    *
-   * @param username Codice Fiscale di chi si vuole loggare
-   * @param password Password dell'iscritto
+   * @param body corpo della richiesta preso in input
    * @return Permesso/Non permesso di accesso
    * @throws SQLException per problemi di esecuzione della query
    */
@@ -48,24 +49,27 @@ public class LogInController extends HttpServlet {
   /**
    * Metodo che permette di registrarsi al sito.
    *
-   * @param codFisc Chiave primaria dell'utente
-   * @param password Password dell'utente
-   * @param nome Nome dell'utente
-   * @param cognome cognome dell'utente
-   * @param dataDiNascita data di nascita dell'utente
-   * @param email email dell'utente
-   * @param numeroDiTelefono numero di telefono dell'utente
+   * @param body corpo della richiesta preso in input
    * @return conferma o meno della registrazione
    * @throws SQLException per problemi di esecuzione della query
+   * @throws ParseException per problemi di conversione di data
    */
   @GetMapping("/signup")
-  public UtenteBean signup(@RequestBody String codFisc, @RequestBody String password,
-                        @RequestBody String nome, @RequestBody String cognome,
-                        @RequestBody Date dataDiNascita, @RequestBody String email,
-                        @RequestBody int numeroDiTelefono) throws SQLException {
+  public UtenteBean signup(@RequestBody String body) throws SQLException,
+          ParseException {
+
+    JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
+
+    String nome = jsonObject.get("nome").getAsString();
+    String cognome = jsonObject.get("cognome").getAsString();
+    String codFisc = jsonObject.get("codFisc").getAsString();
+    String password = jsonObject.get("password").getAsString();
+    String phoneNumber = jsonObject.get("numeroTelefono").getAsString();
+    String email = jsonObject.get("email").getAsString();
+    String dataNascita = jsonObject.get("dataDiNascita").getAsString();
+    Date dataDiNascita = (Date) new SimpleDateFormat("yyyy/mm/gg").parse(dataNascita);
 
     UtenteBean a = new UtenteBean();
-    String phoneNumber = String.valueOf(numeroDiTelefono);
     Boolean checkMail;
     Boolean checkName;
     Boolean checkSurname;
@@ -85,7 +89,7 @@ public class LogInController extends HttpServlet {
     if (checkName && checkSurname && checkPassword
             && checkPhoneNumber && checkCodFisc && checkMail) {
       a = new UtenteBean(codFisc, password, nome, cognome,
-              dataDiNascita, email, numeroDiTelefono);
+              dataDiNascita, email, Integer.valueOf(phoneNumber));
       um.doSave(a);
 
       return a;
