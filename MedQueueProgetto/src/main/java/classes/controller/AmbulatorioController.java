@@ -12,7 +12,9 @@ import java.util.Collection;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,7 +34,7 @@ public class AmbulatorioController {
    * @throws SQLException per problemi di esecuzione della query
    * @throws ObjectNotFoundException problemi di oggetto non trovato
    */
-  @GetMapping("/ambulatorio/{id}")
+  @PostMapping(value="/ambulatorio/{id}", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public AmbulatoriBean getById(@RequestBody String body) throws SQLException,
           ObjectNotFoundException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
@@ -58,7 +60,7 @@ public class AmbulatorioController {
    * @return Collezione di Ambulatori
    * @throws SQLException per problemi di esecuzione della query
    */
-  @GetMapping("/ambulatori")
+  @PostMapping(value="/ambulatori", produces= MediaType.APPLICATION_JSON_VALUE)
   public Collection<AmbulatoriBean> getAllAmbulatori(@RequestBody String body)
           throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
@@ -75,7 +77,7 @@ public class AmbulatorioController {
    * @throws ErrorNewObjectException per problemi nell'input
    * @return conferma/non conferma del salvataggio dell'ambulatorio
    */
-  @GetMapping("/newAmbulatorio")
+  @PostMapping(value="/newAmbulatorio", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public boolean newAmbulatorio(@RequestBody String body) throws SQLException,
           ErrorNewObjectException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
@@ -103,7 +105,7 @@ public class AmbulatorioController {
    * @param body corpo della richiesta preso in input
    * @throws SQLException per problemi di esecuzione della query
    */
-  @GetMapping("/removeAmbulatorio")
+  @PostMapping(value="/deleteAmbulatorio", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public void deleteAmbulatorio(@RequestBody String body) throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("idAmbulatorioRemove").getAsString();
@@ -118,7 +120,7 @@ public class AmbulatorioController {
    * @throws SQLException per problemi di esecuzione della query
    * @return conferma/non conferma dell'aggiornamento dell'ambulatorio
    */
-  @GetMapping("/updateAmbulatorio")
+  @PostMapping(value="/updateAmbulatorio", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public boolean updateAmbulatorio(@RequestBody String body) throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("idAmbulatorioUpdate").getAsString();

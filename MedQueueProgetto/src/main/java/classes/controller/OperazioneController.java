@@ -9,7 +9,8 @@ import java.util.Collection;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,7 +29,7 @@ public class OperazioneController {
    * @throws SQLException per problemi di esecuzione della query
    * @throws ObjectNotFoundException per problemi di oggetto non trovato
    */
-  @GetMapping("/operazione/{id}")
+  @PostMapping(value="/operazione/{id}", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public OperazioneBean getOperazioneById(@RequestBody String body)
       throws SQLException, ObjectNotFoundException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
@@ -53,7 +54,7 @@ public class OperazioneController {
    * @return Collezione di Operazioni
    * @throws SQLException per problemi di esecuzione della query
    */
-  @GetMapping("/operazioni")
+  @PostMapping(value="/operazioni", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public Collection<OperazioneBean> getAllOperazioni(@RequestBody String body) throws
           SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
@@ -68,7 +69,7 @@ public class OperazioneController {
    * @param body corpo della richiesta preso in input
    * @throws SQLException per problemi di esecuzione della query
    */
-  @GetMapping("/newOperazione")
+  @PostMapping(value="/newOperazione", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public boolean newOperazione(@RequestBody String body) throws SQLException,
           ErrorNewObjectException {
 
@@ -94,7 +95,7 @@ public class OperazioneController {
    * @param body corpo della richiesta preso in input
    * @throws SQLException per problemi di esecuzione della query
    */
-  @GetMapping("/deleteOperazione")
+  @PostMapping(value="/deleteOperazione", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public void deleteOperazione(@RequestBody String body) throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("idOperazioneRemove").getAsString();
@@ -109,7 +110,7 @@ public class OperazioneController {
    * @throws SQLException per problemi di esecuzione della query
    * @return conferma/non conferma dell'aggiornamento dell'operazione
    */
-  @GetMapping("/updateOperazione")
+  @PostMapping(value="/updateOperazione", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public boolean updateOperazione(@RequestBody String body) throws SQLException {
 
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
