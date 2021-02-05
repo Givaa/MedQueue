@@ -1,10 +1,14 @@
 package eccezioni;
 
-public class InvalidKeyException extends Exception{
+/** Classe che rappresenta l'eccezione chiave non valida. */
+public class InvalidKeyException extends Exception {
 
-    public InvalidKeyException(String str){
-        super(str);
-    }
-
-
+  /**
+   * Eccezione per la chiave non valida.
+   *
+   * @param str stringa da mostrare nell'eccezione
+   */
+  public InvalidKeyException(String str) {
+    super(str);
+  }
 }

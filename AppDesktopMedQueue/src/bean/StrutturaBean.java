@@ -100,11 +100,18 @@ public class StrutturaBean {
 
   @Override
   public String toString() {
-    return "StrutturaBean{" +
-            "id=" + id +
-            ", nome='" + nome + '\'' +
-            ", indirizzo='" + indirizzo + '\'' +
-            ", numeroDiTelefono='" + numeroDiTelefono + '\'' +
-            '}';
+    return "StrutturaBean{"
+        + "id="
+        + id
+        + ", nome='"
+        + nome
+        + '\''
+        + ", indirizzo='"
+        + indirizzo
+        + '\''
+        + ", numeroDiTelefono='"
+        + numeroDiTelefono
+        + '\''
+        + '}';
   }
 }

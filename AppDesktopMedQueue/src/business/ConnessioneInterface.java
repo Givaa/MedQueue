@@ -7,18 +7,17 @@ import java.sql.Connection;
  */
 public interface ConnessioneInterface {
 
-    /**
-     * Metodo che permette la connessione al database.
-     *
-     * @return connessione
-     */
-    public Connection connect();
+  /**
+   * Metodo che permette la connessione al database.
+   *
+   * @return connessione
+   */
+  public Connection connect();
 
-    /**
-     * Metodo che permette di disconnettersi dal database.
-     *
-     * @param connect connessione al database
-     */
-    public void disconnect(Connection connect);
-
+  /**
+   * Metodo che permette di disconnettersi dal database.
+   *
+   * @param connect connessione al database
+   */
+  public void disconnect(Connection connect);
 }

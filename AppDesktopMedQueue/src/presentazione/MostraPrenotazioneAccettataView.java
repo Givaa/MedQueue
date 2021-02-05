@@ -16,24 +16,25 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /** Classe che mostra un frame con i dettagli della prenotazione chiamata dall'impiegato. */
-public class MostraPrenotazioneAccettataView implements ShowPrenotazioneInterface{
+public class MostraPrenotazioneAccettataView implements ShowPrenotazioneInterface {
   private final ImageIcon infermiera = new ImageIcon("src/image/frameIcon.png");
   private JFrame frame = new JFrame();
   private JLabel idPrenotazione = new JLabel();
   private JLabel codicefiscale = new JLabel();
   private JPanel panneloCentrale = new JPanel();
 
-
-  public MostraPrenotazioneAccettataView() {
-
-  }
+  /**
+   * Genera un pannello che mostra l'id della prenotazione accettate dall'impiegato e il codice *
+   * fiscale dell'utente a cui appartiene la prenotazione.
+   */
+  public MostraPrenotazioneAccettataView() {}
 
   /**
-   * Gernera un pannello che mostra l'id della prenotazione accettate dall'impiegato
-   * e il codice fiscale dell'utene a cui appartiene la prenotazione.
+   * Genera un pannello che mostra l'id della prenotazione accettate dall'impiegato e il codice
+   * fiscale dell'utente a cui appartiene la prenotazione.
    *
    * @param p prenotazione della collezione Prenotazione accettata dall'impiegato
-   * @return frame che contiene l'id e il codicefiscale
+   * @return frame che contiene l'id e il codice fiscale
    */
   @Override
   public JFrame showPrenotation(PrenotazioneBean p) {
@@ -52,9 +53,9 @@ public class MostraPrenotazioneAccettataView implements ShowPrenotazioneInterfac
     idPrenotazione.setAlignmentX(Component.CENTER_ALIGNMENT);
     codicefiscale.setAlignmentX(Component.CENTER_ALIGNMENT);
     idPrenotazione.setFont(
-            new Font(idPrenotazione.getFont().getName(), idPrenotazione.getFont().getStyle(), 30));
+        new Font(idPrenotazione.getFont().getName(), idPrenotazione.getFont().getStyle(), 30));
     codicefiscale.setFont(
-            new Font(codicefiscale.getFont().getName(), codicefiscale.getFont().getStyle(), 30));
+        new Font(codicefiscale.getFont().getName(), codicefiscale.getFont().getStyle(), 30));
 
     panneloCentrale.setLayout(new BoxLayout(panneloCentrale, BoxLayout.Y_AXIS));
     panneloCentrale.add(Box.createRigidArea(new Dimension(0, 150)));
@@ -66,14 +67,14 @@ public class MostraPrenotazioneAccettataView implements ShowPrenotazioneInterfac
 
     frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     frame.addWindowListener(
-            new WindowAdapter() {
+        new WindowAdapter() {
 
-              // chiudere il frame
-              @Override
-              public void windowClosing(WindowEvent e) {
-                frame.dispose();
-              }
-            });
+          // chiudere il frame
+          @Override
+          public void windowClosing(WindowEvent e) {
+            frame.dispose();
+          }
+        });
     frame.setVisible(true);
     return frame;
   }

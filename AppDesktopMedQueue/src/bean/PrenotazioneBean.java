@@ -163,8 +163,8 @@ public class PrenotazioneBean {
   }
 
   /**
-   * Metodo che permette di settare l'id della struttura per la quale l'utente
-   * vuole prenotarsi ad un oggetto PrenotazioneBean.
+   * Metodo che permette di settare l'id della struttura per la quale l'utente vuole prenotarsi ad
+   * un oggetto PrenotazioneBean.
    *
    * @param idStruttura id della struttura per cui l'utente si vuole prenotare
    */
@@ -174,14 +174,22 @@ public class PrenotazioneBean {
 
   @Override
   public String toString() {
-    return "PrenotazioneBean{" +
-            "id=" + id +
-            ", data=" + data +
-            ", time=" + time +
-            ", convalida=" + convalida +
-            ", codiceFiscale='" + codiceFiscale + '\'' +
-            ", idOperazione=" + idOperazione +
-            ", idStruttura=" + idStruttura +
-            '}';
+    return "PrenotazioneBean{"
+        + "id="
+        + id
+        + ", data="
+        + data
+        + ", time="
+        + time
+        + ", convalida="
+        + convalida
+        + ", codiceFiscale='"
+        + codiceFiscale
+        + '\''
+        + ", idOperazione="
+        + idOperazione
+        + ", idStruttura="
+        + idStruttura
+        + '}';
   }
 }

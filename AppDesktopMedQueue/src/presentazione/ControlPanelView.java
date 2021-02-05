@@ -1,11 +1,13 @@
 package presentazione;
 
-import business.Connessione;
-import business.ConnessioneInterface;
-import business.Gestione;
 import bean.ImpiegatoBean;
 import bean.OperazioneBean;
 import bean.PrenotazioneBean;
+import business.Connessione;
+import business.ConnessioneInterface;
+import business.Gestione;
+import business.GestioneInterface;
+import eccezioni.InvalidManagementException;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -16,7 +18,6 @@ import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -32,21 +33,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import business.GestioneInterface;
-import eccezioni.InvalidManagementException;
-import persistence.DataAccess;
-import persistence.DriverManagerConnectionPool;
-
 /**
  * Classe che genera un frame che permette di selezionare la coda di prenotazioni da gestire,
  * accettare e servire una prenotazione.
  */
 public class ControlPanelView implements ControlPanelInterface {
 
-  private GestioneInterface gestione=new Gestione();
-  private ConnessioneInterface connessione=new Connessione();
-  private LoginInterface loginView;
-  private ShowPrenotazioneInterface prentazioneAccettata;
   private final JFrame frame = new JFrame();
   private final JPanel pannelloNord = new JPanel();
   private final JPanel pannelloCentro = new JPanel();
@@ -54,6 +46,10 @@ public class ControlPanelView implements ControlPanelInterface {
   private final JLabel impiegato = new JLabel();
   private final JButton logout = new JButton("Logout");
   private final JLabel jl = new JLabel("Scegli l'operazione da gestire: ");
+  private GestioneInterface gestione = new Gestione();
+  private ConnessioneInterface connessione = new Connessione();
+  private LoginInterface loginView;
+  private ShowPrenotazioneInterface prentazioneAccettata;
   private JFrame showPrenotazione;
   private ArrayList<OperazioneBean> listoperazioni;
   private int idStruttura;
@@ -63,13 +59,15 @@ public class ControlPanelView implements ControlPanelInterface {
       false; // Variabile booleana utilizzata per controllare se l'impiegato sta servendo una
   // prenotazione
 
-
-  public ControlPanelView() { }
+  /**
+   * Metodo che genera il pannello di controllo che permettera all'impiegato di visualizzare le code
+   * che potra gestire, il numero di prenotazioni per coda da servire e accettare una prenotazione.
+   */
+  public ControlPanelView() {}
 
   /**
-   * Metodo che genera il pannello di controllo che permettera all'impiegato di visualizzare
-   * le code che potra gestire, il numero di prenotazioni per coda da servire e accettare una
-   * prenotazione.
+   * Metodo che genera il pannello di controllo che permettera all'impiegato di visualizzare le code
+   * che potra gestire, il numero di prenotazioni per coda da servire e accettare una prenotazione.
    *
    * @param imp impiegato che si è loggato
    * @param con connessione al database
@@ -77,10 +75,10 @@ public class ControlPanelView implements ControlPanelInterface {
   @Override
   public void showControlPanel(ImpiegatoBean imp, Connection con) {
     idStruttura =
-            imp.getIdStruttura(); // Salvo la struttura in cui lavora l'impiegato per poter ottenere le
+        imp.getIdStruttura(); // Salvo la struttura in cui lavora l'impiegato per poter ottenere le
     // prenotazioni sono di quella struttura
     listoperazioni =
-            gestione.getListaOperazioni(); // Salvo le operazioni che potra gestire l'impiegato
+        gestione.getListaOperazioni(); // Salvo le operazioni che potra gestire l'impiegato
 
     // Settaggi frame
     frame.setTitle("MedQueue");
@@ -94,54 +92,54 @@ public class ControlPanelView implements ControlPanelInterface {
 
     // --------Pannello Nord (logo,nome impiegato, logout)--------
     pannelloNord.setLayout(
-            new BoxLayout(
-                    pannelloNord, BoxLayout.X_AXIS)); // BoxLayout che posiziona gli elementi sull'asse X
+        new BoxLayout(
+            pannelloNord, BoxLayout.X_AXIS)); // BoxLayout che posiziona gli elementi sull'asse X
     pannelloNord.setOpaque(false); // Nascondo lo sfondo del JPanel
     // Operazioni per ridimensionare l'immagine
     Image image = immagine.getImage(); // prendo l'immagine dall'ImagIcond
     Image newimg =
-            image.getScaledInstance(
-                    70, 50, java.awt.Image.SCALE_SMOOTH); // Scalo l'immagine in base a width e height
+        image.getScaledInstance(
+            70, 50, java.awt.Image.SCALE_SMOOTH); // Scalo l'immagine in base a width e height
     immagine = new ImageIcon(newimg); // ricreo l'ImageIcon
 
     pannelloNord.add(
-            Box.createRigidArea(
-                    new Dimension(
-                            30, 0))); // Spazio vuoto che viene utilizzato per distanziare il logo dal bordo del
+        Box.createRigidArea(
+            new Dimension(
+                30, 0))); // Spazio vuoto che viene utilizzato per distanziare il logo dal bordo del
     // frame
     pannelloNord.add(new JLabel(immagine)); // Inserimento del logo
 
     // Creo il testo che conterra il nome dell'impiegato che ha eseguito l'accesso all'app
     impiegato.setText(
-            imp.getNome().substring(0, 1).toUpperCase()
-                    + imp.getNome().substring(1).toLowerCase()
-                    + " "
-                    + imp.getCognome().substring(0, 1).toUpperCase()
-                    + imp.getCognome().substring(1).toLowerCase());
+        imp.getNome().substring(0, 1).toUpperCase()
+            + imp.getNome().substring(1).toLowerCase()
+            + " "
+            + imp.getCognome().substring(0, 1).toUpperCase()
+            + imp.getCognome().substring(1).toLowerCase());
     impiegato.setFont(new Font(impiegato.getFont().getName(), impiegato.getFont().getStyle(), 30));
     pannelloNord.add(
-            Box.createRigidArea(
-                    new Dimension(
-                            280,
-                            0))); // Spazio vuoto che viene utilizzato per distanziare il nome dell'impiegato
+        Box.createRigidArea(
+            new Dimension(
+                280,
+                0))); // Spazio vuoto che viene utilizzato per distanziare il nome dell'impiegato
     // dal logo
     pannelloNord.add(impiegato); // Aggiungo il nome dell'impigato al pannello
     pannelloNord.add(
-            Box.createRigidArea(
-                    new Dimension(
-                            250,
-                            0))); // Spazio vuoto che viene utilizzato per distanziare il pulsante di logout dal
+        Box.createRigidArea(
+            new Dimension(
+                250,
+                0))); // Spazio vuoto che viene utilizzato per distanziare il pulsante di logout dal
     // nome dell'impiegato
     pannelloNord.add(logout); // Aggiungo il pulsante di logout
     // ActionListener sul pulsante di logout
     logout.addActionListener(
-            e -> {
-              // eseguo la disconnessione dal database
-              connessione.disconnect(con);
-              loginView=new LoginView();
-              loginView.showLoginView();
-              frame.dispose(); // Chiudo il frame
-            });
+        e -> {
+          // eseguo la disconnessione dal database
+          connessione.disconnect(con);
+          loginView = new LoginView();
+          loginView.showLoginView();
+          frame.dispose(); // Chiudo il frame
+        });
     // --------------------Fine Pannello Nord---------------------
 
     /*--------------------Pannnello Centrale----------------------
@@ -151,15 +149,15 @@ public class ControlPanelView implements ControlPanelInterface {
        JPanel che mostra le informazioni sulla prenotazione accettata
      */
     pannelloCentro.setLayout(
-            new BoxLayout(
-                    pannelloCentro, BoxLayout.X_AXIS)); // BoxLayout che posiziona gli elementi sull'asse X
+        new BoxLayout(
+            pannelloCentro, BoxLayout.X_AXIS)); // BoxLayout che posiziona gli elementi sull'asse X
     pannelloCentro.add(
-            pannelloCoda()); // Aggiungo al pannello centrale il primo JPanel che conterra i button,
+        pannelloCoda()); // Aggiungo al pannello centrale il primo JPanel che conterra i button,
     // viene generato nel metodo pannelloCoda()
     pannelloCentro.add(
-            Box.createRigidArea(
-                    new Dimension(
-                            10, 0))); // Spazio vuoto che viene utilizzato per distanziare i 2 JPanel del
+        Box.createRigidArea(
+            new Dimension(
+                10, 0))); // Spazio vuoto che viene utilizzato per distanziare i 2 JPanel del
     // pannelloCentro
     pannelloCentro.setOpaque(false); // Nascondo lo sfondo del JPanel
     // ------------------Fine Pannello Centrale--------------------
@@ -168,12 +166,11 @@ public class ControlPanelView implements ControlPanelInterface {
     frame.add(pannelloNord, BorderLayout.NORTH);
     frame.add(pannelloCentro, BorderLayout.CENTER);
     frame.setVisible(true);
-
   }
 
   /**
-   * Metodo che genera un pannello che ci permette di scegliere la coda da gestire
-   * e mostra per ogni coda il numero di prenotazioni da accettare.
+   * Metodo che genera un pannello che ci permette di scegliere la coda da gestire e mostra per ogni
+   * coda il numero di prenotazioni da accettare.
    *
    * @return pannello con le code da gestire
    */
@@ -209,17 +206,16 @@ public class ControlPanelView implements ControlPanelInterface {
       JButton operazione = new JButton();
       // Setto il testo del button con il formato (tipo operazioni: prenotazioni in attesta di
       // accettazioni)
-      try{
-        if(listoperazioni.get(i).getId()<=0 || idStruttura<=0)
+      try {
+        if (listoperazioni.get(i).getId() <= 0 || idStruttura <= 0) {
           throw new InvalidManagementException("Id non validi");
+        }
         operazione.setText(
-                listoperazioni.get(i).getTipoOperazione()
-                        + ": "
-                        + gestione.getNumPrenotazioni(listoperazioni.get(i).getId(), idStruttura));
-      }catch (InvalidManagementException ex){
-        operazione.setText(
-                listoperazioni.get(i).getTipoOperazione()
-                        + ": 0");
+            listoperazioni.get(i).getTipoOperazione()
+                + ": "
+                + gestione.getNumPrenotazioni(listoperazioni.get(i).getId(), idStruttura));
+      } catch (InvalidManagementException ex) {
+        operazione.setText(listoperazioni.get(i).getTipoOperazione() + ": 0");
         System.out.println(ex.toString());
       }
       // Modifico le dimensioni del button
@@ -347,27 +343,30 @@ public class ControlPanelView implements ControlPanelInterface {
     accetta.addActionListener(
         e -> { // ActionListener sul bottone per accettare una prenotazione
           try {
-            if(idOperazione<=0 || idStruttura<=0)
+            if (idOperazione <= 0 || idStruttura <= 0) {
               throw new InvalidManagementException("Id non validi");
+            }
             PrenotazioneBean p =
-                    gestione.accettaPrenotazione(
-                            idOperazione,
-                            idStruttura); // Invoco il metodo per l'accettazione di una prenotazione
+                gestione.accettaPrenotazione(
+                    idOperazione,
+                    idStruttura); // Invoco il metodo per l'accettazione di una prenotazione
             if (p != null) { // Se il metodo mi restituisce una prenotazione
               servizioPrenotazione =
-                      true; // Assegno alla true alla variabile che indica il servizio di una prenotazione
+                  true; // Assegno alla true alla variabile che indica il servizio di una
+              // prenotazione
               if (pannelloCentro.getComponentCount() > 2) {
                 pannelloCentro.remove(2);
               } // Rimuovo il pannello per l'accettazione
               pannelloCentro.add(
-                      setPrenotazione(
-                              p)); // Aggiungo il panel contenente le informazioni sulla prenotazione generato
+                  setPrenotazione(
+                      p)); // Aggiungo il panel contenente le informazioni sulla prenotazione
+              // generato
               // tramite il metodo setPrenotazione
               logout.setEnabled(false); // blocco il bottone per il logout
               aggiornoNumPrenotazioni((JPanel) pannelloCentro.getComponent(0), null);
               frame.validate(); // Aggiorno il frame
             }
-          }catch (InvalidManagementException ex){
+          } catch (InvalidManagementException ex) {
             System.out.println(ex.toString());
           }
         });
@@ -394,7 +393,6 @@ public class ControlPanelView implements ControlPanelInterface {
    */
   // Metodo che conterra informazioni sulla prenotazione accettata
   private JPanel setPrenotazione(PrenotazioneBean p) {
-
 
     // piu il button per finire il servizio della prenotazione
     JPanel pannello = new JPanel(); // Pannello che conterra informazioni sulla prenotazioe accetta
@@ -448,8 +446,8 @@ public class ControlPanelView implements ControlPanelInterface {
     dettagliPrenotazione.add(pannello, BorderLayout.CENTER);
     dettagliPrenotazione.add(fine, BorderLayout.SOUTH);
 
-    prentazioneAccettata=new MostraPrenotazioneAccettataView();
-    showPrenotazione=prentazioneAccettata.showPrenotation(p);
+    prentazioneAccettata = new MostraPrenotazioneAccettataView();
+    showPrenotazione = prentazioneAccettata.showPrenotation(p);
     fine.addActionListener(
         e -> { // ActionListener sul bottone per concludere il servizio
           servizioPrenotazione =
@@ -525,11 +523,12 @@ public class ControlPanelView implements ControlPanelInterface {
           JButton) { // Se la componente e un JButton aggiorno il testo (TipoOperazione: numero
         // prenotazioni)
         try {
-          if(listoperazioni.get(j).getId()<=0 || idStruttura<=0)
+          if (listoperazioni.get(j).getId() <= 0 || idStruttura <= 0) {
             throw new InvalidManagementException("Id non validi");
+          }
           numeroPrenotazioni.add(
-                  gestione.getNumPrenotazioni(listoperazioni.get(j).getId(), idStruttura));
-        }catch (InvalidManagementException ex){
+              gestione.getNumPrenotazioni(listoperazioni.get(j).getId(), idStruttura));
+        } catch (InvalidManagementException ex) {
           numeroPrenotazioni.add(0);
           System.out.println(ex.toString());
         }
@@ -549,7 +548,6 @@ public class ControlPanelView implements ControlPanelInterface {
       button.setEnabled(j != 0);
     }
   }
-
 
   /** Metodo che assegna e processa la risposta scelta dall'utente ad una dialogbox. */
   private void handleClosing() {
@@ -588,6 +586,4 @@ public class ControlPanelView implements ControlPanelInterface {
         buttonLabels,
         defaultOption);
   }
-
-
 }
