@@ -9,11 +9,9 @@ import classes.model.dao.AmbulatoriModel;
 import classes.model.dao.StrutturaModel;
 import java.sql.SQLException;
 import java.util.Collection;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,7 +39,7 @@ public class AmbulatorioController {
     int id = jsonObject.get("id").getAsInt();
 
     if (id > 0) {
-      AmbulatoriBean a = ambulatorioModel.doRetrieveByKey( String.valueOf(id) );
+      AmbulatoriBean a = ambulatorioModel.doRetrieveByKey( id );
 
       if (a != null) {
         return a;
@@ -84,7 +82,7 @@ public class AmbulatorioController {
     String idStruttura = jsonObject.get("newAmbulatorioIdS").getAsString();
     String nome = jsonObject.get("newAmbulatorioNome").getAsString();
 
-    StrutturaBean strutturaBean = strutturaModel.doRetrieveByKey(idStruttura);
+    StrutturaBean strutturaBean = strutturaModel.doRetrieveByKey(Integer.valueOf(idStruttura));
 
     boolean checkNome = nome.matches("^[a-z ,.'-]+$");
     boolean checkIdStruttura = strutturaBean != null;
@@ -109,7 +107,7 @@ public class AmbulatorioController {
   public void deleteAmbulatorio(@RequestBody String body) throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("idAmbulatorioRemove").getAsString();
-    ambulatorioModel.doDelete(ambulatorioModel.doRetrieveByKey(id));
+    ambulatorioModel.doDelete(ambulatorioModel.doRetrieveByKey(Integer.valueOf(id)));
   }
 
   /**
@@ -126,12 +124,12 @@ public class AmbulatorioController {
     String id = jsonObject.get("idAmbulatorioUpdate").getAsString();
     String nome = jsonObject.get("AmbulatoriUpdateName").getAsString();
     String idStruttura = jsonObject.get("AmbulatoriUpdateIdStruttura").getAsString();
-    AmbulatoriBean a = ambulatorioModel.doRetrieveByKey(id);
+    AmbulatoriBean a = ambulatorioModel.doRetrieveByKey(Integer.valueOf(id));
 
 
     if ( a != null) {
       StrutturaBean strutturaBean;
-      strutturaBean = strutturaModel.doRetrieveByKey(String.valueOf(idStruttura));
+      strutturaBean = strutturaModel.doRetrieveByKey(Integer.valueOf(idStruttura));
 
       Boolean checkNome = nome.matches("^[a-z A-Z ,.'-]+$");
       Boolean checkIdStruttura = strutturaBean != null;

@@ -33,7 +33,7 @@ public class StrutturaController {
       throws SQLException, ObjectNotFoundException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("idStrutturaGet").getAsString();
-    StrutturaBean s = strutturaModel.doRetrieveByKey(id);
+    StrutturaBean s = strutturaModel.doRetrieveByKey(Integer.valueOf(id));
     if (s != null) {
       return s;
     } else {
@@ -94,7 +94,7 @@ public class StrutturaController {
   public void deleteStruttura(@RequestBody String body) throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("deleteStrutturaId").getAsString();
-    strutturaModel.doDelete(strutturaModel.doRetrieveByKey(id));
+    strutturaModel.doDelete(strutturaModel.doRetrieveByKey(Integer.valueOf(id)));
   }
 
   /**
@@ -109,7 +109,7 @@ public class StrutturaController {
   public boolean updateStruttura(@RequestBody String body) throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("updateStrutturaId").getAsString();
-    StrutturaBean s = strutturaModel.doRetrieveByKey(id);
+    StrutturaBean s = strutturaModel.doRetrieveByKey(Integer.valueOf(id));
     String nome = jsonObject.get("updateStrutturaNome").getAsString();
     String indirizzo = jsonObject.get("updateStrutturaInd").getAsString();
     String numeroCell = jsonObject.get("updateStrutturaNumeroCell").getAsString();

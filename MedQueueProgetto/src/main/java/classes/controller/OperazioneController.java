@@ -36,7 +36,7 @@ public class OperazioneController {
     String id = jsonObject.get("idOperazioneGet").getAsString();
 
     if (! id.equals("0")) {
-      OperazioneBean op = operazioneModel.doRetrieveByKey(id);
+      OperazioneBean op = operazioneModel.doRetrieveByKey(Integer.valueOf(id));
       if (op != null) {
         return op;
       } else {
@@ -99,7 +99,7 @@ public class OperazioneController {
   public void deleteOperazione(@RequestBody String body) throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("idOperazioneRemove").getAsString();
-    operazioneModel.doDelete(operazioneModel.doRetrieveByKey(id));
+    operazioneModel.doDelete(operazioneModel.doRetrieveByKey(Integer.valueOf(id)));
   }
 
   /**
@@ -119,7 +119,7 @@ public class OperazioneController {
     String descrizione = jsonObject.get("updateOperazioneDesc").getAsString();
     String id = jsonObject.get("updateOperazioneId").getAsString();
 
-    OperazioneBean o = operazioneModel.doRetrieveByKey(id);
+    OperazioneBean o = operazioneModel.doRetrieveByKey(Integer.valueOf(id));
 
     if ( o != null) {
       Boolean checkTipoOp = tipoOp.matches("[a-z A-Z]+$");

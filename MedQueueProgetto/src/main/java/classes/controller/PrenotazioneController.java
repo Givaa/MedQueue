@@ -48,7 +48,7 @@ public class PrenotazioneController {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("idPrenotazioneGet").getAsString();
 
-    PrenotazioneBean p = prenotazioneModel.doRetrieveByKey(id);
+    PrenotazioneBean p = prenotazioneModel.doRetrieveByKey(Integer.valueOf(id));
     if (p != null) {
       return p;
     } else {
@@ -93,8 +93,8 @@ public class PrenotazioneController {
 
     StrutturaBean s;
     OperazioneBean o;
-    o = operazioneModel.doRetrieveByKey(idOp);
-    s = strutturaModel.doRetrieveByKey(String.valueOf(idS));
+    o = operazioneModel.doRetrieveByKey(Integer.valueOf(idOp));
+    s = strutturaModel.doRetrieveByKey(Integer.valueOf(idS));
 
     boolean checkCodFisc = cf.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
     boolean checkOra = ora.matches("^([0-1][0-9]|[2][0-3]):([0-5][0-9])$");
@@ -121,7 +121,7 @@ public class PrenotazioneController {
   public void deletePrenotazione(@RequestBody String body) throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("deletePrenotazioniId").getAsString();
-    prenotazioneModel.doDelete(prenotazioneModel.doRetrieveByKey(id));
+    prenotazioneModel.doDelete(prenotazioneModel.doRetrieveByKey(Integer.valueOf(id)));
   }
 
   /**
@@ -145,14 +145,14 @@ public class PrenotazioneController {
     String data = jsonObject.get("updatePrenotazioneData").getAsString();
     Date dataPrenotazione = (Date) new SimpleDateFormat("yyyy/mm/gg").parse(data);
     Boolean cv = jsonObject.get("updatePrenotazioneConvalida").getAsBoolean();
-    PrenotazioneBean p = prenotazioneModel.doRetrieveByKey(id);
+    PrenotazioneBean p = prenotazioneModel.doRetrieveByKey(Integer.valueOf(id));
 
 
     if (p != null) {
       StrutturaBean b;
       OperazioneBean o;
-      o = operazioneModel.doRetrieveByKey(String.valueOf(p.getIdOperazione()));
-      b = strutturaModel.doRetrieveByKey(String.valueOf(p.getIdStruttura()));
+      o = operazioneModel.doRetrieveByKey(p.getIdOperazione());
+      b = strutturaModel.doRetrieveByKey(p.getIdStruttura());
 
       boolean checkCodFisc = cf.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
       boolean checkOra = ora.matches("^([0-1][0-9]|[2][0-3]):([0-5][0-9])$");

@@ -2,6 +2,8 @@ package classes.model.dao;
 
 import classes.model.DriverManagerConnectionPool;
 import classes.model.bean.entity.AmbulatoriBean;
+import classes.model.interfaces.AmbulatorioDaoInterface;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +14,7 @@ import java.util.LinkedList;
 /**
  * Model per collegare la tabella "Ambulatori" al backend.
  */
-public class AmbulatoriModel implements Model<AmbulatoriBean> {
+public class AmbulatoriModel implements AmbulatorioDaoInterface {
 
   private static final String nomeTabella = "ambulatorio";
 
@@ -24,18 +26,18 @@ public class AmbulatoriModel implements Model<AmbulatoriBean> {
    * @throws SQLException per problemi di esecuzione della query
    */
   @Override
-  public AmbulatoriBean doRetrieveByKey(String id) throws SQLException {
+  public AmbulatoriBean doRetrieveByKey(int id) throws SQLException {
     Connection con = null;
     PreparedStatement ps = null;
 
     AmbulatoriBean tmp = new AmbulatoriBean();
 
-    String selectSql = "SELECT * FROM " + nomeTabella + "WHERE id = ?";
+    String selectSql = "SELECT * FROM " + nomeTabella + " WHERE id = ?";
 
     try {
       con = DriverManagerConnectionPool.getConnection();
       ps = con.prepareStatement(selectSql);
-      ps.setInt(1, Integer.parseInt(id));
+      ps.setInt(1, id);
 
       ResultSet rs = ps.executeQuery();
 

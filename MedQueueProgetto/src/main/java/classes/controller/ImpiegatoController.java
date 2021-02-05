@@ -110,7 +110,7 @@ public class ImpiegatoController {
     checkPhoneNumber = phoneNumber.matches("^[\\+][0-9]{10,12}");
     checkCodFisc = codFisc.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
     checkMail = email.matches("/\\S+@\\S+\\.\\S+/");
-    checkIdStruttura = strutturaModel.doRetrieveByKey(idStruttura) != null;
+    checkIdStruttura = strutturaModel.doRetrieveByKey(Integer.valueOf(idStruttura)) != null;
 
     if (checkName && checkSurname && checkPassword && checkPhoneNumber
             && checkCodFisc && checkMail && checkIdStruttura) {
@@ -178,7 +178,7 @@ public class ImpiegatoController {
       checkPhoneNumber = phoneNumber.matches("^[\\+][0-9]{10,12}");
       checkCodFisc = codFisc.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
       checkMail = email.matches("/\\S+@\\S+\\.\\S+/");
-      checkStruttura = strutturaModel.doRetrieveByKey(idStruttura) != null;
+      checkStruttura = strutturaModel.doRetrieveByKey(Integer.valueOf(idStruttura)) != null;
 
       if (checkName && checkSurname && checkPassword && checkPhoneNumber
               && checkCodFisc && checkMail && checkStruttura) {
