@@ -20,29 +20,27 @@
             <br>
             <form>
             <ion-label>Nome</ion-label>
-            <ion-input id="nome" v-model="nome" placeholder="Nome" required="true"></ion-input>
+            <ion-input placeholder="Nome" required="true"></ion-input>
             <ion-label>Cognome</ion-label>
-            <ion-input id="cognome" v-model="cognome" placeholder="Cognome" required="true"></ion-input>
+            <ion-input placeholder="Cognome" required="true"></ion-input>
             <ion-label>Codice Fiscale</ion-label>
-            <ion-input id="cf" v-model="codFisc" placeholder="CodiceFiscale" pattern="[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$" required="true"></ion-input>
+            <ion-input placeholder="CodiceFiscale" pattern="[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$" required="true"></ion-input>
             <ion-label>Password</ion-label>
-            <ion-input id="psw" v-model="password" type="password" placeholder="Password" pattern="(?=^.{8,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*$" required="true"></ion-input>
-            <ion-label>Data di Nascita </ion-label>
-            <ion-datetime id="data" v-model="dataDiNascita" displayFormat="DD-MM-YYYY" placeholder="Data di nascita" required="true"></ion-datetime>
+            <ion-input type="password" placeholder="Password" pattern="(?=^.{8,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*$" required="true"></ion-input>
+            <ion-label>Data di Nascita</ion-label>
+            <ion-datetime displayFormat="DD MM YY" placeholder="Data di nascita" required="true"></ion-datetime>
             <ion-label>Indirizzo e-mail</ion-label>
-            <ion-input id="email" v-model="email" placeholder="Indirizzo e-mail" pattern="\S+@\S+\.\S+" required="true"></ion-input>
+            <ion-input placeholder="Indirizzo e-mail" pattern="/\S+@\S+\.\S+/" required="true"></ion-input>
             <ion-label>Numero di telefono</ion-label>
-            <ion-input id="numero" v-model="numeroTelefono" placeholder="Numero di telefono" patern="^[\+][0-9]{10,12}" required="true"></ion-input>
-            <ion-button @click="autentication()" color="success"> Registrati </ion-button>
+            <ion-input placeholder="Numero di telefono" patern="^[\+][0-9]{10,12}" required="true"></ion-input>
+            <ion-button type="submit" color="success"> Registrati </ion-button>
             </form>
           </div>
         </ion-content>
     </ion-content>
   </ion-page>
 </template>
-<script>
-import singupAxios from "../axios/autentication.js"
-import router from "@/router";
+<script lang="ts">
 import {
   IonDatetime,
   IonButton,
@@ -59,17 +57,6 @@ import {
 
 export default {
   name: "Registration",
-  data(){
-    return{
-      nome: "",
-      cognome: "",
-      codFisc: "",
-      password: "",
-      dataDiNascita: "",
-      email: "",
-      numeroTelefono: ""
-    };
-  },
   components: {
     IonDatetime,
     IonButton,
@@ -81,22 +68,16 @@ export default {
     IonTitle,
     IonToolbar
   },
+  data(){
+    return{
+      minAge: "",
+    };
+  },
   methods: {
-
-    async autentication(){
-      const data =this.dataDiNascita.split('T');
-      console.log(data[0]);
-      singupAxios.signup(this.nome,this.cognome,this.codFisc,this.password,data[0],this.email,this.numeroTelefono)
-      .then((response) => {
-        if(response ===""){
-          console.log("Errore");
-          return null;
-        }else{
-          router.push("/Accesso");
-        }
-      })
+    minData(){
+      const currentDate = new Date().getFullYear();
+      return currentDate - 18;
     }
-
   }
 }
 </script>
