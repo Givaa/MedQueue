@@ -24,6 +24,7 @@ import javax.swing.JTextField;
 import business.AccessoInterface;
 import business.Connessione;
 import business.ConnessioneInterface;
+import eccezioni.InvalidAccesException;
 
 /**
  * Classe per generare un frame dove e possibile inserire le proprie credenziali
@@ -72,19 +73,25 @@ public class LoginView implements LoginInterface {
               if (connection == null) {
                 errore.setText("Errore nella connessione");
               } else {
-                // Verifico le credenziali dell'impiegato
-                ImpiegatoBean impiegato=login.verificaCredenziali(codiceFiscale.getText(),password.getText());
-                if (impiegato!=null) {
-                  pannelloDiControllo=new ControlPanelView();
-                  pannelloDiControllo.showControlPanel(impiegato,connection);
-                  codiceFiscale.setText("");
-                  password.setText("");
-                  errore.setText("");
-                  framePannello.dispose();
-                } else { // Creo la prossima view e la rendo visibile
-                  errore.setText("Credenziali errate");
-                } // Messaggio d'errore nel caso in cui le credenziali del
-                // impiegato sono sbagliate
+                try {
+                  if(codiceFiscale.getText()==null || codiceFiscale.getText().length()!=16 || password.getText()==null)
+                    throw new InvalidAccesException("Codice fiscale o password non valida");
+                  // Verifico le credenziali dell'impiegato
+                  ImpiegatoBean impiegato=login.verificaCredenziali(codiceFiscale.getText(),password.getText());
+                  if (impiegato!=null) {
+                    pannelloDiControllo=new ControlPanelView();
+                    pannelloDiControllo.showControlPanel(impiegato,connection);
+                    codiceFiscale.setText("");
+                    password.setText("");
+                    errore.setText("");
+                    framePannello.dispose();
+                  } else { // Creo la prossima view e la rendo visibile
+                    errore.setText("Credenziali errate");
+                  } // Messaggio d'errore nel caso in cui le credenziali del
+                  // impiegato sono sbagliate
+                }catch (InvalidAccesException i){
+                  System.out.println(i.toString());
+                }
               }
             });
 

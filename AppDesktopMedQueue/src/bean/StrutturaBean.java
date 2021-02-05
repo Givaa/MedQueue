@@ -97,4 +97,14 @@ public class StrutturaBean {
   public void setNumeroDiTelefono(String numeroDiTelefono) {
     this.numeroDiTelefono = numeroDiTelefono;
   }
+
+  @Override
+  public String toString() {
+    return "StrutturaBean{" +
+            "id=" + id +
+            ", nome='" + nome + '\'' +
+            ", indirizzo='" + indirizzo + '\'' +
+            ", numeroDiTelefono='" + numeroDiTelefono + '\'' +
+            '}';
+  }
 }

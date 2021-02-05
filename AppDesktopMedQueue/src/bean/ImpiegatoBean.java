@@ -191,4 +191,18 @@ public class ImpiegatoBean {
   public void setIdStruttura(int idStruttura) {
     this.idStruttura = idStruttura;
   }
+
+  @Override
+  public String toString() {
+    return "ImpiegatoBean{" +
+            "codicefiscale='" + codicefiscale + '\'' +
+            ", password='" + password + '\'' +
+            ", nome='" + nome + '\'' +
+            ", cognome='" + cognome + '\'' +
+            ", dataDiNascita=" + dataDiNascita +
+            ", indirizzoEmail='" + indirizzoEmail + '\'' +
+            ", numeroDiTelefono='" + numeroDiTelefono + '\'' +
+            ", idStruttura=" + idStruttura +
+            '}';
+  }
 }

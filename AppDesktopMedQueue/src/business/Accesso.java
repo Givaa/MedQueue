@@ -1,6 +1,7 @@
 package business;
 
 import bean.ImpiegatoBean;
+import eccezioni.InvalidKeyException;
 import persistence.DaoInterface;
 import persistence.DataAccess;
 
@@ -20,12 +21,18 @@ public class Accesso implements AccessoInterface {
    * oppure null se le credenziali sono sbagliate
    */
   public ImpiegatoBean verificaCredenziali(String cf, String pass){
-    ImpiegatoBean impiegato=daoOperation.getImpiegato(cf);
-    if(impiegato!=null){
-      if(impiegato.getPassword().equals(pass))
-        return impiegato;
-      else
-        return null;
+    try{
+      if(cf==null || cf.length()!=16) {
+        throw new InvalidKeyException("CodiceFiscale non valido");
+      }else{
+        ImpiegatoBean impiegato = daoOperation.getImpiegato(cf);
+        if(impiegato!=null){
+          if(impiegato.getPassword().equals(pass))
+            return impiegato;
+        }
+      }
+    }catch (InvalidKeyException i) {
+      System.out.println(i.toString());
     }
     return null;
   }

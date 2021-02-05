@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import eccezioni.InvalidKeyException;
 import persistence.DaoInterface;
 import persistence.DataAccess;
 import persistence.DriverManagerConnectionPool;
@@ -27,11 +28,24 @@ public class Gestione implements GestioneInterface{
    * passato come parametro, come idStruttura l'idStruttura passato come parametro e convalida a true
    */
   public  PrenotazioneBean accettaPrenotazione(int idOp, int idStruttura) {
-    PrenotazioneBean p = dao.serviPrenotazione(idOp, idStruttura);
-    if (p != null) {
-      if (dao.deletePrenotazione(p.getId()) > 0) {
-        return p;
+    try {
+      if(idOp<=0 || idStruttura<=0) {
+        throw new InvalidKeyException("Id non valido, occorre un id>0");
+      }else {
+        PrenotazioneBean p = dao.serviPrenotazione(idOp, idStruttura);
+        if (p != null) {
+          if (p.getId()<=0) {
+            throw new InvalidKeyException("Id non valido occorre un id>0");
+          } else {
+             if (dao.deletePrenotazione(p.getId()) > 0) {
+               return p;
+              }
+          }
+        }
       }
+
+    }catch (InvalidKeyException i){
+      System.out.println(i.toString());
     }
     return null;
   }
@@ -45,7 +59,15 @@ public class Gestione implements GestioneInterface{
    * passato come parametro, come idOperazione l'idOperazione passato come parametro e convalida a true
    */
   public int getNumPrenotazioni(int idOperazione, int idStruttura) {
-    return dao.numPrenotazioni(idOperazione, idStruttura);
+    try {
+      if (idOperazione<=0 || idStruttura<=0)
+        throw new InvalidKeyException("Id non valido occorre un id>0");
+      else
+        return dao.numPrenotazioni(idOperazione, idStruttura);
+    }catch (InvalidKeyException i){
+      System.out.println(i.toString());
+    }
+    return 0;
   }
 
   /**
@@ -63,7 +85,15 @@ public class Gestione implements GestioneInterface{
    * @return operazione della collezione Operazione che ha come id, l'id passato come parametro
    */
   public OperazioneBean getOperazione(int id) {
-    return dao.getOperazione(id);
+    try{
+      if(id<=0)
+        throw new InvalidKeyException("Id non valido occorre un id>0");
+      else
+        return dao.getOperazione(id);
+    }catch (InvalidKeyException i){
+      System.out.println(i.toString());
     }
+    return null;
+  }
 
 }

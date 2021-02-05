@@ -171,4 +171,17 @@ public class PrenotazioneBean {
   public void setIdStruttura(int idStruttura) {
     this.idStruttura = idStruttura;
   }
+
+  @Override
+  public String toString() {
+    return "PrenotazioneBean{" +
+            "id=" + id +
+            ", data=" + data +
+            ", time=" + time +
+            ", convalida=" + convalida +
+            ", codiceFiscale='" + codiceFiscale + '\'' +
+            ", idOperazione=" + idOperazione +
+            ", idStruttura=" + idStruttura +
+            '}';
+  }
 }

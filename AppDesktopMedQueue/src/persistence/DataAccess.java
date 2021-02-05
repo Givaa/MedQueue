@@ -4,6 +4,8 @@ import bean.ImpiegatoBean;
 import bean.OperazioneBean;
 import bean.PrenotazioneBean;
 import bean.StrutturaBean;
+
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,13 +24,16 @@ public class DataAccess implements DaoInterface{
    *
    */
   public PrenotazioneBean getPrenotazione(int id) {
-    PrenotazioneBean prenotazione = new PrenotazioneBean();
+    PrenotazioneBean prenotazione=null;
+    Connection con=null;
     try {
       String sql = "SELECT * FROM MedQueue.Prenotazione WHERE Prenotazione.Id = ?";
-      PreparedStatement query = DriverManagerConnectionPool.getConnection().prepareStatement(sql);
+      con=DriverManagerConnectionPool.getConnection();
+      PreparedStatement query = con.prepareStatement(sql);
       query.setInt(1, id);
       ResultSet rs = query.executeQuery();
       while (rs.next()) {
+        prenotazione=new PrenotazioneBean();
         prenotazione.setId(rs.getInt(1));
         prenotazione.setData(rs.getDate(2));
         prenotazione.setTime(rs.getTime(3));
@@ -39,6 +44,7 @@ public class DataAccess implements DaoInterface{
       }
       rs.close();
       query.close();
+      con.close();
     } catch (SQLException e) {
       e.printStackTrace();
       System.err.println("SQLException:" + e.getMessage());
@@ -53,13 +59,16 @@ public class DataAccess implements DaoInterface{
    * @return struttura ospedaliera della collezione Struttura che ha come id, l'id passato come parametro
    */
   public StrutturaBean getStruttura(int id) {
-    StrutturaBean struttura = new StrutturaBean();
+    StrutturaBean struttura = null;
+    Connection con=null;
     try {
       String sql = "SELECT * FROM MedQueue.Struttura WHERE Struttura.Id = ?";
-      PreparedStatement query = DriverManagerConnectionPool.getConnection().prepareStatement(sql);
+      con=DriverManagerConnectionPool.getConnection();
+      PreparedStatement query = con.prepareStatement(sql);
       query.setInt(1, id);
       ResultSet rs = query.executeQuery();
       while (rs.next()) {
+        struttura = new StrutturaBean();
         struttura.setId(rs.getInt(1));
         struttura.setNome(rs.getString(2));
         struttura.setIndirizzo(rs.getString(3));
@@ -67,6 +76,7 @@ public class DataAccess implements DaoInterface{
       }
       query.close();
       rs.close();
+      con.close();
     } catch (SQLException e) {
       e.printStackTrace();
       System.err.println("SQLException:" + e.getMessage());
@@ -82,19 +92,23 @@ public class DataAccess implements DaoInterface{
    * @return operazione della collezione Operazione che ha come id, l'id passato come parametro al metodo
    */
   public OperazioneBean getOperazione(int id) {
-    OperazioneBean operazione = new OperazioneBean();
+    OperazioneBean operazione = null;
+    Connection con=null;
     try {
       String sql = "SELECT * FROM MedQueue.Operazione WHERE Operazione.Id = ?";
-      PreparedStatement query = DriverManagerConnectionPool.getConnection().prepareStatement(sql);
+      con=DriverManagerConnectionPool.getConnection();
+      PreparedStatement query = con.prepareStatement(sql);
       query.setInt(1, id);
       ResultSet rs = query.executeQuery();
       while (rs.next()) {
+        operazione= new OperazioneBean();
         operazione.setId(rs.getInt(1));
         operazione.setTipoOperazione(rs.getString(2));
         operazione.setDescrizione(rs.getString(3));
       }
       query.close();
       rs.close();
+      con.close();
     } catch (SQLException e) {
       e.printStackTrace();
       System.err.println("SQLException:" + e.getMessage());
@@ -109,13 +123,16 @@ public class DataAccess implements DaoInterface{
    * @return impiegato della collezione Impiegato che ha come codice fiscale, il codice fiscale passato come parametro al metodo
    */
   public ImpiegatoBean getImpiegato(String codicefiscale) {
-    ImpiegatoBean impiegato = new ImpiegatoBean();
+    ImpiegatoBean impiegato = null;
+    Connection con=null;
     try {
       String sql = "SELECT * FROM MedQueue.Impiegato WHERE Impiegato.codiceFiscale = ?";
-      PreparedStatement query = DriverManagerConnectionPool.getConnection().prepareStatement(sql);
+      con=DriverManagerConnectionPool.getConnection();
+      PreparedStatement query = con.prepareStatement(sql);
       query.setString(1, codicefiscale);
       ResultSet rs = query.executeQuery();
       while (rs.next()) {
+        impiegato = new ImpiegatoBean();
         impiegato.setCodicefiscale(rs.getString(1));
         impiegato.setPassword(rs.getString(2));
         impiegato.setNome(rs.getString(3));
@@ -127,6 +144,7 @@ public class DataAccess implements DaoInterface{
       }
       query.close();
       rs.close();
+      con.close();
     } catch (SQLException e) {
       e.printStackTrace();
       System.err.println("SQLException:" + e.getMessage());
@@ -141,9 +159,11 @@ public class DataAccess implements DaoInterface{
    */
   public ArrayList<OperazioneBean> getOperazioni() {
     ArrayList<OperazioneBean> operazioni = new ArrayList<OperazioneBean>();
+    Connection con=null;
     try {
       String sql = "SELECT * FROM MedQueue.Operazione";
-      PreparedStatement query = DriverManagerConnectionPool.getConnection().prepareStatement(sql);
+      con=DriverManagerConnectionPool.getConnection();
+      PreparedStatement query = con.prepareStatement(sql);
       ResultSet rs = query.executeQuery();
       while (rs.next()) {
         operazioni.add(
@@ -152,6 +172,7 @@ public class DataAccess implements DaoInterface{
       }
       query.close();
       rs.close();
+      con.close();
     } catch (SQLException e) {
       e.printStackTrace();
       System.err.println("SQLException:" + e.getMessage());
@@ -168,12 +189,15 @@ public class DataAccess implements DaoInterface{
    */
   public int deletePrenotazione(int id) {
     int delete = 0;
+    Connection con=null;
     try {
       String sql = "DELETE Prenotazione FROM MedQueue.Prenotazione WHERE Prenotazione.Id = ?";
-      PreparedStatement query = DriverManagerConnectionPool.getConnection().prepareStatement(sql);
+      con=DriverManagerConnectionPool.getConnection();
+      PreparedStatement query = con.prepareStatement(sql);
       query.setInt(1, id);
       delete = query.executeUpdate();
       query.close();
+      con.close();
     } catch (SQLException e) {
       e.printStackTrace();
       System.err.println("SQLException:" + e.getMessage());
@@ -192,12 +216,14 @@ public class DataAccess implements DaoInterface{
    */
   public int numPrenotazioni(int idOperazione, int idStruttura) {
     int count = 0;
+    Connection con=null;
     try {
       String sql =
           "SELECT * FROM MedQueue.Prenotazione WHERE Prenotazione.convalida = 1 "
               + "AND Prenotazione.idOperazione = ?"
               + " AND Prenotazione.idStruttura = ?";
-      PreparedStatement query = DriverManagerConnectionPool.getConnection().prepareStatement(sql);
+      con=DriverManagerConnectionPool.getConnection();
+      PreparedStatement query = con.prepareStatement(sql);
       query.setInt(1, idOperazione);
       query.setInt(2, idStruttura);
       ResultSet rs = query.executeQuery();
@@ -206,6 +232,7 @@ public class DataAccess implements DaoInterface{
       }
       query.close();
       rs.close();
+      con.close();
     } catch (SQLException e) {
       e.printStackTrace();
       System.err.println("SQLException:" + e.getMessage());
@@ -225,16 +252,19 @@ public class DataAccess implements DaoInterface{
    *
    */
   public PrenotazioneBean serviPrenotazione(int idOperazione, int idStruttura) {
-    PrenotazioneBean prenotazione = new PrenotazioneBean();
+    PrenotazioneBean prenotazione = null;
+    Connection con=null;
     try {
       String sql =
           "SELECT * FROM MedQueue.Prenotazione WHERE Prenotazione.convalida = 1 AND "
               + "Prenotazione.idOperazione = ? AND Prenotazione.idStruttura = ? ORDER BY ora";
-      PreparedStatement query = DriverManagerConnectionPool.getConnection().prepareStatement(sql);
+      con=DriverManagerConnectionPool.getConnection();
+      PreparedStatement query = con.prepareStatement(sql);
       query.setInt(1, idOperazione);
       query.setInt(2, idStruttura);
       ResultSet rs = query.executeQuery();
       while (rs.next()) {
+        prenotazione = new PrenotazioneBean();
         prenotazione.setId(Integer.parseInt(rs.getString(1)));
         prenotazione.setData(rs.getDate(2));
         prenotazione.setTime(rs.getTime(3));

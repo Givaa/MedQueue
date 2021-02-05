@@ -33,6 +33,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import business.GestioneInterface;
+import eccezioni.InvalidManagementException;
 import persistence.DataAccess;
 import persistence.DriverManagerConnectionPool;
 
@@ -208,10 +209,19 @@ public class ControlPanelView implements ControlPanelInterface {
       JButton operazione = new JButton();
       // Setto il testo del button con il formato (tipo operazioni: prenotazioni in attesta di
       // accettazioni)
-      operazione.setText(
-          listoperazioni.get(i).getTipoOperazione()
-              + ": "
-              + gestione.getNumPrenotazioni(listoperazioni.get(i).getId(), idStruttura));
+      try{
+        if(listoperazioni.get(i).getId()<=0 || idStruttura<=0)
+          throw new InvalidManagementException("Id non validi");
+        operazione.setText(
+                listoperazioni.get(i).getTipoOperazione()
+                        + ": "
+                        + gestione.getNumPrenotazioni(listoperazioni.get(i).getId(), idStruttura));
+      }catch (InvalidManagementException ex){
+        operazione.setText(
+                listoperazioni.get(i).getTipoOperazione()
+                        + ": 0");
+        System.out.println(ex.toString());
+      }
       // Modifico le dimensioni del button
       operazione.setPreferredSize(new Dimension(230, 25));
       operazione.setMaximumSize(operazione.getPreferredSize());
@@ -336,23 +346,29 @@ public class ControlPanelView implements ControlPanelInterface {
     pannelloAccettazione.setOpaque(false); // Setto lo sfondo del panel trasparente
     accetta.addActionListener(
         e -> { // ActionListener sul bottone per accettare una prenotazione
-          PrenotazioneBean p =
-              gestione.accettaPrenotazione(
-                  idOperazione,
-                  idStruttura); // Invoco il metodo per l'accettazione di una prenotazione
-          if (p != null) { // Se il metodo mi restituisce una prenotazione
-            servizioPrenotazione =
-                true; // Assegno alla true alla variabile che indica il servizio di una prenotazione
-            if (pannelloCentro.getComponentCount() > 2) {
-              pannelloCentro.remove(2);
-            } // Rimuovo il pannello per l'accettazione
-            pannelloCentro.add(
-                setPrenotazione(
-                    p)); // Aggiungo il panel contenente le informazioni sulla prenotazione generato
-            // tramite il metodo setPrenotazione
-            logout.setEnabled(false); // blocco il bottone per il logout
-            aggiornoNumPrenotazioni((JPanel) pannelloCentro.getComponent(0), null);
-            frame.validate(); // Aggiorno il frame
+          try {
+            if(idOperazione<=0 || idStruttura<=0)
+              throw new InvalidManagementException("Id non validi");
+            PrenotazioneBean p =
+                    gestione.accettaPrenotazione(
+                            idOperazione,
+                            idStruttura); // Invoco il metodo per l'accettazione di una prenotazione
+            if (p != null) { // Se il metodo mi restituisce una prenotazione
+              servizioPrenotazione =
+                      true; // Assegno alla true alla variabile che indica il servizio di una prenotazione
+              if (pannelloCentro.getComponentCount() > 2) {
+                pannelloCentro.remove(2);
+              } // Rimuovo il pannello per l'accettazione
+              pannelloCentro.add(
+                      setPrenotazione(
+                              p)); // Aggiungo il panel contenente le informazioni sulla prenotazione generato
+              // tramite il metodo setPrenotazione
+              logout.setEnabled(false); // blocco il bottone per il logout
+              aggiornoNumPrenotazioni((JPanel) pannelloCentro.getComponent(0), null);
+              frame.validate(); // Aggiorno il frame
+            }
+          }catch (InvalidManagementException ex){
+            System.out.println(ex.toString());
           }
         });
 
@@ -508,8 +524,15 @@ public class ControlPanelView implements ControlPanelInterface {
           instanceof
           JButton) { // Se la componente e un JButton aggiorno il testo (TipoOperazione: numero
         // prenotazioni)
-        numeroPrenotazioni.add(
-                gestione.getNumPrenotazioni(listoperazioni.get(j).getId(), idStruttura));
+        try {
+          if(listoperazioni.get(j).getId()<=0 || idStruttura<=0)
+            throw new InvalidManagementException("Id non validi");
+          numeroPrenotazioni.add(
+                  gestione.getNumPrenotazioni(listoperazioni.get(j).getId(), idStruttura));
+        }catch (InvalidManagementException ex){
+          numeroPrenotazioni.add(0);
+          System.out.println(ex.toString());
+        }
         ((JButton) comp[i])
             .setText(listoperazioni.get(j).getTipoOperazione() + ": " + numeroPrenotazioni.get(j));
         j++; // La variabile j viene utilizzata poichè nel pannello non conterrà solo JButton quindi
