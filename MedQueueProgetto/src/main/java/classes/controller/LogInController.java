@@ -30,7 +30,7 @@ public class LogInController extends HttpServlet {
    * @return Permesso/Non permesso di accesso
    * @throws SQLException per problemi di esecuzione della query
    */
-  @PostMapping (value="/login", produces= MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping (value="/login", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public UtenteBean login(@RequestBody String body) throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String username = jsonObject.get("username").getAsString();
@@ -54,7 +54,7 @@ public class LogInController extends HttpServlet {
    * @throws SQLException per problemi di esecuzione della query
    * @throws ParseException per problemi di conversione di data
    */
-  @GetMapping("/signup")
+  @PostMapping (value="/signup", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public UtenteBean signup(@RequestBody String body) throws SQLException,
           ParseException {
 
@@ -89,7 +89,7 @@ public class LogInController extends HttpServlet {
     if (checkName && checkSurname && checkPassword
             && checkPhoneNumber && checkCodFisc && checkMail) {
       a = new UtenteBean(codFisc, password, nome, cognome,
-              dataDiNascita, email, Integer.valueOf(phoneNumber));
+              dataDiNascita, email, phoneNumber);
       um.doSave(a);
 
       return a;

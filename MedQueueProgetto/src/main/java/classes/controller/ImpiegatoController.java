@@ -14,7 +14,8 @@ import java.util.Collection;
 import classes.model.dao.StrutturaModel;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,7 +35,7 @@ public class ImpiegatoController {
    * @throws SQLException per problemi di esecuzione della query
    * @throws ObjectNotFoundException per problemi di oggetto non trovato
    */
-  @GetMapping("/impiegato/{cf}")
+  @PostMapping(value="/impiegato/{cf}", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public ImpiegatoBean getImpiegatoByCodFis(@RequestBody String body)
       throws SQLException, ObjectNotFoundException {
 
@@ -64,7 +65,7 @@ public class ImpiegatoController {
    * @return Collezione di Impiegati
    * @throws SQLException per problemi di esecuzione della query
    */
-  @GetMapping("/impiegati")
+  @PostMapping(value="/impiegati", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public Collection<ImpiegatoBean> getAllImpiegati(@RequestBody String body) throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String order = jsonObject.get("ordineImpiegati").getAsString();
@@ -80,7 +81,7 @@ public class ImpiegatoController {
    * @throws ParseException per problemi di parse
    * @return conferma/non conferma del salvataggio dell'impiegato
    */
-  @GetMapping("/newImpiegato")
+  @PostMapping(value="/newImpiegato", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public boolean newImpiegato(@RequestBody String body) throws SQLException,
           ErrorNewObjectException, ParseException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
@@ -109,7 +110,7 @@ public class ImpiegatoController {
     checkPhoneNumber = phoneNumber.matches("^[\\+][0-9]{10,12}");
     checkCodFisc = codFisc.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
     checkMail = email.matches("/\\S+@\\S+\\.\\S+/");
-    checkIdStruttura = strutturaModel.doRetrieveByKey(idStruttura) != null;
+    checkIdStruttura = strutturaModel.doRetrieveByKey(Integer.valueOf(idStruttura)) != null;
 
     if (checkName && checkSurname && checkPassword && checkPhoneNumber
             && checkCodFisc && checkMail && checkIdStruttura) {
@@ -128,7 +129,7 @@ public class ImpiegatoController {
    * @param body corpo della richiesta preso in input
    * @throws SQLException per problemi di esecuzione della query
    */
-  @GetMapping("/deleteImpiegato")
+  @PostMapping(value="/deleteImpiegato", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public void deleteImpiegato(@RequestBody String body) throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("deleteImpiegatoId").getAsString();
@@ -144,7 +145,7 @@ public class ImpiegatoController {
    * @throws ParseException per problemi di parse
    * @return conferma/non conferma dell'aggiornamento dell'impiegato
    */
-  @GetMapping("/updateImpiegato")
+  @PostMapping(value="/updateImpiegato", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public boolean updateImpiegato(@RequestBody String body) throws SQLException,
           ParseException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
@@ -177,7 +178,7 @@ public class ImpiegatoController {
       checkPhoneNumber = phoneNumber.matches("^[\\+][0-9]{10,12}");
       checkCodFisc = codFisc.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
       checkMail = email.matches("/\\S+@\\S+\\.\\S+/");
-      checkStruttura = strutturaModel.doRetrieveByKey(idStruttura) != null;
+      checkStruttura = strutturaModel.doRetrieveByKey(Integer.valueOf(idStruttura)) != null;
 
       if (checkName && checkSurname && checkPassword && checkPhoneNumber
               && checkCodFisc && checkMail && checkStruttura) {

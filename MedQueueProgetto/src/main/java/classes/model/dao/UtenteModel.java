@@ -2,6 +2,8 @@ package classes.model.dao;
 
 import classes.model.DriverManagerConnectionPool;
 import classes.model.bean.entity.UtenteBean;
+import classes.model.interfaces.UtenteDaoInterface;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +14,7 @@ import java.util.LinkedList;
 /**
  * Model per collegare la tabella "Utente" al backend.
  */
-public class UtenteModel implements Model<UtenteBean> {
+public class UtenteModel implements UtenteDaoInterface {
   private static final String nomeTabella = "medqueue.utente";
 
   /**
@@ -167,7 +169,7 @@ public class UtenteModel implements Model<UtenteBean> {
             + nomeTabella
             + " SET password = ?, nome = ?, cognome = ?,"
             + " dataDiNascita = ?, indirizzoEmail = ?, numeroDiTelefono = ?"
-            + "  WHERE codiceFiscale = ?";
+            + " WHERE codiceFiscale = ?";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();

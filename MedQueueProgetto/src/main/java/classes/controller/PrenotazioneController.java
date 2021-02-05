@@ -17,7 +17,9 @@ import java.util.Collection;
 import classes.model.dao.StrutturaModel;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,13 +42,13 @@ public class PrenotazioneController {
    * @throws SQLException per problemi di esecuzione della query
    * @throws ObjectNotFoundException per problemi di oggetto non trovato
    */
-  @GetMapping("/prenotazione/{id}")
+  @PostMapping(value="/prenotazione/{id}", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public PrenotazioneBean getPrenotazioneById(@RequestBody String body) throws SQLException,
           ObjectNotFoundException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("idPrenotazioneGet").getAsString();
 
-    PrenotazioneBean p = prenotazioneModel.doRetrieveByKey(id);
+    PrenotazioneBean p = prenotazioneModel.doRetrieveByKey(Integer.valueOf(id));
     if (p != null) {
       return p;
     } else {
@@ -61,7 +63,7 @@ public class PrenotazioneController {
    * @return Collezione di Prenotazione
    * @throws SQLException per problemi di esecuzione della query
    */
-  @GetMapping("/prenotazioni")
+  @PostMapping(value="/prenotazioni", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public Collection<PrenotazioneBean> getAllPrenotazioni(@RequestBody String body) throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String order = jsonObject.get("ordinePrenotazioni").getAsString();
@@ -78,7 +80,7 @@ public class PrenotazioneController {
    * @throws ErrorNewObjectException per problemi di creazione di un oggetto
    * @return conferma/non conferma del salvataggio della prenotazione
    */
-  @GetMapping("/newPrenotazione")
+  @PostMapping(value="/newPrenotazione", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public boolean newPrenotazione(@RequestBody String body) throws SQLException,
           ParseException, ErrorNewObjectException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
@@ -91,8 +93,8 @@ public class PrenotazioneController {
 
     StrutturaBean s;
     OperazioneBean o;
-    o = operazioneModel.doRetrieveByKey(idOp);
-    s = strutturaModel.doRetrieveByKey(String.valueOf(idS));
+    o = operazioneModel.doRetrieveByKey(Integer.valueOf(idOp));
+    s = strutturaModel.doRetrieveByKey(Integer.valueOf(idS));
 
     boolean checkCodFisc = cf.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
     boolean checkOra = ora.matches("^([0-1][0-9]|[2][0-3]):([0-5][0-9])$");
@@ -115,11 +117,11 @@ public class PrenotazioneController {
    * @param body corpo della richiesta preso in input
    * @throws SQLException per problemi di esecuzione della query
    */
-  @GetMapping("/deletePrenotazione")
+  @PostMapping(value="/deletePrenotazione", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public void deletePrenotazione(@RequestBody String body) throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("deletePrenotazioniId").getAsString();
-    prenotazioneModel.doDelete(prenotazioneModel.doRetrieveByKey(id));
+    prenotazioneModel.doDelete(prenotazioneModel.doRetrieveByKey(Integer.valueOf(id)));
   }
 
   /**
@@ -131,7 +133,7 @@ public class PrenotazioneController {
    * @throws ParseException per problemi di parse
    * @return conferma/non conferma dell'aggiornamento
    */
-  @GetMapping("/updatePrenotazione")
+  @PostMapping(value="/updatePrenotazione", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public boolean updatePrenotazione(@RequestBody String body) throws SQLException,
           ParseException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
@@ -143,14 +145,14 @@ public class PrenotazioneController {
     String data = jsonObject.get("updatePrenotazioneData").getAsString();
     Date dataPrenotazione = (Date) new SimpleDateFormat("yyyy/mm/gg").parse(data);
     Boolean cv = jsonObject.get("updatePrenotazioneConvalida").getAsBoolean();
-    PrenotazioneBean p = prenotazioneModel.doRetrieveByKey(id);
+    PrenotazioneBean p = prenotazioneModel.doRetrieveByKey(Integer.valueOf(id));
 
 
     if (p != null) {
       StrutturaBean b;
       OperazioneBean o;
-      o = operazioneModel.doRetrieveByKey(String.valueOf(p.getIdOperazione()));
-      b = strutturaModel.doRetrieveByKey(String.valueOf(p.getIdStruttura()));
+      o = operazioneModel.doRetrieveByKey(p.getIdOperazione());
+      b = strutturaModel.doRetrieveByKey(p.getIdStruttura());
 
       boolean checkCodFisc = cf.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
       boolean checkOra = ora.matches("^([0-1][0-9]|[2][0-3]):([0-5][0-9])$");
@@ -179,7 +181,7 @@ public class PrenotazioneController {
    * @return Prenotazioni di quell'utente
    * @throws SQLException per problemi di esecuzione della query
    */
-  @GetMapping("/prenotazioniUtente/{cf}")
+  @PostMapping(value="/prenotazioniUtente/{cf}", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public Collection<PrenotazioneBean> getPrenotazioniByCodFisc(@RequestBody String body) throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String cf = jsonObject.get("getPrenotazioniByCf").getAsString();

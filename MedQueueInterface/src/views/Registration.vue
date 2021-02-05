@@ -20,19 +20,19 @@
             <br>
             <form>
             <ion-label>Nome</ion-label>
-            <ion-input placeholder="Nome"></ion-input>
+            <ion-input placeholder="Nome" required="true"></ion-input>
             <ion-label>Cognome</ion-label>
-            <ion-input placeholder="Cognome"></ion-input>
+            <ion-input placeholder="Cognome" required="true"></ion-input>
             <ion-label>Codice Fiscale</ion-label>
-            <ion-input placeholder="CodiceFiscale"></ion-input>
+            <ion-input placeholder="CodiceFiscale" pattern="[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$" required="true"></ion-input>
             <ion-label>Password</ion-label>
-            <ion-input type="password" placeholder="Password"></ion-input>
+            <ion-input type="password" placeholder="Password" pattern="(?=^.{8,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*$" required="true"></ion-input>
             <ion-label>Data di Nascita</ion-label>
-            <ion-datetime displayFormat="DD MM YY" placeholder="Data di nascita"></ion-datetime>
+            <ion-datetime displayFormat="DD MM YY" placeholder="Data di nascita" required="true"></ion-datetime>
             <ion-label>Indirizzo e-mail</ion-label>
-            <ion-input placeholder="Indirizzo e-mail"></ion-input>
+            <ion-input placeholder="Indirizzo e-mail" pattern="/\S+@\S+\.\S+/" required="true"></ion-input>
             <ion-label>Numero di telefono</ion-label>
-            <ion-input placeholder="Numero di telefono"></ion-input>
+            <ion-input placeholder="Numero di telefono" patern="^[\+][0-9]{10,12}" required="true"></ion-input>
             <ion-button type="submit" color="success"> Registrati </ion-button>
             </form>
           </div>
@@ -67,6 +67,17 @@ export default {
     IonPage,
     IonTitle,
     IonToolbar
+  },
+  data(){
+    return{
+      minAge: "",
+    };
+  },
+  methods: {
+    minData(){
+      const currentDate = new Date().getFullYear();
+      return currentDate - 18;
+    }
   }
 }
 </script>

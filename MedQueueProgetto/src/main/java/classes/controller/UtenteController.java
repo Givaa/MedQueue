@@ -13,10 +13,8 @@ import java.util.Collection;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 /** Classe per controllare i metodi del Model di Utente. */
 @RestController
@@ -31,7 +29,7 @@ public class UtenteController {
    * @throws SQLException per problemi di esecuzione della query
    * @throws ObjectNotFoundException per problemi di oggetto non trovato
    */
-  @GetMapping("/utente/{cf}")
+  @PostMapping(value="/utente/{cf}", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public UtenteBean getUtenteByCodFisc(@RequestBody String body)
       throws SQLException, ObjectNotFoundException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
@@ -51,7 +49,7 @@ public class UtenteController {
    * @return Collezione di Utenti
    * @throws SQLException per problemi di esecuzione della query
    */
-  @GetMapping("/utenti")
+  @PostMapping(value="/utenti", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public Collection<UtenteBean> getAllUtenti(@RequestBody String body) throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String order = jsonObject.get("ordineUtenti").getAsString();
@@ -67,7 +65,7 @@ public class UtenteController {
    * @throws ParseException per problemi di parsing
    * @return conferma/non conferma del salvataggio dell'utente
    */
-  @GetMapping("/newUtente")
+  @PostMapping(value="/newUtente", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public boolean newUtente(@RequestBody String body) throws SQLException,
           ErrorNewObjectException, ParseException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
@@ -119,7 +117,7 @@ public class UtenteController {
    * @param body corpo della richiesta preso in input
    * @throws SQLException per problemi di esecuzione della query
    */
-  @GetMapping("/deleteUtente")
+  @PostMapping(value="/deleteUtente", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public void deleteUtente(@RequestBody String body) throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("deleteUtenteId").getAsString();
@@ -135,7 +133,7 @@ public class UtenteController {
    * @throws ParseException per problemi di parsing
    * @return conferma/non conferma dell'aggiornamento dell'utente
    */
-  @GetMapping("/updateUtente")
+  @PostMapping(value="/updateUtente", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public boolean updateUtente(@RequestBody String body) throws SQLException,
           ParseException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();

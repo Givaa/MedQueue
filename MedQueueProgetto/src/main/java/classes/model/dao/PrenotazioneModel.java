@@ -2,6 +2,8 @@ package classes.model.dao;
 
 import classes.model.DriverManagerConnectionPool;
 import classes.model.bean.entity.PrenotazioneBean;
+import classes.model.interfaces.PrenotazioneDaoInterface;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +14,7 @@ import java.util.LinkedList;
 /**
  * Model per collegare la tabella "Prenotazione" al backend.
  */
-public class PrenotazioneModel implements Model<PrenotazioneBean> {
+public class PrenotazioneModel implements PrenotazioneDaoInterface {
   private static final String nomeTabella = "prenotazione";
 
   /**
@@ -23,7 +25,7 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
    * @throws SQLException per problemi di esecuzione della query
    */
   @Override
-  public PrenotazioneBean doRetrieveByKey(String id) throws SQLException {
+  public PrenotazioneBean doRetrieveByKey(int id) throws SQLException {
     Connection con = null;
     PreparedStatement ps = null;
 
@@ -34,7 +36,7 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
     try {
       con = DriverManagerConnectionPool.getConnection();
       ps = con.prepareStatement(selectSql);
-      ps.setString(1, id);
+      ps.setInt(1, id);
 
       ResultSet rs = ps.executeQuery();
 
@@ -166,7 +168,7 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
         "UPDATE "
             + nomeTabella
             + " SET ora = ?, dataPrenotazione = ?, codiceFiscale = ?,"
-            + " idOperazione = ?, idStruttura = ?, convalida = ?  WHERE id = ?";
+            + " idOperazione = ?, idStruttura = ?, convalida = ? WHERE id = ?";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();
@@ -232,6 +234,7 @@ public class PrenotazioneModel implements Model<PrenotazioneBean> {
    * @return Collezione di prenotazioni dell'utente avente quel codice fiscale
    * @throws SQLException per problemi di esecuzione della query
    */
+  @Override
   public Collection<PrenotazioneBean> getUtentePrenotazioni(String cf) throws SQLException {
     Connection con = null;
     PreparedStatement ps = null;
