@@ -70,9 +70,7 @@ export default {
     async onSubmit(){
       loginAxios.login(this.loginForm.username, this.loginForm.password)
       .then((response) => {
-        console.log(response);
         if(response === ''){
-          console.log("Errore");
           this.presentAlert();
           return null;
         }else {
