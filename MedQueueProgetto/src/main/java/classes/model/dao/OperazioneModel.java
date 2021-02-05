@@ -2,6 +2,7 @@ package classes.model.dao;
 
 import classes.model.DriverManagerConnectionPool;
 import classes.model.bean.entity.OperazioneBean;
+import classes.model.interfaces.OperazioneDaoInterface;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,19 +13,19 @@ import java.util.LinkedList;
 /**
  * Model per collegare la tabella "Operazione" al backend.
  */
-public class OperazioneModel implements Model<OperazioneBean> {
+public class OperazioneModel implements OperazioneDaoInterface {
 
   private static final String nomeTabella = "operazione";
 
   /**
    * Prelevamento singola operazione.
    *
-   * @param code chiave primaria dell'operazione
+   * @param id chiave primaria dell'operazione
    * @return Operazione avente quell'id
    * @throws SQLException per problemi di esecuzione della query
    */
   @Override
-  public OperazioneBean doRetrieveByKey(String code) throws SQLException {
+  public OperazioneBean doRetrieveByKey(int id) throws SQLException {
     Connection con = null;
     PreparedStatement ps = null;
 
@@ -35,7 +36,7 @@ public class OperazioneModel implements Model<OperazioneBean> {
     try {
       con = DriverManagerConnectionPool.getConnection();
       ps = con.prepareStatement(selectSql);
-      ps.setInt(1, Integer.parseInt(code));
+      ps.setInt(1, id);
 
       ResultSet rs = ps.executeQuery();
 

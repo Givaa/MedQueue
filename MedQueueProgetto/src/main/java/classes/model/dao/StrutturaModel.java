@@ -2,6 +2,7 @@ package classes.model.dao;
 
 import classes.model.DriverManagerConnectionPool;
 import classes.model.bean.entity.StrutturaBean;
+import classes.model.interfaces.StrutturaDaoInterface;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,18 +13,18 @@ import java.util.LinkedList;
 /**
  * Model per collegare la tabella "Struttura" al backend.
  */
-public class StrutturaModel implements Model<StrutturaBean> {
+public class StrutturaModel implements StrutturaDaoInterface {
   private static final String nomeTabella = "struttura";
 
   /**
    * Prelevamento singola struttura.
    *
-   * @param code chiave primaria della struttura
+   * @param id chiave primaria della struttura
    * @return Struttura avente quell'id
    * @throws SQLException per problemi di esecuzione della query
    */
   @Override
-  public StrutturaBean doRetrieveByKey(String code) throws SQLException {
+  public StrutturaBean doRetrieveByKey(int id) throws SQLException {
     Connection con = null;
     PreparedStatement ps = null;
 
@@ -34,7 +35,7 @@ public class StrutturaModel implements Model<StrutturaBean> {
     try {
       con = DriverManagerConnectionPool.getConnection();
       ps = con.prepareStatement(selectSql);
-      ps.setString(1, code);
+      ps.setInt(1, id);
 
       ResultSet rs = ps.executeQuery();
 

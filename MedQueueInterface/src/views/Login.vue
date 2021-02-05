@@ -39,7 +39,7 @@
 
 <script>
 import loginAxios from "../axios/login.js"
-import { IonButton,IonLabel, IonInput, IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import {alertController, IonButton,IonLabel, IonInput, IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
 import router from "@/router";
 
 export default {
@@ -70,17 +70,33 @@ export default {
     async onSubmit(){
       loginAxios.login(this.loginForm.username, this.loginForm.password)
       .then((response) => {
-        sessionStorage.setItem("codiceFiscale", response.codiceFiscale);
-        sessionStorage.setItem("password", response.password);
-        sessionStorage.setItem("nome", response.nome);
-        sessionStorage.setItem("cognome", response.cognome);
-        sessionStorage.setItem("dataDiNascita", response.dataDiNascita);
-        sessionStorage.setItem("email", response.email);
-        sessionStorage.setItem("numeroDiTelefono", response.numeroDiTelefono);
+        console.log(response);
+        if(response === ''){
+          console.log("Errore");
+          this.presentAlert();
+          return null;
+        }else {
+          sessionStorage.setItem("codiceFiscale", response.codiceFiscale);
+          sessionStorage.setItem("password", response.password);
+          sessionStorage.setItem("nome", response.nome);
+          sessionStorage.setItem("cognome", response.cognome);
+          sessionStorage.setItem("dataDiNascita", response.dataDiNascita);
+          sessionStorage.setItem("email", response.email);
+          sessionStorage.setItem("numeroDiTelefono", response.numeroDiTelefono);
 
-        router.push("/HomeUtente")
+          router.push("/HomeUtente");
+        }
       })
-    }
+    },
+
+    async presentAlert(){
+      const alert = await alertController.create({
+        header:'Attenzione!',
+        message:'Credenziali errate!',
+        buttons: ['OK'],
+      });
+      return alert.present();
+    },
   }
 }
 </script>

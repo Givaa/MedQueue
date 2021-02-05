@@ -2,6 +2,7 @@ package classes.model.dao;
 
 import classes.model.DriverManagerConnectionPool;
 import classes.model.bean.entity.ImpiegatoBean;
+import classes.model.interfaces.ImpiegatoDaoInterface;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +13,7 @@ import java.util.LinkedList;
 /**
  * Model per collegare la tabella "Impiegato" al backend.
  */
-public class ImpiegatoModel implements Model<ImpiegatoBean> {
+public class ImpiegatoModel implements ImpiegatoDaoInterface {
 
   private static final String nomeTabella = "impiegato";
 
@@ -30,7 +31,7 @@ public class ImpiegatoModel implements Model<ImpiegatoBean> {
 
     ImpiegatoBean tmp = new ImpiegatoBean();
 
-    String selectSql = "SELECT * FROM " + nomeTabella + "WHERE id = ?";
+    String selectSql = "SELECT * FROM " + nomeTabella + " WHERE codiceFiscale = ?";
 
     try {
       con = DriverManagerConnectionPool.getConnection();

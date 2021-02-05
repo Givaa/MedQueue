@@ -4,17 +4,16 @@ import classes.controller.exception.ErrorNewObjectException;
 import classes.controller.exception.ObjectNotFoundException;
 import classes.model.bean.entity.ImpiegatoBean;
 import classes.model.dao.ImpiegatoModel;
-
+import classes.model.dao.StrutturaModel;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
-
-import classes.model.dao.StrutturaModel;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,7 +33,10 @@ public class ImpiegatoController {
    * @throws SQLException per problemi di esecuzione della query
    * @throws ObjectNotFoundException per problemi di oggetto non trovato
    */
-  @GetMapping("/impiegato/{cf}")
+  @PostMapping(
+      value = "/impiegato/{cf}",
+      produces = MediaType.APPLICATION_JSON_VALUE,
+      consumes = MediaType.APPLICATION_JSON_VALUE)
   public ImpiegatoBean getImpiegatoByCodFis(@RequestBody String body)
       throws SQLException, ObjectNotFoundException {
 
@@ -54,7 +56,6 @@ public class ImpiegatoController {
     } else {
       return null;
     }
-
   }
 
   /**
@@ -64,7 +65,10 @@ public class ImpiegatoController {
    * @return Collezione di Impiegati
    * @throws SQLException per problemi di esecuzione della query
    */
-  @GetMapping("/impiegati")
+  @PostMapping(
+      value = "/impiegati",
+      produces = MediaType.APPLICATION_JSON_VALUE,
+      consumes = MediaType.APPLICATION_JSON_VALUE)
   public Collection<ImpiegatoBean> getAllImpiegati(@RequestBody String body) throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String order = jsonObject.get("ordineImpiegati").getAsString();
@@ -80,41 +84,63 @@ public class ImpiegatoController {
    * @throws ParseException per problemi di parse
    * @return conferma/non conferma del salvataggio dell'impiegato
    */
-  @GetMapping("/newImpiegato")
-  public boolean newImpiegato(@RequestBody String body) throws SQLException,
-          ErrorNewObjectException, ParseException {
+  @PostMapping(
+      value = "/newImpiegato",
+      produces = MediaType.APPLICATION_JSON_VALUE,
+      consumes = MediaType.APPLICATION_JSON_VALUE)
+  public boolean newImpiegato(@RequestBody String body)
+      throws SQLException, ErrorNewObjectException, ParseException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
-    String codFisc = jsonObject.get("newImpiegatoCf").getAsString();
-    String cognome = jsonObject.get("newImpiegatoCognome").getAsString();
-    String nome = jsonObject.get("newImpiegatoNome").getAsString();
-    String password = jsonObject.get("newImpiegatoPassword").getAsString();
-    String email = jsonObject.get("newImpiegatoEmail").getAsString();
+
     String dataN = jsonObject.get("newImpiegatoDataN").getAsString();
-    String phoneNumber = jsonObject.get("newImpiegatoNumero").getAsString();
     Date dataNascita = (Date) new SimpleDateFormat("yyyy/mm/gg").parse(dataN);
-    String idStruttura = jsonObject.get("newImpiegatoIdStruttura").getAsString();
 
-    Boolean checkMail;
+    String nome = jsonObject.get("newImpiegatoNome").getAsString();
     Boolean checkName;
-    Boolean checkSurname;
-    Boolean checkPassword;
-    Boolean checkPhoneNumber;
-    Boolean checkCodFisc;
-    Boolean checkIdStruttura;
-
     checkName = nome.matches("[A-Za-z]+$");
+
+    String email = jsonObject.get("newImpiegatoEmail").getAsString();
+    Boolean checkMail;
+    checkMail = email.matches("/\\S+@\\S+\\.\\S+/");
+
+    String cognome = jsonObject.get("newImpiegatoCognome").getAsString();
+    Boolean checkSurname;
     checkSurname = cognome.matches("[A-Za-z]+$");
+
+    String password = jsonObject.get("newImpiegatoPassword").getAsString();
+    Boolean checkPassword;
     checkPassword =
             password.matches("(?=^.{8,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*$");
-    checkPhoneNumber = phoneNumber.matches("^[\\+][0-9]{10,12}");
-    checkCodFisc = codFisc.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
-    checkMail = email.matches("/\\S+@\\S+\\.\\S+/");
-    checkIdStruttura = strutturaModel.doRetrieveByKey(idStruttura) != null;
 
-    if (checkName && checkSurname && checkPassword && checkPhoneNumber
-            && checkCodFisc && checkMail && checkIdStruttura) {
-      impiegatoModel.doSave(new ImpiegatoBean(codFisc, password, nome, cognome, dataNascita,
-              email, phoneNumber, Integer.valueOf(idStruttura)));
+    String phoneNumber = jsonObject.get("newImpiegatoNumero").getAsString();
+    Boolean checkPhoneNumber;
+    checkPhoneNumber = phoneNumber.matches("^[\\+][0-9]{10,12}");
+
+    String codFisc = jsonObject.get("newImpiegatoCf").getAsString();
+    Boolean checkCodFisc;
+    checkCodFisc = codFisc.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
+
+    String idStruttura = jsonObject.get("newImpiegatoIdStruttura").getAsString();
+    Boolean checkIdStruttura;
+    checkIdStruttura = strutturaModel.doRetrieveByKey(Integer.valueOf(idStruttura)) != null;
+
+    if (checkName
+        && checkSurname
+        && checkPassword
+        && checkPhoneNumber
+        && checkCodFisc
+        && checkMail
+        && checkIdStruttura) {
+      impiegatoModel.doSave(
+          new ImpiegatoBean(
+              codFisc,
+              password,
+              nome,
+              cognome,
+              dataNascita,
+              email,
+              phoneNumber,
+              Integer.valueOf(idStruttura)));
       return true;
     } else {
       throw new ErrorNewObjectException(new ImpiegatoBean());
@@ -128,7 +154,10 @@ public class ImpiegatoController {
    * @param body corpo della richiesta preso in input
    * @throws SQLException per problemi di esecuzione della query
    */
-  @GetMapping("/deleteImpiegato")
+  @PostMapping(
+      value = "/deleteImpiegato",
+      produces = MediaType.APPLICATION_JSON_VALUE,
+      consumes = MediaType.APPLICATION_JSON_VALUE)
   public void deleteImpiegato(@RequestBody String body) throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("deleteImpiegatoId").getAsString();
@@ -144,9 +173,11 @@ public class ImpiegatoController {
    * @throws ParseException per problemi di parse
    * @return conferma/non conferma dell'aggiornamento dell'impiegato
    */
-  @GetMapping("/updateImpiegato")
-  public boolean updateImpiegato(@RequestBody String body) throws SQLException,
-          ParseException {
+  @PostMapping(
+      value = "/updateImpiegato",
+      produces = MediaType.APPLICATION_JSON_VALUE,
+      consumes = MediaType.APPLICATION_JSON_VALUE)
+  public boolean updateImpiegato(@RequestBody String body) throws SQLException, ParseException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String codFisc = jsonObject.get("updateImpiegatoCf").getAsString();
     String cognome = jsonObject.get("updateImpiegatoCognome").getAsString();
@@ -160,27 +191,38 @@ public class ImpiegatoController {
 
     ImpiegatoBean i = impiegatoModel.doRetrieveByKey(codFisc);
 
-    if ( i != null) {
+    if (i != null) {
 
       Boolean checkMail;
-      Boolean checkName;
-      Boolean checkSurname;
-      Boolean checkPassword;
-      Boolean checkPhoneNumber;
-      Boolean checkCodFisc;
-      Boolean checkStruttura;
+      checkMail = email.matches("/\\S+@\\S+\\.\\S+/");
 
+      Boolean checkName;
       checkName = nome.matches("[A-Za-z]+$");
+
+      Boolean checkSurname;
       checkSurname = cognome.matches("[A-Za-z]+$");
+
+      Boolean checkPassword;
       checkPassword =
               password.matches("(?=^.{8,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*$");
-      checkPhoneNumber = phoneNumber.matches("^[\\+][0-9]{10,12}");
-      checkCodFisc = codFisc.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
-      checkMail = email.matches("/\\S+@\\S+\\.\\S+/");
-      checkStruttura = strutturaModel.doRetrieveByKey(idStruttura) != null;
 
-      if (checkName && checkSurname && checkPassword && checkPhoneNumber
-              && checkCodFisc && checkMail && checkStruttura) {
+      Boolean checkPhoneNumber;
+      checkPhoneNumber = phoneNumber.matches("^[\\+][0-9]{10,12}");
+
+      Boolean checkCodFisc;
+      checkCodFisc = codFisc.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
+
+      Boolean checkStruttura;
+      checkStruttura = strutturaModel.doRetrieveByKey(Integer.valueOf(idStruttura)) != null;
+
+
+      if (checkName
+          && checkSurname
+          && checkPassword
+          && checkPhoneNumber
+          && checkCodFisc
+          && checkMail
+          && checkStruttura) {
         i.setNome(nome);
         i.setIdStruttura(Integer.valueOf(idStruttura));
         i.setNumeroDiTelefono(phoneNumber);

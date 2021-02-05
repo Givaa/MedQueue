@@ -4,12 +4,12 @@ import classes.controller.exception.ErrorNewObjectException;
 import classes.controller.exception.ObjectNotFoundException;
 import classes.model.bean.entity.OperazioneBean;
 import classes.model.dao.OperazioneModel;
-import java.sql.SQLException;
-import java.util.Collection;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.springframework.web.bind.annotation.GetMapping;
+import java.sql.SQLException;
+import java.util.Collection;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,14 +28,15 @@ public class OperazioneController {
    * @throws SQLException per problemi di esecuzione della query
    * @throws ObjectNotFoundException per problemi di oggetto non trovato
    */
-  @GetMapping("/operazione/{id}")
+  @PostMapping(value = "/operazione/{id}", produces = MediaType.APPLICATION_JSON_VALUE,
+          consumes = MediaType.APPLICATION_JSON_VALUE)
   public OperazioneBean getOperazioneById(@RequestBody String body)
       throws SQLException, ObjectNotFoundException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("idOperazioneGet").getAsString();
 
     if (! id.equals("0")) {
-      OperazioneBean op = operazioneModel.doRetrieveByKey(id);
+      OperazioneBean op = operazioneModel.doRetrieveByKey(Integer.valueOf(id));
       if (op != null) {
         return op;
       } else {
@@ -53,7 +54,8 @@ public class OperazioneController {
    * @return Collezione di Operazioni
    * @throws SQLException per problemi di esecuzione della query
    */
-  @GetMapping("/operazioni")
+  @PostMapping(value = "/operazioni", produces = MediaType.APPLICATION_JSON_VALUE,
+          consumes = MediaType.APPLICATION_JSON_VALUE)
   public Collection<OperazioneBean> getAllOperazioni(@RequestBody String body) throws
           SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
@@ -68,7 +70,8 @@ public class OperazioneController {
    * @param body corpo della richiesta preso in input
    * @throws SQLException per problemi di esecuzione della query
    */
-  @GetMapping("/newOperazione")
+  @PostMapping(value = "/newOperazione", produces = MediaType.APPLICATION_JSON_VALUE,
+          consumes = MediaType.APPLICATION_JSON_VALUE)
   public boolean newOperazione(@RequestBody String body) throws SQLException,
           ErrorNewObjectException {
 
@@ -94,11 +97,12 @@ public class OperazioneController {
    * @param body corpo della richiesta preso in input
    * @throws SQLException per problemi di esecuzione della query
    */
-  @GetMapping("/deleteOperazione")
+  @PostMapping(value = "/deleteOperazione", produces = MediaType.APPLICATION_JSON_VALUE,
+          consumes = MediaType.APPLICATION_JSON_VALUE)
   public void deleteOperazione(@RequestBody String body) throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("idOperazioneRemove").getAsString();
-    operazioneModel.doDelete(operazioneModel.doRetrieveByKey(id));
+    operazioneModel.doDelete(operazioneModel.doRetrieveByKey(Integer.valueOf(id)));
   }
 
   /**
@@ -109,7 +113,8 @@ public class OperazioneController {
    * @throws SQLException per problemi di esecuzione della query
    * @return conferma/non conferma dell'aggiornamento dell'operazione
    */
-  @GetMapping("/updateOperazione")
+  @PostMapping(value = "/updateOperazione", produces = MediaType.APPLICATION_JSON_VALUE,
+          consumes = MediaType.APPLICATION_JSON_VALUE)
   public boolean updateOperazione(@RequestBody String body) throws SQLException {
 
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
@@ -118,9 +123,9 @@ public class OperazioneController {
     String descrizione = jsonObject.get("updateOperazioneDesc").getAsString();
     String id = jsonObject.get("updateOperazioneId").getAsString();
 
-    OperazioneBean o = operazioneModel.doRetrieveByKey(id);
+    OperazioneBean o = operazioneModel.doRetrieveByKey(Integer.valueOf(id));
 
-    if ( o != null) {
+    if (o != null) {
       Boolean checkTipoOp = tipoOp.matches("[a-z A-Z]+$");
       Boolean checkDesc = descrizione.matches("[a-z A-Z]+$");
       if (checkDesc && checkTipoOp) {
