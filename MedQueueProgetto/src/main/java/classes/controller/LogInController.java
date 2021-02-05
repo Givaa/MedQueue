@@ -75,7 +75,8 @@ public class LogInController extends HttpServlet {
     String phoneNumber = jsonObject.get("numeroTelefono").getAsString();
 
     String dataNascita = jsonObject.get("dataDiNascita").getAsString();
-    Date dataDiNascita = (Date) new SimpleDateFormat("yyyy/mm/gg").parse(dataNascita);
+    java.util.Date tmp = new SimpleDateFormat("yyyy-MM-dd").parse(dataNascita);
+    java.sql.Date dataDiNascita = new Date(tmp.getTime());
 
     String email = jsonObject.get("email").getAsString();
     Boolean checkMail;
@@ -84,13 +85,15 @@ public class LogInController extends HttpServlet {
     Boolean checkPassword;
     checkPassword =
             password.matches("(?=^.{8,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*$");
+    checkCodFisc = codFisc.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
+
 
     Boolean checkPhoneNumber;
-    checkPhoneNumber = phoneNumber.matches("^[\\+][0-9]{10,12}");
+    checkPhoneNumber = phoneNumber.matches("^[0-9]{10,12}");
 
     UtenteBean a = new UtenteBean();
     if (checkName && checkSurname && checkPassword
-            && checkPhoneNumber && checkCodFisc && checkMail) {
+            && checkPhoneNumber && checkCodFisc /*&& checkMail*/) {
       a = new UtenteBean(codFisc, password, nome, cognome,
               dataDiNascita, email, phoneNumber);
       um.doSave(a);
