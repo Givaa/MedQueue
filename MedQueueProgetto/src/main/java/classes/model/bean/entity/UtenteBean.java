@@ -31,7 +31,7 @@ public class UtenteBean {
       String password,
       String nome,
       String cognome,
-      Date dataDiNascita,
+      java.sql.Date dataDiNascita,
       String email,
       String numeroDiTelefono) {
     this.codiceFiscale = codiceFiscale;
@@ -125,7 +125,7 @@ public class UtenteBean {
    *
    * @return data di nascita dell'utente
    */
-  public Date getDataDiNascita() {
+  public java.sql.Date getDataDiNascita() {
     return dataDiNascita;
   }
 
