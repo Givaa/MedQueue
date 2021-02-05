@@ -2,13 +2,14 @@ package classes.controller;
 
 import classes.model.bean.entity.PrenotazioneBean;
 import classes.model.dao.PrenotazioneModel;
-import java.sql.SQLException;
-import java.util.Collection;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import java.sql.SQLException;
+import java.util.Collection;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /** Classe per visualizzare la coda di una struttura. */
 @RestController
@@ -22,7 +23,8 @@ public class ViewCoda {
    * @return Coda della struttura
    * @throws SQLException per problemi di esecuzione della query
    */
-  @PostMapping(value="/visualizzaCoda/{id}", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(value = "/visualizzaCoda/{id}", produces = MediaType.APPLICATION_JSON_VALUE,
+          consumes = MediaType.APPLICATION_JSON_VALUE)
   public Collection<PrenotazioneBean> getAllPrenotazioniByStruttura(@RequestBody String body)
       throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();

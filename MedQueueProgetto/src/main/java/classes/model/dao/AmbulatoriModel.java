@@ -3,7 +3,6 @@ package classes.model.dao;
 import classes.model.DriverManagerConnectionPool;
 import classes.model.bean.entity.AmbulatoriBean;
 import classes.model.interfaces.AmbulatorioDaoInterface;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

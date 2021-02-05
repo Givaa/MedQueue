@@ -3,7 +3,6 @@ package classes.model.dao;
 import classes.model.DriverManagerConnectionPool;
 import classes.model.bean.entity.OperazioneBean;
 import classes.model.interfaces.OperazioneDaoInterface;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,7 +20,7 @@ public class OperazioneModel implements OperazioneDaoInterface {
   /**
    * Prelevamento singola operazione.
    *
-   * @param code chiave primaria dell'operazione
+   * @param id chiave primaria dell'operazione
    * @return Operazione avente quell'id
    * @throws SQLException per problemi di esecuzione della query
    */

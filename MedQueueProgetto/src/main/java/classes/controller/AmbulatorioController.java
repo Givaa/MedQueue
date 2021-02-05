@@ -7,10 +7,10 @@ import classes.model.bean.entity.AmbulatoriBean;
 import classes.model.bean.entity.StrutturaBean;
 import classes.model.dao.AmbulatoriModel;
 import classes.model.dao.StrutturaModel;
-import java.sql.SQLException;
-import java.util.Collection;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import java.sql.SQLException;
+import java.util.Collection;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,14 +32,15 @@ public class AmbulatorioController {
    * @throws SQLException per problemi di esecuzione della query
    * @throws ObjectNotFoundException problemi di oggetto non trovato
    */
-  @PostMapping(value="/ambulatorio/{id}", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(value = "/ambulatorio/{id}", produces = MediaType.APPLICATION_JSON_VALUE,
+          consumes = MediaType.APPLICATION_JSON_VALUE)
   public AmbulatoriBean getById(@RequestBody String body) throws SQLException,
           ObjectNotFoundException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     int id = jsonObject.get("id").getAsInt();
 
     if (id > 0) {
-      AmbulatoriBean a = ambulatorioModel.doRetrieveByKey( id );
+      AmbulatoriBean a = ambulatorioModel.doRetrieveByKey(id);
 
       if (a != null) {
         return a;
@@ -58,7 +59,7 @@ public class AmbulatorioController {
    * @return Collezione di Ambulatori
    * @throws SQLException per problemi di esecuzione della query
    */
-  @PostMapping(value="/ambulatori", produces= MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(value = "/ambulatori", produces = MediaType.APPLICATION_JSON_VALUE)
   public Collection<AmbulatoriBean> getAllAmbulatori(@RequestBody String body)
           throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
@@ -75,7 +76,8 @@ public class AmbulatorioController {
    * @throws ErrorNewObjectException per problemi nell'input
    * @return conferma/non conferma del salvataggio dell'ambulatorio
    */
-  @PostMapping(value="/newAmbulatorio", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(value = "/newAmbulatorio", produces = MediaType.APPLICATION_JSON_VALUE,
+          consumes = MediaType.APPLICATION_JSON_VALUE)
   public boolean newAmbulatorio(@RequestBody String body) throws SQLException,
           ErrorNewObjectException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
@@ -103,7 +105,8 @@ public class AmbulatorioController {
    * @param body corpo della richiesta preso in input
    * @throws SQLException per problemi di esecuzione della query
    */
-  @PostMapping(value="/deleteAmbulatorio", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(value = "/deleteAmbulatorio", produces = MediaType.APPLICATION_JSON_VALUE,
+          consumes = MediaType.APPLICATION_JSON_VALUE)
   public void deleteAmbulatorio(@RequestBody String body) throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("idAmbulatorioRemove").getAsString();
@@ -118,7 +121,8 @@ public class AmbulatorioController {
    * @throws SQLException per problemi di esecuzione della query
    * @return conferma/non conferma dell'aggiornamento dell'ambulatorio
    */
-  @PostMapping(value="/updateAmbulatorio", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(value = "/updateAmbulatorio", produces = MediaType.APPLICATION_JSON_VALUE,
+          consumes = MediaType.APPLICATION_JSON_VALUE)
   public boolean updateAmbulatorio(@RequestBody String body) throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("idAmbulatorioUpdate").getAsString();
@@ -127,7 +131,7 @@ public class AmbulatorioController {
     AmbulatoriBean a = ambulatorioModel.doRetrieveByKey(Integer.valueOf(id));
 
 
-    if ( a != null) {
+    if (a != null) {
       StrutturaBean strutturaBean;
       strutturaBean = strutturaModel.doRetrieveByKey(Integer.valueOf(idStruttura));
 

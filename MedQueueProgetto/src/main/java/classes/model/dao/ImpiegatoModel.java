@@ -3,7 +3,6 @@ package classes.model.dao;
 import classes.model.DriverManagerConnectionPool;
 import classes.model.bean.entity.ImpiegatoBean;
 import classes.model.interfaces.ImpiegatoDaoInterface;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

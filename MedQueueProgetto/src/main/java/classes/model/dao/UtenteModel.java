@@ -3,7 +3,6 @@ package classes.model.dao;
 import classes.model.DriverManagerConnectionPool;
 import classes.model.bean.entity.UtenteBean;
 import classes.model.interfaces.UtenteDaoInterface;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -4,13 +4,11 @@ import classes.controller.exception.ErrorNewObjectException;
 import classes.controller.exception.ObjectNotFoundException;
 import classes.model.bean.entity.StrutturaBean;
 import classes.model.dao.StrutturaModel;
-import java.sql.SQLException;
-import java.util.Collection;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import java.sql.SQLException;
+import java.util.Collection;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +26,8 @@ public class StrutturaController {
    * @throws SQLException per problemi di esecuzione della query
    * @throws ObjectNotFoundException per problemi di oggetto non trovato
    */
-  @PostMapping(value="/struttura/{id}", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(value = "/struttura/{id}", produces = MediaType.APPLICATION_JSON_VALUE,
+          consumes = MediaType.APPLICATION_JSON_VALUE)
   public StrutturaBean getStrutturaById(@RequestBody String body)
       throws SQLException, ObjectNotFoundException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
@@ -48,7 +47,8 @@ public class StrutturaController {
    * @return Collezione di Strutture
    * @throws SQLException per problemi di esecuzione della query
    */
-  @PostMapping(value="/strutture", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(value = "/strutture", produces = MediaType.APPLICATION_JSON_VALUE,
+          consumes = MediaType.APPLICATION_JSON_VALUE)
   public Collection<StrutturaBean> getAllStrutture(@RequestBody String body) throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String order = jsonObject.get("ordineStrutture").getAsString();
@@ -62,7 +62,8 @@ public class StrutturaController {
    * @throws SQLException per problemi di esecuzione della query
    * @return conferma/non conferma del salvataggio della struttura
    */
-  @PostMapping(value="/newStruttura", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(value = "/newStruttura", produces = MediaType.APPLICATION_JSON_VALUE,
+          consumes = MediaType.APPLICATION_JSON_VALUE)
   public boolean newStruttura(@RequestBody String body) throws SQLException,
           ErrorNewObjectException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
@@ -90,7 +91,8 @@ public class StrutturaController {
    * @param body corpo della richiesta preso in input
    * @throws SQLException per problemi di esecuzione della query
    */
-  @PostMapping(value="/deleteStruttura", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(value = "/deleteStruttura", produces = MediaType.APPLICATION_JSON_VALUE,
+          consumes = MediaType.APPLICATION_JSON_VALUE)
   public void deleteStruttura(@RequestBody String body) throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("deleteStrutturaId").getAsString();
@@ -105,7 +107,8 @@ public class StrutturaController {
    * @throws SQLException per problemi di esecuzione della query
    * @return conferma/non conferma della modifica della struttura
    */
-  @PostMapping(value="/updateStruttura", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(value = "/updateStruttura", produces = MediaType.APPLICATION_JSON_VALUE,
+          consumes = MediaType.APPLICATION_JSON_VALUE)
   public boolean updateStruttura(@RequestBody String body) throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("updateStrutturaId").getAsString();

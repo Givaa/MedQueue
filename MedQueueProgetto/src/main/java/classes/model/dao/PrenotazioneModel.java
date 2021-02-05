@@ -3,7 +3,6 @@ package classes.model.dao;
 import classes.model.DriverManagerConnectionPool;
 import classes.model.bean.entity.PrenotazioneBean;
 import classes.model.interfaces.PrenotazioneDaoInterface;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -283,6 +282,7 @@ public class PrenotazioneModel implements PrenotazioneDaoInterface {
    * @return Collezione che rappresenta la coda della struttura
    * @throws SQLException per problemi di esecuzione della query
    */
+  @Override
   public Collection<PrenotazioneBean> getCodaStruttura(int idStruttura) throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;

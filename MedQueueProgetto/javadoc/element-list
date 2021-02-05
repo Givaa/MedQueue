@@ -4,4 +4,5 @@ classes.MedQueue
 classes.model
 classes.model.bean.entity
 classes.model.dao
+classes.model.interfaces
 config
