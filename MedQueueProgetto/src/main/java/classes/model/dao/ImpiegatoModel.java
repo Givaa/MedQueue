@@ -90,10 +90,10 @@ public class ImpiegatoModel implements ImpiegatoDaoInterface {
       ps = con.prepareStatement(selectSql);
 
       ResultSet rs = ps.executeQuery();
-      ImpiegatoBean tmp = new ImpiegatoBean();
+
 
       while (rs.next()) {
-
+        ImpiegatoBean tmp = new ImpiegatoBean();
         tmp.setCodiceFiscale(rs.getString("codiceFiscale"));
         tmp.setPassword(rs.getString("password"));
         tmp.setNome(rs.getString("nome"));

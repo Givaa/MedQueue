@@ -88,10 +88,10 @@ public class PrenotazioneModel implements PrenotazioneDaoInterface {
       ps = con.prepareStatement(selectSql);
 
       ResultSet rs = ps.executeQuery();
-      PrenotazioneBean tmp = new PrenotazioneBean();
+
 
       while (rs.next()) {
-
+        PrenotazioneBean tmp = new PrenotazioneBean();
         tmp.setId(rs.getInt("id"));
         tmp.setOra(rs.getString("ora"));
         tmp.setDataPrenotazione(rs.getDate("data"));
