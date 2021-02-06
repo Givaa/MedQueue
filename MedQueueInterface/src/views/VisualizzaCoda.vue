@@ -8,103 +8,63 @@
         </ion-header>
         <div id="container">
           <strong class="capitalize">Visualizza Coda</strong>
-          <p>Coda ufficio</p>
+          <ion-item>
+          <h2>Coda ufficio</h2>
+          </ion-item>
+          <ion-item>
+            <label for="struttura">Seleziona la struttura:</label>
+            <ion-select @click="updateStrutture" id="struttura" placeholder="Struttura">
+              <ion-select-option v-bind:key="struttura" v-for="struttura in strutture">{{struttura}}</ion-select-option>
+            </ion-select>
+          </ion-item>
         </div>
       </ion-content>
   </ion-page>
 </template>
 
-<script lang="ts">
+<script >
+import prenotazioniAxios from '../axios/prenotazioni'
 import {
-  IonContent,
-  IonIcon,
   IonItem,
-  IonLabel,
-  IonList,
-  IonListHeader,
-  IonRouterOutlet,
-  IonSplitPane,
-  IonButtons,
+  IonContent,
   IonHeader,
-  IonMenu,
-  IonMenuButton,
-  IonMenuToggle,
   IonPage,
   IonTitle,
   IonToolbar
 } from '@ionic/vue';
-import {ref} from "vue";
-import {
-  homeOutline,
-  homeSharp,
-  listOutline,
-  listSharp,
-  logInOutline,
-  logInSharp,
-  pencilOutline,
-  pencilSharp
-} from "ionicons/icons";
-import {useRoute} from "vue-router";
+import loginAxios from "@/axios/login";
+import router from "@/router";
 
 export default {
   name: "visualizzaCoda",
   components: {
+    IonItem,
     IonContent,
     IonHeader,
     IonPage,
     IonTitle,
     IonToolbar
   },
-  setup() {
-    const selectedIndex = ref(0);
-    const appPages = [
-      {
-        title:"Home",
-        url:"/Home",
-        iosIcon: homeOutline,
-        mdIcon: homeSharp
-      },
-      /**{
-        title: 'Log In',
-        url: '/Accesso',
-        iosIcon: logInOutline,
-        mdIcon: logInSharp
-      },
-       {
-        title: 'Sign in',
-        url: '/Registrazione',
-        iosIcon: pencilOutline,
-        mdIcon: pencilSharp
-      },*/
-      {
-        title: 'Visualizza Coda',
-        url: '/VisualizzazioneCoda',
-        iosIcon: listOutline,
-        mdIcon: listSharp
+  data(){
+    return{
+      strutture: [],
+      order: "data"
+    };
+  },
+  methods:{
+
+    updateStrutture(){
+      prenotazioniAxios.getPrenotazioniByStruttura(this.order)
+          .then((response) => {
+            if(response === ''){
+              this.presentAlert();
+              return null;
+            }else {
+              console.log(response);
+            }
+          })
       }
-    ];
-
-    const path = window.location.pathname.split('folder/')[1];
-    if (path !== undefined) {
-      selectedIndex.value = appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
-
-    const route = useRoute();
-
-    return {
-      selectedIndex,
-      appPages,
-      homeOutline,
-      homeSharp,
-      logInOutline,
-      logInSharp,
-      pencilOutline,
-      pencilSharp,
-      listOutline,
-      listSharp,
-      isSelected: (url: string) => url === route.path ? 'selected' : ''
-    }
-  }
 
 }
 </script>
