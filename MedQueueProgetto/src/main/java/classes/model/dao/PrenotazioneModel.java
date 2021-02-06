@@ -288,7 +288,7 @@ public class PrenotazioneModel implements PrenotazioneDaoInterface {
     PreparedStatement preparedStatement = null;
 
     Collection<PrenotazioneBean> result = new LinkedList<PrenotazioneBean>();
-    PrenotazioneBean tmp = new PrenotazioneBean();
+
 
     String selectPrenotazioniSql = "SELECT * FROM " + nomeTabella
             + " WHERE idStruttura = ? ORDER BY ora";
@@ -301,6 +301,7 @@ public class PrenotazioneModel implements PrenotazioneDaoInterface {
       ResultSet rs = preparedStatement.executeQuery();
 
       while (rs.next()) {
+        PrenotazioneBean tmp = new PrenotazioneBean();
         tmp.setId(rs.getInt("id"));
         tmp.setOra(rs.getString("ora"));
         tmp.setDataPrenotazione(rs.getDate("data"));

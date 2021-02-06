@@ -4,9 +4,9 @@ import axios from 'axios';
 //E' solo un test
 
 export default {
-    getPrenotazioniByStruttura(ordinePrenotazioni){
-        return axios.post('http://localhost:8080/prenotazioni', {
-            ordinePrenotazioni
+    getPrenotazioniByStruttura(getAllPrenotazionyByStruttura){
+        return axios.post('http://localhost:8080/visualizzaCoda/{id}', {
+            getAllPrenotazionyByStruttura
         }, {
             crossDomain:true,
             headers:{

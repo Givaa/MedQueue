@@ -12,11 +12,23 @@
           <h2>Coda ufficio</h2>
           </ion-item>
           <ion-item>
-            <label for="struttura">Seleziona la struttura:</label>
-            <ion-select @click="updateStrutture" id="struttura" placeholder="Struttura">
-              <ion-select-option v-bind:key="struttura" v-for="struttura in strutture">{{struttura}}</ion-select-option>
+            <label>Seleziona la struttura:</label>
+            <ion-select @click="updateStrutture" placeholder="Struttura" v-bind="selectedCod">
+              <ion-select-option @click="updateStrutture" id="codice" v-bind:key="codice" v-for="codice in cod" >{{codice}}</ion-select-option>
             </ion-select>
           </ion-item>
+          <div class="titolo1">Data</div>
+          <div class="titolo2">Ora</div>
+          <div class="titolo3">Tipo </div>
+          <div class="colonna1">
+            <div id="data" v-bind:key="data" v-for="data in date" >{{data}}</div>
+          </div>
+          <div class="colonna2">
+            <div id="ora" v-bind:key="ora" v-for="ora in ore" >{{ora}}</div>
+          </div>
+          <div class="colonna3">
+            <div id="prenotazione" v-bind:key="prenotazione" v-for="prenotazione in prenotazioni" >{{prenotazione}}</div>
+          </div>
         </div>
       </ion-content>
   </ion-page>
@@ -25,6 +37,8 @@
 <script >
 import prenotazioniAxios from '../axios/prenotazioni'
 import {
+  IonSelect,
+  IonSelectOption,
   IonItem,
   IonContent,
   IonHeader,
@@ -32,12 +46,12 @@ import {
   IonTitle,
   IonToolbar
 } from '@ionic/vue';
-import loginAxios from "@/axios/login";
-import router from "@/router";
 
 export default {
   name: "visualizzaCoda",
   components: {
+    IonSelect,
+    IonSelectOption,
     IonItem,
     IonContent,
     IonHeader,
@@ -48,19 +62,30 @@ export default {
   data(){
     return{
       strutture: [],
-      order: "data"
+      cod: [1,2],
+      ore:[],
+      date:[],
+      prenotazioni:[],
+      selectedCod:1
     };
   },
   methods:{
 
     updateStrutture(){
-      prenotazioniAxios.getPrenotazioniByStruttura(this.order)
+      prenotazioniAxios.getPrenotazioniByStruttura(this.selectedCod)
           .then((response) => {
             if(response === ''){
               this.presentAlert();
               return null;
             }else {
-              console.log(response);
+              this.strutture = response;
+
+              for (let i=0; i<this.strutture.length; i++){
+                this.ore[i] = this.strutture[i].ora;
+                this.date[i] = this.strutture[i].dataPrenotazione;
+                this.prenotazioni[i] =  this.strutture[i].idOperazione;
+              }
+              console.log(this.ore, this.date, this.prenotazioni);
             }
           })
       }
@@ -70,8 +95,35 @@ export default {
 </script>
 
 <style scoped>
-#page{
-  background-color: blue;
+
+div.colonna1{
+  float: left;
+  margin-right: 33%;
+  margin-left: 9%;
+}
+
+div.colonna2{
+  float: left;
+  margin-right: 33%;
+}
+
+div.colonna3{
+  float: left;
+}
+
+div.titolo1{
+  float: left;
+  margin-right: 36%;
+  margin-left: 10%;
+}
+
+div.titolo2{
+  float: left;
+  margin-right: 33%;
+}
+
+div.titolo3{
+  float: left;
 }
 #container {
   text-align: center;
