@@ -194,15 +194,29 @@ public class ImpiegatoBean {
 
   @Override
   public String toString() {
-    return "ImpiegatoBean{" +
-            "codicefiscale='" + codicefiscale + '\'' +
-            ", password='" + password + '\'' +
-            ", nome='" + nome + '\'' +
-            ", cognome='" + cognome + '\'' +
-            ", dataDiNascita=" + dataDiNascita +
-            ", indirizzoEmail='" + indirizzoEmail + '\'' +
-            ", numeroDiTelefono='" + numeroDiTelefono + '\'' +
-            ", idStruttura=" + idStruttura +
-            '}';
+    return "ImpiegatoBean{"
+        + "codicefiscale='"
+        + codicefiscale
+        + '\''
+        + ", password='"
+        + password
+        + '\''
+        + ", nome='"
+        + nome
+        + '\''
+        + ", cognome='"
+        + cognome
+        + '\''
+        + ", dataDiNascita="
+        + dataDiNascita
+        + ", indirizzoEmail='"
+        + indirizzoEmail
+        + '\''
+        + ", numeroDiTelefono='"
+        + numeroDiTelefono
+        + '\''
+        + ", idStruttura="
+        + idStruttura
+        + '}';
   }
 }

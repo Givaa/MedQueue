@@ -8,110 +8,135 @@
         </ion-header>
         <div id="container">
           <strong class="capitalize">Visualizza Coda</strong>
-          <p>Coda ufficio</p>
+          <ion-item>
+          <h2>Coda ufficio</h2>
+          </ion-item>
+          <ion-item>
+            <label>Seleziona la struttura:</label>
+            <ion-select @click="updateStrutture" placeholder="Struttura" v-bind="selectedCod">
+              <ion-select-option id="codice" v-bind:key="codice" v-for="codice in cod" >{{codice}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div class="titolo1">Data</div>
+          <div class="titolo2">Ora</div>
+          <div class="titolo3">Tipo </div>
+          <div class="colonna1">
+            <div id="data" v-bind:key="data" v-for="data in date" >{{data}}</div>
+          </div>
+          <div class="colonna2">
+            <div id="ora" v-bind:key="ora" v-for="ora in ore" >{{ora}}</div>
+          </div>
+          <div class="colonna3">
+            <div id="prenotazione" v-bind:key="prenotazione" v-for="prenotazione in nomePrenotazioni" >{{prenotazione}}</div>
+          </div>
         </div>
       </ion-content>
   </ion-page>
 </template>
 
-<script lang="ts">
+<script >
+import prenotazioniAxios from '../axios/prenotazioni'
+import operazioneAxios from '../axios/Operazione'
 import {
-  IonContent,
-  IonIcon,
+  IonSelect,
+  IonSelectOption,
   IonItem,
-  IonLabel,
-  IonList,
-  IonListHeader,
-  IonRouterOutlet,
-  IonSplitPane,
-  IonButtons,
+  IonContent,
   IonHeader,
-  IonMenu,
-  IonMenuButton,
-  IonMenuToggle,
   IonPage,
   IonTitle,
   IonToolbar
 } from '@ionic/vue';
-import {ref} from "vue";
-import {
-  homeOutline,
-  homeSharp,
-  listOutline,
-  listSharp,
-  logInOutline,
-  logInSharp,
-  pencilOutline,
-  pencilSharp
-} from "ionicons/icons";
-import {useRoute} from "vue-router";
 
 export default {
   name: "visualizzaCoda",
   components: {
+    IonSelect,
+    IonSelectOption,
+    IonItem,
     IonContent,
     IonHeader,
     IonPage,
     IonTitle,
     IonToolbar
   },
-  setup() {
-    const selectedIndex = ref(0);
-    const appPages = [
-      {
-        title:"Home",
-        url:"/Home",
-        iosIcon: homeOutline,
-        mdIcon: homeSharp
+  data(){
+    return{
+      strutture: [],
+      cod: [1,2],
+      ore:[],
+      date:[],
+      prenotazioni:[],
+      nomePrenotazioni: [],
+      selectedCod:1
+    };
+  },
+  methods:{
+
+    updateStrutture(){
+      prenotazioniAxios.getPrenotazioniByStruttura(this.selectedCod)
+          .then((response) => {
+            if(response === ''){
+              this.presentAlert();
+              return null;
+            }else {
+              this.strutture = response;
+
+              for (let i=0; i<this.strutture.length; i++){
+                this.ore[i] = this.strutture[i].ora;
+                this.date[i] = this.strutture[i].dataPrenotazione;
+                this.prenotazioni[i] =  this.strutture[i].idOperazione;
+              }
+              this.operazioneString();
+            }
+          })
       },
-      /**{
-        title: 'Log In',
-        url: '/Accesso',
-        iosIcon: logInOutline,
-        mdIcon: logInSharp
-      },
-       {
-        title: 'Sign in',
-        url: '/Registrazione',
-        iosIcon: pencilOutline,
-        mdIcon: pencilSharp
-      },*/
-      {
-        title: 'Visualizza Coda',
-        url: '/VisualizzazioneCoda',
-        iosIcon: listOutline,
-        mdIcon: listSharp
+
+      operazioneString(){
+      for(let i=0; i<this.prenotazioni.length; i++) {
+        operazioneAxios.getOperazioneBtId(this.prenotazioni[i])
+        .then((response) =>{
+          this.nomePrenotazioni[i] = response.tipoOperazione;
+        })
       }
-    ];
-
-    const path = window.location.pathname.split('folder/')[1];
-    if (path !== undefined) {
-      selectedIndex.value = appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
+      console.log(this.nomePrenotazioni);
+      }
     }
-
-    const route = useRoute();
-
-    return {
-      selectedIndex,
-      appPages,
-      homeOutline,
-      homeSharp,
-      logInOutline,
-      logInSharp,
-      pencilOutline,
-      pencilSharp,
-      listOutline,
-      listSharp,
-      isSelected: (url: string) => url === route.path ? 'selected' : ''
-    }
-  }
 
 }
 </script>
 
 <style scoped>
-#page{
-  background-color: blue;
+
+div.colonna1{
+  float: left;
+  margin-right: 33%;
+  margin-left: 9%;
+}
+
+div.colonna2{
+  float: left;
+  margin-right: 33%;
+}
+
+div.colonna3{
+  float: left;
+  margin-right: 5%;
+}
+
+div.titolo1{
+  float: left;
+  margin-right: 36%;
+  margin-left: 10%;
+}
+
+div.titolo2{
+  float: left;
+  margin-right: 38%;
+}
+
+div.titolo3{
+  float: left;
 }
 #container {
   text-align: center;

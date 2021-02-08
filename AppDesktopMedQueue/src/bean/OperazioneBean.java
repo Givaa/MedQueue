@@ -78,11 +78,15 @@ public class OperazioneBean {
 
   @Override
   public String toString() {
-    return "OperazioneBean{" +
-            "id=" + id +
-            ", tipoOperazione='" + tipoOperazione + '\'' +
-            ", descrizione='" + descrizione + '\'' +
-            '}';
+    return "OperazioneBean{"
+        + "id="
+        + id
+        + ", tipoOperazione='"
+        + tipoOperazione
+        + '\''
+        + ", descrizione='"
+        + descrizione
+        + '\''
+        + '}';
   }
-
 }

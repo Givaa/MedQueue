@@ -83,12 +83,10 @@ public class AmbulatoriModel implements AmbulatorioDaoInterface {
 
       con = DriverManagerConnectionPool.getConnection();
       ps = con.prepareStatement(selectSql);
-
       ResultSet rs = ps.executeQuery();
-      AmbulatoriBean tmp = new AmbulatoriBean();
 
       while (rs.next()) {
-
+        AmbulatoriBean tmp = new AmbulatoriBean();
         tmp.setId(rs.getInt("id"));
         tmp.setNome(rs.getString("nome"));
         tmp.setIdStruttura(rs.getInt("idStruttura"));

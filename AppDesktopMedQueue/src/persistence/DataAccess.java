@@ -4,7 +4,6 @@ import bean.ImpiegatoBean;
 import bean.OperazioneBean;
 import bean.PrenotazioneBean;
 import bean.StrutturaBean;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,28 +11,31 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /** Classe che permette operazioni sul database. */
-public class DataAccess implements DaoInterface{
+public class DataAccess implements DaoInterface {
 
-  public DataAccess(){}
+  /**
+   * Metodo che ci permettere di ottenere una prenotazione dal database in base all'id.
+   */
+  public DataAccess() {}
 
   /**
    * Metodo che ci permettere di ottenere una prenotazione dal database in base all'id.
    *
    * @param id id della prenotazione che si vuole prelevare dalla collezione Prenotazione
-   * @return prenotazione della collezione Prenotazione che ha come id, l'id passato come parametro al metodo
-   *
+   * @return prenotazione della collezione Prenotazione che ha come id, l'id passato come parametro
+   *     al metodo
    */
   public PrenotazioneBean getPrenotazione(int id) {
-    PrenotazioneBean prenotazione=null;
-    Connection con=null;
+    PrenotazioneBean prenotazione = null;
+    Connection con = null;
     try {
       String sql = "SELECT * FROM MedQueue.Prenotazione WHERE Prenotazione.Id = ?";
-      con=DriverManagerConnectionPool.getConnection();
+      con = DriverManagerConnectionPool.getConnection();
       PreparedStatement query = con.prepareStatement(sql);
       query.setInt(1, id);
       ResultSet rs = query.executeQuery();
       while (rs.next()) {
-        prenotazione=new PrenotazioneBean();
+        prenotazione = new PrenotazioneBean();
         prenotazione.setId(rs.getInt(1));
         prenotazione.setData(rs.getDate(2));
         prenotazione.setTime(rs.getTime(3));
@@ -56,14 +58,15 @@ public class DataAccess implements DaoInterface{
    * Metodo che ci permette di ottenere una struttura ospedaliera dal database in base all'id.
    *
    * @param id id della struttura ospedaliera che si vuole prelevare dalla collezione Struttura
-   * @return struttura ospedaliera della collezione Struttura che ha come id, l'id passato come parametro
+   * @return struttura ospedaliera della collezione Struttura che ha come id, l'id passato come
+   *     parametro
    */
   public StrutturaBean getStruttura(int id) {
     StrutturaBean struttura = null;
-    Connection con=null;
+    Connection con = null;
     try {
       String sql = "SELECT * FROM MedQueue.Struttura WHERE Struttura.Id = ?";
-      con=DriverManagerConnectionPool.getConnection();
+      con = DriverManagerConnectionPool.getConnection();
       PreparedStatement query = con.prepareStatement(sql);
       query.setInt(1, id);
       ResultSet rs = query.executeQuery();
@@ -89,19 +92,20 @@ public class DataAccess implements DaoInterface{
    * all'id.
    *
    * @param id id dell'operazione che si vuole prelevare dalla collezione Operazione
-   * @return operazione della collezione Operazione che ha come id, l'id passato come parametro al metodo
+   * @return operazione della collezione Operazione che ha come id, l'id passato come parametro al
+   *     metodo
    */
   public OperazioneBean getOperazione(int id) {
     OperazioneBean operazione = null;
-    Connection con=null;
+    Connection con = null;
     try {
       String sql = "SELECT * FROM MedQueue.Operazione WHERE Operazione.Id = ?";
-      con=DriverManagerConnectionPool.getConnection();
+      con = DriverManagerConnectionPool.getConnection();
       PreparedStatement query = con.prepareStatement(sql);
       query.setInt(1, id);
       ResultSet rs = query.executeQuery();
       while (rs.next()) {
-        operazione= new OperazioneBean();
+        operazione = new OperazioneBean();
         operazione.setId(rs.getInt(1));
         operazione.setTipoOperazione(rs.getString(2));
         operazione.setDescrizione(rs.getString(3));
@@ -119,15 +123,17 @@ public class DataAccess implements DaoInterface{
   /**
    * Metodo che restituisce un impiegato di una struttura ospedaliera in base al codice fiscale.
    *
-   * @param codicefiscale codice fiscale dell'impiegato che si vuole prelevare dalla collezione Impiegato
-   * @return impiegato della collezione Impiegato che ha come codice fiscale, il codice fiscale passato come parametro al metodo
+   * @param codicefiscale codice fiscale dell'impiegato che si vuole prelevare dalla collezione
+   *     Impiegato
+   * @return impiegato della collezione Impiegato che ha come codice fiscale, il codice fiscale
+   *     passato come parametro al metodo
    */
   public ImpiegatoBean getImpiegato(String codicefiscale) {
     ImpiegatoBean impiegato = null;
-    Connection con=null;
+    Connection con = null;
     try {
       String sql = "SELECT * FROM MedQueue.Impiegato WHERE Impiegato.codiceFiscale = ?";
-      con=DriverManagerConnectionPool.getConnection();
+      con = DriverManagerConnectionPool.getConnection();
       PreparedStatement query = con.prepareStatement(sql);
       query.setString(1, codicefiscale);
       ResultSet rs = query.executeQuery();
@@ -159,16 +165,14 @@ public class DataAccess implements DaoInterface{
    */
   public ArrayList<OperazioneBean> getOperazioni() {
     ArrayList<OperazioneBean> operazioni = new ArrayList<OperazioneBean>();
-    Connection con=null;
+    Connection con = null;
     try {
       String sql = "SELECT * FROM MedQueue.Operazione";
-      con=DriverManagerConnectionPool.getConnection();
+      con = DriverManagerConnectionPool.getConnection();
       PreparedStatement query = con.prepareStatement(sql);
       ResultSet rs = query.executeQuery();
       while (rs.next()) {
-        operazioni.add(
-            new OperazioneBean(
-               rs.getInt(1), rs.getString(2), rs.getString(3)));
+        operazioni.add(new OperazioneBean(rs.getInt(1), rs.getString(2), rs.getString(3)));
       }
       query.close();
       rs.close();
@@ -189,10 +193,10 @@ public class DataAccess implements DaoInterface{
    */
   public int deletePrenotazione(int id) {
     int delete = 0;
-    Connection con=null;
+    Connection con = null;
     try {
       String sql = "DELETE Prenotazione FROM MedQueue.Prenotazione WHERE Prenotazione.Id = ?";
-      con=DriverManagerConnectionPool.getConnection();
+      con = DriverManagerConnectionPool.getConnection();
       PreparedStatement query = con.prepareStatement(sql);
       query.setInt(1, id);
       delete = query.executeUpdate();
@@ -211,18 +215,19 @@ public class DataAccess implements DaoInterface{
    *
    * @param idOperazione id dell'operazione della collezione Operazione
    * @param idStruttura id della struttura della collezione Struttura
-   * @return size delle prenotazioni della collezione Prenotazione che hanno come idStruttura l'idStruttura
-   * passato come parametro, come idOperazione l'idOperazione passato come parametro e con la convalida a true
+   * @return size delle prenotazioni della collezione Prenotazione che hanno come idStruttura
+   *     l'idStruttura passato come parametro, come idOperazione l'idOperazione passato come
+   *     parametro e con la convalida a true
    */
   public int numPrenotazioni(int idOperazione, int idStruttura) {
     int count = 0;
-    Connection con=null;
+    Connection con = null;
     try {
       String sql =
           "SELECT * FROM MedQueue.Prenotazione WHERE Prenotazione.convalida = 1 "
               + "AND Prenotazione.idOperazione = ?"
               + " AND Prenotazione.idStruttura = ?";
-      con=DriverManagerConnectionPool.getConnection();
+      con = DriverManagerConnectionPool.getConnection();
       PreparedStatement query = con.prepareStatement(sql);
       query.setInt(1, idOperazione);
       query.setInt(2, idStruttura);
@@ -246,19 +251,17 @@ public class DataAccess implements DaoInterface{
    * @param idOperazione id dell'operazione della collezione Operazione
    * @param idStruttura id della struttura della collezione Struttura
    * @return prenotazione della collezione Prenotazione che hanno come idStruttura l'idStruttura
-   * passato come parametro, come idOperazione l'idOperazione passato come parametro, con convalida a true
-   * ed e la prima in odrine d'orario
-   *
-   *
+   *     passato come parametro, come idOperazione l'idOperazione passato come parametro, con
+   *     convalida a true ed e la prima in odrine d'orario
    */
   public PrenotazioneBean serviPrenotazione(int idOperazione, int idStruttura) {
     PrenotazioneBean prenotazione = null;
-    Connection con=null;
+    Connection con = null;
     try {
       String sql =
           "SELECT * FROM MedQueue.Prenotazione WHERE Prenotazione.convalida = 1 AND "
               + "Prenotazione.idOperazione = ? AND Prenotazione.idStruttura = ? ORDER BY ora";
-      con=DriverManagerConnectionPool.getConnection();
+      con = DriverManagerConnectionPool.getConnection();
       PreparedStatement query = con.prepareStatement(sql);
       query.setInt(1, idOperazione);
       query.setInt(2, idStruttura);

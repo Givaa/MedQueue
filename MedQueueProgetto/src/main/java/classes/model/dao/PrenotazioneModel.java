@@ -88,10 +88,10 @@ public class PrenotazioneModel implements PrenotazioneDaoInterface {
       ps = con.prepareStatement(selectSql);
 
       ResultSet rs = ps.executeQuery();
-      PrenotazioneBean tmp = new PrenotazioneBean();
+
 
       while (rs.next()) {
-
+        PrenotazioneBean tmp = new PrenotazioneBean();
         tmp.setId(rs.getInt("id"));
         tmp.setOra(rs.getString("ora"));
         tmp.setDataPrenotazione(rs.getDate("data"));
@@ -128,7 +128,7 @@ public class PrenotazioneModel implements PrenotazioneDaoInterface {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
-    String insertSql = "INSERT INTO " + nomeTabella + " VALUES (?, ?, ?, ?, ?, ?)";
+    String insertSql = "INSERT INTO " + nomeTabella + "(data, ora, convalida, codiceFiscale, idOperazione, idStruttura) VALUES (?, ?, ?, ?, ?, ?)";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();
@@ -288,7 +288,7 @@ public class PrenotazioneModel implements PrenotazioneDaoInterface {
     PreparedStatement preparedStatement = null;
 
     Collection<PrenotazioneBean> result = new LinkedList<PrenotazioneBean>();
-    PrenotazioneBean tmp = new PrenotazioneBean();
+
 
     String selectPrenotazioniSql = "SELECT * FROM " + nomeTabella
             + " WHERE idStruttura = ? ORDER BY ora";
@@ -301,6 +301,7 @@ public class PrenotazioneModel implements PrenotazioneDaoInterface {
       ResultSet rs = preparedStatement.executeQuery();
 
       while (rs.next()) {
+        PrenotazioneBean tmp = new PrenotazioneBean();
         tmp.setId(rs.getInt("id"));
         tmp.setOra(rs.getString("ora"));
         tmp.setDataPrenotazione(rs.getDate("data"));

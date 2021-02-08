@@ -85,10 +85,10 @@ public class OperazioneModel implements OperazioneDaoInterface {
       ps = con.prepareStatement(selectSql);
 
       ResultSet rs = ps.executeQuery();
-      OperazioneBean tmp = new OperazioneBean();
+
 
       while (rs.next()) {
-
+        OperazioneBean tmp = new OperazioneBean();
         tmp.setId(rs.getInt("id"));
         tmp.setTipoOperazione(rs.getString("tipoOperazione"));
         tmp.setDescrizione(rs.getString("descrizione"));

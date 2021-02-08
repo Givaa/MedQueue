@@ -51,8 +51,13 @@ public class StrutturaController {
           consumes = MediaType.APPLICATION_JSON_VALUE)
   public Collection<StrutturaBean> getAllStrutture(@RequestBody String body) throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
-    String order = jsonObject.get("ordineStrutture").getAsString();
-    return strutturaModel.doRetrieveAll(order);
+    if(!body.equals("{}")) {
+      String order = jsonObject.get("ordineStrutture").getAsString();
+      return strutturaModel.doRetrieveAll(order);
+    }else {
+      String order = "";
+      return strutturaModel.doRetrieveAll(order);
+    }
   }
 
   /**

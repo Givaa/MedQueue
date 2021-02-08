@@ -1,10 +1,15 @@
 package presentazione;
 
 import bean.PrenotazioneBean;
+import javax.swing.JFrame;
 
-import javax.swing.*;
-
+/** Interfaccia per la visualizzazione delle prenotazioni. */
 public interface ShowPrenotazioneInterface {
-
-    public JFrame showPrenotation(PrenotazioneBean p);
+  /**
+   * Restituisce il frame per mostrare le prenotazioni.
+   *
+   * @param p bean della prenotazione
+   * @return JFrame per rappresentare le prenotazioni.
+   */
+  public JFrame showPrenotation(PrenotazioneBean p);
 }

@@ -88,9 +88,10 @@ public class UtenteModel implements UtenteDaoInterface {
       ps = con.prepareStatement(selectSql);
 
       ResultSet rs = ps.executeQuery();
-      UtenteBean tmp = new UtenteBean();
+
 
       while (rs.next()) {
+        UtenteBean tmp = new UtenteBean();
         tmp.setCodiceFiscale(rs.getString("codiceFiscale"));
         tmp.setPassword(rs.getString("password"));
         tmp.setNome(rs.getString("nome"));

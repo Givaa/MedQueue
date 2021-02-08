@@ -75,7 +75,6 @@ export default {
           return null;
         }else {
           sessionStorage.setItem("codiceFiscale", response.codiceFiscale);
-          sessionStorage.setItem("password", response.password);
           sessionStorage.setItem("nome", response.nome);
           sessionStorage.setItem("cognome", response.cognome);
           sessionStorage.setItem("dataDiNascita", response.dataDiNascita);
