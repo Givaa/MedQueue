@@ -2,6 +2,7 @@ package classes.controller;
 
 
 import classes.controller.exception.ErrorNewObjectException;
+import classes.controller.exception.InvalidKeyException;
 import classes.controller.exception.ObjectNotFoundException;
 import classes.model.bean.entity.AmbulatoriBean;
 import classes.model.bean.entity.StrutturaBean;
@@ -31,11 +32,12 @@ public class AmbulatorioController {
    * @return Ambulatorio avente l'id passato
    * @throws SQLException per problemi di esecuzione della query
    * @throws ObjectNotFoundException problemi di oggetto non trovato
+   * @throws InvalidKeyException per problemi con la chiave primaria
    */
   @PostMapping(value = "/ambulatorio/{id}", produces = MediaType.APPLICATION_JSON_VALUE,
           consumes = MediaType.APPLICATION_JSON_VALUE)
   public AmbulatoriBean getById(@RequestBody String body) throws SQLException,
-          ObjectNotFoundException {
+          ObjectNotFoundException, InvalidKeyException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     int id = jsonObject.get("id").getAsInt();
 
@@ -47,9 +49,9 @@ public class AmbulatorioController {
       } else {
         throw new ObjectNotFoundException(a);
       }
+    } else {
+      throw new InvalidKeyException("Id invalido, occorre un id maggiore di 0");
     }
-
-    return null;
   }
 
   /**

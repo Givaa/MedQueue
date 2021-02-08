@@ -1,6 +1,7 @@
 package classes.controller;
 
 import classes.controller.exception.ErrorNewObjectException;
+import classes.controller.exception.InvalidKeyException;
 import classes.controller.exception.ObjectNotFoundException;
 import classes.model.bean.entity.OperazioneBean;
 import classes.model.dao.OperazioneModel;
@@ -27,11 +28,12 @@ public class OperazioneController {
    * @return Operazione avente l'id passato
    * @throws SQLException per problemi di esecuzione della query
    * @throws ObjectNotFoundException per problemi di oggetto non trovato
+   * @throws InvalidKeyException per problemi di chiave primaria
    */
   @PostMapping(value = "/operazione/{id}", produces = MediaType.APPLICATION_JSON_VALUE,
           consumes = MediaType.APPLICATION_JSON_VALUE)
   public OperazioneBean getOperazioneById(@RequestBody String body)
-      throws SQLException, ObjectNotFoundException {
+      throws SQLException, ObjectNotFoundException, InvalidKeyException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("idOperazioneGet").getAsString();
 
@@ -42,9 +44,9 @@ public class OperazioneController {
       } else {
         throw new ObjectNotFoundException(op);
       }
+    } else {
+      throw new InvalidKeyException("Id invalido, occorre un id maggiore di 0");
     }
-
-    return null;
   }
 
   /**
