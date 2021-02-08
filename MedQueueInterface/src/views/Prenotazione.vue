@@ -18,17 +18,17 @@
             <br>
             <br>
             <ion-label>Seleziona Struttura</ion-label>
-            <ion-select v-model="struttura" placeholder="Struttura">
-              <ion-select-option value="1">Santobono</ion-select-option>
-              <ion-select-option value="2">San Leonardo</ion-select-option>
+            <ion-select @mouseover="getStrutture" v-model="struttura" placeholder="Struttura">
+              <ion-select-option id="struttura" v-bind:key="struttura" v-for="struttura in listaStrutture">{{struttura}}</ion-select-option>
             </ion-select>
             <br>
+
             <ion-label>Seleziona Operazione</ion-label>
-            <ion-select v-model="operazione" placeholder="Operazione">
-              <ion-select-option value="1">Pagamento Ticket</ion-select-option>
-              <ion-select-option value="2">Prenotazione Ambulatiorio</ion-select-option>
+            <ion-select @mouseover="getOperazioni" v-model="operazione" placeholder="Operazione">
+              <ion-select-option id="operazione" v-bind:key="operazione" v-for="operazione in listaOperazioni">{{operazione}}</ion-select-option>
             </ion-select>
             <br>
+
             <ion-label>Seleziona Data</ion-label>
             <ion-datetime v-model="data" max="2023" displayFormat="DD MM YY" placeholder="Data"></ion-datetime>
             <br>
@@ -49,6 +49,8 @@
 
 <script>
 import prenotazioniAxios from '../axios/prenotazioni'
+import struttureAxios from '../axios/strutture'
+import operazioneAxios from '../axios/Operazione'
 import {
   IonButton,
   IonSelectOption,
@@ -82,6 +84,11 @@ export default {
   },
   data(){
     return{
+      id:1,
+      tmp:[],
+      listaStrutture:[],
+      listaOperazioni:[],
+      listaOrari:[],
       struttura:"",
       operazione:"",
       data:"",
@@ -108,9 +115,33 @@ export default {
           router.push("/HomeUtente");
         }
       })
+    },
+
+    getStrutture(){
+      struttureAxios.getStrutture()
+      .then((response) =>{
+        this.tmp = response;
+
+        for(let i = 0; i<this.tmp.length; i++){
+          this.listaStrutture[i] = this.tmp[i].nome;
+        }
+      })
+    },
+
+    getOperazioni(){
+      operazioneAxios.getOperazioni()
+      .then((response) =>{
+        this.tmp = response;
+
+        for(let i = 0; i<this.tmp.length; i++){
+          this.listaOperazioni[i] = this.tmp[i].tipoOperazione;
+        }
+      })
+      console.log(this.listaOperazioni)
     }
   }
 }
+
 </script>
 
 <style scoped>
@@ -299,4 +330,5 @@ ion-datetime{
   min-width: 193px;
   width: 20%;
 }
+
 </style>

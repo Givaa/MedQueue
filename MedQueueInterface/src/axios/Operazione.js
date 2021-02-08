@@ -10,5 +10,15 @@ export default {
                 'Content-Type': 'application/json',
             }
         }).then(response => response.data)
+    },
+
+    getOperazioni(){
+        return axios.post('http://localhost:8080/operazioni', {
+        }, {
+            crossDomain:true,
+            headers:{
+                'Content-Type': 'application/json',
+            }
+        }).then(response => response.data)
     }
 };

@@ -61,8 +61,13 @@ public class OperazioneController {
   public Collection<OperazioneBean> getAllOperazioni(@RequestBody String body) throws
           SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
-    String order = jsonObject.get("ordineOperazioni").getAsString();
-    return operazioneModel.doRetrieveAll(order);
+    if(!body.equals("{}")) {
+      String order = jsonObject.get("ordineOperazioni").getAsString();
+      return operazioneModel.doRetrieveAll(order);
+    }else{
+      String order ="";
+      return operazioneModel.doRetrieveAll(order);
+    }
   }
 
   /**
