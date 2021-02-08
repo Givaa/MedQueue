@@ -128,7 +128,7 @@ public class PrenotazioneModel implements PrenotazioneDaoInterface {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
-    String insertSql = "INSERT INTO " + nomeTabella + " VALUES (?, ?, ?, ?, ?, ?)";
+    String insertSql = "INSERT INTO " + nomeTabella + "(data, ora, convalida, codiceFiscale, idOperazione, idStruttura) VALUES (?, ?, ?, ?, ?, ?)";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();

@@ -18,40 +18,37 @@
             <br>
             <br>
             <ion-label>Seleziona Struttura</ion-label>
-            <ion-select placeholder="Struttura">
-              <ion-select-option value="str1">Napoli</ion-select-option>
-              <ion-select-option value="str2">Caserta</ion-select-option>
-              <ion-select-option value="str3">Salerno</ion-select-option>
-              <ion-select-option value="str4">Avellino</ion-select-option>
+            <ion-select v-model="struttura" placeholder="Struttura">
+              <ion-select-option value="1">Santobono</ion-select-option>
+              <ion-select-option value="2">San Leonardo</ion-select-option>
             </ion-select>
             <br>
             <ion-label>Seleziona Operazione</ion-label>
-            <ion-select placeholder="Operazione">
-              <ion-select-option value="op1">Pagamento</ion-select-option>
-              <ion-select-option value="op2">Effettua prestazione</ion-select-option>
-              <ion-select-option value="op3">Ritiro analise</ion-select-option>
-              <ion-select-option value="op4">Ritito cartella clinica</ion-select-option>
+            <ion-select v-model="operazione" placeholder="Operazione">
+              <ion-select-option value="1">Pagamento Ticket</ion-select-option>
+              <ion-select-option value="2">Prenotazione Ambulatiorio</ion-select-option>
             </ion-select>
             <br>
             <ion-label>Seleziona Data</ion-label>
-            <ion-datetime min="2021-01-29" max="2023" displayFormat="DD MM YY" placeholder="Data"></ion-datetime>
+            <ion-datetime v-model="data" max="2023" displayFormat="DD MM YY" placeholder="Data"></ion-datetime>
             <br>
             <ion-label>Seleziona Orario</ion-label>
-            <ion-select placeholder="Orario">
-              <ion-select-option value="ora1">10:00</ion-select-option>
-              <ion-select-option value="ora2">11:00</ion-select-option>
-              <ion-select-option value="ora3">12:00</ion-select-option>
-              <ion-select-option value="ora4">13:00</ion-select-option>
+            <ion-select v-model="ora" placeholder="Orario">
+              <ion-select-option value="10:00">10:00</ion-select-option>
+              <ion-select-option value="11:00">11:00</ion-select-option>
+              <ion-select-option value="12:00">12:00</ion-select-option>
+              <ion-select-option value="13:00">13:00</ion-select-option>
             </ion-select>
             <br>
-            <ion-button @click="goHomeUtente" color="success"> Prenota </ion-button>
+            <ion-button @click="addPrenotazione" color="success"> Prenota </ion-button>
           </div>
         </ion-content>
       </ion-content>
   </ion-page>
 </template>
 
-<script lang="ts">
+<script>
+import prenotazioniAxios from '../axios/prenotazioni'
 import {
   IonButton,
   IonSelectOption,
@@ -83,10 +80,35 @@ export default {
     IonTitle,
     IonToolbar
   },
+  data(){
+    return{
+      struttura:"",
+      operazione:"",
+      data:"",
+      ora:"",
+      dataOggi: {
+        year: new Date().getFullYear(),
+        month: new Date().getMonth(),
+        day: new Date().getDay()}
+    }
+  },
   methods: {
     goHomeUtente() {
       router.push("/HomeUtente");
     },
+
+    addPrenotazione(){
+      const data =this.data.split('T');
+      prenotazioniAxios.addPrenotazione(sessionStorage.getItem("codiceFiscale"),this.ora, this.operazione,this.struttura,data[0])
+      .then((response) =>{
+        if(response ===""){
+          console.log("Errore");
+          return null;
+        }else{
+          router.push("/HomeUtente");
+        }
+      })
+    }
   }
 }
 </script>

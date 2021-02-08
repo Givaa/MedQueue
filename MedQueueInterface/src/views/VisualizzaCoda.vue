@@ -14,7 +14,7 @@
           <ion-item>
             <label>Seleziona la struttura:</label>
             <ion-select @click="updateStrutture" placeholder="Struttura" v-bind="selectedCod">
-              <ion-select-option @click="updateStrutture" id="codice" v-bind:key="codice" v-for="codice in cod" >{{codice}}</ion-select-option>
+              <ion-select-option id="codice" v-bind:key="codice" v-for="codice in cod" >{{codice}}</ion-select-option>
             </ion-select>
           </ion-item>
           <div class="titolo1">Data</div>
@@ -27,7 +27,7 @@
             <div id="ora" v-bind:key="ora" v-for="ora in ore" >{{ora}}</div>
           </div>
           <div class="colonna3">
-            <div id="prenotazione" v-bind:key="prenotazione" v-for="prenotazione in prenotazioni" >{{prenotazione}}</div>
+            <div id="prenotazione" v-bind:key="prenotazione" v-for="prenotazione in nomePrenotazioni" >{{prenotazione}}</div>
           </div>
         </div>
       </ion-content>
@@ -36,6 +36,7 @@
 
 <script >
 import prenotazioniAxios from '../axios/prenotazioni'
+import operazioneAxios from '../axios/Operazione'
 import {
   IonSelect,
   IonSelectOption,
@@ -66,6 +67,7 @@ export default {
       ore:[],
       date:[],
       prenotazioni:[],
+      nomePrenotazioni: [],
       selectedCod:1
     };
   },
@@ -85,9 +87,19 @@ export default {
                 this.date[i] = this.strutture[i].dataPrenotazione;
                 this.prenotazioni[i] =  this.strutture[i].idOperazione;
               }
-              console.log(this.ore, this.date, this.prenotazioni);
+              this.operazioneString();
             }
           })
+      },
+
+      operazioneString(){
+      for(let i=0; i<this.prenotazioni.length; i++) {
+        operazioneAxios.getOperazioneBtId(this.prenotazioni[i])
+        .then((response) =>{
+          this.nomePrenotazioni[i] = response.tipoOperazione;
+        })
+      }
+      console.log(this.nomePrenotazioni);
       }
     }
 
@@ -109,6 +121,7 @@ div.colonna2{
 
 div.colonna3{
   float: left;
+  margin-right: 5%;
 }
 
 div.titolo1{
@@ -119,7 +132,7 @@ div.titolo1{
 
 div.titolo2{
   float: left;
-  margin-right: 33%;
+  margin-right: 38%;
 }
 
 div.titolo3{

@@ -90,19 +90,20 @@ public class PrenotazioneController {
     String idOp = jsonObject.get("newPrenotazioniIdOp").getAsString();
     String idS = jsonObject.get("newPrenotazioniIdS").getAsString();
     String data = jsonObject.get("newPrenotazioneData").getAsString();
-    Date dataPrenotazione = (Date) new SimpleDateFormat("yyyy/mm/gg").parse(data);
+    java.util.Date tmp = new SimpleDateFormat("yyyy-MM-dd").parse(data);
+    java.sql.Date dataPrenotazione = new Date(tmp.getTime());
 
     StrutturaBean s;
     OperazioneBean o;
     o = operazioneModel.doRetrieveByKey(Integer.valueOf(idOp));
     s = strutturaModel.doRetrieveByKey(Integer.valueOf(idS));
 
-    boolean checkCodFisc = cf.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
+    //boolean checkCodFisc = cf.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
     boolean checkOra = ora.matches("^([0-1][0-9]|[2][0-3]):([0-5][0-9])$");
     boolean checkOperazione = o != null;
     boolean checkStruttura = s != null;
 
-    if (checkCodFisc && checkOra && checkOperazione && checkStruttura) {
+    if (/**checkCodFisc &&*/ checkOra && checkOperazione && checkStruttura) {
       prenotazioneModel.doSave(new PrenotazioneBean(ora, dataPrenotazione, cf,
               Integer.valueOf(idOp), Integer.valueOf(idS), false));
       return true;
