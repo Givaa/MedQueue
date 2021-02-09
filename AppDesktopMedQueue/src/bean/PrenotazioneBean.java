@@ -196,14 +196,31 @@ public class PrenotazioneBean {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof PrenotazioneBean)) return false;
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof PrenotazioneBean)) {
+      return false;
+    }
     PrenotazioneBean that = (PrenotazioneBean) o;
-    return getId() == that.getId() && isConvalida() == that.isConvalida() && getIdOperazione() == that.getIdOperazione() && getIdStruttura() == that.getIdStruttura() && Objects.equals(getData(), that.getData()) && Objects.equals(getTime(), that.getTime()) && Objects.equals(getCodiceFiscale(), that.getCodiceFiscale());
+    return getId() == that.getId()
+        && isConvalida() == that.isConvalida()
+        && getIdOperazione() == that.getIdOperazione()
+        && getIdStruttura() == that.getIdStruttura()
+        && Objects.equals(getData(), that.getData())
+        && Objects.equals(getTime(), that.getTime())
+        && Objects.equals(getCodiceFiscale(), that.getCodiceFiscale());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getId(), getData(), getTime(), isConvalida(), getCodiceFiscale(), getIdOperazione(), getIdStruttura());
+    return Objects.hash(
+        getId(),
+        getData(),
+        getTime(),
+        isConvalida(),
+        getCodiceFiscale(),
+        getIdOperazione(),
+        getIdStruttura());
   }
 }

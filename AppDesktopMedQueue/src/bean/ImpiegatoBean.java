@@ -223,14 +223,33 @@ public class ImpiegatoBean {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof ImpiegatoBean)) return false;
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof ImpiegatoBean)) {
+      return false;
+    }
     ImpiegatoBean that = (ImpiegatoBean) o;
-    return getIdStruttura() == that.getIdStruttura() && Objects.equals(getCodicefiscale(), that.getCodicefiscale()) && Objects.equals(getPassword(), that.getPassword()) && Objects.equals(getNome(), that.getNome()) && Objects.equals(getCognome(), that.getCognome()) && Objects.equals(getDataDiNascita(), that.getDataDiNascita()) && Objects.equals(getIndirizzoEmail(), that.getIndirizzoEmail()) && Objects.equals(getNumeroDiTelefono(), that.getNumeroDiTelefono());
+    return getIdStruttura() == that.getIdStruttura()
+        && Objects.equals(getCodicefiscale(), that.getCodicefiscale())
+        && Objects.equals(getPassword(), that.getPassword())
+        && Objects.equals(getNome(), that.getNome())
+        && Objects.equals(getCognome(), that.getCognome())
+        && Objects.equals(getDataDiNascita(), that.getDataDiNascita())
+        && Objects.equals(getIndirizzoEmail(), that.getIndirizzoEmail())
+        && Objects.equals(getNumeroDiTelefono(), that.getNumeroDiTelefono());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getCodicefiscale(), getPassword(), getNome(), getCognome(), getDataDiNascita(), getIndirizzoEmail(), getNumeroDiTelefono(), getIdStruttura());
+    return Objects.hash(
+        getCodicefiscale(),
+        getPassword(),
+        getNome(),
+        getCognome(),
+        getDataDiNascita(),
+        getIndirizzoEmail(),
+        getNumeroDiTelefono(),
+        getIdStruttura());
   }
 }

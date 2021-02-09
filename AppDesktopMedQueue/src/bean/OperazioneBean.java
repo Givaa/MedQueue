@@ -94,10 +94,16 @@ public class OperazioneBean {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof OperazioneBean)) return false;
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof OperazioneBean)) {
+      return false;
+    }
     OperazioneBean that = (OperazioneBean) o;
-    return getId() == that.getId() && Objects.equals(getTipoOperazione(), that.getTipoOperazione()) && Objects.equals(getDescrizione(), that.getDescrizione());
+    return getId() == that.getId()
+        && Objects.equals(getTipoOperazione(), that.getTipoOperazione())
+        && Objects.equals(getDescrizione(), that.getDescrizione());
   }
 
   @Override

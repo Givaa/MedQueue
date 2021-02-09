@@ -119,10 +119,17 @@ public class StrutturaBean {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof StrutturaBean)) return false;
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof StrutturaBean)) {
+      return false;
+    }
     StrutturaBean that = (StrutturaBean) o;
-    return getId() == that.getId() && Objects.equals(getNome(), that.getNome()) && Objects.equals(getIndirizzo(), that.getIndirizzo()) && Objects.equals(getNumeroDiTelefono(), that.getNumeroDiTelefono());
+    return getId() == that.getId()
+        && Objects.equals(getNome(), that.getNome())
+        && Objects.equals(getIndirizzo(), that.getIndirizzo())
+        && Objects.equals(getNumeroDiTelefono(), that.getNumeroDiTelefono());
   }
 
   @Override
