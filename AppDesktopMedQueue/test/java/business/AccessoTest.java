@@ -12,12 +12,12 @@ class AccessoTest {
 
     @Test
     void verificaCredenziali() {
-        String cf="FLTNGL99A14L845J2";
-        String pw=null;
-
-
-
-
+        Accesso test=new Accesso();
+        assertNull(test.verificaCredenziali("mario",null));
+        assertNull(test.verificaCredenziali("MNDCMN97R22A509S",null));
+        assertNull(test.verificaCredenziali("FLTNGL99A14L845J","a"));
+        assertNull(test.verificaCredenziali("FLTNGL99A14L845J","angelo"));
+        assertNotNull(test.verificaCredenziali("FLTNGL99A14L845J","angelo99"));
     }
 
 }

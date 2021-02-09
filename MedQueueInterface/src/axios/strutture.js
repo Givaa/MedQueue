@@ -12,4 +12,15 @@ export default {
         }).then(response => response.data)
     },
 
+    getStrutturaByNome(nomeStrutturaGet){
+        return axios.post('http://localhost:8080/struttura/{nome}', {
+            nomeStrutturaGet
+        }, {
+            crossDomain:true,
+            headers:{
+                'Content-Type': 'application/json',
+            }
+        }).then(response => response.data)
+    }
+
 }

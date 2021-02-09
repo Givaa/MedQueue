@@ -1,6 +1,7 @@
 package bean;
 
 import java.sql.Date;
+import java.util.Objects;
 
 /** Classe che rappresenta l'impiegato ospedaliero. */
 public class ImpiegatoBean {
@@ -218,5 +219,18 @@ public class ImpiegatoBean {
         + ", idStruttura="
         + idStruttura
         + '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof ImpiegatoBean)) return false;
+    ImpiegatoBean that = (ImpiegatoBean) o;
+    return getIdStruttura() == that.getIdStruttura() && Objects.equals(getCodicefiscale(), that.getCodicefiscale()) && Objects.equals(getPassword(), that.getPassword()) && Objects.equals(getNome(), that.getNome()) && Objects.equals(getCognome(), that.getCognome()) && Objects.equals(getDataDiNascita(), that.getDataDiNascita()) && Objects.equals(getIndirizzoEmail(), that.getIndirizzoEmail()) && Objects.equals(getNumeroDiTelefono(), that.getNumeroDiTelefono());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getCodicefiscale(), getPassword(), getNome(), getCognome(), getDataDiNascita(), getIndirizzoEmail(), getNumeroDiTelefono(), getIdStruttura());
   }
 }
