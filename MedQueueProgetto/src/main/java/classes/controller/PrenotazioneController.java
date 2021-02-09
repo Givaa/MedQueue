@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.tomcat.jni.Local;
 import org.springframework.http.MediaType;
@@ -238,4 +239,27 @@ public class PrenotazioneController {
     }
     return false;
   }
+
+  /**
+   * Metodo per prelevare gli orari di prenotazione liberi.
+   * @body Il contenuto della request
+   * @return Collezione di orari
+   * @throws SQLException per problemi di esecuzione della query
+   */
+
+  @PostMapping(value = "/getOrari", produces = MediaType.APPLICATION_JSON_VALUE,
+          consumes = MediaType.APPLICATION_JSON_VALUE)
+  public List<String> getOrariDisponibili(@RequestBody String body)
+          throws SQLException, ParseException{
+    JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
+    int idStruttura = jsonObject.get("idStruttura").getAsInt();
+    int idOperazione = jsonObject.get("idOperazione").getAsInt();
+    String data = jsonObject.get("PrenotazioneData").getAsString();
+    java.util.Date tmp = new SimpleDateFormat("yyyy-MM-dd").parse(data);
+    java.sql.Date dataPrenotazione = new Date(tmp.getTime());
+
+    return prenotazioneModel.getOrariPrenotazione(idStruttura,idOperazione,dataPrenotazione);
+
+  }
+
 }

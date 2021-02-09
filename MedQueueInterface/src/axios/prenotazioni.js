@@ -26,5 +26,18 @@ export default {
                 'Content-Type': 'application/json',
             }
         }).then(response => response.data)
+    },
+
+    getOrariDisponibili(idStruttura,idOperazione,PrenotazioneData){
+        return axios.post('http://localhost:8080/getOrari', {
+            idStruttura,
+            idOperazione,
+            PrenotazioneData
+        }, {
+            crossDomain:true,
+            headers:{
+                'Content-Type': 'application/json',
+            }
+        }).then(response => response.data)
     }
 };

@@ -33,11 +33,8 @@
             <ion-datetime v-model="data" max="2023" displayFormat="DD MM YY" placeholder="Data"></ion-datetime>
             <br>
             <ion-label>Seleziona Orario</ion-label>
-            <ion-select v-model="ora" placeholder="Orario">
-              <ion-select-option value="10:00">10:00</ion-select-option>
-              <ion-select-option value="11:00">11:00</ion-select-option>
-              <ion-select-option value="12:00">12:00</ion-select-option>
-              <ion-select-option value="13:00">13:00</ion-select-option>
+            <ion-select @mouseover="getOrari" v-model="ora" placeholder="Orario">
+              <ion-select-option id="ora" v-bind:key="ora" v-for="ora in listaOrari">{{ora}}</ion-select-option>
             </ion-select>
             <br>
             <ion-button @click="addPrenotazione" color="success"> Prenota </ion-button>
@@ -147,7 +144,6 @@ export default {
           router.push("/HomeUtente");
         }
       })
-      console.log(this.idStruttura);
     },
 
     getStrutture(){
@@ -170,15 +166,24 @@ export default {
           this.listaOperazioni[i] = this.tmp[i].tipoOperazione;
         }
       })
-      console.log(this.listaOperazioni)
     },
 
-    sleep(milliseconds) {
-      const date = Date.now();
-      let currentDate = null;
-      do {
-        currentDate = Date.now();
-      } while (currentDate - date < milliseconds);
+    async getOrari(){
+      const data =this.data.split('T');
+      try {
+        await this.getIdStruttura();
+        await this.getIdOperazione();
+      }catch (err){ return null;}
+
+      prenotazioniAxios.getOrariDisponibili(this.idStruttura,this.idOperazione,data[0])
+      .then((response) =>{
+        this.tmp = response;
+        console.log(this.tmp);
+        for(let i = 0; i<this.tmp.length; i++){
+          this.listaOrari[i] = this.tmp[i].ora;
+        }
+      })
+      console.log("solo questo");
     }
 
   }

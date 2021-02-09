@@ -3,6 +3,7 @@ package classes.model.interfaces;
 import classes.model.bean.entity.PrenotazioneBean;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.List;
 
 /** Interfaccia per il Model delle Prenotazioni. */
 public interface PrenotazioneDaoInterface {
@@ -66,4 +67,14 @@ public interface PrenotazioneDaoInterface {
    * @throws SQLException per problemi di esecuzione della query
    */
   Collection<PrenotazioneBean> getCodaStruttura(int idStruttura) throws SQLException;
+
+  /**
+   * Metodo per prelevare gli orari di prenotazione liberi.
+   * @param idStruttura id della Struttura selezionata
+   * @param idOperazione id dell'operazione selezionata
+   * @param dataPrenotazione data della prenotazione
+   * @return Collezione di orari
+   * @throws SQLException per problemi di esecuzione della query
+   */
+  List<String> getOrariPrenotazione(int idStruttura, int idOperazione, java.sql.Date dataPrenotazione)throws SQLException;
 }

@@ -3,18 +3,20 @@ package classes.model.dao;
 import classes.model.DriverManagerConnectionPool;
 import classes.model.bean.entity.PrenotazioneBean;
 import classes.model.interfaces.PrenotazioneDaoInterface;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Model per collegare la tabella "Prenotazione" al backend.
  */
 public class PrenotazioneModel implements PrenotazioneDaoInterface {
   private static final String nomeTabella = "prenotazione";
+  private String[] elencoOrari= {"09:00:00","09:15:00","09:30:00","09:45:00","10:00:00","10:15:00","10:30:00","10:45:00","11:00:00","11:15:00","11:30:00","11:45:00","12:00:00","12:15:00","12:30:00","12:45:00","13:00:00"};
+
 
   /**
    * Prelevamento singola prenotazione.
@@ -325,4 +327,82 @@ public class PrenotazioneModel implements PrenotazioneDaoInterface {
 
     return result;
   }
+
+  /**
+   * Metodo per prelevare gli orari di prenotazione liberi.
+   * @param idStruttura id della Struttura selezionata
+   * @param idOperazione id dell'operazione selezionata
+   * @param dataPrenotazione data della prenotazione
+   * @return Collezione di orari
+   * @throws SQLException per problemi di esecuzione della query
+   */
+  @Override
+  public List<String> getOrariPrenotazione(int idStruttura, int idOperazione, java.sql.Date dataPrenotazione)throws SQLException{
+
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+
+    List<String> query = new ArrayList<String>();
+    List<String> result = new ArrayList<String>();
+
+
+    String selecrOrariSql = "SELECT ora FROM "+ nomeTabella
+            + " WHERE idStruttura =? AND idOperazione=? AND data=? ORDER BY ora";
+
+    try{
+      connection = DriverManagerConnectionPool.getConnection();
+      preparedStatement = connection.prepareStatement(selecrOrariSql);
+
+      preparedStatement.setInt(1, idStruttura);
+      preparedStatement.setInt(2,idOperazione);
+      preparedStatement.setDate(3,dataPrenotazione);
+      ResultSet res = preparedStatement.executeQuery();
+
+      while (res.next()){
+            query.add(res.getString("ora"));
+          }
+
+      //Esempio per testare giorno completamente pieno
+      /*query.clear();
+      for(int i = 0;  i < elencoOrari.length; i++) {
+        query.add(elencoOrari[i]);
+      }*/
+
+      if(query.size() > 0) {
+        for (int i = 0, j = 0; i < elencoOrari.length; i++) {
+          if (!elencoOrari[i].equals(query.get(j))) {
+            result.add(elencoOrari[i]);
+          } else {
+            if (j < query.size() - 1) {
+              j++;
+            } else {
+              j = query.size() - 1;
+            }
+          }
+        }
+      }else{
+        //Se sono liberi tutti gli orari
+        for(int i = 0;  i < elencoOrari.length; i++){
+          result.add(elencoOrari[i]);
+        }
+      }
+      //Se sono occupati tutti gli orari
+      if(result.size()==0){
+        return null;
+      }
+
+    }catch (SQLException e){
+      e.printStackTrace();
+    }finally {
+      try {
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
+      } finally {
+        DriverManagerConnectionPool.releaseConnection(connection);
+      }
+    }
+    return result;
+  }
+
 }
