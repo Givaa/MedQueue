@@ -43,7 +43,7 @@ public class AmbulatoriModel implements AmbulatorioDaoInterface {
       while (rs.next()) {
         tmp.setId(rs.getInt("Id"));
         tmp.setNome(rs.getString("Nome"));
-        tmp.setIdStruttura(rs.getInt("Id_Struttura"));
+        tmp.setIdStruttura(rs.getInt("idStruttura"));
       }
     } catch (SQLException e) {
       e.printStackTrace();

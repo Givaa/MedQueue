@@ -17,6 +17,15 @@ public interface StrutturaDaoInterface {
   StrutturaBean doRetrieveByKey(int id) throws SQLException;
 
   /**
+   * Prelevamento singola struttura.
+   *
+   * @param nome nome della struttura
+   * @return Struttura avente quell'id
+   * @throws SQLException per problemi di esecuzione della query
+   */
+  StrutturaBean doRetrieveByName(String nome) throws SQLException;
+
+  /**
    * Prelevamento di tutte le Strutture nel DB.
    *
    * @param order Ordine per la visualizzazione della collezione

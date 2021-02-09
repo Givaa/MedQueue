@@ -14,7 +14,11 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Iterator;
+
+import org.apache.tomcat.jni.Local;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -192,5 +196,24 @@ public class PrenotazioneController {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String cf = jsonObject.get("getPrenotazioniByCf").getAsString();
     return prenotazioneModel.getUtentePrenotazioni(cf);
+  }
+
+  @PostMapping(value = "/convalida", produces = MediaType.APPLICATION_JSON_VALUE,
+          consumes = MediaType.APPLICATION_JSON_VALUE)
+  public boolean convalidaPrenotazione(@RequestBody String body)
+    throws SQLException {
+    JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
+    String cf = jsonObject.get("convalidaPrenotazione").getAsString();
+    LocalDateTime now = LocalDateTime.now();
+    Collection<PrenotazioneBean> collection = this.getPrenotazioniByCodFisc(cf);
+    Iterator iter = collection.iterator();
+    PrenotazioneBean p = (PrenotazioneBean) iter.next();
+    Date d = new Date;
+    p.getDataPrenotazione();
+
+    if (now.getDayOfMonth() == d.getDay() ) {
+
+    }
+    return true;
   }
 }

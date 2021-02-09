@@ -60,6 +60,49 @@ public class StrutturaModel implements StrutturaDaoInterface {
   }
 
   /**
+   * Prelevamento singola struttura.
+   *
+   * @param nome nome della struttura
+   * @return Struttura avente quell'id
+   * @throws SQLException per problemi di esecuzione della query
+   */
+  @Override
+  public StrutturaBean doRetrieveByName(String nome) throws SQLException {
+    Connection con = null;
+    PreparedStatement ps = null;
+
+    StrutturaBean tmp = new StrutturaBean();
+
+    String selectSql = "SELECT * FROM " + nomeTabella + " WHERE nome = ?";
+
+    try {
+      con = DriverManagerConnectionPool.getConnection();
+      ps = con.prepareStatement(selectSql);
+      ps.setString(1, nome);
+
+      ResultSet rs = ps.executeQuery();
+
+      while (rs.next()) {
+        tmp.setId(rs.getInt("id"));
+        tmp.setNome(rs.getString("nome"));
+        tmp.setIndirizzo(rs.getString("indirizzo"));
+        tmp.setNumeroDiTelefono(rs.getString("numeroDiTelefono"));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        if (ps != null) {
+          ps.close();
+        }
+      } finally {
+        DriverManagerConnectionPool.releaseConnection(con);
+      }
+    }
+    return tmp;
+  }
+
+  /**
    * Prelevamento di tutte le Strutture nel DB.
    *
    * @param order Ordine per la visualizzazione della collezione
