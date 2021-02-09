@@ -89,8 +89,12 @@ export default {
       listaStrutture:[],
       listaOperazioni:[],
       listaOrari:[],
+      prova1:"",
+      prova2:"",
       struttura:"",
+      idStruttura:"",
       operazione:"",
+      idOperazione:"",
       data:"",
       ora:"",
       dataOggi: {
@@ -100,13 +104,41 @@ export default {
     }
   },
   methods: {
-    goHomeUtente() {
-      router.push("/HomeUtente");
+
+    getIdStruttura(){
+     return new Promise((resolve, reject) => {
+      struttureAxios.getStrutturaByNome(this.struttura)
+          .then((response) =>{
+            this.prova1 = response;
+            this.idStruttura = this.prova1.id;
+            return resolve(true);
+          }).catch(err =>{
+        reject(console.log("Errore!"))
+      })
+    })
     },
 
-    addPrenotazione(){
+    getIdOperazione(){
+      return new Promise((resolve, reject) => {
+            operazioneAxios.getOperazioneByNome(this.operazione)
+                .then((response) =>{
+                  this.prova2 = response;
+                  this.idOperazione = this.prova2.id;
+                  return resolve(true);
+      }).catch(err =>{
+              reject(console.log("Errore!"))
+            })
+    })
+    },
+
+    async addPrenotazione(){
       const data =this.data.split('T');
-      prenotazioniAxios.addPrenotazione(sessionStorage.getItem("codiceFiscale"),this.ora, this.operazione,this.struttura,data[0])
+      try {
+        await this.getIdStruttura();
+        await this.getIdOperazione();
+      }catch (err){ return null;}
+
+      prenotazioniAxios.addPrenotazione(sessionStorage.getItem("codiceFiscale"),this.ora, this.idOperazione,this.idStruttura,data[0])
       .then((response) =>{
         if(response ===""){
           console.log("Errore");
@@ -115,6 +147,7 @@ export default {
           router.push("/HomeUtente");
         }
       })
+      console.log(this.idStruttura);
     },
 
     getStrutture(){
@@ -138,7 +171,16 @@ export default {
         }
       })
       console.log(this.listaOperazioni)
+    },
+
+    sleep(milliseconds) {
+      const date = Date.now();
+      let currentDate = null;
+      do {
+        currentDate = Date.now();
+      } while (currentDate - date < milliseconds);
     }
+
   }
 }
 
