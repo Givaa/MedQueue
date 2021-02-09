@@ -208,12 +208,20 @@ public class PrenotazioneController {
     Collection<PrenotazioneBean> collection = this.getPrenotazioniByCodFisc(cf);
     Iterator iter = collection.iterator();
     PrenotazioneBean p = (PrenotazioneBean) iter.next();
-    Date d = new Date;
     p.getDataPrenotazione();
+    Date d = p.getDataPrenotazione();
+    String ora = p.getOra();
+    String oraMin;
+    int oraNow = now.getHour();
+    int minuteNow = now.getMinute();
+    String timeNow = String.valueOf(oraNow).concat(String.valueOf(minuteNow));
 
-    if (now.getDayOfMonth() == d.getDay() ) {
-
+    if ((now.getDayOfMonth() == d.toLocalDate().getDayOfMonth())
+            && (now.getMonth() == d.toLocalDate().getMonth())
+            ) {
+      p.setConvalida(true);
+      return true;
     }
-    return true;
+    return false;
   }
 }
