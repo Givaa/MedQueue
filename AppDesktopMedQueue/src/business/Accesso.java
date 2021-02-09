@@ -2,6 +2,7 @@ package business;
 
 import bean.ImpiegatoBean;
 import eccezioni.InvalidKeyException;
+import java.util.regex.Pattern;
 import persistence.DaoInterface;
 import persistence.DataAccess;
 
@@ -25,8 +26,13 @@ public class Accesso implements AccessoInterface {
    */
   public ImpiegatoBean verificaCredenziali(String cf, String pass) {
     try {
-      if (cf == null || cf.length() != 16) {
-        throw new InvalidKeyException("CodiceFiscale non valido");
+      if (Pattern.compile("^[a-zA-Z]{6}[0-9]{2}[abcdehlmprstABCDEHLMPRST]{1}"
+              + "[0-9]{2}([a-zA-Z]{1}[0-9]{3})[a-zA-Z]{1}$").matcher(cf).matches() == false) {
+        throw new InvalidKeyException("Codice fiscale non valido.");
+      }
+      if (Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$")
+              .matcher(pass).matches() == false) {
+        throw new InvalidKeyException("Password non valida.");
       } else {
         ImpiegatoBean impiegato = daoOperation.getImpiegato(cf);
         if (impiegato != null) {
