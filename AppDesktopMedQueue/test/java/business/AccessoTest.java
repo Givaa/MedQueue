@@ -10,8 +10,8 @@ class AccessoTest {
   @Test
   void verificaCredenziali() {
     Accesso test = new Accesso();
-    assertNull(test.verificaCredenziali("mario", null));
-    assertNull(test.verificaCredenziali("MNDCMN97R22A509S", null));
+    assertNull(test.verificaCredenziali("mario", ""));
+    assertNull(test.verificaCredenziali("MNDCMN97R22A509S", ""));
     assertNull(test.verificaCredenziali("FLTNGL99A14L845J", "a"));
     assertNull(test.verificaCredenziali("FLTNGL99A14L845J", "angelo"));
     assertNotNull(test.verificaCredenziali("FLTNGL99A14L845J", "angelo99"));
