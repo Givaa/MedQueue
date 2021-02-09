@@ -60,6 +60,48 @@ public class OperazioneModel implements OperazioneDaoInterface {
   }
 
   /**
+   * Prelevamento singola operazione.
+   *
+   * @param tipo tipo dell'operazione
+   * @return Operazione avente quell'id
+   * @throws SQLException per problemi di esecuzione della query
+   */
+  @Override
+  public OperazioneBean doRetrieveByTipo(String tipo) throws SQLException {
+    Connection con = null;
+    PreparedStatement ps = null;
+
+    OperazioneBean tmp = new OperazioneBean();
+
+    String selectSql = "SELECT * FROM " + nomeTabella + " WHERE tipoOperazione = ?";
+
+    try {
+      con = DriverManagerConnectionPool.getConnection();
+      ps = con.prepareStatement(selectSql);
+      ps.setString(1, tipo);
+
+      ResultSet rs = ps.executeQuery();
+
+      while (rs.next()) {
+        tmp.setId(rs.getInt("id"));
+        tmp.setTipoOperazione(rs.getString("tipoOperazione"));
+        tmp.setDescrizione(rs.getString("descrizione"));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        if (ps != null) {
+          ps.close();
+        }
+      } finally {
+        DriverManagerConnectionPool.releaseConnection(con);
+      }
+    }
+    return tmp;
+  }
+
+  /**
    * Prelevamento di tutte le operazioni presenti nel DB.
    *
    * @param order Ordine per la visualizzazione della collezione

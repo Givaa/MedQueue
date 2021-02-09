@@ -14,7 +14,11 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Iterator;
+
+import org.apache.tomcat.jni.Local;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -192,5 +196,46 @@ public class PrenotazioneController {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String cf = jsonObject.get("getPrenotazioniByCf").getAsString();
     return prenotazioneModel.getUtentePrenotazioni(cf);
+  }
+
+  /**
+   * Metodo per la convalida della prenotazione.
+   *
+   * @param body corpo della richiesta preso in input
+   * @return conferma/non conferma della convalida
+   * @throws SQLException per problemi di esecuzione della query
+   * @throws ParseException per problemi di parse
+   */
+  @PostMapping(value = "/convalida", produces = MediaType.APPLICATION_JSON_VALUE,
+          consumes = MediaType.APPLICATION_JSON_VALUE)
+  public boolean convalidaPrenotazione(@RequestBody String body)
+          throws SQLException, ParseException {
+    JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
+    String cf = jsonObject.get("convalidaPrenotazione").getAsString();
+
+    //Prendo la prenotazione
+    Collection<PrenotazioneBean> collection = this.getPrenotazioniByCodFisc(cf);
+    Iterator iter = collection.iterator();
+    PrenotazioneBean p = (PrenotazioneBean) iter.next();
+
+    //Impostazioni variabili data e ora
+    LocalDateTime now = LocalDateTime.now();
+    p.getDataPrenotazione();
+    Date d = p.getDataPrenotazione();
+    String ora = p.getOra();
+    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    Long minHour = df.parse(ora).getTime();
+    Long maxHour = df.parse(ora).getTime();
+    Long timeNow = System.currentTimeMillis();
+    minHour -= 1800 * 1000;
+    maxHour += 600 * 1000;
+
+    if ((now.getDayOfMonth() == d.toLocalDate().getDayOfMonth())
+            && (now.getMonth() == d.toLocalDate().getMonth())
+            && ((timeNow >= minHour) && (timeNow <= maxHour))) {
+      p.setConvalida(true);
+      return true;
+    }
+    return false;
   }
 }

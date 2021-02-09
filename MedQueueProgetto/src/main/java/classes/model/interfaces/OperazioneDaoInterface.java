@@ -17,6 +17,15 @@ public interface OperazioneDaoInterface {
   OperazioneBean doRetrieveByKey(int id) throws SQLException;
 
   /**
+   * Prelevamento singola operazione.
+   *
+   * @param tipo tipo dell'operazione
+   * @return Operazione avente quell'id
+   * @throws SQLException per problemi di esecuzione della query
+   */
+  OperazioneBean doRetrieveByTipo(String tipo) throws SQLException;
+
+  /**
    * Prelevamento di tutte le operazioni presenti nel DB.
    *
    * @param order Ordine per la visualizzazione della collezione

@@ -41,6 +41,28 @@ public class StrutturaController {
   }
 
   /**
+   * Metodo che permette di utilizzare il prelevamento per id dello StrutturaModel.
+   *
+   * @param body corpo della richiesta preso in input
+   * @return Struttura avente l'id passato
+   * @throws SQLException per problemi di esecuzione della query
+   * @throws ObjectNotFoundException per problemi di oggetto non trovato
+   */
+  @PostMapping(value = "/struttura/{nome}", produces = MediaType.APPLICATION_JSON_VALUE,
+          consumes = MediaType.APPLICATION_JSON_VALUE)
+  public StrutturaBean getStrutturaByNome(@RequestBody String body)
+          throws SQLException, ObjectNotFoundException {
+    JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
+    String nome = jsonObject.get("nomeStrutturaGet").getAsString();
+    StrutturaBean s = strutturaModel.doRetrieveByName(nome);
+    if (s != null) {
+      return s;
+    } else {
+      throw new ObjectNotFoundException(s);
+    }
+  }
+
+  /**
    * Metodo che permette di utilizzare il prelevamento di tutti gli oggetti dello StrutturaModel.
    *
    * @param body corpo della richiesta preso in input
