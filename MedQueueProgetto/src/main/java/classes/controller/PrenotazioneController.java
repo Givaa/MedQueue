@@ -199,12 +199,12 @@ public class PrenotazioneController {
   }
 
   /**
+   * Metodo per la convalida della prenotazione.
    *
-   *
-   * @param body
-   * @return
-   * @throws SQLException
-   * @throws ParseException
+   * @param body corpo della richiesta preso in input
+   * @return conferma/non conferma della convalida
+   * @throws SQLException per problemi di esecuzione della query
+   * @throws ParseException per problemi di parse
    */
   @PostMapping(value = "/convalida", produces = MediaType.APPLICATION_JSON_VALUE,
           consumes = MediaType.APPLICATION_JSON_VALUE)
