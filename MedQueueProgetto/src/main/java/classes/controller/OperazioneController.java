@@ -50,6 +50,28 @@ public class OperazioneController {
   }
 
   /**
+   * Metodo che permette di utilizzare il prelevamento per id dell'OperazioneModel.
+   *
+   * @param body corpo della richiesta preso in input
+   * @return Operazione avente l'id passato
+   * @throws SQLException per problemi di esecuzione della query
+   * @throws ObjectNotFoundException per problemi di oggetto non trovato
+   */
+  @PostMapping(value = "/operazione/{tipo}", produces = MediaType.APPLICATION_JSON_VALUE,
+          consumes = MediaType.APPLICATION_JSON_VALUE)
+  public OperazioneBean getOperazioneByTipo(@RequestBody String body) throws SQLException {
+    JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
+    String tipo = jsonObject.get("tipoOperazioneGet").getAsString();
+
+    OperazioneBean op = operazioneModel.doRetrieveByTipo(tipo);
+    if (op != null) {
+      return op;
+    } else {
+      throw new ObjectNotFoundException(op);
+    }
+  }
+
+  /**
    * Metodo che permette di utilizzare il prelevamento di tutti gli oggetti dell'OperazioneModel.
    *
    * @param body corpo della richiesta preso in input
