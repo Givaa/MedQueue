@@ -25,8 +25,10 @@ public class Gestione implements GestioneInterface {
    *     passato come parametro, come idStruttura l'idStruttura passato come parametro e convalida a
    *     true
    */
-  public PrenotazioneBean accettaPrenotazione(int idOp, int idStruttura) {
+  public PrenotazioneBean accettaPrenotazione(Integer idOp, Integer idStruttura) {
     try {
+      if(idOp==null || idStruttura==null)
+        throw new InvalidKeyException("Id non valido, occorre un id>0");
       if (idOp <= 0 || idStruttura <= 0) {
         throw new InvalidKeyException("Id non valido, occorre un id>0");
       } else {

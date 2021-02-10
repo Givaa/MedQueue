@@ -27,7 +27,7 @@ class DataAccessTest {
   }
 
   @Test
-  void getPrenotazione() {
+  void AutenticazioneImpiegato_CodiceFiscale_NonValido_1() {
     assertNull(test.getPrenotazione(idNonValido));
     assertNull(test.getPrenotazione(idValidoNonTrovato));
     String str = "2021-01-22";
@@ -36,6 +36,16 @@ class DataAccessTest {
     Time time = Time.valueOf(str1);
     PrenotazioneBean p = new PrenotazioneBean(1, date, time, true, "MNDCMN97R22A509S", 1, 1);
     assertEquals(p, test.getPrenotazione(idValido));
+  }
+
+  @Test
+  void AutenticazioneImpiegato_CodiceFiscale_NonEsistenteNelDatabase_2() {
+    assertNull(test.getPrenotazione(idValidoNonTrovato));
+  }
+
+  @Test
+  void AutenticazioneImpiegato_Password_NonRispettaIlFormato_3() {
+    assertNull(test.getPrenotazione(idValidoNonTrovato));
   }
 
   @Test

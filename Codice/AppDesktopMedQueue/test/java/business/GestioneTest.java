@@ -20,29 +20,21 @@ class GestioneTest {
   }
 
   @Test
-  void accettaPrenotazione() {
-    assertNull(test.accettaPrenotazione(idNonValido, idNonValido));
-    assertNull(test.accettaPrenotazione(idNonValido, idValido));
-    assertNull(test.accettaPrenotazione(idValido, idNonValido));
-    assertNull(test.accettaPrenotazione(IdValidoNonTrovato, IdValidoNonTrovato));
-    while (test.getNumPrenotazioni(idValido, idValido) > 0)
-      assertNotEquals(null, test.accettaPrenotazione(idValido, idValido));
-    assertNull(test.accettaPrenotazione(idValido, idValido));
+  void accettazionePrenotazione_CodaNonSelezionata_1() {
+    assertNull(test.accettaPrenotazione(null,null));
   }
 
   @Test
-  void getNumPrenotazioni() {
-    assertEquals(0, test.getNumPrenotazioni(idNonValido, idNonValido));
-    assertEquals(0, test.getNumPrenotazioni(idNonValido, idValido));
-    assertEquals(0, test.getNumPrenotazioni(idValido, idNonValido));
-    assertEquals(0, test.getNumPrenotazioni(IdValidoNonTrovato, IdValidoNonTrovato));
-    assertNotEquals(0, test.getNumPrenotazioni(idValido, idValido));
+  void accettazionePrenotazione_PrenotazioneNonAccettata_2() {
+    assertNull(test.accettaPrenotazione(1,null));
   }
 
   @Test
-  void getOperazione() {
-    assertNull(test.getOperazione(idNonValido));
-    assertNull(test.getOperazione(IdValidoNonTrovato));
-    assertNotEquals(null, test.getOperazione(idValido));
+  void accettazionePrenotazione_PrenotazioneAccettata_3() {
+    assertNotNull(test.accettaPrenotazione(1,1));
   }
+
+
+
+
 }

@@ -28,11 +28,13 @@ public class Accesso implements AccessoInterface {
     try {
       if (Pattern.compile("^[a-zA-Z]{6}[0-9]{2}[abcdehlmprstABCDEHLMPRST]{1}"
               + "[0-9]{2}([a-zA-Z]{1}[0-9]{3})[a-zA-Z]{1}$").matcher(cf).matches() == false) {
-        throw new InvalidKeyException("Codice fiscale non valido.");
+        throw new InvalidKeyException("Codice Fiscale non rispetta il formato.");
       }
+      if(pass==null)
+        throw new InvalidKeyException("Password non inserita.");
       if (Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$")
               .matcher(pass).matches() == false) {
-        throw new InvalidKeyException("Password non valida.");
+        throw new InvalidKeyException("Password non rispetta il formato.");
       } else {
         ImpiegatoBean impiegato = daoOperation.getImpiegato(cf);
         if (impiegato != null) {

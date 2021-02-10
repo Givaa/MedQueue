@@ -16,7 +16,7 @@ public interface GestioneInterface {
    *     passato come parametro, come idStruttura l'idStruttura passato come parametro e convalida a
    *     true
    */
-  public PrenotazioneBean accettaPrenotazione(int idOp, int idStruttura);
+  public PrenotazioneBean accettaPrenotazione(Integer idOp, Integer idStruttura);
 
   /**
    * Metodo che restituisce il numero di prenotazioni da accettare.
