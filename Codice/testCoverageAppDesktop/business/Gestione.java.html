@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Gestione.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">AppDesktopMedQueue$All_in_AppDesktopMedQueue.exec</a> &gt; <a href="index.source.html" class="el_package">business</a> &gt; <span class="el_source">Gestione.java</span></div><h1>Gestione.java</h1><pre class="source lang-java linenums">package business;
+
+import bean.OperazioneBean;
+import bean.PrenotazioneBean;
+import eccezioni.InvalidKeyException;
+import java.util.ArrayList;
+import persistence.DaoInterface;
+import persistence.DataAccess;
+
+/** Classe che conterrà tutte le operazioni che l'impiegato puo effettuare. * */
+public class Gestione implements GestioneInterface {
+<span class="fc" id="L12">  private DaoInterface dao = new DataAccess();</span>
+
+  /**
+   * Metodo di business che permette di accettare una prenotazione convalidata.
+   */
+<span class="fc" id="L17">  public Gestione() {}</span>
+
+  /**
+   * Metodo di business che permette di accettare una prenotazione convalidata.
+   *
+   * @param idOp id dell'operazione della collezione Operazione
+   * @param idStruttura id della struttura della collezione Struttura
+   * @return prenotazione della collezione Prenotazione che ha come idOperazione l'idOperazione
+   *     passato come parametro, come idStruttura l'idStruttura passato come parametro e convalida a
+   *     true
+   */
+  public PrenotazioneBean accettaPrenotazione(Integer idOp, Integer idStruttura) {
+    try {
+<span class="fc bfc" id="L30" title="All 4 branches covered.">      if(idOp==null || idStruttura==null)</span>
+<span class="fc" id="L31">        throw new InvalidKeyException(&quot;Id non valido, occorre un id&gt;0&quot;);</span>
+<span class="pc bpc" id="L32" title="1 of 4 branches missed.">      if (idOp &lt;= 0 || idStruttura &lt;= 0) {</span>
+<span class="fc" id="L33">        throw new InvalidKeyException(&quot;Id non valido, occorre un id&gt;0&quot;);</span>
+      } else {
+<span class="fc" id="L35">        PrenotazioneBean p = dao.serviPrenotazione(idOp, idStruttura);</span>
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">        if (p != null) {</span>
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">          if (p.getId() &lt;= 0) {</span>
+<span class="nc" id="L38">            throw new InvalidKeyException(&quot;Id non valido occorre un id&gt;0&quot;);</span>
+          } else {
+<span class="pc bpc" id="L40" title="1 of 2 branches missed.">            if (dao.deletePrenotazione(p.getId()) &gt; 0) {</span>
+<span class="fc" id="L41">              return p;</span>
+            }
+          }
+        }
+      }
+
+<span class="fc" id="L47">    } catch (InvalidKeyException i) {</span>
+<span class="fc" id="L48">      System.out.println(i.toString());</span>
+<span class="nc" id="L49">    }</span>
+<span class="fc" id="L50">    return null;</span>
+  }
+
+  /**
+   * Metodo che restituisce il numero di prenotazioni da accettare.
+   *
+   * @param idOperazione id dell'operazione della collezione Operazione
+   * @param idStruttura id della struttura della collezione Struttura
+   * @return size delle prenotazioni della collezione prenotazione che hanno come idStruttura
+   *     l'idStruttura passato come parametro, come idOperazione l'idOperazione passato come
+   *     parametro e convalida a true
+   */
+  public int getNumPrenotazioni(int idOperazione, int idStruttura) {
+    try {
+<span class="pc bpc" id="L64" title="1 of 4 branches missed.">      if (idOperazione &lt;= 0 || idStruttura &lt;= 0) {</span>
+<span class="fc" id="L65">        throw new InvalidKeyException(&quot;Id non valido occorre un id&gt;0&quot;);</span>
+      } else {
+<span class="fc" id="L67">        return dao.numPrenotazioni(idOperazione, idStruttura);</span>
+      }
+<span class="fc" id="L69">    } catch (InvalidKeyException i) {</span>
+<span class="fc" id="L70">      System.out.println(i.toString());</span>
+    }
+<span class="fc" id="L72">    return 0;</span>
+  }
+
+  /**
+   * Metodo di business che mostra all'impiegato le operazioni che puo servire.
+   *
+   * @return operazioni della collezione Operazione
+   */
+  public ArrayList&lt;OperazioneBean&gt; getListaOperazioni() {
+<span class="fc" id="L81">    return dao.getOperazioni();</span>
+  }
+
+  /**
+   * Metodo di business che permette di scegliere all'impiegato un operazione da gestire.
+   *
+   * @param id id dell'operazione della collezione Operazione
+   * @return operazione della collezione Operazione che ha come id, l'id passato come parametro
+   */
+  public OperazioneBean getOperazione(int id) {
+    try {
+<span class="fc bfc" id="L92" title="All 2 branches covered.">      if (id &lt;= 0) {</span>
+<span class="fc" id="L93">        throw new InvalidKeyException(&quot;Id non valido occorre un id&gt;0&quot;);</span>
+      } else {
+<span class="fc" id="L95">        return dao.getOperazione(id);</span>
+      }
+<span class="fc" id="L97">    } catch (InvalidKeyException i) {</span>
+<span class="fc" id="L98">      System.out.println(i.toString());</span>
+    }
+<span class="fc" id="L100">    return null;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

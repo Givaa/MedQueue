@@ -42,7 +42,7 @@ public class ControlPanelView implements ControlPanelInterface {
   private final JFrame frame = new JFrame();
   private final JPanel pannelloNord = new JPanel();
   private final JPanel pannelloCentro = new JPanel();
-  private final ImageIcon infermiera = new ImageIcon("src/image/frameIcon.png");
+  private final ImageIcon infermiera = new ImageIcon(getClass().getResource("/image/frameIcon.png"));
   private final JLabel impiegato = new JLabel();
   private final JButton logout = new JButton("Logout");
   private final JLabel jl = new JLabel("Scegli l'operazione da gestire: ");
@@ -53,7 +53,7 @@ public class ControlPanelView implements ControlPanelInterface {
   private JFrame showPrenotazione;
   private ArrayList<OperazioneBean> listoperazioni;
   private int idStruttura;
-  private ImageIcon immagine = new ImageIcon("src/image/frameIcon.png");
+  private ImageIcon immagine = new ImageIcon(getClass().getResource("/image/frameIcon.png"));
   private int idOperazione;
   private boolean servizioPrenotazione =
       false; // Variabile booleana utilizzata per controllare se l'impiegato sta servendo una

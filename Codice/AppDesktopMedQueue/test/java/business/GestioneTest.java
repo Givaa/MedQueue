@@ -7,16 +7,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GestioneTest {
   private static Gestione test;
-  private static int idValido;
-  private static int IdValidoNonTrovato;
-  private static int idNonValido;
+
 
   @BeforeAll
   public static void setUp() {
     test = new Gestione();
-    idValido = 1;
-    idNonValido = 0;
-    IdValidoNonTrovato = 99;
   }
 
   @Test
@@ -34,7 +29,43 @@ class GestioneTest {
     assertNotNull(test.accettaPrenotazione(1,1));
   }
 
+  @Test
+  void accettaPrenotazione_idNonValido(){
+    assertNull(test.accettaPrenotazione(-1,-1));
+  }
 
+  @Test
+  void getNumeroPrenotazioni_idNonValido(){
+    assertEquals(0,test.getNumPrenotazioni(0,0));
+  }
 
+  @Test
+  void getNumeroPrenotazioni_idValidoNonTrovato(){
+    assertEquals(0,test.getNumPrenotazioni(99,99));
+  }
 
+  @Test
+  void getNumeroPrenotazioni_idValido(){
+    assertNotEquals(0,test.getNumPrenotazioni(1,1));
+  }
+
+  @Test
+  void getListaOperazioni(){
+    assertNotNull(test.getListaOperazioni());
+  }
+
+  @Test
+  void getOperazione_idNonValido(){
+    assertNull(test.getOperazione(0));
+  }
+
+  @Test
+  void getOperazione_idValidoNonTrovato(){
+    assertNull(test.getOperazione(99));
+  }
+
+  @Test
+  void getOperazione_idValido(){
+    assertNotNull(test.getOperazione(1));
+  }
 }

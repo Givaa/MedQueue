@@ -27,12 +27,16 @@ public class Connessione implements ConnessioneInterface {
    * Metodo che permette di disconnettersi dal database.
    *
    * @param connect connessione al database
+   * @return true o false
    */
-  public void disconnect(Connection connect) {
+  public boolean disconnect(Connection connect) {
+    boolean value=false;
     try {
       DriverManagerConnectionPool.releaseConnection(connect);
+      value=true;
     } catch (SQLException throwables) {
       throwables.printStackTrace();
     }
+    return value;
   }
 }

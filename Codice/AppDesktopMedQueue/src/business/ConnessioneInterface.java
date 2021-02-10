@@ -18,6 +18,7 @@ public interface ConnessioneInterface {
    * Metodo che permette di disconnettersi dal database.
    *
    * @param connect connessione al database
+   * @return true o false
    */
-  public void disconnect(Connection connect);
+  public boolean disconnect(Connection connect);
 }

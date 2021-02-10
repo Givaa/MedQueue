@@ -38,7 +38,7 @@ public class LoginView implements LoginInterface {
   private AccessoInterface login = new Accesso();
   private ConnessioneInterface connessioneInterface = new Connessione();
   private ControlPanelInterface pannelloDiControllo;
-  private ImageIcon immagine = new ImageIcon("src/image/LogoNoBG.png");
+  private ImageIcon immagine = new ImageIcon(getClass().getResource("/image/LogoNoBG.png"));
 
   /** Metodo che genera il frame che permette all'impiegato di loggarsi. */
   public LoginView() {}
@@ -54,7 +54,7 @@ public class LoginView implements LoginInterface {
     framePannello.setLocationRelativeTo(null);
     framePannello.getContentPane().setBackground(Color.white);
     framePannello.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    ImageIcon infermiera = new ImageIcon("src/image/frameIcon.png");
+    ImageIcon infermiera = new ImageIcon(getClass().getResource("/image/frameIcon.png"));
     framePannello.setIconImage(infermiera.getImage());
 
     // Settaggi componenti frame
@@ -88,6 +88,7 @@ public class LoginView implements LoginInterface {
               } // Messaggio d'errore nel caso in cui le credenziali del
               // impiegato sono sbagliate
             } catch (InvalidAccesException i) {
+              errore.setText("Credenziali errate");
               System.out.println(i.toString());
             }
           }
