@@ -106,12 +106,10 @@ public class PrenotazioneController {
     o = operazioneModel.doRetrieveByKey(Integer.valueOf(idOp));
     s = strutturaModel.doRetrieveByKey(Integer.valueOf(idS));
 
-    //boolean checkCodFisc = cf.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
-    boolean checkOra = ora.matches("^([0-1][0-9]|[2][0-3]):([0-5][0-9])$");
     boolean checkOperazione = o != null;
     boolean checkStruttura = s != null;
 
-    if (/**checkCodFisc &&*/ checkOra && checkOperazione && checkStruttura) {
+    if (checkOperazione && checkStruttura) {
       prenotazioneModel.doSave(new PrenotazioneBean(ora, dataPrenotazione, cf,
               Integer.valueOf(idOp), Integer.valueOf(idS), false));
       return true;

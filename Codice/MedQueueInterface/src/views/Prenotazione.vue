@@ -178,12 +178,10 @@ export default {
       prenotazioniAxios.getOrariDisponibili(this.idStruttura,this.idOperazione,data[0])
       .then((response) =>{
         this.tmp = response;
-        console.log(this.tmp);
         for(let i = 0; i<this.tmp.length; i++){
-          this.listaOrari[i] = this.tmp[i].ora;
+          this.listaOrari[i] = this.tmp[i];
         }
       })
-      console.log("solo questo");
     }
 
   }
