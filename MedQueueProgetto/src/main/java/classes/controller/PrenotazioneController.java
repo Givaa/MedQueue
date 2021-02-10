@@ -8,6 +8,9 @@ import classes.model.bean.entity.StrutturaBean;
 import classes.model.dao.OperazioneModel;
 import classes.model.dao.PrenotazioneModel;
 import classes.model.dao.StrutturaModel;
+import classes.model.interfaces.OperazioneDaoInterface;
+import classes.model.interfaces.PrenotazioneDaoInterface;
+import classes.model.interfaces.StrutturaDaoInterface;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.sql.Date;
@@ -32,9 +35,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PrenotazioneController {
 
-  private final PrenotazioneModel prenotazioneModel = new PrenotazioneModel();
-  private final StrutturaModel strutturaModel = new StrutturaModel();
-  private final OperazioneModel operazioneModel = new OperazioneModel();
+  private final PrenotazioneDaoInterface prenotazioneModel = new PrenotazioneModel();
+  private final StrutturaDaoInterface strutturaModel = new StrutturaModel();
+  private final OperazioneDaoInterface operazioneModel = new OperazioneModel();
 
   /**
    * Metodo che permette di utilizzare il prelevamento per id del PrenotazioneModel.

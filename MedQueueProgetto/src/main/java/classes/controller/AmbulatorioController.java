@@ -1,6 +1,5 @@
 package classes.controller;
 
-
 import classes.controller.exception.ErrorNewObjectException;
 import classes.controller.exception.InvalidKeyException;
 import classes.controller.exception.ObjectNotFoundException;
@@ -8,6 +7,7 @@ import classes.model.bean.entity.AmbulatoriBean;
 import classes.model.bean.entity.StrutturaBean;
 import classes.model.dao.AmbulatoriModel;
 import classes.model.dao.StrutturaModel;
+import classes.model.interfaces.AmbulatorioDaoInterface;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.sql.SQLException;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AmbulatorioController {
 
-  private final AmbulatoriModel ambulatorioModel = new AmbulatoriModel();
+  private final AmbulatorioDaoInterface ambulatorioModel = new AmbulatoriModel();
   private final StrutturaModel strutturaModel = new StrutturaModel();
 
   /**

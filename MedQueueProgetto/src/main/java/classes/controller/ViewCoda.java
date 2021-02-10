@@ -2,6 +2,7 @@ package classes.controller;
 
 import classes.model.bean.entity.PrenotazioneBean;
 import classes.model.dao.PrenotazioneModel;
+import classes.model.interfaces.PrenotazioneDaoInterface;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.sql.SQLException;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 /** Classe per visualizzare la coda di una struttura. */
 @RestController
 public class ViewCoda {
-  public final PrenotazioneModel prenotazioneModel = new PrenotazioneModel();
+  public final PrenotazioneDaoInterface prenotazioneModel = new PrenotazioneModel();
 
   /**
    * Metodo che permette di visualizzare la coda di una struttura tramite l'id.

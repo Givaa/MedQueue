@@ -4,6 +4,7 @@ import classes.controller.exception.ErrorNewObjectException;
 import classes.controller.exception.ObjectNotFoundException;
 import classes.model.bean.entity.UtenteBean;
 import classes.model.dao.UtenteModel;
+import classes.model.interfaces.UtenteDaoInterface;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.sql.Date;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 /** Classe per controllare i metodi del Model di Utente. */
 @RestController
 public class UtenteController {
-  private final UtenteModel utenteModel = new UtenteModel();
+  private final UtenteDaoInterface utenteModel = new UtenteModel();
 
   /**
    * Metodo che permette di utilizzare il prelevamento per id dell'UtenteModel.

@@ -3,6 +3,7 @@ package classes.controller;
 import classes.controller.exception.ErrorNewObjectException;
 import classes.model.bean.entity.UtenteBean;
 import classes.model.dao.UtenteModel;
+import classes.model.interfaces.UtenteDaoInterface;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.sql.Date;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LogInController extends HttpServlet {
 
-  private final UtenteModel um = new UtenteModel();
+  private final UtenteDaoInterface um = new UtenteModel();
 
   /**
    * Metodo che controlla le credenziali inviate.

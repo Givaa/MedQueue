@@ -4,6 +4,7 @@ import classes.controller.exception.ErrorNewObjectException;
 import classes.controller.exception.ObjectNotFoundException;
 import classes.model.bean.entity.StrutturaBean;
 import classes.model.dao.StrutturaModel;
+import classes.model.interfaces.StrutturaDaoInterface;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.sql.SQLException;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 /** Classe per controllare i metodi del Model di Struttura. */
 @RestController
 public class StrutturaController {
-  private final StrutturaModel strutturaModel = new StrutturaModel();
+  private final StrutturaDaoInterface strutturaModel = new StrutturaModel();
 
   /**
    * Metodo che permette di utilizzare il prelevamento per id dello StrutturaModel.

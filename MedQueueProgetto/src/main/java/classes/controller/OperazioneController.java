@@ -5,6 +5,7 @@ import classes.controller.exception.InvalidKeyException;
 import classes.controller.exception.ObjectNotFoundException;
 import classes.model.bean.entity.OperazioneBean;
 import classes.model.dao.OperazioneModel;
+import classes.model.interfaces.OperazioneDaoInterface;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.sql.SQLException;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class OperazioneController {
 
-  private final OperazioneModel operazioneModel = new OperazioneModel();
+  private final OperazioneDaoInterface operazioneModel = new OperazioneModel();
 
   /**
    * Metodo che permette di utilizzare il prelevamento per id dell'OperazioneModel.

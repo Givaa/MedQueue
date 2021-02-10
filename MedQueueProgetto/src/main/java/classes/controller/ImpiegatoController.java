@@ -5,6 +5,7 @@ import classes.controller.exception.ObjectNotFoundException;
 import classes.model.bean.entity.ImpiegatoBean;
 import classes.model.dao.ImpiegatoModel;
 import classes.model.dao.StrutturaModel;
+import classes.model.interfaces.ImpiegatoDaoInterface;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.sql.Date;
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ImpiegatoController {
 
-  private final ImpiegatoModel impiegatoModel = new ImpiegatoModel();
+  private final ImpiegatoDaoInterface impiegatoModel = new ImpiegatoModel();
   private final StrutturaModel strutturaModel = new StrutturaModel();
 
   /**
