@@ -1,5 +1,7 @@
 package bean;
 
+import java.util.Objects;
+
 /** Classe che rappresenta una struttura ospedaliera. */
 public class StrutturaBean {
 
@@ -113,5 +115,25 @@ public class StrutturaBean {
         + numeroDiTelefono
         + '\''
         + '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof StrutturaBean)) {
+      return false;
+    }
+    StrutturaBean that = (StrutturaBean) o;
+    return getId() == that.getId()
+        && Objects.equals(getNome(), that.getNome())
+        && Objects.equals(getIndirizzo(), that.getIndirizzo())
+        && Objects.equals(getNumeroDiTelefono(), that.getNumeroDiTelefono());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getId(), getNome(), getIndirizzo(), getNumeroDiTelefono());
   }
 }

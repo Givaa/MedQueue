@@ -1,5 +1,7 @@
 package bean;
 
+import java.util.Objects;
+
 /** Classe che rappresenta per quale operazione è possibile prendere una prenotazione. */
 public class OperazioneBean {
   private int id;
@@ -88,5 +90,24 @@ public class OperazioneBean {
         + descrizione
         + '\''
         + '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof OperazioneBean)) {
+      return false;
+    }
+    OperazioneBean that = (OperazioneBean) o;
+    return getId() == that.getId()
+        && Objects.equals(getTipoOperazione(), that.getTipoOperazione())
+        && Objects.equals(getDescrizione(), that.getDescrizione());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getId(), getTipoOperazione(), getDescrizione());
   }
 }

@@ -20,5 +20,16 @@ export default {
                 'Content-Type': 'application/json',
             }
         }).then(response => response.data)
+    },
+
+    getOperazioneByNome(tipoOperazioneGet) {
+        return axios.post('http://localhost:8080/operazione/{tipo}', {
+            tipoOperazioneGet
+        }, {
+            crossDomain: true,
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(response => response.data)
     }
 };
