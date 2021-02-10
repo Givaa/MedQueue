@@ -88,7 +88,7 @@ public class AmbulatorioController {
 
     StrutturaBean strutturaBean = strutturaModel.doRetrieveByKey(Integer.valueOf(idStruttura));
 
-    boolean checkNome = nome.matches("^[a-z ,.'-]+$");
+    boolean checkNome = nome.matches("^[a-z A-Z ,.'-]+$");
     boolean checkIdStruttura = strutturaBean != null;
 
     if (checkNome && checkIdStruttura) {
