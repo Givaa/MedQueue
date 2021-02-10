@@ -62,17 +62,21 @@ public class LogInController extends HttpServlet {
 
     String nome = jsonObject.get("nome").getAsString();
     Boolean checkName;
-    checkName = nome.matches("[A-Za-z]+$");
+    checkName = nome.matches("[A-Za-z]{2,35}$");
 
     String cognome = jsonObject.get("cognome").getAsString();
     Boolean checkSurname;
-    checkSurname = cognome.matches("[A-Za-z]+$");
+    checkSurname = cognome.matches("[A-Za-z]{2,35}$");
 
     String codFisc = jsonObject.get("codFisc").getAsString();
     Boolean checkCodFisc;
     checkCodFisc = codFisc.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
 
     String password = jsonObject.get("password").getAsString();
+    Boolean checkPassword;
+    checkPassword =
+            password.matches("(?=^.{6,50}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*$");
+
     String phoneNumber = jsonObject.get("numeroTelefono").getAsString();
 
     String dataNascita = jsonObject.get("dataDiNascita").getAsString();
@@ -81,13 +85,9 @@ public class LogInController extends HttpServlet {
 
     String email = jsonObject.get("email").getAsString();
     Boolean checkMail;
-    checkMail = email.matches("/\\S+@\\S+\\.\\S+/");
-
-    Boolean checkPassword;
-    checkPassword =
-            password.matches("(?=^.{8,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*$");
-    checkCodFisc = codFisc.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
-
+    checkMail = email.matches(
+            "^(?=.{8,255}$)[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$"
+    );
 
     Boolean checkPhoneNumber;
     checkPhoneNumber = phoneNumber.matches("^[0-9]{10,12}");

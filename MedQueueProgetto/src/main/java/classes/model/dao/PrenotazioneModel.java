@@ -388,7 +388,7 @@ public class PrenotazioneModel implements PrenotazioneDaoInterface {
       }
       //Se sono occupati tutti gli orari
       if(result.size()==0){
-        return null;
+        System.exit(400);
       }
 
     }catch (SQLException e){
