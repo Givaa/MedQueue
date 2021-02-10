@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default {
-    getOperazioneBtId(idOperazioneGet){
+    getOperazioneById(idOperazioneGet){
         return axios.post('http://localhost:8080/operazione/{id}', {
             idOperazioneGet
         }, {

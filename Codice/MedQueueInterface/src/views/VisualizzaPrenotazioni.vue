@@ -1,5 +1,5 @@
 <template>
-  <ion-page>
+  <ion-page @mouseover="getPrenotazioni">
     <ion-content content="menu">
       <ion-header :translucent="true">
         <ion-toolbar>
@@ -11,51 +11,61 @@
       </ion-header>
       <div id="container">
         <strong class="capitalize">Prenotazioni</strong>
-        <p>Prenotazioni</p>
-        <ion-grid>
-          <ion-row id="top">
-            <ion-col>Data</ion-col>
-            <ion-col>Struttura</ion-col>
-            <ion-col>Tipo</ion-col>
-            <ion-col>Ora</ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>13/02/2021</ion-col>
-            <ion-col>Caserta</ion-col>
-            <ion-col>Pagamento</ion-col>
-            <ion-col>11:30</ion-col>
-          </ion-row>
-            <ion-row>
-              <ion-col>13/02/2021</ion-col>
-              <ion-col>Caserta</ion-col>
-              <ion-col>Ritiro analisi</ion-col>
-              <ion-col>11:30</ion-col>
-            </ion-row>
+        <br>
+        <br>
+        <br>
+        <div class="titolo1">Data</div>
+        <div class="titolo2">Struttura</div>
+        <div class="titolo3">Tipo</div>
+        <div class="titolo4">Ora</div>
+        <div class="titolo5">Elimina</div>
+        <div class="colonna1">
+          <div id="data" v-bind:key="data" v-for="data in date">
+            <br>
+            <div>{{ data }}</div>
+            <br>
+          </div>
+        </div>
+        <div class="colonna2">
+          <div id="struttura" v-bind:key="struttura" v-for="struttura in strutture">
+            <br>
+            <div>{{ struttura }}</div>
+            <br>
+            </div>
+        </div>
+        <div class="colonna3">
+          <div id="tipo" v-bind:key="tipo" v-for="tipo in tipi">
+            <br>
+            <div>{{ tipo }}</div>
+            <br>
+          </div>
+        </div>
+        <div class="colonna4">
+          <div id="ora" v-bind:key="ora" v-for="ora in ore">
+            <br>
+            <div>{{ ora }}</div>
+            <br>
+          </div>
+        </div>
+        <div class="colonna5">
 
-            <ion-row>
-              <ion-col>13/02/2021</ion-col>
-              <ion-col>Caserta</ion-col>
-              <ion-col>Ritiro cartella clinica</ion-col>
-              <ion-col>11:30</ion-col>
-            </ion-row>
-
-          <ion-row>
-            <ion-col>13/02/2021</ion-col>
-            <ion-col>Caserta</ion-col>
-            <ion-col>Ritiro cartella clinica</ion-col>
-            <ion-col>11:30</ion-col>
-          </ion-row>
-        </ion-grid>
+          <div id="id" v-bind:key="id" v-for="id in idPrenotazioni">
+            <ion-button @click="eliminaPrenotazione(id)" color="danger">premi</ion-button>
+            <br>
+            <br>
+          </div>
+        </div>
       </div>
     </ion-content>
   </ion-page>
 </template>
 
-<script lang="ts">
+<script>
+import prenotazioniAxios from '../axios/prenotazioni'
+import struttureAxios from '../axios/strutture'
+import operazioneAxios from '../axios/Operazione'
 import {
-  IonGrid,
-  IonRow,
-  IonCol,
+  IonButton,
   IonContent,
   IonButtons,
   IonHeader,
@@ -64,26 +74,12 @@ import {
   IonTitle,
   IonToolbar
 } from '@ionic/vue';
-import {ref} from "vue";
-import {
-  homeOutline,
-  homeSharp,
-  listOutline,
-  listSharp,
-  logInOutline,
-  logInSharp,
-  pencilOutline,
-  pencilSharp
-} from "ionicons/icons";
-import {useRoute} from "vue-router";
-import menu1 from "./menu.vue"
+import router from "@/router";
 
 export default {
   name: "Prenotazione",
   components: {
-    IonGrid,
-    IonRow,
-    IonCol,
+    IonButton,
     IonContent,
     IonButtons,
     IonHeader,
@@ -92,64 +88,130 @@ export default {
     IonTitle,
     IonToolbar
   },
-  setup() {
-    const selectedIndex = ref(0);
-    const appPages = [
-      {
-        title:"Home",
-        url:"/HomeUtente",
-        iosIcon: homeOutline,
-        mdIcon: homeSharp
-      },
-      {
-        title: 'Log In',
-        url: '/Prenotazione',
-        iosIcon: logInOutline,
-        mdIcon: logInSharp
-      },
-      /**{
-        title: 'Sign in',
-        url: '/Registrazione',
-        iosIcon: pencilOutline,
-        mdIcon: pencilSharp
-      },
-       {
-        title: 'Visualizza Coda',
-        url: '/VisualizzazioneCoda',
-        iosIcon: listOutline,
-        mdIcon: listSharp
-      }*/
-    ];
-
-    const path = window.location.pathname.split('folder/')[1];
-    if (path !== undefined) {
-      selectedIndex.value = appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
-    }
-
-    const route = useRoute();
-
+  data() {
     return {
-      selectedIndex,
-      appPages,
-      homeOutline,
-      homeSharp,
-      logInOutline,
-      logInSharp,
-      pencilOutline,
-      pencilSharp,
-      listOutline,
-      listSharp,
-      isSelected: (url: string) => url === route.path ? 'selected' : ''
+      tmp: "",
+      idPrenotazioni:[],
+      prenotazioni: [],
+      date: [],
+      idStrutture: [],
+      strutture: [],
+      idTipi: [],
+      tipi:[],
+      ore: [],
     }
-  }
+  },
+  created() {
+    this.getPrenotazioni();
+  },
+  methods: {
+
+    async getPrenotazioni() {
+      prenotazioniAxios.getPrenotazioneByCf(sessionStorage.getItem("codiceFiscale"))
+          .then((response) => {
+            this.prenotazioni = response;
+
+            for (let i = 0; i < this.prenotazioni.length; i++) {
+              this.idPrenotazioni[i] = this.prenotazioni[i].id;
+              this.date[i] = this.prenotazioni[i].dataPrenotazione;
+              this.idStrutture[i] = this.prenotazioni[i].idStruttura;
+              this.idTipi[i] = this.prenotazioni[i].idOperazione;
+              this.ore[i] = this.prenotazioni[i].ora;
+            }
+          })
+
+        this.getNomeStruttura();
+        this.getNomeOperazione();
+
+    },
+
+    getNomeStruttura() {
+        for (let i = 0; i < this.idStrutture.length; i++) {
+          struttureAxios.getStrutturaById(this.idStrutture[i])
+              .then((response) => {
+                this.tmp = response;
+
+                this.strutture[i] = this.tmp.nome;
+              })
+      }
+    },
+
+    getNomeOperazione(){
+        for (let i = 0; i < this.idTipi.length; i++) {
+          operazioneAxios.getOperazioneById(this.idTipi[i])
+              .then((response) =>{
+                this.tmp = response;
+                this.tipi[i] = this.tmp.tipoOperazione;
+              })
+        }
+      },
+
+    eliminaPrenotazione(id){
+      prenotazioniAxios.elimina(id)
+      .then((response) =>{
+        console.log("Successo!");
+        window.location.reload();
+      })
+    }
+
+    }
 
 }
 </script>
 
 <style scoped>
 
-ion-grid{
-  border:1px black;
+ion-button{
+  height: 30px;
+}
+div.colonna1 {
+  float: left;
+  margin-right: 17%;
+  margin-left: 9%;
+}
+
+div.colonna2 {
+  float: left;
+  margin-right: 13%;
+}
+
+div.colonna3 {
+  float: left;
+  margin-right: 13%;
+}
+
+div.colonna4 {
+  float: left;
+  margin-right: 3%;
+}
+
+div.titolo1 {
+  font-weight: bold;
+  float: left;
+  margin-right: 20%;
+  margin-left: 10%;
+}
+
+div.titolo2 {
+  font-weight: bold;
+  float: left;
+  margin-right: 20%;
+}
+
+div.titolo3 {
+  font-weight: bold;
+  float: left;
+  margin-right: 20%;
+}
+
+div.titolo4 {
+  font-weight: bold;
+  float: left;
+  margin-right: 3%;
+}
+
+div.titolo5{
+  font-weight: bold;
 }
 
 #container {
@@ -293,7 +355,7 @@ ion-note {
   color: var(--ion-color-medium-shade);
 }
 
-#top{
+#top {
   font-weight: bolder;
 }
 

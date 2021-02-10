@@ -94,7 +94,7 @@ export default {
 
       operazioneString(){
       for(let i=0; i<this.prenotazioni.length; i++) {
-        operazioneAxios.getOperazioneBtId(this.prenotazioni[i])
+        operazioneAxios.getOperazioneById(this.prenotazioni[i])
         .then((response) =>{
           this.nomePrenotazioni[i] = response.tipoOperazione;
         })
