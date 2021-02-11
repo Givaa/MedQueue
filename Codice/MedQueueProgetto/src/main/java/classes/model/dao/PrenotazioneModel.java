@@ -294,7 +294,7 @@ public class PrenotazioneModel implements PrenotazioneDaoInterface {
 
 
     String selectPrenotazioniSql = "SELECT * FROM " + nomeTabella
-            + " WHERE idStruttura = ? ORDER BY ora";
+            + " WHERE idStruttura = ? ORDER BY data AND ora";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();
