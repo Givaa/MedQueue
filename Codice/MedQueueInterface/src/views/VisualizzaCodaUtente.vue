@@ -11,112 +11,162 @@
       </ion-header>
       <div id="container">
         <strong class="capitalize">Visualizza Coda</strong>
-        <p>Coda ufficio</p>
+        <div class="selezione">
+          <label>Seleziona la struttura:</label>
+          <ion-select placeholder="Struttura" >
+            <ion-select-option v-bind="strutturaScelta" id="str" v-bind:key="struttura" v-for="struttura in struture" >{{struttura}}</ion-select-option>
+          </ion-select>
+          <ion-button @click="updatePrenotazioni" color="primary">Visualizza</ion-button>
+        </div>
+
+        <br>
+        <br>
+        <br>
+
+        <div class="titolo1">Data</div>
+        <div class="titolo2">Ora</div>
+        <div class="titolo3">Tipo </div>
+        <div class="colonna1">
+          <div id="data" v-bind:key="data" v-for="data in date" >{{data}}</div>
+        </div>
+        <div class="colonna2">
+          <div id="ora" v-bind:key="ora" v-for="ora in ore" >{{ora}}</div>
+        </div>
+        <div class="colonna3">
+          <div id="prenotazione" v-bind:key="prenotazione" v-for="prenotazione in nomeOperazioni" >{{prenotazione}}</div>
+        </div>
       </div>
     </ion-content>
   </ion-page>
 </template>
 
-<script lang="ts">
+<script >
+import prenotazioniAxios from '../axios/prenotazioni'
+import operazioneAxios from '../axios/Operazione'
+import struttureAxios from '../axios/strutture'
 import {
+  IonSelect,
+  IonSelectOption,
   IonContent,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonListHeader,
-  IonRouterOutlet,
-  IonSplitPane,
-  IonButtons,
   IonHeader,
-  IonMenu,
-  IonMenuButton,
-  IonMenuToggle,
   IonPage,
   IonTitle,
   IonToolbar
 } from '@ionic/vue';
-import {ref} from "vue";
-import {
-  homeOutline,
-  homeSharp,
-  listOutline,
-  listSharp,
-  logInOutline,
-  logInSharp,
-  pencilOutline,
-  pencilSharp
-} from "ionicons/icons";
-import {useRoute} from "vue-router";
+
 
 export default {
   name: "visualizzaCoda",
   components: {
+    IonSelect,
+    IonSelectOption,
     IonContent,
     IonHeader,
     IonPage,
     IonTitle,
     IonToolbar
   },
-  setup() {
-    const selectedIndex = ref(0);
-    const appPages = [
-      {
-        title:"Home",
-        url:"/Home",
-        iosIcon: homeOutline,
-        mdIcon: homeSharp
-      },
-      /**{
-        title: 'Log In',
-        url: '/Accesso',
-        iosIcon: logInOutline,
-        mdIcon: logInSharp
-      },
-       {
-        title: 'Sign in',
-        url: '/Registrazione',
-        iosIcon: pencilOutline,
-        mdIcon: pencilSharp
-      },*/
-      {
-        title: 'Visualizza Coda',
-        url: '/VisualizzazioneCoda',
-        iosIcon: listOutline,
-        mdIcon: listSharp
+  data(){
+    return{
+      tmp:[],
+      prenotazioni: [],
+      ore:[],
+      date:[],
+      operazioni:[],
+      nomeOperazioni: [],
+      struture:[],
+      strutturaScelta:"",
+      selectedCod:1
+    };
+  },
+  created() {
+    this.getStrutture();
+  },
+  methods:{
+
+    updatePrenotazioni(){
+      console.log(this.strutturaScelta);
+      prenotazioniAxios.getPrenotazioniByStruttura(this.selectedCod)
+          .then((response) => {
+            if(response === ''){
+              this.presentAlert();
+              return null;
+            }else {
+              this.prenotazioni = response;
+
+              for (let i=0; i<this.prenotazioni.length; i++){
+                this.ore[i] = this.prenotazioni[i].ora;
+                this.date[i] = this.prenotazioni[i].dataPrenotazione;
+                this.operazioni[i] =  this.prenotazioni[i].idOperazione;
+              }
+              this.operazioneString();
+            }
+          })
+    },
+
+    operazioneString(){
+      for(let i=0; i<this.operazioni.length; i++) {
+        operazioneAxios.getOperazioneById(this.operazioni[i])
+            .then((response) =>{
+              this.nomeOperazioni[i] = response.tipoOperazione;
+            })
       }
-    ];
+    },
 
-    const path = window.location.pathname.split('folder/')[1];
-    if (path !== undefined) {
-      selectedIndex.value = appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
-    }
-
-    const route = useRoute();
-
-    return {
-      selectedIndex,
-      appPages,
-      homeOutline,
-      homeSharp,
-      logInOutline,
-      logInSharp,
-      pencilOutline,
-      pencilSharp,
-      listOutline,
-      listSharp,
-      isSelected: (url: string) => url === route.path ? 'selected' : ''
+    getStrutture(){
+      struttureAxios.getStrutture()
+      .then((response) =>{
+        this.tmp = response;
+        for(let i=0; i<this.tmp. length;i++){
+          this.struture[i] = this.tmp[i].nome;
+        }
+      })
     }
   }
-
 }
 </script>
 
 
 <style scoped>
-#page{
-  background-color: blue;
+
+.selezione{
+  width: 20%;
 }
+
+ion-button{
+  float: top;
+}
+
+div.colonna1{
+  float: left;
+  margin-right: 33%;
+  margin-left: 9%;
+}
+
+div.colonna2{
+  float: left;
+  margin-right: 33%;
+}
+
+div.colonna3{
+  float: left;
+}
+
+div.titolo1{
+  float: left;
+  margin-right: 36%;
+  margin-left: 10%;
+}
+
+div.titolo2{
+  float: left;
+  margin-right: 38%;
+}
+
+div.titolo3{
+  float: left;
+}
+
 #container {
   text-align: center;
   position: relative;
