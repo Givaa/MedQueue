@@ -14,7 +14,6 @@ public interface ControlPanelInterface {
    * all'impiegato di accettare prenotazioni.
    *
    * @param impiegato impiegato della collezione Impiegato che si e loggato nell'applicazione
-   * @param connessione connessione al database
    */
-  public void showControlPanel(ImpiegatoBean impiegato, Connection connessione);
+  public void showControlPanel(ImpiegatoBean impiegato);
 }

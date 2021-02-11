@@ -14,12 +14,6 @@ class FacadeClassBusinessTest {
     }
 
     @Test
-    void getConnessione() {
-        assertNotNull(test.getConnessione());
-    }
-
-
-    @Test
     void autenticazione() {
         assertNotNull(test.autenticazione("FLTNGL99A14L845J","angelo99"));
     }

@@ -30,7 +30,7 @@ public class LoginView implements LoginInterface {
   private JFrame framePannello;
   private JTextField codiceFiscale;
   private JPasswordField password;
-  private JButton connect;
+  private JButton accedi;
   private JLabel errore;
   private FacadeClassBusiness business;
   private ControlPanelInterface pannelloDiControllo;
@@ -41,7 +41,7 @@ public class LoginView implements LoginInterface {
     framePannello = new JFrame();
     codiceFiscale = new JTextField(16);
     password = new JPasswordField(32);
-    connect = new JButton("Connetti");
+    accedi = new JButton("Accedi");
     errore = new JLabel();
     immagine = new ImageIcon(getClass().getResource("/image/LogoNoBG.png"));
     business = new FacadeClassBusiness();
@@ -66,12 +66,8 @@ public class LoginView implements LoginInterface {
     errore.setForeground(Color.red); // Setto il colore del testo a rosso
     errore.setHorizontalAlignment(JLabel.CENTER); // Centro il testo nella JLabel
 
-    connect.addActionListener(
+    accedi.addActionListener(
         l -> { // Action Listener sul bottone di connessione
-          Connection connection = business.getConnessione();
-          if (connection == null) {
-            errore.setText("Errore nella connessione");
-          } else {
             try {
               if (codiceFiscale.getText() == ""
                   || codiceFiscale.getText().length() != 16
@@ -83,7 +79,7 @@ public class LoginView implements LoginInterface {
                   business.autenticazione(codiceFiscale.getText(), password.getText());
               if (impiegato != null) {
                 pannelloDiControllo = new ControlPanelView();
-                pannelloDiControllo.showControlPanel(impiegato, connection);
+                pannelloDiControllo.showControlPanel(impiegato);
                 codiceFiscale.setText("");
                 password.setText("");
                 errore.setText("");
@@ -96,7 +92,6 @@ public class LoginView implements LoginInterface {
               errore.setText("Credenziali errate");
               System.out.println(i.toString());
             }
-          }
         });
 
     JCheckBox select = new JCheckBox("Mostra password");
@@ -116,7 +111,7 @@ public class LoginView implements LoginInterface {
         new KeyAdapter() {
           public void keyPressed(KeyEvent event) {
             if (event.getKeyCode() == KeyEvent.VK_ENTER) {
-              connect.doClick();
+              accedi.doClick();
             }
           }
         });
@@ -139,7 +134,7 @@ public class LoginView implements LoginInterface {
     pannelloaccesso.add(password);
     pannelloaccesso.add(select);
     pannelloaccesso.add(errore);
-    pannelloaccesso.add(connect);
+    pannelloaccesso.add(accedi);
 
     framePannello.add(pannelloaccesso, BorderLayout.CENTER);
     JLabel contenitoreImmagine = new JLabel(immagine, JLabel.CENTER);

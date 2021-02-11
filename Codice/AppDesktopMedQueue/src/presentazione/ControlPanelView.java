@@ -78,10 +78,9 @@ public class ControlPanelView implements ControlPanelInterface {
    * che potra gestire, il numero di prenotazioni per coda da servire e accettare una prenotazione.
    *
    * @param imp impiegato che si è loggato
-   * @param con connessione al database
    */
   @Override
-  public void showControlPanel(ImpiegatoBean imp, Connection con) {
+  public void showControlPanel(ImpiegatoBean imp) {
     idStruttura =
         imp.getIdStruttura(); // Salvo la struttura in cui lavora l'impiegato per poter ottenere le
     // prenotazioni sono di quella struttura
@@ -141,8 +140,6 @@ public class ControlPanelView implements ControlPanelInterface {
     // ActionListener sul pulsante di logout
     logout.addActionListener(
         e -> {
-          // eseguo la disconnessione dal database
-          business.disconnect(con);
           loginView = new LoginView();
           loginView.showLoginView();
           frame.dispose(); // Chiudo il frame

@@ -13,7 +13,6 @@ public class FacadeClassBusiness {
 
   private final AccessoInterface accesso;
   private final GestioneInterface gestione;
-  private final ConnessioneInterface connessione;
 
   /**
    * Costruttore della classe.
@@ -21,15 +20,6 @@ public class FacadeClassBusiness {
   public FacadeClassBusiness() {
     accesso = new Accesso();
     gestione = new Gestione();
-    connessione = new Connessione();
-  }
-
-  public Connection getConnessione() {
-    return connessione.connect();
-  }
-
-  public void disconnect(Connection con) {
-    connessione.disconnect(con);
   }
 
   public ImpiegatoBean autenticazione(String cf, String pw) {
