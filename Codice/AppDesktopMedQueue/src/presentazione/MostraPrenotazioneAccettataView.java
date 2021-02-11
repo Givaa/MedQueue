@@ -17,7 +17,8 @@ import javax.swing.JPanel;
 
 /** Classe che mostra un frame con i dettagli della prenotazione chiamata dall'impiegato. */
 public class MostraPrenotazioneAccettataView implements ShowPrenotazioneInterface {
-  private final ImageIcon infermiera = new ImageIcon(getClass().getResource("/image/frameIcon.png"));
+  private final ImageIcon infermiera =
+          new ImageIcon(getClass().getResource("/image/frameIcon.png"));
   private JFrame frame = new JFrame();
   private JLabel idPrenotazione = new JLabel();
   private JLabel codicefiscale = new JLabel();

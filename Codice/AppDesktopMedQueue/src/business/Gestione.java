@@ -9,11 +9,9 @@ import persistence.DataAccess;
 
 /** Classe che conterrà tutte le operazioni che l'impiegato puo effettuare. * */
 public class Gestione implements GestioneInterface {
-  private DaoInterface dao = new DataAccess();
+  private final DaoInterface dao = new DataAccess();
 
-  /**
-   * Metodo di business che permette di accettare una prenotazione convalidata.
-   */
+  /** Metodo di business che permette di accettare una prenotazione convalidata. */
   public Gestione() {}
 
   /**
@@ -27,8 +25,9 @@ public class Gestione implements GestioneInterface {
    */
   public PrenotazioneBean accettaPrenotazione(Integer idOp, Integer idStruttura) {
     try {
-      if(idOp==null || idStruttura==null)
+      if (idOp == null || idStruttura == null) {
         throw new InvalidKeyException("Id non valido, occorre un id>0");
+      }
       if (idOp <= 0 || idStruttura <= 0) {
         throw new InvalidKeyException("Id non valido, occorre un id>0");
       } else {
