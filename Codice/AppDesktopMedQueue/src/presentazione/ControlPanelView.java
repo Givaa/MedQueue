@@ -3,10 +3,7 @@ package presentazione;
 import bean.ImpiegatoBean;
 import bean.OperazioneBean;
 import bean.PrenotazioneBean;
-import business.Connessione;
-import business.ConnessioneInterface;
-import business.Gestione;
-import business.GestioneInterface;
+import business.*;
 import eccezioni.InvalidManagementException;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -39,31 +36,42 @@ import javax.swing.JTextField;
  */
 public class ControlPanelView implements ControlPanelInterface {
 
-  private final JFrame frame = new JFrame();
-  private final JPanel pannelloNord = new JPanel();
-  private final JPanel pannelloCentro = new JPanel();
-  private final ImageIcon infermiera = new ImageIcon(getClass().getResource("/image/frameIcon.png"));
-  private final JLabel impiegato = new JLabel();
-  private final JButton logout = new JButton("Logout");
-  private final JLabel jl = new JLabel("Scegli l'operazione da gestire: ");
-  private GestioneInterface gestione = new Gestione();
-  private ConnessioneInterface connessione = new Connessione();
+  private JFrame frame;
+  private JPanel pannelloNord;
+  private JPanel pannelloCentro;
+  private ImageIcon infermiera;
+  private JLabel impiegato;
+  private JButton logout;
+  private JLabel jl;
   private LoginInterface loginView;
   private ShowPrenotazioneInterface prentazioneAccettata;
   private JFrame showPrenotazione;
-  private ArrayList<OperazioneBean> listoperazioni;
+  private ArrayList<OperazioneBean> listaCode;
+  private ImageIcon immagine;
   private int idStruttura;
-  private ImageIcon immagine = new ImageIcon(getClass().getResource("/image/frameIcon.png"));
   private int idOperazione;
-  private boolean servizioPrenotazione =
-      false; // Variabile booleana utilizzata per controllare se l'impiegato sta servendo una
+  // Variabile booleana utilizzata per controllare se l'impiegato sta servendo una
   // prenotazione
+  private boolean servizioPrenotazione;
+  private FacadeClassBusiness business;
 
   /**
    * Metodo che genera il pannello di controllo che permettera all'impiegato di visualizzare le code
    * che potra gestire, il numero di prenotazioni per coda da servire e accettare una prenotazione.
    */
-  public ControlPanelView() {}
+  public ControlPanelView() {
+    frame = new JFrame();
+    pannelloNord = new JPanel();
+    pannelloCentro = new JPanel();
+    pannelloCentro = new JPanel();
+    infermiera = new ImageIcon(getClass().getResource("/image/frameIcon.png"));
+    impiegato = new JLabel();
+    logout = new JButton("Logout");
+    jl = new JLabel("Scegli l'operazione da gestire: ");
+    immagine = new ImageIcon(getClass().getResource("/image/frameIcon.png"));
+    servizioPrenotazione =false;
+    business=new FacadeClassBusiness();
+  }
 
   /**
    * Metodo che genera il pannello di controllo che permettera all'impiegato di visualizzare le code
@@ -77,8 +85,8 @@ public class ControlPanelView implements ControlPanelInterface {
     idStruttura =
         imp.getIdStruttura(); // Salvo la struttura in cui lavora l'impiegato per poter ottenere le
     // prenotazioni sono di quella struttura
-    listoperazioni =
-        gestione.getListaOperazioni(); // Salvo le operazioni che potra gestire l'impiegato
+    listaCode =
+        business.getCode(); // Salvo le operazioni che potra gestire l'impiegato
 
     // Settaggi frame
     frame.setTitle("MedQueue");
@@ -135,7 +143,7 @@ public class ControlPanelView implements ControlPanelInterface {
     logout.addActionListener(
         e -> {
           // eseguo la disconnessione dal database
-          connessione.disconnect(con);
+          business.disconnect(con);
           loginView = new LoginView();
           loginView.showLoginView();
           frame.dispose(); // Chiudo il frame
@@ -201,31 +209,31 @@ public class ControlPanelView implements ControlPanelInterface {
     // da gestire
 
     // Ciclo for basato sul numero di operazioni gestibili presenti nel db
-    for (int i = 0; i < listoperazioni.size(); i++) {
-      // Creo il bottone che corrispondera ad un operazione gestibile nel db
-      JButton operazione = new JButton();
+    for (int i = 0; i < listaCode.size(); i++) {
+      // Creo il bottone che corrispondera ad un coda gestibile nel db
+      JButton coda = new JButton();
       // Setto il testo del button con il formato (tipo operazioni: prenotazioni in attesta di
       // accettazioni)
       try {
-        if (listoperazioni.get(i).getId() <= 0 || idStruttura <= 0) {
+        if (listaCode.get(i).getId() <= 0 || idStruttura <= 0) {
           throw new InvalidManagementException("Id non validi");
         }
-        operazione.setText(
-            listoperazioni.get(i).getTipoOperazione()
+        coda.setText(
+            listaCode.get(i).getTipoOperazione()
                 + ": "
-                + gestione.getNumPrenotazioni(listoperazioni.get(i).getId(), idStruttura));
+                + business.getSizeCoda(listaCode.get(i).getId(), idStruttura));
       } catch (InvalidManagementException ex) {
-        operazione.setText(listoperazioni.get(i).getTipoOperazione() + ": 0");
+        coda.setText(listaCode.get(i).getTipoOperazione() + ": 0");
         System.out.println(ex.toString());
       }
       // Modifico le dimensioni del button
-      operazione.setPreferredSize(new Dimension(230, 25));
-      operazione.setMaximumSize(operazione.getPreferredSize());
-      // Assegno un name al bottone corrispondente al id dell'operazione
-      operazione.setName(Integer.toString(listoperazioni.get(i).getId()));
-      operazione.setAlignmentX(Component.CENTER_ALIGNMENT); // Centro il button
+      coda.setPreferredSize(new Dimension(230, 25));
+      coda.setMaximumSize(coda.getPreferredSize());
+      // Assegno un name al bottone corrispondente al id dell'coda
+      coda.setName(Integer.toString(listaCode.get(i).getId()));
+      coda.setAlignmentX(Component.CENTER_ALIGNMENT); // Centro il button
       // ActionListener sul bottone
-      operazione.addActionListener(
+      coda.addActionListener(
           e -> {
             if (!servizioPrenotazione) { // Se non si sta servendo nessuna prenotazione e possibile
               // cambiare la coda scelta
@@ -235,16 +243,16 @@ public class ControlPanelView implements ControlPanelInterface {
               } // rimuovo il pannello della coda scelta
               pannelloCentro.add(
                   setServiPrenotazione(
-                      operazione.getText())); // Aggiungo un nuovo pannello per la nuova coda
+                      coda.getText())); // Aggiungo un nuovo pannello per la nuova coda
               idOperazione =
                   Integer.parseInt(
-                      operazione
-                          .getName()); // Aggiorno l'id dell operazione gestita dall'utente in base
+                      coda
+                          .getName()); // Aggiorno l'id dell coda gestita dall'utente in base
               // al name assegnato al button
               frame.validate(); // Aggiorno il frame
             }
           });
-      pannelloCoda.add(operazione); // Aggiungo il button al pannello
+      pannelloCoda.add(coda); // Aggiungo il button al pannello
       pannelloCoda.add(
           Box.createRigidArea(new Dimension(0, 10))); // Spazio vuoto per distanziare i button
     } // Fine ciclo for (vengono creati dinamicamente n button con le stesse caratteristiche in base
@@ -347,7 +355,7 @@ public class ControlPanelView implements ControlPanelInterface {
               throw new InvalidManagementException("Id non validi");
             }
             PrenotazioneBean p =
-                gestione.accettaPrenotazione(
+                business.accettaPrenotazione(
                     idOperazione,
                     idStruttura); // Invoco il metodo per l'accettazione di una prenotazione
             if (p != null) { // Se il metodo mi restituisce una prenotazione
@@ -415,7 +423,7 @@ public class ControlPanelView implements ControlPanelInterface {
     oraText.setText(p.getTime().toString());
     oraText.setEditable(false); // Setto la Text field a non editabile
     JTextField tipoOperazioneText = new JTextField();
-    tipoOperazioneText.setText(gestione.getOperazione(p.getIdOperazione()).getTipoOperazione());
+    tipoOperazioneText.setText(business.getCoda(p.getIdOperazione()).getTipoOperazione());
     tipoOperazioneText.setEditable(false); // Setto la Text field a non editabile
     JLabel idPrenotazione = new JLabel("Id prenotazione: ");
     JLabel codiceFiscale = new JLabel("Codice fiscale: ");
@@ -523,17 +531,17 @@ public class ControlPanelView implements ControlPanelInterface {
           JButton) { // Se la componente e un JButton aggiorno il testo (TipoOperazione: numero
         // prenotazioni)
         try {
-          if (listoperazioni.get(j).getId() <= 0 || idStruttura <= 0) {
+          if (listaCode.get(j).getId() <= 0 || idStruttura <= 0) {
             throw new InvalidManagementException("Id non validi");
           }
           numeroPrenotazioni.add(
-              gestione.getNumPrenotazioni(listoperazioni.get(j).getId(), idStruttura));
+              business.getSizeCoda(listaCode.get(j).getId(), idStruttura));
         } catch (InvalidManagementException ex) {
           numeroPrenotazioni.add(0);
           System.out.println(ex.toString());
         }
         ((JButton) comp[i])
-            .setText(listoperazioni.get(j).getTipoOperazione() + ": " + numeroPrenotazioni.get(j));
+            .setText(listaCode.get(j).getTipoOperazione() + ": " + numeroPrenotazioni.get(j));
         j++; // La variabile j viene utilizzata poichè nel pannello non conterrà solo JButton quindi
         // lavoreremo su due array diversi
       }

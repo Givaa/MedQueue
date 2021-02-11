@@ -1,6 +1,7 @@
 package business;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  * Interfaccia che offre le funzionalita di business per connettersi e disconettersi da un database.

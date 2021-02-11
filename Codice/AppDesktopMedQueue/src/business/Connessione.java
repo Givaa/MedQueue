@@ -18,8 +18,12 @@ public class Connessione implements ConnessioneInterface {
    * @return connessione
    */
   public Connection connect() {
-    Connection con;
-    con = DriverManagerConnectionPool.createDbConnection();
+    Connection con=null;
+    try {
+      con = DriverManagerConnectionPool.getConnection();
+    } catch (SQLException throwables) {
+      throwables.printStackTrace();
+    }
     return con;
   }
 

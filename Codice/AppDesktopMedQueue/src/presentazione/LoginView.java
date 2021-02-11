@@ -1,10 +1,7 @@
 package presentazione;
 
 import bean.ImpiegatoBean;
-import business.Accesso;
-import business.AccessoInterface;
-import business.Connessione;
-import business.ConnessioneInterface;
+import business.*;
 import eccezioni.InvalidAccesException;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -30,18 +27,26 @@ import javax.swing.JTextField;
  */
 public class LoginView implements LoginInterface {
   // Componenti della view
-  private static final JFrame framePannello = new JFrame();
-  private final JTextField codiceFiscale = new JTextField(16);
-  private final JPasswordField password = new JPasswordField(32);
-  private final JButton connect = new JButton("Connetti");
-  private final JLabel errore = new JLabel();
-  private AccessoInterface login = new Accesso();
-  private ConnessioneInterface connessioneInterface = new Connessione();
+  private JFrame framePannello;
+  private JTextField codiceFiscale;
+  private JPasswordField password;
+  private JButton connect;
+  private JLabel errore ;
+  private FacadeClassBusiness business;
   private ControlPanelInterface pannelloDiControllo;
-  private ImageIcon immagine = new ImageIcon(getClass().getResource("/image/LogoNoBG.png"));
+  private ImageIcon immagine;
 
   /** Metodo che genera il frame che permette all'impiegato di loggarsi. */
-  public LoginView() {}
+  public LoginView() {
+    framePannello=new JFrame();
+    codiceFiscale = new JTextField(16);
+    password = new JPasswordField(32);
+    connect = new JButton("Connetti");
+    errore = new JLabel();
+    immagine = new ImageIcon(getClass().getResource("/image/LogoNoBG.png"));
+    business=new FacadeClassBusiness();
+    pannelloDiControllo=new ControlPanelView();
+  }
 
   /** Metodo che genera il frame che permette all'impiegato di loggarsi. */
   @Override
@@ -63,19 +68,19 @@ public class LoginView implements LoginInterface {
 
     connect.addActionListener(
         l -> { // Action Listener sul bottone di connessione
-          Connection connection = connessioneInterface.connect();
+          Connection connection = business.getConnessione();
           if (connection == null) {
             errore.setText("Errore nella connessione");
           } else {
             try {
-              if (codiceFiscale.getText() == null
+              if (codiceFiscale.getText() == ""
                   || codiceFiscale.getText().length() != 16
-                  || password.getText() == null) {
-                throw new InvalidAccesException("Codice fiscale o password non valida");
+                  || password.getText() == "") {
+                throw new InvalidAccesException("Codice fiscale o password non inserita");
               }
               // Verifico le credenziali dell'impiegato
               ImpiegatoBean impiegato =
-                  login.verificaCredenziali(codiceFiscale.getText(), password.getText());
+                  business.autenticazione(codiceFiscale.getText(), password.getText());
               if (impiegato != null) {
                 pannelloDiControllo = new ControlPanelView();
                 pannelloDiControllo.showControlPanel(impiegato, connection);
