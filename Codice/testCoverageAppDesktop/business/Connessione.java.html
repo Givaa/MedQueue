@@ -18,9 +18,13 @@ public class Connessione implements ConnessioneInterface {
    * @return connessione
    */
   public Connection connect() {
-    Connection con;
-<span class="fc" id="L22">    con = DriverManagerConnectionPool.createDbConnection();</span>
-<span class="fc" id="L23">    return con;</span>
+<span class="fc" id="L21">    Connection con=null;</span>
+    try {
+<span class="fc" id="L23">      con = DriverManagerConnectionPool.getConnection();</span>
+<span class="nc" id="L24">    } catch (SQLException throwables) {</span>
+<span class="nc" id="L25">      throwables.printStackTrace();</span>
+<span class="fc" id="L26">    }</span>
+<span class="fc" id="L27">    return con;</span>
   }
 
   /**
@@ -30,14 +34,14 @@ public class Connessione implements ConnessioneInterface {
    * @return true o false
    */
   public boolean disconnect(Connection connect) {
-<span class="fc" id="L33">    boolean value=false;</span>
+<span class="fc" id="L37">    boolean value=false;</span>
     try {
-<span class="fc" id="L35">      DriverManagerConnectionPool.releaseConnection(connect);</span>
-<span class="fc" id="L36">      value=true;</span>
-<span class="nc" id="L37">    } catch (SQLException throwables) {</span>
-<span class="nc" id="L38">      throwables.printStackTrace();</span>
-<span class="fc" id="L39">    }</span>
-<span class="fc" id="L40">    return value;</span>
+<span class="fc" id="L39">      DriverManagerConnectionPool.releaseConnection(connect);</span>
+<span class="fc" id="L40">      value=true;</span>
+<span class="nc" id="L41">    } catch (SQLException throwables) {</span>
+<span class="nc" id="L42">      throwables.printStackTrace();</span>
+<span class="fc" id="L43">    }</span>
+<span class="fc" id="L44">    return value;</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
