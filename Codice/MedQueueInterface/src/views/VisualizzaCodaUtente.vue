@@ -13,10 +13,10 @@
         <strong class="capitalize">Visualizza Coda</strong>
         <div class="selezione">
           <label>Seleziona la struttura:</label>
-          <ion-select placeholder="Struttura" >
-            <ion-select-option v-bind="strutturaScelta" id="str" v-bind:key="struttura" v-for="struttura in struture" >{{struttura}}</ion-select-option>
+          <ion-select placeholder="Struttura" v-model="strutturaScelta" >
+            <ion-select-option id="str" v-bind:key="struttura" v-for="struttura in struture" >{{struttura}}</ion-select-option>
           </ion-select>
-          <ion-button @click="updatePrenotazioni" color="primary">Visualizza</ion-button>
+          <ion-button @mouseover="getIdStruttura" @click="updatePrenotazioni" color="primary">Visualizza</ion-button>
         </div>
 
         <br>
@@ -76,7 +76,7 @@ export default {
       nomeOperazioni: [],
       struture:[],
       strutturaScelta:"",
-      selectedCod:1
+      selectedCod:""
     };
   },
   created() {
@@ -84,8 +84,19 @@ export default {
   },
   methods:{
 
+    getIdStruttura(){
+      struttureAxios.getStrutturaByNome(this.strutturaScelta)
+      .then((response) =>{
+        this.selectedCod = response.id;
+      })
+    },
+
     updatePrenotazioni(){
-      console.log(this.strutturaScelta);
+      for(let i = 0; i<this.ore.length; i++){
+        this.ore.pop();
+        this.date.pop();
+        this.operazioni.pop();
+      }
       prenotazioniAxios.getPrenotazioniByStruttura(this.selectedCod)
           .then((response) => {
             if(response === ''){
@@ -128,6 +139,10 @@ export default {
 
 
 <style scoped>
+
+.logout{
+  float: right;
+}
 
 .selezione{
   width: 20%;

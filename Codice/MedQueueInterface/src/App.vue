@@ -7,7 +7,7 @@
             <ion-list-header >Medqueue</ion-list-header>
             <ion-note></ion-note>
 
-            <ion-menu-toggle auto-hide="false" v-for="(p, i) in appPages" :key="i">
+            <ion-menu-toggle auto-hide="true" v-for="(p, i) in appPages" :key="i">
               <ion-item @click="selectedIndex = i" router-direction="root" :router-link="p.url" lines="none" detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
                 <ion-icon slot="start" :ios="p.iosIcon" :md="p.mdIcon"></ion-icon>
                 <ion-label>{{ p.title }}</ion-label>
@@ -15,6 +15,10 @@
             </ion-menu-toggle>
           </ion-list>
         </ion-content>
+        <ion-item  @click="logOut">
+          <ion-icon slot="start" :ios="logOutOutline" :md="logOutSharp"></ion-icon>
+          <ion-label>Logout</ion-label>
+        </ion-item>
       </ion-menu>
       <ion-router-outlet id="main-content"></ion-router-outlet>
     </IonSplitPane>
@@ -25,7 +29,8 @@
 import { IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonNote, IonRouterOutlet, IonSplitPane } from '@ionic/vue';
 import { defineComponent, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { businessSharp, businessOutline, calendarOutline, calendarSharp,homeOutline, homeSharp, logInOutline,  logInSharp, pencilOutline, pencilSharp, listOutline, listSharp} from 'ionicons/icons';
+import { logOutOutline, logOutSharp, businessSharp, businessOutline, calendarOutline, calendarSharp,homeOutline, homeSharp, logInOutline,  logInSharp, pencilOutline, pencilSharp, listOutline, listSharp} from 'ionicons/icons';
+import router from "@/router";
 
 export default defineComponent({
   name: 'App',
@@ -82,6 +87,8 @@ export default defineComponent({
     return { 
       selectedIndex,
       appPages,
+      logOutOutline,
+      logOutSharp,
       homeOutline,
       homeSharp,
       logInOutline,
@@ -96,6 +103,15 @@ export default defineComponent({
       businessSharp,
       isSelected: (url: string) => url === route.path ? 'selected' : ''
     }
+  },
+  methods:{
+    logOut(){
+      sessionStorage.clear();
+      //const x = document.cookie;
+      //console.log(x);
+      router.push("/Home");
+    },
+
   }
 });
 </script>

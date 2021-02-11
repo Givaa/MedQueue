@@ -10,7 +10,7 @@
           </ion-toolbar>
         </ion-header>
         <div id="container">
-          <img src="../../public/assets/logosvg_nobg.svg"/>
+          <img src="../../public/assets/logosvg_nobg.svg" />
           <br>
           <strong class="capitalize">Benvenuto {{nome}}</strong>
           <p>Da qui puoi raggiungere tutte le funzionalità offerte agli utenti,</p>
@@ -23,38 +23,17 @@
   </ion-page>
 </template>
 
-<script lang="ts">
+<script>
 import {
   IonContent,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonListHeader,
-  IonRouterOutlet,
-  IonSplitPane,
+
   IonButtons,
   IonHeader,
-  IonMenu,
   IonMenuButton,
-  IonMenuToggle,
   IonPage,
   IonTitle,
   IonToolbar,
 } from '@ionic/vue';
-import {ref} from "vue";
-import {
-  homeOutline,
-  homeSharp,
-  listOutline,
-  listSharp,
-  logInOutline,
-  logInSharp,
-  pencilOutline,
-  pencilSharp
-} from "ionicons/icons";
-import {useRoute} from "vue-router";
-import menu1 from "./menu.vue"
 import router from "@/router";
 
 
@@ -74,6 +53,9 @@ export default {
       nome:sessionStorage.getItem("nome")
     }
   },
+  mounted() {
+      this.verificaSessione();
+    },
   methods:{
     goPrenotazione(){
       router.push("/Prenotazione")
@@ -84,46 +66,14 @@ export default {
     goCalendar(){
       router.push("/VisualizzazioneCodaUtente")
     },
+    verificaSessione(){
+      console.log(sessionStorage.getItem("codiceFiscale"))
+      if(sessionStorage.getItem("codiceFiscale")===null){
+        router.push("/Home");
+      }
+    }
 
   },
-  setup() {
-    const selectedIndex = ref(0);
-    const appPages = [
-      {
-        title:"Home",
-        url:"/HomeUtente",
-        iosIcon: homeOutline,
-        mdIcon: homeSharp
-      },
-      {
-          title: 'Log in',
-          url: '/Prenotazione',
-          iosIcon: logInOutline,
-          mdIcon: logInSharp
-        },
-    ];
-
-    const path = window.location.pathname.split('folder/')[1];
-    if (path !== undefined) {
-      selectedIndex.value = appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
-    }
-
-    const route = useRoute();
-
-    return {
-      selectedIndex,
-      appPages,
-      homeOutline,
-      homeSharp,
-      logInOutline,
-      logInSharp,
-      pencilOutline,
-      pencilSharp,
-      listOutline,
-      listSharp,
-      isSelected: (url: string) => url === route.path ? 'selected' : ''
-    }
-  }
 
 }
 </script>

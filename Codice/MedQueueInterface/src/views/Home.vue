@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts">
-import {IonButton, IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import {IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
 import router from "@/router";
 
 export default {
@@ -48,6 +48,13 @@ export default {
     IonPage,
     IonTitle,
     IonToolbar
+  },
+  updated() {
+    console.log("sono qui ");
+    window.history.go(10);
+    function noBack() {
+      window.history.forward();
+    }
   },
   methods:{
     goLogin(){

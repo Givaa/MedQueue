@@ -8,26 +8,41 @@
         </ion-header>
         <div id="container">
           <strong class="capitalize">Visualizza Coda</strong>
-          <ion-item>
-          <h2>Coda ufficio</h2>
-          </ion-item>
-          <ion-item>
+          <div class="selezione">
             <label>Seleziona la struttura:</label>
-            <ion-select @click="updateStrutture" placeholder="Struttura" v-bind="selectedCod">
-              <ion-select-option id="codice" v-bind:key="codice" v-for="codice in cod" >{{codice}}</ion-select-option>
+            <ion-select placeholder="Struttura" v-model="strutturaScelta" >
+              <ion-select-option id="str" v-bind:key="struttura" v-for="struttura in struture" >{{struttura}}</ion-select-option>
             </ion-select>
-          </ion-item>
+            <ion-button @mouseover="getIdStruttura" @click="updatePrenotazioni" color="primary">Visualizza</ion-button>
+          </div>
+
+          <br>
+          <br>
+          <br>
+
           <div class="titolo1">Data</div>
           <div class="titolo2">Ora</div>
           <div class="titolo3">Tipo </div>
+          <br>
+          <br>
+
           <div class="colonna1">
-            <div id="data" v-bind:key="data" v-for="data in date" >{{data}}</div>
+            <div id="data" v-bind:key="data" v-for="data in date" >
+              <div>{{data}}</div>
+              <br>
+            </div>
           </div>
           <div class="colonna2">
-            <div id="ora" v-bind:key="ora" v-for="ora in ore" >{{ora}}</div>
+            <div id="ora" v-bind:key="ora" v-for="ora in ore" >
+              <div>{{ora}}</div>
+            <br>
+            </div>
           </div>
           <div class="colonna3">
-            <div id="prenotazione" v-bind:key="prenotazione" v-for="prenotazione in nomePrenotazioni" >{{prenotazione}}</div>
+            <div id="prenotazione" v-bind:key="prenotazione" v-for="prenotazione in nomeOperazioni" >
+              <div>{{prenotazione}}</div>
+            <br>
+            </div>
           </div>
         </div>
       </ion-content>
@@ -37,10 +52,10 @@
 <script >
 import prenotazioniAxios from '../axios/prenotazioni'
 import operazioneAxios from '../axios/Operazione'
+import struttureAxios from '../axios/strutture'
 import {
   IonSelect,
   IonSelectOption,
-  IonItem,
   IonContent,
   IonHeader,
   IonPage,
@@ -48,12 +63,12 @@ import {
   IonToolbar
 } from '@ionic/vue';
 
+
 export default {
   name: "visualizzaCoda",
   components: {
     IonSelect,
     IonSelectOption,
-    IonItem,
     IonContent,
     IonHeader,
     IonPage,
@@ -62,51 +77,86 @@ export default {
   },
   data(){
     return{
-      strutture: [],
-      cod: [1,2],
+      tmp:[],
+      prenotazioni: [],
       ore:[],
       date:[],
-      prenotazioni:[],
-      nomePrenotazioni: [],
-      selectedCod:1
+      operazioni:[],
+      nomeOperazioni: [],
+      struture:[],
+      strutturaScelta:"",
+      selectedCod:""
     };
+  },
+  created() {
+    this.getStrutture();
   },
   methods:{
 
-    updateStrutture(){
+    getIdStruttura(){
+      struttureAxios.getStrutturaByNome(this.strutturaScelta)
+          .then((response) =>{
+            this.selectedCod = response.id;
+          })
+    },
+
+    updatePrenotazioni(){
+
+      for(let i = 0; i<this.ore.length; i++){
+        this.ore.pop();
+        this.date.pop();
+        this.operazioni.pop();
+      }
       prenotazioniAxios.getPrenotazioniByStruttura(this.selectedCod)
           .then((response) => {
             if(response === ''){
               this.presentAlert();
               return null;
             }else {
-              this.strutture = response;
+              this.prenotazioni = response;
 
-              for (let i=0; i<this.strutture.length; i++){
-                this.ore[i] = this.strutture[i].ora;
-                this.date[i] = this.strutture[i].dataPrenotazione;
-                this.prenotazioni[i] =  this.strutture[i].idOperazione;
+              for (let i=0; i<this.prenotazioni.length; i++){
+                this.ore[i] = this.prenotazioni[i].ora;
+                this.date[i] = this.prenotazioni[i].dataPrenotazione;
+                this.operazioni[i] =  this.prenotazioni[i].idOperazione;
               }
               this.operazioneString();
             }
           })
-      },
+    },
 
-      operazioneString(){
-      for(let i=0; i<this.prenotazioni.length; i++) {
-        operazioneAxios.getOperazioneById(this.prenotazioni[i])
-        .then((response) =>{
-          this.nomePrenotazioni[i] = response.tipoOperazione;
-        })
+    operazioneString(){
+      for(let i=0; i<this.operazioni.length; i++) {
+        operazioneAxios.getOperazioneById(this.operazioni[i])
+            .then((response) =>{
+              this.nomeOperazioni[i] = response.tipoOperazione;
+            })
       }
-      console.log(this.nomePrenotazioni);
-      }
+    },
+
+    getStrutture(){
+      struttureAxios.getStrutture()
+          .then((response) =>{
+            this.tmp = response;
+            for(let i=0; i<this.tmp. length;i++){
+              this.struture[i] = this.tmp[i].nome;
+            }
+          })
     }
-
+  }
 }
 </script>
 
+
 <style scoped>
+
+.selezione{
+  width: 20%;
+}
+
+ion-button{
+  float: top;
+}
 
 div.colonna1{
   float: left;
@@ -121,23 +171,26 @@ div.colonna2{
 
 div.colonna3{
   float: left;
-  margin-right: 5%;
 }
 
 div.titolo1{
+  font-weight: bold;
   float: left;
   margin-right: 36%;
   margin-left: 10%;
 }
 
 div.titolo2{
+  font-weight: bold;
   float: left;
   margin-right: 38%;
 }
 
 div.titolo3{
+  font-weight: bold;
   float: left;
 }
+
 #container {
   text-align: center;
   position: relative;

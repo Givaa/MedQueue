@@ -22,7 +22,6 @@
         <div class="colonna1">
           <div id="data" v-bind:key="data" v-for="data in date">
             <br>
-            <div>{{ data }}</div>
             <br>
           </div>
         </div>
