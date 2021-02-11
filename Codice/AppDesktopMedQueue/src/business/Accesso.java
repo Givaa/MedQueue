@@ -10,9 +10,7 @@ import persistence.DataAccess;
 public class Accesso implements AccessoInterface {
   DaoInterface daoOperation = new DataAccess();
 
-  /**
-   * Metodo di business che verifica le credenziali di un impiegato.
-   */
+  /** Metodo di business che verifica le credenziali di un impiegato. */
   public Accesso() {}
 
   /**
@@ -26,14 +24,19 @@ public class Accesso implements AccessoInterface {
    */
   public ImpiegatoBean verificaCredenziali(String cf, String pass) {
     try {
-      if (Pattern.compile("^[a-zA-Z]{6}[0-9]{2}[abcdehlmprstABCDEHLMPRST]{1}"
-              + "[0-9]{2}([a-zA-Z]{1}[0-9]{3})[a-zA-Z]{1}$").matcher(cf).matches() == false) {
+      if (Pattern.compile(
+                  "^[a-zA-Z]{6}[0-9]{2}[abcdehlmprstABCDEHLMPRST]{1}"
+                      + "[0-9]{2}([a-zA-Z]{1}[0-9]{3})[a-zA-Z]{1}$")
+              .matcher(cf)
+              .matches()
+          == false) {
         throw new InvalidKeyException("Codice Fiscale non rispetta il formato.");
       }
-      if(pass==null)
+      if (pass == null) {
         throw new InvalidKeyException("Password non inserita.");
-      if (Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$")
-              .matcher(pass).matches() == false) {
+      }
+      if (Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$").matcher(pass).matches()
+          == false) {
         throw new InvalidKeyException("Password non rispetta il formato.");
       } else {
         ImpiegatoBean impiegato = daoOperation.getImpiegato(cf);

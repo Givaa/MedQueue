@@ -3,7 +3,7 @@ package presentazione;
 import bean.ImpiegatoBean;
 import bean.OperazioneBean;
 import bean.PrenotazioneBean;
-import business.*;
+import business.FacadeClassBusiness;
 import eccezioni.InvalidManagementException;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -69,8 +69,8 @@ public class ControlPanelView implements ControlPanelInterface {
     logout = new JButton("Logout");
     jl = new JLabel("Scegli l'operazione da gestire: ");
     immagine = new ImageIcon(getClass().getResource("/image/frameIcon.png"));
-    servizioPrenotazione =false;
-    business=new FacadeClassBusiness();
+    servizioPrenotazione = false;
+    business = new FacadeClassBusiness();
   }
 
   /**
@@ -85,8 +85,7 @@ public class ControlPanelView implements ControlPanelInterface {
     idStruttura =
         imp.getIdStruttura(); // Salvo la struttura in cui lavora l'impiegato per poter ottenere le
     // prenotazioni sono di quella struttura
-    listaCode =
-        business.getCode(); // Salvo le operazioni che potra gestire l'impiegato
+    listaCode = business.getCode(); // Salvo le operazioni che potra gestire l'impiegato
 
     // Settaggi frame
     frame.setTitle("MedQueue");
@@ -246,8 +245,7 @@ public class ControlPanelView implements ControlPanelInterface {
                       coda.getText())); // Aggiungo un nuovo pannello per la nuova coda
               idOperazione =
                   Integer.parseInt(
-                      coda
-                          .getName()); // Aggiorno l'id dell coda gestita dall'utente in base
+                      coda.getName()); // Aggiorno l'id dell coda gestita dall'utente in base
               // al name assegnato al button
               frame.validate(); // Aggiorno il frame
             }
@@ -534,8 +532,7 @@ public class ControlPanelView implements ControlPanelInterface {
           if (listaCode.get(j).getId() <= 0 || idStruttura <= 0) {
             throw new InvalidManagementException("Id non validi");
           }
-          numeroPrenotazioni.add(
-              business.getSizeCoda(listaCode.get(j).getId(), idStruttura));
+          numeroPrenotazioni.add(business.getSizeCoda(listaCode.get(j).getId(), idStruttura));
         } catch (InvalidManagementException ex) {
           numeroPrenotazioni.add(0);
           System.out.println(ex.toString());

@@ -7,9 +7,7 @@ import persistence.DriverManagerConnectionPool;
 /** Classe che offre le funzionalita di business per connettersi e disconettersi da un database. */
 public class Connessione implements ConnessioneInterface {
 
-  /**
-   * Metodo che permette la connessione al database.
-   */
+  /** Metodo che permette la connessione al database. */
   public Connessione() {}
 
   /**
@@ -18,7 +16,7 @@ public class Connessione implements ConnessioneInterface {
    * @return connessione
    */
   public Connection connect() {
-    Connection con=null;
+    Connection con = null;
     try {
       con = DriverManagerConnectionPool.getConnection();
     } catch (SQLException throwables) {
@@ -34,10 +32,10 @@ public class Connessione implements ConnessioneInterface {
    * @return true o false
    */
   public boolean disconnect(Connection connect) {
-    boolean value=false;
+    boolean value = false;
     try {
       DriverManagerConnectionPool.releaseConnection(connect);
-      value=true;
+      value = true;
     } catch (SQLException throwables) {
       throwables.printStackTrace();
     }

@@ -1,7 +1,7 @@
 package presentazione;
 
 import bean.ImpiegatoBean;
-import business.*;
+import business.FacadeClassBusiness;
 import eccezioni.InvalidAccesException;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -31,21 +31,21 @@ public class LoginView implements LoginInterface {
   private JTextField codiceFiscale;
   private JPasswordField password;
   private JButton connect;
-  private JLabel errore ;
+  private JLabel errore;
   private FacadeClassBusiness business;
   private ControlPanelInterface pannelloDiControllo;
   private ImageIcon immagine;
 
   /** Metodo che genera il frame che permette all'impiegato di loggarsi. */
   public LoginView() {
-    framePannello=new JFrame();
+    framePannello = new JFrame();
     codiceFiscale = new JTextField(16);
     password = new JPasswordField(32);
     connect = new JButton("Connetti");
     errore = new JLabel();
     immagine = new ImageIcon(getClass().getResource("/image/LogoNoBG.png"));
-    business=new FacadeClassBusiness();
-    pannelloDiControllo=new ControlPanelView();
+    business = new FacadeClassBusiness();
+    pannelloDiControllo = new ControlPanelView();
   }
 
   /** Metodo che genera il frame che permette all'impiegato di loggarsi. */
