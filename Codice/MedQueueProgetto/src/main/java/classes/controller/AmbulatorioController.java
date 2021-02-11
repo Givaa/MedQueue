@@ -44,7 +44,7 @@ public class AmbulatorioController {
     if (id > 0) {
       AmbulatoriBean a = ambulatorioModel.doRetrieveByKey(id);
 
-      if (a != null) {
+      if (a.getNome() != null) {
         return a;
       } else {
         throw new ObjectNotFoundException(a);

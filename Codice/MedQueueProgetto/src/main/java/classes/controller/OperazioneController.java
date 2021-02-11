@@ -40,7 +40,7 @@ public class OperazioneController {
 
     if (! id.equals("0")) {
       OperazioneBean op = operazioneModel.doRetrieveByKey(Integer.valueOf(id));
-      if (op != null) {
+      if (op.getTipoOperazione() != null) {
         return op;
       } else {
         throw new ObjectNotFoundException(op);

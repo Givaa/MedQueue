@@ -21,8 +21,6 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-
-import org.apache.tomcat.jni.Local;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -55,7 +53,7 @@ public class PrenotazioneController {
     String id = jsonObject.get("idPrenotazioneGet").getAsString();
 
     PrenotazioneBean p = prenotazioneModel.doRetrieveByKey(Integer.valueOf(id));
-    if (p != null) {
+    if (p.getCodiceFiscale() != null) {
       return p;
     } else {
       throw new ObjectNotFoundException(p);

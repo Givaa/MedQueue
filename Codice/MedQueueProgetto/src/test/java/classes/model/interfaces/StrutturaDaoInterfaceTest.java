@@ -1,13 +1,17 @@
-package classes.model.dao;
+package classes.model.interfaces;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ImpiegatoModelTest {
+class StrutturaDaoInterfaceTest {
 
     @Test
     void doRetrieveByKey() {
+    }
+
+    @Test
+    void doRetrieveByName() {
     }
 
     @Test

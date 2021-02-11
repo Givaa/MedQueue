@@ -1,6 +1,7 @@
 package classes.controller;
 
 import classes.controller.exception.ErrorNewObjectException;
+import classes.controller.exception.InvalidKeyException;
 import classes.controller.exception.ObjectNotFoundException;
 import classes.model.bean.entity.ImpiegatoBean;
 import classes.model.dao.ImpiegatoModel;
@@ -13,6 +14,9 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,13 +37,14 @@ public class ImpiegatoController {
    * @return Impiegato avente il CF passato
    * @throws SQLException per problemi di esecuzione della query
    * @throws ObjectNotFoundException per problemi di oggetto non trovato
+   * @throws InvalidKeyException per problemi di chiave principale errata
    */
   @PostMapping(
       value = "/impiegato/{cf}",
       produces = MediaType.APPLICATION_JSON_VALUE,
       consumes = MediaType.APPLICATION_JSON_VALUE)
   public ImpiegatoBean getImpiegatoByCodFis(@RequestBody String body)
-      throws SQLException, ObjectNotFoundException {
+          throws SQLException, ObjectNotFoundException, InvalidKeyException {
 
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String cf = jsonObject.get("cfImpiegatoRicerca").getAsString();
@@ -49,13 +54,13 @@ public class ImpiegatoController {
     if (checkCodFisc) {
       ImpiegatoBean b = impiegatoModel.doRetrieveByKey(cf);
 
-      if (b != null) {
+      if (b.getCodiceFiscale() != null) {
         return b;
       } else {
         throw new ObjectNotFoundException(b);
       }
     } else {
-      return null;
+      throw new InvalidKeyException("Codice fiscale non valido, inserirne uno che rispetta lo standard");
     }
   }
 
@@ -94,7 +99,8 @@ public class ImpiegatoController {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
 
     String dataN = jsonObject.get("newImpiegatoDataN").getAsString();
-    Date dataNascita = (Date) new SimpleDateFormat("yyyy/mm/gg").parse(dataN);
+    java.util.Date tmp = new SimpleDateFormat("yyyy-MM-dd").parse(dataN);
+    java.sql.Date dataNascita = new Date(tmp.getTime());
 
     String nome = jsonObject.get("newImpiegatoNome").getAsString();
     Boolean checkName;
@@ -102,7 +108,7 @@ public class ImpiegatoController {
 
     String email = jsonObject.get("newImpiegatoEmail").getAsString();
     Boolean checkMail;
-    checkMail = email.matches("/\\S+@\\S+\\.\\S+/");
+    checkMail = email.matches("\\S+@\\S+\\.\\S+");
 
     String cognome = jsonObject.get("newImpiegatoCognome").getAsString();
     Boolean checkSurname;
@@ -115,7 +121,7 @@ public class ImpiegatoController {
 
     String phoneNumber = jsonObject.get("newImpiegatoNumero").getAsString();
     Boolean checkPhoneNumber;
-    checkPhoneNumber = phoneNumber.matches("^[\\+][0-9]{10,12}");
+    checkPhoneNumber = phoneNumber.matches("^[0-9]{10,12}");
 
     String codFisc = jsonObject.get("newImpiegatoCf").getAsString();
     Boolean checkCodFisc;
@@ -188,14 +194,15 @@ public class ImpiegatoController {
     String phoneNumber = jsonObject.get("updateImpiegatoPhoneNumber").getAsString();
     String idStruttura = jsonObject.get("updateImpiegatoIdS").getAsString();
     String dataN = jsonObject.get("updateImpiegatoDataN").getAsString();
-    Date dataNascita = (Date) new SimpleDateFormat("yyyy/mm/gg").parse(dataN);
+    java.util.Date tmp = new SimpleDateFormat("yyyy-MM-dd").parse(dataN);
+    java.sql.Date dataNascita = new Date(tmp.getTime());
 
     ImpiegatoBean i = impiegatoModel.doRetrieveByKey(codFisc);
 
     if (i != null) {
 
       Boolean checkMail;
-      checkMail = email.matches("/\\S+@\\S+\\.\\S+/");
+      checkMail = email.matches("\\S+@\\S+\\.\\S+");
 
       Boolean checkName;
       checkName = nome.matches("[A-Za-z]+$");
@@ -208,7 +215,7 @@ public class ImpiegatoController {
               password.matches("(?=^.{8,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*$");
 
       Boolean checkPhoneNumber;
-      checkPhoneNumber = phoneNumber.matches("^[\\+][0-9]{10,12}");
+      checkPhoneNumber = phoneNumber.matches("^[0-9]{10,12}");
 
       Boolean checkCodFisc;
       checkCodFisc = codFisc.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");

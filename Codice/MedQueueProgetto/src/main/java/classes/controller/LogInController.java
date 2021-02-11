@@ -60,37 +60,36 @@ public class LogInController extends HttpServlet {
 
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
 
-    String nome = jsonObject.get("nome").getAsString();
+    String nome = jsonObject.get("nomeNewUtente").getAsString();
     Boolean checkName;
     checkName = nome.matches("[A-Za-z]{2,35}$");
 
-    String cognome = jsonObject.get("cognome").getAsString();
+    String cognome = jsonObject.get("cognomeNewUtente").getAsString();
     Boolean checkSurname;
     checkSurname = cognome.matches("[A-Za-z]{2,35}$");
 
-    String codFisc = jsonObject.get("codFisc").getAsString();
+    String codFisc = jsonObject.get("codFiscNewUtente").getAsString();
     Boolean checkCodFisc;
     checkCodFisc = codFisc.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
 
-    String password = jsonObject.get("password").getAsString();
+    String password = jsonObject.get("passwordNewUtente").getAsString();
     Boolean checkPassword;
     checkPassword =
             password.matches("(?=^.{6,50}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*$");
 
-    String phoneNumber = jsonObject.get("numeroTelefono").getAsString();
+    String phoneNumber = jsonObject.get("numeroTelefonoNewUtente").getAsString();
+    Boolean checkPhoneNumber;
+    checkPhoneNumber = phoneNumber.matches("^[0-9]{10,12}");
 
-    String dataNascita = jsonObject.get("dataDiNascita").getAsString();
+    String dataNascita = jsonObject.get("dataDiNascitaNewUtente").getAsString();
     java.util.Date tmp = new SimpleDateFormat("yyyy-MM-dd").parse(dataNascita);
     java.sql.Date dataDiNascita = new Date(tmp.getTime());
 
-    String email = jsonObject.get("email").getAsString();
+    String email = jsonObject.get("emailNewUtente").getAsString();
     Boolean checkMail;
     checkMail = email.matches(
             "^(?=.{8,255}$)[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$"
     );
-
-    Boolean checkPhoneNumber;
-    checkPhoneNumber = phoneNumber.matches("^[0-9]{10,12}");
 
     UtenteBean a = new UtenteBean();
     if (checkName && checkSurname && checkPassword

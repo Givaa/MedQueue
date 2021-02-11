@@ -1,10 +1,10 @@
-package classes.model.dao;
+package classes.model.interfaces;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PrenotazioneModelTest {
+class UtenteDaoInterfaceTest {
 
     @Test
     void doRetrieveByKey() {
@@ -24,13 +24,5 @@ class PrenotazioneModelTest {
 
     @Test
     void doDelete() {
-    }
-
-    @Test
-    void getUtentePrenotazioni() {
-    }
-
-    @Test
-    void getCodaStruttura() {
     }
 }

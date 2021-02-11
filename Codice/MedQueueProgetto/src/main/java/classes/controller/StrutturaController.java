@@ -34,7 +34,7 @@ public class StrutturaController {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("idStrutturaGet").getAsString();
     StrutturaBean s = strutturaModel.doRetrieveByKey(Integer.valueOf(id));
-    if (s != null) {
+    if (s.getNome() != null) {
       return s;
     } else {
       throw new ObjectNotFoundException(s);

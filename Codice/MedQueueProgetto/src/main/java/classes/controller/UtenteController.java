@@ -37,7 +37,7 @@ public class UtenteController {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String cf = jsonObject.get("idUtenteGet").getAsString();
     UtenteBean s = utenteModel.doRetrieveByKey(cf);
-    if (s != null) {
+    if (s.getCodiceFiscale() != null) {
       return s;
     } else {
       throw new ObjectNotFoundException(s);

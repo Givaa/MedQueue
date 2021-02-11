@@ -17,14 +17,14 @@ class AmbulatorioControllerTest {
         JsonParser parser = new JsonParser();
         JsonElement jsonElement = parser.parse("{\"id\":\"1\"}");
         JsonObject rootObject = jsonElement.getAsJsonObject();
-        AmbulatorioController a = new AmbulatorioController();
-        assertNotNull(a.getById(rootObject.toString()));
+        AmbulatorioController ambulatorioController = new AmbulatorioController();
+        assertNotNull(ambulatorioController.getById(rootObject.toString()));
 
         jsonElement = parser.parse("{\"id\":\"0\"}");
         rootObject = jsonElement.getAsJsonObject();
         JsonObject finalRootObject = rootObject;
         InvalidKeyException i = assertThrows(InvalidKeyException.class, () -> {
-            a.getById(finalRootObject.toString());
+            ambulatorioController.getById(finalRootObject.toString());
         });
     }
 
@@ -33,12 +33,12 @@ class AmbulatorioControllerTest {
         JsonParser parser = new JsonParser();
         JsonElement jsonElement = parser.parse("{\"ordineAmbulatori\":\"idStruttura\"}");
         JsonObject rootObject = jsonElement.getAsJsonObject();
-        AmbulatorioController a = new AmbulatorioController();
-        a.getAllAmbulatori(rootObject.toString());
+        AmbulatorioController ambulatorioController = new AmbulatorioController();
+        ambulatorioController.getAllAmbulatori(rootObject.toString());
 
         jsonElement = parser.parse("{\"ordineAmbulatori\":\"\"}");
         rootObject = jsonElement.getAsJsonObject();
-        assertNotNull(a.getAllAmbulatori(rootObject.toString()));
+        assertNotNull(ambulatorioController.getAllAmbulatori(rootObject.toString()));
     }
 
     @Test
@@ -47,8 +47,8 @@ class AmbulatorioControllerTest {
         JsonElement jsonElement = parser.parse(
                 "{\"newAmbulatorioNome\":\"ProvaAiuto\",\"newAmbulatorioIdS\":\"1\"}");
         JsonObject rootObject = jsonElement.getAsJsonObject();
-        AmbulatorioController a = new AmbulatorioController();
-        assertTrue(a.newAmbulatorio(rootObject.toString()));
+        AmbulatorioController ambulatorioController = new AmbulatorioController();
+        assertTrue(ambulatorioController.newAmbulatorio(rootObject.toString()));
     }
 
     @Test
@@ -56,8 +56,8 @@ class AmbulatorioControllerTest {
         JsonParser parser = new JsonParser();
         JsonElement jsonElement = parser.parse("{\"idAmbulatorioRemove\":\"1\"}");
         JsonObject rootObject = jsonElement.getAsJsonObject();
-        AmbulatorioController a = new AmbulatorioController();
-        a.deleteAmbulatorio(rootObject.toString());
+        AmbulatorioController ambulatorioController = new AmbulatorioController();
+        ambulatorioController.deleteAmbulatorio(rootObject.toString());
     }
 
     @Test
@@ -66,7 +66,7 @@ class AmbulatorioControllerTest {
         JsonElement jsonElement = parser.parse(
                 "{\"idAmbulatorioUpdate\":\"1\",\"AmbulatoriUpdateName\":\"ProvaCiao\",\"AmbulatoriUpdateIdStruttura\":\"1\"}");
         JsonObject rootObject = jsonElement.getAsJsonObject();
-        AmbulatorioController a = new AmbulatorioController();
-        assertTrue(a.updateAmbulatorio(rootObject.toString()));
+        AmbulatorioController ambulatorioController = new AmbulatorioController();
+        assertTrue(ambulatorioController.updateAmbulatorio(rootObject.toString()));
     }
 }
