@@ -22,6 +22,7 @@
         <div class="colonna1">
           <div id="data" v-bind:key="data" v-for="data in date">
             <br>
+            <div>{{data}}</div>
             <br>
           </div>
         </div>
@@ -71,7 +72,8 @@ import {
   IonMenuButton,
   IonPage,
   IonTitle,
-  IonToolbar
+  IonToolbar,
+  alertController
 } from '@ionic/vue';
 import router from "@/router";
 
@@ -119,38 +121,59 @@ export default {
             }
           })
 
-        this.getNomeStruttura();
-        this.getNomeOperazione();
+      this.getNomeStruttura();
+      this.getNomeOperazione();
 
     },
 
     getNomeStruttura() {
-        for (let i = 0; i < this.idStrutture.length; i++) {
-          struttureAxios.getStrutturaById(this.idStrutture[i])
-              .then((response) => {
-                this.tmp = response;
+      for (let i = 0; i < this.idStrutture.length; i++) {
+        struttureAxios.getStrutturaById(this.idStrutture[i])
+            .then((response) => {
+              this.tmp = response;
 
-                this.strutture[i] = this.tmp.nome;
-              })
+              this.strutture[i] = this.tmp.nome;
+            })
       }
     },
 
-    getNomeOperazione(){
-        for (let i = 0; i < this.idTipi.length; i++) {
-          operazioneAxios.getOperazioneById(this.idTipi[i])
-              .then((response) =>{
-                this.tmp = response;
-                this.tipi[i] = this.tmp.tipoOperazione;
-              })
-        }
-      },
+    getNomeOperazione() {
+      for (let i = 0; i < this.idTipi.length; i++) {
+        operazioneAxios.getOperazioneById(this.idTipi[i])
+            .then((response) => {
+              this.tmp = response;
+              this.tipi[i] = this.tmp.tipoOperazione;
+            })
+      }
+    },
 
-    eliminaPrenotazione(id){
-      prenotazioniAxios.elimina(id)
-      .then((response) =>{
-        console.log("Successo!");
-        window.location.reload();
-      })
+    async eliminaPrenotazione(id) {
+      const toast = await alertController
+          .create({
+            header:'Sei sicuro di voler eliminare questa prenotazione ?',
+            position: 'middle',
+            buttons: [
+              {
+                side: 'start',
+                text: 'Annulla',
+                handler: () => {
+                  console.log('Cancellazione annullata');
+                }
+              },
+              {
+                text: 'Conferma',
+                handler: () => {
+                  prenotazioniAxios.elimina(id)
+                      .then((response) => {
+                        console.log("Successo!");
+                        window.location.reload();
+                      })
+                }
+              }
+            ]
+          })
+      return toast.present();
+
     }
 
     }
@@ -165,23 +188,23 @@ ion-button{
 }
 div.colonna1 {
   float: left;
-  margin-right: 17%;
+  margin-right: 18%;
   margin-left: 9%;
 }
 
 div.colonna2 {
   float: left;
-  margin-right: 13%;
+  margin-right: 16%;
 }
 
 div.colonna3 {
   float: left;
-  margin-right: 13%;
+  margin-right: 17%;
 }
 
 div.colonna4 {
   float: left;
-  margin-right: 3%;
+  margin-right: 2%;
 }
 
 div.titolo1 {

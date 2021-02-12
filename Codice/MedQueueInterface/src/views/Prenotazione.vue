@@ -100,6 +100,12 @@ export default {
         day: new Date().getDay()}
     }
   },
+  updated() {
+    this.struttura = "";
+    this.data = "";
+    this.operazione= "";
+    this.ora = "";
+  },
   methods: {
 
     getIdStruttura(){
