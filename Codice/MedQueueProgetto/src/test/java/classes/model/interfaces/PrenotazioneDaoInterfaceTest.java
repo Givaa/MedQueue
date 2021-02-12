@@ -33,13 +33,13 @@ class PrenotazioneDaoInterfaceTest {
         DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
         Date date = null;
         try {
-            date = new Date(df.parse("02-04-2021").getTime());
+            date = new Date(df.parse("02-04-2022").getTime());
         } catch (ParseException e) {
             e.printStackTrace();
         }
         prenotazioneBean.setDataPrenotazione(date);
         prenotazioneBean.setOra("11:00:00");
-        prenotazioneBean.setCodiceFiscale("CCCNTN98H02F839V");
+        prenotazioneBean.setCodiceFiscale("CPHMKL98H41I490J");
         prenotazioneBean.setConvalida(false);
         prenotazioneBean.setIdStruttura(1);
         prenotazioneBean.setIdOperazione(1);
@@ -55,7 +55,7 @@ class PrenotazioneDaoInterfaceTest {
 
     @Test
     void doDelete() throws SQLException {
-        prenotazioneBean = prenotazioneDaoInterface.doRetrieveByKey(11);
+        prenotazioneBean = prenotazioneDaoInterface.doRetrieveByKey(18);
         prenotazioneDaoInterface.doDelete(prenotazioneBean);
     }
 

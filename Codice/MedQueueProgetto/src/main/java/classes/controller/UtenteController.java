@@ -101,26 +101,27 @@ public class UtenteController {
 
     String phoneNumber = jsonObject.get("newUtentePhoneNumber").getAsString();
     Boolean checkPhoneNumber;
-    checkPhoneNumber = phoneNumber.matches("^[\\+][0-9]{10,12}");
+    checkPhoneNumber = phoneNumber.matches("^[0-9]{10,12}");
 
     String email = jsonObject.get("newUtenteEmail").getAsString();
     Boolean checkMail;
-    checkMail = email.matches("/\\S+@\\S+\\.\\S+/");
+    checkMail = email.matches("\\S+@\\S+\\.\\S+");
 
     String dataN = jsonObject.get("newUtenteDataN").getAsString();
-    Date dataNascita = (Date) new SimpleDateFormat("yyyy/mm/gg").parse(dataN);
+    java.util.Date tmp = new SimpleDateFormat("yyyy-MM-dd").parse(dataN);
+    java.sql.Date dataNascita = new Date(tmp.getTime());
 
-    UtenteBean u = utenteModel.doRetrieveByKey(cf);
+    UtenteBean utenteBean = new UtenteBean();
     if (checkName && checkSurname && checkPassword
             && checkPhoneNumber && checkCodFisc && checkMail) {
-      u.setNumeroDiTelefono(phoneNumber);
-      u.setPassword(password);
-      u.setEmail(email);
-      u.setCognome(cognome);
-      u.setNome(nome);
-      u.setDataDiNascita(dataNascita);
-      u.setCodiceFiscale(cf);
-      utenteModel.doSave(u);
+      utenteBean.setNumeroDiTelefono(phoneNumber);
+      utenteBean.setPassword(password);
+      utenteBean.setEmail(email);
+      utenteBean.setCognome(cognome);
+      utenteBean.setNome(nome);
+      utenteBean.setDataDiNascita(dataNascita);
+      utenteBean.setCodiceFiscale(cf);
+      utenteModel.doSave(utenteBean);
       return true;
     } else {
       throw new ErrorNewObjectException(new UtenteBean());
@@ -175,15 +176,15 @@ public class UtenteController {
 
       String phoneNumber = jsonObject.get("updateUtentePhoneNumber").getAsString();
       Boolean checkPhoneNumber;
-      checkPhoneNumber = phoneNumber.matches("^[\\+][0-9]{10,12}");
+      checkPhoneNumber = phoneNumber.matches("^[0-9]{10,12}");
 
       String email = jsonObject.get("updateUtenteEmail").getAsString();
       Boolean checkMail;
-      checkMail = email.matches("/\\S+@\\S+\\.\\S+/");
+      checkMail = email.matches("\\S+@\\S+\\.\\S+");
 
       String dataN = jsonObject.get("updateUtenteDataN").getAsString();
-      Date dataNascita = (Date) new SimpleDateFormat("yyyy/mm/gg").parse(dataN);
-
+      java.util.Date tmp = new SimpleDateFormat("yyyy-MM-dd").parse(dataN);
+      java.sql.Date dataNascita = new Date(tmp.getTime());
 
       if (checkName && checkSurname && checkPassword
           && checkPhoneNumber && checkMail) {

@@ -1,6 +1,7 @@
 package classes.controller;
 
 import classes.controller.exception.ErrorNewObjectException;
+import classes.controller.exception.InvalidKeyException;
 import classes.controller.exception.ObjectNotFoundException;
 import classes.model.bean.entity.OperazioneBean;
 import classes.model.bean.entity.PrenotazioneBean;
@@ -35,7 +36,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class PrenotazioneController {
-
   private final PrenotazioneDaoInterface prenotazioneDaoInterface = new PrenotazioneModel();
   private final StrutturaDaoInterface strutturaDaoInterface = new StrutturaModel();
   private final OperazioneDaoInterface operazioneDaoInterface = new OperazioneModel();
@@ -48,19 +48,25 @@ public class PrenotazioneController {
    * @return Prenotazione avente l'id passato
    * @throws SQLException per problemi di esecuzione della query
    * @throws ObjectNotFoundException per problemi di oggetto non trovato
+   * @throws InvalidKeyException per problemi di chiave primaria
    */
   @PostMapping(value = "/prenotazione/{id}", produces = MediaType.APPLICATION_JSON_VALUE,
           consumes = MediaType.APPLICATION_JSON_VALUE)
   public PrenotazioneBean getPrenotazioneById(@RequestBody String body) throws SQLException,
-          ObjectNotFoundException {
+          ObjectNotFoundException, InvalidKeyException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("idPrenotazioneGet").getAsString();
 
-    PrenotazioneBean p = prenotazioneDaoInterface.doRetrieveByKey(Integer.valueOf(id));
-    if (p.getCodiceFiscale() != null) {
-      return p;
+    PrenotazioneBean prenotazioneBean = prenotazioneDaoInterface.doRetrieveByKey(Integer.valueOf(id));
+
+    if(Integer.valueOf(id) > 0 ) {
+      if (prenotazioneBean != null) {
+        return prenotazioneBean;
+      } else {
+        throw new ObjectNotFoundException(new PrenotazioneBean());
+      }
     } else {
-      throw new ObjectNotFoundException(p);
+      throw new InvalidKeyException("Id prenotazione non valido");
     }
   }
 
@@ -158,7 +164,8 @@ public class PrenotazioneController {
     String idOp = jsonObject.get("updatePrenotazioniIdOp").getAsString();
     String idS = jsonObject.get("updatePrenotazioniIdS").getAsString();
     String data = jsonObject.get("updatePrenotazioneData").getAsString();
-    Date dataPrenotazione = (Date) new SimpleDateFormat("yyyy/mm/gg").parse(data);
+    java.util.Date tmp = new SimpleDateFormat("yyyy-MM-dd").parse(data);
+    java.sql.Date dataPrenotazione = new Date(tmp.getTime());
     Boolean cv = jsonObject.get("updatePrenotazioneConvalida").getAsBoolean();
     PrenotazioneBean p = prenotazioneDaoInterface.doRetrieveByKey(Integer.valueOf(id));
 
@@ -170,7 +177,7 @@ public class PrenotazioneController {
       b = strutturaDaoInterface.doRetrieveByKey(p.getIdStruttura());
 
       boolean checkCodFisc = cf.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
-      boolean checkOra = ora.matches("^([0-1][0-9]|[2][0-3]):([0-5][0-9])$");
+      boolean checkOra = ora.matches("^([0-1][0-9]|[2][0-3]):([0-5][0-9]):([0-5][0-9])$");
 
       if (checkCodFisc && checkOra && b != null && o != null) {
         p.setDataPrenotazione(dataPrenotazione);
@@ -184,9 +191,9 @@ public class PrenotazioneController {
       } else {
         return false;
       }
+    } else {
+      throw new ObjectNotFoundException(new PrenotazioneBean());
     }
-
-    return false;
   }
 
   /**
@@ -224,6 +231,7 @@ public class PrenotazioneController {
     Collection<PrenotazioneBean> collection = prenotazioneDaoInterface.getUtentePrenotazioni(cf);
     Iterator iter = collection.iterator();
     PrenotazioneBean prenotazioneBean = (PrenotazioneBean) iter.next();
+    System.out.println(prenotazioneBean);
 
     //Impostazioni variabili data, ora e codice fiscale
     LocalDateTime now = LocalDateTime.now();
@@ -231,11 +239,13 @@ public class PrenotazioneController {
     Date d = prenotazioneBean.getDataPrenotazione();
     String ora = prenotazioneBean.getOra();
     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    Long minHour = df.parse(ora).getTime();
-    Long maxHour = df.parse(ora).getTime();
+    Long minHour = df.parse(d.toString()+ " " +ora).getTime();
+    Long maxHour = df.parse(d.toString()+ " " +ora).getTime();
     Long timeNow = System.currentTimeMillis();
     minHour -= 1800 * 1000;
     maxHour += 600 * 1000;
+    System.out.println("MinHour: "+minHour+" MaxHour: "+maxHour);
+    System.out.println(timeNow);
     boolean checkCodFisc = cf.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
 
     if ((now.getDayOfMonth() == d.toLocalDate().getDayOfMonth())

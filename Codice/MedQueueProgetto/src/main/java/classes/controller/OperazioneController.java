@@ -39,11 +39,11 @@ public class OperazioneController {
     String id = jsonObject.get("idOperazioneGet").getAsString();
 
     if (! id.equals("0")) {
-      OperazioneBean op = operazioneModel.doRetrieveByKey(Integer.valueOf(id));
-      if (op.getTipoOperazione() != null) {
-        return op;
+      OperazioneBean operazioneBean = operazioneModel.doRetrieveByKey(Integer.valueOf(id));
+      if (operazioneBean != null) {
+        return operazioneBean;
       } else {
-        throw new ObjectNotFoundException(op);
+        throw new ObjectNotFoundException(new OperazioneBean());
       }
     } else {
       throw new InvalidKeyException("Id invalido, occorre un id maggiore di 0");
@@ -68,7 +68,7 @@ public class OperazioneController {
     if (op != null) {
       return op;
     } else {
-      throw new ObjectNotFoundException(op);
+      throw new ObjectNotFoundException(new OperazioneBean());
     }
   }
 
@@ -87,9 +87,8 @@ public class OperazioneController {
     if(!body.equals("{}")) {
       String order = jsonObject.get("ordineOperazioni").getAsString();
       return operazioneModel.doRetrieveAll(order);
-    }else{
-      String order ="";
-      return operazioneModel.doRetrieveAll(order);
+    } else {
+      return null;
     }
   }
 

@@ -42,12 +42,12 @@ public class AmbulatorioController {
     int id = jsonObject.get("id").getAsInt();
 
     if (id > 0) {
-      AmbulatoriBean a = ambulatorioModel.doRetrieveByKey(id);
+      AmbulatoriBean ambulatoriBean = ambulatorioModel.doRetrieveByKey(id);
 
-      if (a.getNome() != null) {
-        return a;
+      if (ambulatoriBean != null) {
+        return ambulatoriBean;
       } else {
-        throw new ObjectNotFoundException(a);
+        throw new ObjectNotFoundException(new AmbulatoriBean());
       }
     } else {
       throw new InvalidKeyException("Id invalido, occorre un id maggiore di 0");

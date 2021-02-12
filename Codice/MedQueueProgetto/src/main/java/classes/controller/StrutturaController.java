@@ -1,6 +1,7 @@
 package classes.controller;
 
 import classes.controller.exception.ErrorNewObjectException;
+import classes.controller.exception.InvalidKeyException;
 import classes.controller.exception.ObjectNotFoundException;
 import classes.model.bean.entity.StrutturaBean;
 import classes.model.dao.StrutturaModel;
@@ -26,18 +27,23 @@ public class StrutturaController {
    * @return Struttura avente l'id passato
    * @throws SQLException per problemi di esecuzione della query
    * @throws ObjectNotFoundException per problemi di oggetto non trovato
+   * @throws InvalidKeyException per problemi con la chiave primaria
    */
   @PostMapping(value = "/struttura/{id}", produces = MediaType.APPLICATION_JSON_VALUE,
           consumes = MediaType.APPLICATION_JSON_VALUE)
   public StrutturaBean getStrutturaById(@RequestBody String body)
-      throws SQLException, ObjectNotFoundException {
+          throws SQLException, ObjectNotFoundException, InvalidKeyException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("idStrutturaGet").getAsString();
     StrutturaBean s = strutturaModel.doRetrieveByKey(Integer.valueOf(id));
-    if (s.getNome() != null) {
-      return s;
+    if (Integer.valueOf(id) > 0) {
+      if (s.getNome() != null) {
+        return s;
+      } else {
+        throw new ObjectNotFoundException(s);
+      }
     } else {
-      throw new ObjectNotFoundException(s);
+      throw new InvalidKeyException("Id invalido, occorre un id maggiore di 0");
     }
   }
 
@@ -100,9 +106,9 @@ public class StrutturaController {
     String indirizzo = jsonObject.get("newStrutturaIndirizzo").getAsString();
     String numeroCell = jsonObject.get("newStrutturaNumeroCell").getAsString();
 
-    boolean checkNome = nome.matches("[A-Za-z]+$");
+    boolean checkNome = nome.matches("[A-Za-z ]+$");
     boolean checkIndirizzo = indirizzo.matches("^[A-Za-z0-9\\-\\s,\\/]*$");
-    boolean checkNumeroCell = numeroCell.matches("^[\\+][0-9]{10,12}");
+    boolean checkNumeroCell = numeroCell.matches("^[0-9]{10,12}");
 
     if (checkIndirizzo && checkNome && checkNumeroCell) {
       strutturaModel.doSave(new StrutturaBean(nome, indirizzo, numeroCell));
@@ -146,9 +152,9 @@ public class StrutturaController {
     String numeroCell = jsonObject.get("updateStrutturaNumeroCell").getAsString();
 
     if (s != null) {
-      boolean checkNome = nome.matches("[A-Za-z]+$");
+      boolean checkNome = nome.matches("[A-Za-z ]+$");
       boolean checkIndirizzo = indirizzo.matches("^[A-Za-z0-9\\-\\s,\\/]*$");
-      boolean checkNumeroCell = numeroCell.matches("^[\\+][0-9]{10,12}");
+      boolean checkNumeroCell = numeroCell.matches("^[0-9]{10,12}");
 
       if (checkIndirizzo && checkNome && checkNumeroCell) {
         s.setNumeroDiTelefono(numeroCell);
