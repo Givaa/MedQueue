@@ -63,9 +63,6 @@ export default {
     IonToolbar
   },
   methods: {
-    goHomeUtente() {
-      router.push("/HomeUtente");
-    },
 
     async onSubmit(){
       loginAxios.login(this.loginForm.username, this.loginForm.password)

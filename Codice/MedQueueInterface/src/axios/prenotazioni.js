@@ -61,5 +61,16 @@ export default {
                 'Content-Type': 'application/json',
             }
         }).then(response => response.data)
+    },
+
+    convalida(convalidaPrenotazione){
+        return axios.post('http://localhost:8080/convalida', {
+            convalidaPrenotazione
+        }, {
+            crossDomain: true,
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(response => response.data)
     }
 };

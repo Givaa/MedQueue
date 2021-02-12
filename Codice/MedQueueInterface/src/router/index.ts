@@ -39,6 +39,10 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/VisualizzazioneCodaUtente',
     component: () => import ('../views/VisualizzaCodaUtente.vue')
+  },
+  {
+    path:'/Convalida',
+    component: () => import('../views/Convalida.vue')
   }
 
 
