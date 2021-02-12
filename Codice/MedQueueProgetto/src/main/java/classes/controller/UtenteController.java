@@ -1,12 +1,15 @@
 package classes.controller;
 
 import classes.controller.exception.ErrorNewObjectException;
+import classes.controller.exception.InvalidKeyException;
 import classes.controller.exception.ObjectNotFoundException;
 import classes.model.bean.entity.UtenteBean;
 import classes.model.dao.UtenteModel;
 import classes.model.interfaces.UtenteDaoInterface;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import java.security.KeyException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -29,18 +32,23 @@ public class UtenteController {
    * @return Utente avente il codice fiscale passato
    * @throws SQLException per problemi di esecuzione della query
    * @throws ObjectNotFoundException per problemi di oggetto non trovato
+   * @throws InvalidKeyException per problemi di chiave primaria
    */
   @PostMapping(value = "/utente/{cf}", produces = MediaType.APPLICATION_JSON_VALUE,
           consumes = MediaType.APPLICATION_JSON_VALUE)
   public UtenteBean getUtenteByCodFisc(@RequestBody String body)
-      throws SQLException, ObjectNotFoundException {
+          throws SQLException, ObjectNotFoundException, InvalidKeyException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String cf = jsonObject.get("idUtenteGet").getAsString();
-    UtenteBean s = utenteModel.doRetrieveByKey(cf);
-    if (s.getCodiceFiscale() != null) {
-      return s;
+    UtenteBean utenteBean = utenteModel.doRetrieveByKey(cf);
+    if (cf.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$")) {
+      if (utenteBean != null) {
+        return utenteBean;
+      } else {
+        throw new ObjectNotFoundException(new UtenteBean());
+      }
     } else {
-      throw new ObjectNotFoundException(s);
+      throw new InvalidKeyException("Codice fiscale non valido");
     }
   }
 

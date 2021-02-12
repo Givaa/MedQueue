@@ -5,12 +5,15 @@ import classes.controller.exception.ObjectNotFoundException;
 import classes.model.bean.entity.OperazioneBean;
 import classes.model.bean.entity.PrenotazioneBean;
 import classes.model.bean.entity.StrutturaBean;
+import classes.model.bean.entity.UtenteBean;
 import classes.model.dao.OperazioneModel;
 import classes.model.dao.PrenotazioneModel;
 import classes.model.dao.StrutturaModel;
+import classes.model.dao.UtenteModel;
 import classes.model.interfaces.OperazioneDaoInterface;
 import classes.model.interfaces.PrenotazioneDaoInterface;
 import classes.model.interfaces.StrutturaDaoInterface;
+import classes.model.interfaces.UtenteDaoInterface;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.sql.Date;
@@ -33,9 +36,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PrenotazioneController {
 
-  private final PrenotazioneDaoInterface prenotazioneModel = new PrenotazioneModel();
-  private final StrutturaDaoInterface strutturaModel = new StrutturaModel();
-  private final OperazioneDaoInterface operazioneModel = new OperazioneModel();
+  private final PrenotazioneDaoInterface prenotazioneDaoInterface = new PrenotazioneModel();
+  private final StrutturaDaoInterface strutturaDaoInterface = new StrutturaModel();
+  private final OperazioneDaoInterface operazioneDaoInterface = new OperazioneModel();
+  private final UtenteDaoInterface utenteDaoInterface = new UtenteModel();
 
   /**
    * Metodo che permette di utilizzare il prelevamento per id del PrenotazioneModel.
@@ -52,7 +56,7 @@ public class PrenotazioneController {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("idPrenotazioneGet").getAsString();
 
-    PrenotazioneBean p = prenotazioneModel.doRetrieveByKey(Integer.valueOf(id));
+    PrenotazioneBean p = prenotazioneDaoInterface.doRetrieveByKey(Integer.valueOf(id));
     if (p.getCodiceFiscale() != null) {
       return p;
     } else {
@@ -73,7 +77,7 @@ public class PrenotazioneController {
           throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String order = jsonObject.get("ordinePrenotazioni").getAsString();
-    return prenotazioneModel.doRetrieveAll(order);
+    return prenotazioneDaoInterface.doRetrieveAll(order);
   }
 
   /**
@@ -99,16 +103,19 @@ public class PrenotazioneController {
     java.util.Date tmp = new SimpleDateFormat("yyyy-MM-dd").parse(data);
     java.sql.Date dataPrenotazione = new Date(tmp.getTime());
 
-    StrutturaBean s;
-    OperazioneBean o;
-    o = operazioneModel.doRetrieveByKey(Integer.valueOf(idOp));
-    s = strutturaModel.doRetrieveByKey(Integer.valueOf(idS));
+    StrutturaBean strutturaBean;
+    OperazioneBean operazioneBean;
+    UtenteBean utenteBean;
+    strutturaBean = strutturaDaoInterface.doRetrieveByKey(Integer.valueOf(idS));
+    operazioneBean = operazioneDaoInterface.doRetrieveByKey(Integer.valueOf(idOp));
+    utenteBean = utenteDaoInterface.doRetrieveByKey(cf);
 
-    boolean checkOperazione = o != null;
-    boolean checkStruttura = s != null;
+    boolean checkStruttura = strutturaBean != null;
+    boolean checkOperazione = operazioneBean != null;
+    boolean checkUtente = utenteBean != null;
 
-    if (checkOperazione && checkStruttura) {
-      prenotazioneModel.doSave(new PrenotazioneBean(ora, dataPrenotazione, cf,
+    if (checkOperazione && checkStruttura && checkUtente) {
+      prenotazioneDaoInterface.doSave(new PrenotazioneBean(ora, dataPrenotazione, cf,
               Integer.valueOf(idOp), Integer.valueOf(idS), false));
       return true;
     } else {
@@ -128,7 +135,7 @@ public class PrenotazioneController {
   public void deletePrenotazione(@RequestBody String body) throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("deletePrenotazioniId").getAsString();
-    prenotazioneModel.doDelete(prenotazioneModel.doRetrieveByKey(Integer.valueOf(id)));
+    prenotazioneDaoInterface.doDelete(prenotazioneDaoInterface.doRetrieveByKey(Integer.valueOf(id)));
   }
 
   /**
@@ -153,14 +160,14 @@ public class PrenotazioneController {
     String data = jsonObject.get("updatePrenotazioneData").getAsString();
     Date dataPrenotazione = (Date) new SimpleDateFormat("yyyy/mm/gg").parse(data);
     Boolean cv = jsonObject.get("updatePrenotazioneConvalida").getAsBoolean();
-    PrenotazioneBean p = prenotazioneModel.doRetrieveByKey(Integer.valueOf(id));
+    PrenotazioneBean p = prenotazioneDaoInterface.doRetrieveByKey(Integer.valueOf(id));
 
 
     if (p != null) {
       StrutturaBean b;
       OperazioneBean o;
-      o = operazioneModel.doRetrieveByKey(p.getIdOperazione());
-      b = strutturaModel.doRetrieveByKey(p.getIdStruttura());
+      o = operazioneDaoInterface.doRetrieveByKey(p.getIdOperazione());
+      b = strutturaDaoInterface.doRetrieveByKey(p.getIdStruttura());
 
       boolean checkCodFisc = cf.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
       boolean checkOra = ora.matches("^([0-1][0-9]|[2][0-3]):([0-5][0-9])$");
@@ -172,7 +179,7 @@ public class PrenotazioneController {
         p.setIdStruttura(Integer.valueOf(idS));
         p.setIdOperazione(Integer.valueOf(idOp));
         p.setOra(ora);
-        prenotazioneModel.doUpdate(p);
+        prenotazioneDaoInterface.doUpdate(p);
         return true;
       } else {
         return false;
@@ -195,7 +202,7 @@ public class PrenotazioneController {
           throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String cf = jsonObject.get("getPrenotazioniByCf").getAsString();
-    return prenotazioneModel.getUtentePrenotazioni(cf);
+    return prenotazioneDaoInterface.getUtentePrenotazioni(cf);
   }
 
   /**
@@ -214,26 +221,29 @@ public class PrenotazioneController {
     String cf = jsonObject.get("convalidaPrenotazione").getAsString();
 
     //Prendo la prenotazione
-    Collection<PrenotazioneBean> collection = this.getPrenotazioniByCodFisc(cf);
+    Collection<PrenotazioneBean> collection = prenotazioneDaoInterface.getUtentePrenotazioni(cf);
     Iterator iter = collection.iterator();
-    PrenotazioneBean p = (PrenotazioneBean) iter.next();
+    PrenotazioneBean prenotazioneBean = (PrenotazioneBean) iter.next();
 
-    //Impostazioni variabili data e ora
+    //Impostazioni variabili data, ora e codice fiscale
     LocalDateTime now = LocalDateTime.now();
-    p.getDataPrenotazione();
-    Date d = p.getDataPrenotazione();
-    String ora = p.getOra();
+    prenotazioneBean.getDataPrenotazione();
+    Date d = prenotazioneBean.getDataPrenotazione();
+    String ora = prenotazioneBean.getOra();
     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     Long minHour = df.parse(ora).getTime();
     Long maxHour = df.parse(ora).getTime();
     Long timeNow = System.currentTimeMillis();
     minHour -= 1800 * 1000;
     maxHour += 600 * 1000;
+    boolean checkCodFisc = cf.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
 
     if ((now.getDayOfMonth() == d.toLocalDate().getDayOfMonth())
             && (now.getMonth() == d.toLocalDate().getMonth())
-            && ((timeNow >= minHour) && (timeNow <= maxHour))) {
-      p.setConvalida(true);
+            && ((timeNow >= minHour) && (timeNow <= maxHour))
+            && checkCodFisc) {
+      prenotazioneBean.setConvalida(true);
+      prenotazioneDaoInterface.doUpdate(prenotazioneBean);
       return true;
     }
     return false;
@@ -257,7 +267,7 @@ public class PrenotazioneController {
     java.util.Date tmp = new SimpleDateFormat("yyyy-MM-dd").parse(data);
     java.sql.Date dataPrenotazione = new Date(tmp.getTime());
 
-    return prenotazioneModel.getOrariPrenotazione(idStruttura,idOperazione,dataPrenotazione);
+    return prenotazioneDaoInterface.getOrariPrenotazione(idStruttura,idOperazione,dataPrenotazione);
 
   }
 

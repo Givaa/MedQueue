@@ -1,5 +1,6 @@
 package classes.model.dao;
 
+import classes.controller.exception.ObjectNotFoundException;
 import classes.model.DriverManagerConnectionPool;
 import classes.model.bean.entity.OperazioneBean;
 import classes.model.interfaces.OperazioneDaoInterface;
@@ -67,7 +68,7 @@ public class OperazioneModel implements OperazioneDaoInterface {
    * @throws SQLException per problemi di esecuzione della query
    */
   @Override
-  public OperazioneBean doRetrieveByTipo(String tipo) throws SQLException {
+  public OperazioneBean doRetrieveByTipo(String tipo) throws SQLException, ObjectNotFoundException {
     Connection con = null;
     PreparedStatement ps = null;
 
@@ -98,7 +99,11 @@ public class OperazioneModel implements OperazioneDaoInterface {
         DriverManagerConnectionPool.releaseConnection(con);
       }
     }
-    return tmp;
+    if (tmp.getTipoOperazione() != null ) {
+      return tmp;
+    } else {
+      return null;
+    }
   }
 
   /**
@@ -163,7 +168,7 @@ public class OperazioneModel implements OperazioneDaoInterface {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
-    String insertSql = "INSERT INTO " + nomeTabella + " VALUES (?, ?)";
+    String insertSql = "INSERT INTO " + nomeTabella + " (tipoOperazione, descrizione) VALUES (?, ?)";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();

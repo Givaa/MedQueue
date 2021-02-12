@@ -1,5 +1,6 @@
 package classes.model.dao;
 
+import classes.controller.exception.ObjectNotFoundException;
 import classes.model.DriverManagerConnectionPool;
 import classes.model.bean.entity.StrutturaBean;
 import classes.model.interfaces.StrutturaDaoInterface;
@@ -24,7 +25,7 @@ public class StrutturaModel implements StrutturaDaoInterface {
    * @throws SQLException per problemi di esecuzione della query
    */
   @Override
-  public StrutturaBean doRetrieveByKey(int id) throws SQLException {
+  public StrutturaBean doRetrieveByKey(int id) throws SQLException, ObjectNotFoundException {
     Connection con = null;
     PreparedStatement ps = null;
 
@@ -56,7 +57,12 @@ public class StrutturaModel implements StrutturaDaoInterface {
         DriverManagerConnectionPool.releaseConnection(con);
       }
     }
-    return tmp;
+
+    if (tmp.getNome() != null) {
+      return tmp;
+    } else {
+      return null;
+    }
   }
 
   /**
@@ -165,7 +171,8 @@ public class StrutturaModel implements StrutturaDaoInterface {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
-    String insertSql = "INSERT INTO " + nomeTabella + " VALUES (?, ?, ?)";
+    String insertSql = "INSERT INTO " + nomeTabella + " (nome, indirizzo, numeroDiTelefono) "
+            + "VALUES (?, ?, ?)";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();

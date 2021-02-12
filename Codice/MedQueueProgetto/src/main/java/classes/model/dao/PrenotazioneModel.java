@@ -1,5 +1,6 @@
 package classes.model.dao;
 
+import classes.controller.exception.ObjectNotFoundException;
 import classes.model.DriverManagerConnectionPool;
 import classes.model.bean.entity.PrenotazioneBean;
 import classes.model.interfaces.PrenotazioneDaoInterface;
@@ -15,7 +16,11 @@ import java.util.List;
  */
 public class PrenotazioneModel implements PrenotazioneDaoInterface {
   private static final String nomeTabella = "prenotazione";
-  private String[] elencoOrari= {"09:00:00","09:15:00","09:30:00","09:45:00","10:00:00","10:15:00","10:30:00","10:45:00","11:00:00","11:15:00","11:30:00","11:45:00","12:00:00","12:15:00","12:30:00","12:45:00","13:00:00"};
+  private String[] elencoOrari= {"09:00:00","09:15:00",
+          "09:30:00","09:45:00","10:00:00","10:15:00",
+          "10:30:00","10:45:00","11:00:00","11:15:00","11:30:00",
+          "11:45:00","12:00:00","12:15:00","12:30:00","12:45:00",
+          "13:00:00"};
 
 
   /**
@@ -26,7 +31,8 @@ public class PrenotazioneModel implements PrenotazioneDaoInterface {
    * @throws SQLException per problemi di esecuzione della query
    */
   @Override
-  public PrenotazioneBean doRetrieveByKey(int id) throws SQLException {
+  public PrenotazioneBean doRetrieveByKey(int id) throws SQLException,
+          ObjectNotFoundException {
     Connection con = null;
     PreparedStatement ps = null;
 
@@ -61,7 +67,12 @@ public class PrenotazioneModel implements PrenotazioneDaoInterface {
         DriverManagerConnectionPool.releaseConnection(con);
       }
     }
-    return tmp;
+
+    if(tmp.getCodiceFiscale() != null ) {
+      return tmp;
+    } else {
+      return null;
+    }
   }
 
   /**
@@ -168,7 +179,7 @@ public class PrenotazioneModel implements PrenotazioneDaoInterface {
     String deleteSql =
         "UPDATE "
             + nomeTabella
-            + " SET ora = ?, dataPrenotazione = ?, codiceFiscale = ?,"
+            + " SET ora = ?, data = ?, codiceFiscale = ?,"
             + " idOperazione = ?, idStruttura = ?, convalida = ? WHERE id = ?";
 
     try {

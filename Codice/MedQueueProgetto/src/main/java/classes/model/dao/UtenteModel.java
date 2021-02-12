@@ -1,5 +1,6 @@
 package classes.model.dao;
 
+import classes.controller.exception.ObjectNotFoundException;
 import classes.model.DriverManagerConnectionPool;
 import classes.model.bean.entity.UtenteBean;
 import classes.model.interfaces.UtenteDaoInterface;
@@ -24,7 +25,7 @@ public class UtenteModel implements UtenteDaoInterface {
    * @throws SQLException per problemi di esecuzione della query
    */
   @Override
-  public UtenteBean doRetrieveByKey(String cf) throws SQLException {
+  public UtenteBean doRetrieveByKey(String cf) throws SQLException, ObjectNotFoundException {
     Connection con = null;
     PreparedStatement ps = null;
 
@@ -59,7 +60,12 @@ public class UtenteModel implements UtenteDaoInterface {
         DriverManagerConnectionPool.releaseConnection(con);
       }
     }
-    return tmp;
+
+    if (tmp.getCodiceFiscale() != null ) {
+      return tmp;
+    } else {
+      return null;
+    }
   }
 
   /**

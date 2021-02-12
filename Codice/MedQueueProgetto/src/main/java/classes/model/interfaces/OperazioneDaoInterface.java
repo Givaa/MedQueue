@@ -1,5 +1,6 @@
 package classes.model.interfaces;
 
+import classes.controller.exception.ObjectNotFoundException;
 import classes.model.bean.entity.OperazioneBean;
 import java.sql.SQLException;
 import java.util.Collection;
@@ -23,7 +24,7 @@ public interface OperazioneDaoInterface {
    * @return Operazione avente quell'id
    * @throws SQLException per problemi di esecuzione della query
    */
-  OperazioneBean doRetrieveByTipo(String tipo) throws SQLException;
+  OperazioneBean doRetrieveByTipo(String tipo) throws SQLException, ObjectNotFoundException;
 
   /**
    * Prelevamento di tutte le operazioni presenti nel DB.

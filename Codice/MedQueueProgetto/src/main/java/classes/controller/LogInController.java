@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LogInController extends HttpServlet {
 
-  private final UtenteDaoInterface um = new UtenteModel();
+  private final UtenteDaoInterface utenteDaoInterface = new UtenteModel();
 
   /**
    * Metodo che controlla le credenziali inviate.
@@ -36,7 +36,7 @@ public class LogInController extends HttpServlet {
     String username = jsonObject.get("username").getAsString();
     String password = jsonObject.get("password").getAsString();
 
-    UtenteBean a = um.doRetrieveByKey(username);
+    UtenteBean a = utenteDaoInterface.doRetrieveByKey(username);
 
     if (password.equals(a.getPassword())) {
       return a;
@@ -70,7 +70,8 @@ public class LogInController extends HttpServlet {
 
     String codFisc = jsonObject.get("codFiscNewUtente").getAsString();
     Boolean checkCodFisc;
-    checkCodFisc = codFisc.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
+    checkCodFisc = codFisc.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$")
+            && (utenteDaoInterface.doRetrieveByKey(codFisc) == null) ;
 
     String password = jsonObject.get("passwordNewUtente").getAsString();
     Boolean checkPassword;
@@ -96,7 +97,7 @@ public class LogInController extends HttpServlet {
             && checkPhoneNumber && checkCodFisc /*&& checkMail*/) {
       a = new UtenteBean(codFisc, password, nome, cognome,
               dataDiNascita, email, phoneNumber);
-      um.doSave(a);
+      utenteDaoInterface.doSave(a);
 
       return a;
     } else {

@@ -56,7 +56,12 @@ public class AmbulatoriModel implements AmbulatorioDaoInterface {
         DriverManagerConnectionPool.releaseConnection(con);
       }
     }
-    return tmp;
+
+    if (tmp.getNome() != null) {
+      return tmp;
+    } else {
+      return null;
+    }
   }
 
   /**
