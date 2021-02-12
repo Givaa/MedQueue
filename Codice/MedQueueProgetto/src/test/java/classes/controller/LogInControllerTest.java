@@ -25,7 +25,13 @@ class LogInControllerTest {
 
     @Test
     void signup() throws SQLException, ParseException {
-        jsonElement = parser.parse("{\"nomeNewUtente\":\"Bud\",\"cognomeNewUtente\":\"Spencer\",\"codFiscNewUtente\":\"DTSQJP55R30A119M\",\"passwordNewUtente\":\"Fagiolih1!\",\"numeroTelefonoNewUtente\":\"3271219447\",\"dataDiNascitaNewUtente\":\"31-10-1929\",\"emailNewUtente\":\"mazzate@paccari.it\"}");
+        jsonElement = parser.parse("{\"nomeNewUtente\":\"Bud\"," +
+                "\"cognomeNewUtente\":\"Spencer\"," +
+                "\"codFiscNewUtente\":\"DTSQJP55R30A119M\"," +
+                "\"passwordNewUtente\":\"Fagiolih1!\"," +
+                "\"numeroTelefonoNewUtente\":\"3271219447\"," +
+                "\"dataDiNascitaNewUtente\":\"31-10-1929\"," +
+                "\"emailNewUtente\":\"mazzate@paccari.it\"}");
         rootObject = jsonElement.getAsJsonObject();
         assertNotNull(logInController.signup(rootObject.toString()));
     }

@@ -145,10 +145,10 @@ public class UtenteController {
    * Metodo che permette di utilizzare l'aggiornamento di un ambulatorio presente sul DB tramite
    * UtenteController.
    *
+   * @return conferma/non conferma dell'aggiornamento dell'utente
    * @param body corpo della richiesta preso in input
    * @throws SQLException per problemi di esecuzione della query
    * @throws ParseException per problemi di parsing
-   * @return conferma/non conferma dell'aggiornamento dell'utente
    */
   @PostMapping(value = "/updateUtente", produces = MediaType.APPLICATION_JSON_VALUE,
           consumes = MediaType.APPLICATION_JSON_VALUE)

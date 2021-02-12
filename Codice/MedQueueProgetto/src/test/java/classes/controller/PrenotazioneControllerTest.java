@@ -44,7 +44,7 @@ class PrenotazioneControllerTest {
     @Test
     void newPrenotazione() throws SQLException, ParseException {
         jsonElement = parser.parse(
-                "{\"newPrenotazioniCf\":\"CPHMKL98H41I490J\"," +
+                "{\"newPrenotazioniCf\":\"MNDCMN97R22A509S\"," +
                         "\"newPrenotazioniOra\":\"15:30:00\"," +
                         "\"newPrenotazioniIdOp\":\"1\"," +
                         "\"newPrenotazioniIdS\":\"1\"," +
@@ -55,7 +55,7 @@ class PrenotazioneControllerTest {
 
     @Test
     void deletePrenotazione() throws SQLException {
-        jsonElement = parser.parse("{\"deletePrenotazioniId\":\"17\"}");
+        jsonElement = parser.parse("{\"deletePrenotazioniId\":\"11\"}");
         rootObject = jsonElement.getAsJsonObject();
         prenotazioneController.deletePrenotazione(rootObject.toString());
     }
@@ -63,8 +63,8 @@ class PrenotazioneControllerTest {
     @Test
     void updatePrenotazione() throws SQLException, ParseException {
         jsonElement = parser.parse(
-                "{\"updatePrenotazioniId\":\"17\"," +
-                        "\"updatePrenotazioniCf\":\"CPHMKL98H41I490J\"," +
+                "{\"updatePrenotazioniId\":\"11\"," +
+                        "\"updatePrenotazioniCf\":\"MNDCMN97R22A509S\"," +
                         "\"updatePrenotazioniOra\":\"12:00:00\"," +
                         "\"updatePrenotazioniIdOp\":\"1\"," +
                         "\"updatePrenotazioniIdS\":\"1\"," +
@@ -76,14 +76,14 @@ class PrenotazioneControllerTest {
 
     @Test
     void getPrenotazioniByCodFisc() throws SQLException {
-        jsonElement = parser.parse("{\"getPrenotazioniByCf\":\"CPHMKL98H41I490J\"}");
+        jsonElement = parser.parse("{\"getPrenotazioniByCf\":\"MNDCMN97R22A509S\"}");
         rootObject = jsonElement.getAsJsonObject();
         assertNotNull(prenotazioneController.getPrenotazioniByCodFisc(rootObject.toString()));
     }
 
     @Test
     void convalidaPrenotazione() throws SQLException, ParseException {
-        jsonElement = parser.parse("{\"convalidaPrenotazione\":\"CPHMKL98H41I490J\"}");
+        jsonElement = parser.parse("{\"convalidaPrenotazione\":\"MNDCMN97R22A509S\"}");
         rootObject = jsonElement.getAsJsonObject();
         assertTrue(prenotazioneController.convalidaPrenotazione(rootObject.toString()));
     }

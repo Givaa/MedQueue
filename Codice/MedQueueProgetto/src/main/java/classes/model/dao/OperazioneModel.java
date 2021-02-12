@@ -57,7 +57,12 @@ public class OperazioneModel implements OperazioneDaoInterface {
         DriverManagerConnectionPool.releaseConnection(con);
       }
     }
-    return tmp;
+
+    if (tmp.getTipoOperazione() != null) {
+      return tmp;
+    } else {
+      return null;
+    }
   }
 
   /**
@@ -99,6 +104,7 @@ public class OperazioneModel implements OperazioneDaoInterface {
         DriverManagerConnectionPool.releaseConnection(con);
       }
     }
+
     if (tmp.getTipoOperazione() != null) {
       return tmp;
     } else {

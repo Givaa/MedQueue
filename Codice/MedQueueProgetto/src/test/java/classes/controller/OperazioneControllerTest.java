@@ -25,6 +25,12 @@ class OperazioneControllerTest {
 
         jsonElement = parser.parse("{\"idOperazioneGet\":\"545515151\"}");
         rootObject = jsonElement.getAsJsonObject();
+        ObjectNotFoundException objectNotFoundException = assertThrows(ObjectNotFoundException.class, () -> {
+            operazioneController.getOperazioneById(rootObject.toString());
+        });
+
+        jsonElement = parser.parse("{\"idOperazioneGet\":\"0\"}");
+        rootObject = jsonElement.getAsJsonObject();
         InvalidKeyException invalidKeyException = assertThrows(InvalidKeyException.class, () -> {
             operazioneController.getOperazioneById(rootObject.toString());
         });
@@ -66,7 +72,7 @@ class OperazioneControllerTest {
 
     @Test
     void deleteOperazione() throws SQLException {
-        jsonElement = parser.parse("{\"idOperazioneRemove\":\"10\"}");
+        jsonElement = parser.parse("{\"idOperazioneRemove\":\"4\"}");
         rootObject = jsonElement.getAsJsonObject();
         operazioneController.deleteOperazione(rootObject.toString());
     }
@@ -76,7 +82,7 @@ class OperazioneControllerTest {
         jsonElement = parser.parse(
                 "{\"updateOperazioneTipoOp\":\"Nuova Operazione Modificata\",\""
                         + "updateOperazioneDesc\":\"Operazione di prova modificata\",\""
-                        + "updateOperazioneId\":\"10\"}");
+                        + "updateOperazioneId\":\"4\"}");
         rootObject = jsonElement.getAsJsonObject();
         assertTrue(operazioneController.updateOperazione(rootObject.toString()));
     }

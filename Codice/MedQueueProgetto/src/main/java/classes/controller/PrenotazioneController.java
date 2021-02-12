@@ -104,8 +104,8 @@ public class PrenotazioneController {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String cf = jsonObject.get("newPrenotazioniCf").getAsString();
     String ora = jsonObject.get("newPrenotazioniOra").getAsString();
-    String idOp = jsonObject.get("newPrenotazioniIdOp").getAsString();
-    String idS = jsonObject.get("newPrenotazioniIdS").getAsString();
+    String idOperazione = jsonObject.get("newPrenotazioniIdOp").getAsString();
+    String idStruttura = jsonObject.get("newPrenotazioniIdS").getAsString();
     String data = jsonObject.get("newPrenotazioneData").getAsString();
     java.util.Date tmp = new SimpleDateFormat("yyyy-MM-dd").parse(data);
     java.sql.Date dataPrenotazione = new Date(tmp.getTime());
@@ -113,8 +113,8 @@ public class PrenotazioneController {
     StrutturaBean strutturaBean;
     OperazioneBean operazioneBean;
     UtenteBean utenteBean;
-    strutturaBean = strutturaDaoInterface.doRetrieveByKey(Integer.valueOf(idS));
-    operazioneBean = operazioneDaoInterface.doRetrieveByKey(Integer.valueOf(idOp));
+    strutturaBean = strutturaDaoInterface.doRetrieveByKey(Integer.valueOf(idStruttura));
+    operazioneBean = operazioneDaoInterface.doRetrieveByKey(Integer.valueOf(idOperazione));
     utenteBean = utenteDaoInterface.doRetrieveByKey(cf);
 
     boolean checkStruttura = strutturaBean != null;
@@ -123,7 +123,7 @@ public class PrenotazioneController {
 
     if (checkOperazione && checkStruttura && checkUtente) {
       prenotazioneDaoInterface.doSave(new PrenotazioneBean(ora, dataPrenotazione, cf,
-              Integer.valueOf(idOp), Integer.valueOf(idS), false));
+              Integer.valueOf(idOperazione), Integer.valueOf(idStruttura), false));
       return true;
     } else {
       throw new ErrorNewObjectException(new PrenotazioneBean());
@@ -163,30 +163,29 @@ public class PrenotazioneController {
     String id = jsonObject.get("updatePrenotazioniId").getAsString();
     String cf = jsonObject.get("updatePrenotazioniCf").getAsString();
     String ora = jsonObject.get("updatePrenotazioniOra").getAsString();
-    String idOp = jsonObject.get("updatePrenotazioniIdOp").getAsString();
-    String idS = jsonObject.get("updatePrenotazioniIdS").getAsString();
+    String idOperazione = jsonObject.get("updatePrenotazioniIdOp").getAsString();
+    String idStruttura = jsonObject.get("updatePrenotazioniIdS").getAsString();
     String data = jsonObject.get("updatePrenotazioneData").getAsString();
     java.util.Date tmp = new SimpleDateFormat("yyyy-MM-dd").parse(data);
     java.sql.Date dataPrenotazione = new Date(tmp.getTime());
     Boolean cv = jsonObject.get("updatePrenotazioneConvalida").getAsBoolean();
     PrenotazioneBean p = prenotazioneDaoInterface.doRetrieveByKey(Integer.valueOf(id));
 
-
     if (p != null) {
-      StrutturaBean b;
-      OperazioneBean o;
-      o = operazioneDaoInterface.doRetrieveByKey(p.getIdOperazione());
-      b = strutturaDaoInterface.doRetrieveByKey(p.getIdStruttura());
+      StrutturaBean strutturaBean;
+      OperazioneBean operazioneBean;
+      operazioneBean = operazioneDaoInterface.doRetrieveByKey(Integer.valueOf(idOperazione));
+      strutturaBean = strutturaDaoInterface.doRetrieveByKey(Integer.valueOf(idStruttura));
 
       boolean checkCodFisc = cf.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
       boolean checkOra = ora.matches("^([0-1][0-9]|[2][0-3]):([0-5][0-9]):([0-5][0-9])$");
 
-      if (checkCodFisc && checkOra && b != null && o != null) {
+      if (checkCodFisc && checkOra && operazioneBean != null && strutturaBean != null) {
         p.setDataPrenotazione(dataPrenotazione);
         p.setConvalida(cv);
         p.setCodiceFiscale(cf);
-        p.setIdStruttura(Integer.valueOf(idS));
-        p.setIdOperazione(Integer.valueOf(idOp));
+        p.setIdStruttura(Integer.valueOf(idStruttura));
+        p.setIdOperazione(Integer.valueOf(idOperazione));
         p.setOra(ora);
         prenotazioneDaoInterface.doUpdate(p);
         return true;
@@ -265,6 +264,7 @@ public class PrenotazioneController {
    * @param body Il contenuto della request
    * @return Collezione di orari
    * @throws SQLException per problemi di esecuzione della query
+   * @throws ParseException per problemi di parse
    */
 
   @PostMapping(value = "/getOrari", produces = MediaType.APPLICATION_JSON_VALUE,

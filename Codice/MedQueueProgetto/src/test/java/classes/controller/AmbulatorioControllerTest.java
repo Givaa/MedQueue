@@ -50,17 +50,17 @@ class AmbulatorioControllerTest {
     }
 
     @Test
-    void deleteAmbulatorio() throws SQLException {
-        jsonElement = parser.parse("{\"idAmbulatorioRemove\":\"1\"}");
+    void updateAmbulatorio() throws SQLException {
+        jsonElement = parser.parse(
+                "{\"idAmbulatorioUpdate\":\"10\",\"AmbulatoriUpdateName\":\"ProvaCiao\",\"AmbulatoriUpdateIdStruttura\":\"1\"}");
         rootObject = jsonElement.getAsJsonObject();
-        ambulatorioController.deleteAmbulatorio(rootObject.toString());
+        assertTrue(ambulatorioController.updateAmbulatorio(rootObject.toString()));
     }
 
     @Test
-    void updateAmbulatorio() throws SQLException {
-        jsonElement = parser.parse(
-                "{\"idAmbulatorioUpdate\":\"1\",\"AmbulatoriUpdateName\":\"ProvaCiao\",\"AmbulatoriUpdateIdStruttura\":\"1\"}");
+    void deleteAmbulatorio() throws SQLException {
+        jsonElement = parser.parse("{\"idAmbulatorioRemove\":\"10\"}");
         rootObject = jsonElement.getAsJsonObject();
-        assertTrue(ambulatorioController.updateAmbulatorio(rootObject.toString()));
+        ambulatorioController.deleteAmbulatorio(rootObject.toString());
     }
 }

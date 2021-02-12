@@ -36,10 +36,11 @@ public class OperazioneController {
   public OperazioneBean getOperazioneById(@RequestBody String body)
       throws SQLException, ObjectNotFoundException, InvalidKeyException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
-    String id = jsonObject.get("idOperazioneGet").getAsString();
+    String idString = jsonObject.get("idOperazioneGet").getAsString();
+    int id = Integer.valueOf(idString);
 
-    if (! id.equals("0")) {
-      OperazioneBean operazioneBean = operazioneModel.doRetrieveByKey(Integer.valueOf(id));
+    if (id > 0) {
+      OperazioneBean operazioneBean = operazioneModel.doRetrieveByKey(id);
       if (operazioneBean != null) {
         return operazioneBean;
       } else {
@@ -60,13 +61,14 @@ public class OperazioneController {
    */
   @PostMapping(value = "/operazione/{tipo}", produces = MediaType.APPLICATION_JSON_VALUE,
           consumes = MediaType.APPLICATION_JSON_VALUE)
-  public OperazioneBean getOperazioneByTipo(@RequestBody String body) throws SQLException {
+  public OperazioneBean getOperazioneByTipo(@RequestBody String body) throws SQLException,
+          ObjectNotFoundException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String tipo = jsonObject.get("tipoOperazioneGet").getAsString();
 
-    OperazioneBean op = operazioneModel.doRetrieveByTipo(tipo);
-    if (op != null) {
-      return op;
+    OperazioneBean operazioneBean = operazioneModel.doRetrieveByTipo(tipo);
+    if (operazioneBean != null) {
+      return operazioneBean;
     } else {
       throw new ObjectNotFoundException(new OperazioneBean());
     }
@@ -98,6 +100,7 @@ public class OperazioneController {
    *
    * @param body corpo della richiesta preso in input
    * @throws SQLException per problemi di esecuzione della query
+   * @throws ErrorNewObjectException per problemi di creazione di un oggetto
    */
   @PostMapping(value = "/newOperazione", produces = MediaType.APPLICATION_JSON_VALUE,
           consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -152,21 +155,21 @@ public class OperazioneController {
     String descrizione = jsonObject.get("updateOperazioneDesc").getAsString();
     String id = jsonObject.get("updateOperazioneId").getAsString();
 
-    OperazioneBean o = operazioneModel.doRetrieveByKey(Integer.valueOf(id));
+    OperazioneBean operazioneBean = operazioneModel.doRetrieveByKey(Integer.valueOf(id));
 
-    if (o != null) {
+    if (operazioneBean != null) {
       Boolean checkTipoOp = tipoOp.matches("[a-z A-Z]+$");
       Boolean checkDesc = descrizione.matches("[a-z A-Z]+$");
       if (checkDesc && checkTipoOp) {
-        o.setTipoOperazione(tipoOp);
-        o.setDescrizione(descrizione);
-        operazioneModel.doUpdate(o);
+        operazioneBean.setTipoOperazione(tipoOp);
+        operazioneBean.setDescrizione(descrizione);
+        operazioneModel.doUpdate(operazioneBean);
         return true;
       } else {
         return false;
       }
     } else {
-      throw new ObjectNotFoundException(o);
+      throw new ObjectNotFoundException(new OperazioneBean());
     }
   }
 }

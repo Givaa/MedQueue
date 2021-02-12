@@ -36,10 +36,10 @@ public class LogInController extends HttpServlet {
     String username = jsonObject.get("username").getAsString();
     String password = jsonObject.get("password").getAsString();
 
-    UtenteBean a = utenteDaoInterface.doRetrieveByKey(username);
+    UtenteBean utenteBean = utenteDaoInterface.doRetrieveByKey(username);
 
-    if (password.equals(a.getPassword())) {
-      return a;
+    if (password.equals(utenteBean.getPassword())) {
+      return utenteBean;
     } else {
       return null;
     }
@@ -92,16 +92,16 @@ public class LogInController extends HttpServlet {
             "^(?=.{8,255}$)[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$"
     );
 
-    UtenteBean a = new UtenteBean();
+    UtenteBean utenteBean = new UtenteBean();
     if (checkName && checkSurname && checkPassword
             && checkPhoneNumber && checkCodFisc /*&& checkMail*/) {
-      a = new UtenteBean(codFisc, password, nome, cognome,
+      utenteBean = new UtenteBean(codFisc, password, nome, cognome,
               dataDiNascita, email, phoneNumber);
-      utenteDaoInterface.doSave(a);
+      utenteDaoInterface.doSave(utenteBean);
 
-      return a;
+      return utenteBean;
     } else {
-      throw new ErrorNewObjectException(a);
+      throw new ErrorNewObjectException(utenteBean);
     }
 
   }

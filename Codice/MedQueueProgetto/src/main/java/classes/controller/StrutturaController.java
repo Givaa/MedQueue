@@ -35,12 +35,12 @@ public class StrutturaController {
           throws SQLException, ObjectNotFoundException, InvalidKeyException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("idStrutturaGet").getAsString();
-    StrutturaBean s = strutturaModel.doRetrieveByKey(Integer.valueOf(id));
+    StrutturaBean strutturaBean = strutturaModel.doRetrieveByKey(Integer.valueOf(id));
     if (Integer.valueOf(id) > 0) {
-      if (s.getNome() != null) {
-        return s;
+      if (strutturaBean.getNome() != null) {
+        return strutturaBean;
       } else {
-        throw new ObjectNotFoundException(s);
+        throw new ObjectNotFoundException(strutturaBean);
       }
     } else {
       throw new InvalidKeyException("Id invalido, occorre un id maggiore di 0");
@@ -61,11 +61,11 @@ public class StrutturaController {
           throws SQLException, ObjectNotFoundException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String nome = jsonObject.get("nomeStrutturaGet").getAsString();
-    StrutturaBean s = strutturaModel.doRetrieveByName(nome);
-    if (s != null) {
-      return s;
+    StrutturaBean strutturaBean = strutturaModel.doRetrieveByName(nome);
+    if (strutturaBean != null) {
+      return strutturaBean;
     } else {
-      throw new ObjectNotFoundException(s);
+      throw new ObjectNotFoundException(strutturaBean);
     }
   }
 
@@ -94,6 +94,7 @@ public class StrutturaController {
    *
    * @param body corpo della richiesta preso in input
    * @throws SQLException per problemi di esecuzione della query
+   * @throws ErrorNewObjectException per errori di creazione di un nuovo oggetto
    * @return conferma/non conferma del salvataggio della struttura
    */
   @PostMapping(value = "/newStruttura", produces = MediaType.APPLICATION_JSON_VALUE,
