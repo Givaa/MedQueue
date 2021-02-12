@@ -70,11 +70,13 @@ public interface PrenotazioneDaoInterface {
 
   /**
    * Metodo per prelevare gli orari di prenotazione liberi.
+   *
    * @param idStruttura id della Struttura selezionata
    * @param idOperazione id dell'operazione selezionata
    * @param dataPrenotazione data della prenotazione
    * @return Collezione di orari
    * @throws SQLException per problemi di esecuzione della query
    */
-  List<String> getOrariPrenotazione(int idStruttura, int idOperazione, java.sql.Date dataPrenotazione)throws SQLException;
+  List<String> getOrariPrenotazione(int idStruttura, int idOperazione,
+                                    java.sql.Date dataPrenotazione)throws SQLException;
 }

@@ -99,7 +99,7 @@ public class OperazioneModel implements OperazioneDaoInterface {
         DriverManagerConnectionPool.releaseConnection(con);
       }
     }
-    if (tmp.getTipoOperazione() != null ) {
+    if (tmp.getTipoOperazione() != null) {
       return tmp;
     } else {
       return null;
@@ -168,7 +168,8 @@ public class OperazioneModel implements OperazioneDaoInterface {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
-    String insertSql = "INSERT INTO " + nomeTabella + " (tipoOperazione, descrizione) VALUES (?, ?)";
+    String insertSql = "INSERT INTO " + nomeTabella
+            + " (tipoOperazione, descrizione) VALUES (?, ?)";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();

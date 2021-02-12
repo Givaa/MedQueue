@@ -34,10 +34,12 @@ public class AmbulatorioController {
    * @throws ObjectNotFoundException problemi di oggetto non trovato
    * @throws InvalidKeyException per problemi con la chiave primaria
    */
-  @PostMapping(value = "/ambulatorio/{id}", produces = MediaType.APPLICATION_JSON_VALUE,
-          consumes = MediaType.APPLICATION_JSON_VALUE)
-  public AmbulatoriBean getById(@RequestBody String body) throws SQLException,
-          ObjectNotFoundException, InvalidKeyException {
+  @PostMapping(
+      value = "/ambulatorio/{id}",
+      produces = MediaType.APPLICATION_JSON_VALUE,
+      consumes = MediaType.APPLICATION_JSON_VALUE)
+  public AmbulatoriBean getById(@RequestBody String body)
+      throws SQLException, ObjectNotFoundException, InvalidKeyException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     int id = jsonObject.get("id").getAsInt();
 

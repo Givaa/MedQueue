@@ -71,7 +71,7 @@ public class LogInController extends HttpServlet {
     String codFisc = jsonObject.get("codFiscNewUtente").getAsString();
     Boolean checkCodFisc;
     checkCodFisc = codFisc.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$")
-            && (utenteDaoInterface.doRetrieveByKey(codFisc) == null) ;
+            && (utenteDaoInterface.doRetrieveByKey(codFisc) == null);
 
     String password = jsonObject.get("passwordNewUtente").getAsString();
     Boolean checkPassword;

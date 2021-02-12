@@ -4,8 +4,10 @@ import classes.controller.exception.ObjectNotFoundException;
 import classes.model.DriverManagerConnectionPool;
 import classes.model.bean.entity.PrenotazioneBean;
 import classes.model.interfaces.PrenotazioneDaoInterface;
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -16,11 +18,11 @@ import java.util.List;
  */
 public class PrenotazioneModel implements PrenotazioneDaoInterface {
   private static final String nomeTabella = "prenotazione";
-  private String[] elencoOrari= {"09:00:00","09:15:00",
-          "09:30:00","09:45:00","10:00:00","10:15:00",
-          "10:30:00","10:45:00","11:00:00","11:15:00","11:30:00",
-          "11:45:00","12:00:00","12:15:00","12:30:00","12:45:00",
-          "13:00:00"};
+  private String[] elencoOrari = {"09:00:00", "09:15:00",
+                                  "09:30:00", "09:45:00", "10:00:00", "10:15:00",
+                                  "10:30:00", "10:45:00", "11:00:00", "11:15:00", "11:30:00",
+                                  "11:45:00", "12:00:00", "12:15:00", "12:30:00", "12:45:00",
+                                  "13:00:00"};
 
 
   /**
@@ -68,7 +70,7 @@ public class PrenotazioneModel implements PrenotazioneDaoInterface {
       }
     }
 
-    if(tmp.getCodiceFiscale() != null ) {
+    if (tmp.getCodiceFiscale() != null) {
       return tmp;
     } else {
       return null;
@@ -141,7 +143,9 @@ public class PrenotazioneModel implements PrenotazioneDaoInterface {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
-    String insertSql = "INSERT INTO " + nomeTabella + "(data, ora, convalida, codiceFiscale, idOperazione, idStruttura) VALUES (?, ?, ?, ?, ?, ?)";
+    String insertSql = "INSERT INTO " + nomeTabella
+            + "(data, ora, convalida, codiceFiscale, idOperazione, idStruttura) "
+            + " VALUES (?, ?, ?, ?, ?, ?)";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();
@@ -342,6 +346,7 @@ public class PrenotazioneModel implements PrenotazioneDaoInterface {
 
   /**
    * Metodo per prelevare gli orari di prenotazione liberi.
+   *
    * @param idStruttura id della Struttura selezionata
    * @param idOperazione id dell'operazione selezionata
    * @param dataPrenotazione data della prenotazione
@@ -349,7 +354,8 @@ public class PrenotazioneModel implements PrenotazioneDaoInterface {
    * @throws SQLException per problemi di esecuzione della query
    */
   @Override
-  public List<String> getOrariPrenotazione(int idStruttura, int idOperazione, java.sql.Date dataPrenotazione)throws SQLException{
+  public List<String> getOrariPrenotazione(int idStruttura, int idOperazione,
+                                           java.sql.Date dataPrenotazione)throws SQLException {
 
     Connection connection = null;
     PreparedStatement preparedStatement = null;
@@ -358,21 +364,21 @@ public class PrenotazioneModel implements PrenotazioneDaoInterface {
     List<String> result = new ArrayList<String>();
 
 
-    String selecrOrariSql = "SELECT ora FROM "+ nomeTabella
+    String selecrOrariSql = "SELECT ora FROM " + nomeTabella
             + " WHERE idStruttura =? AND idOperazione=? AND data=? ORDER BY ora";
 
-    try{
+    try {
       connection = DriverManagerConnectionPool.getConnection();
       preparedStatement = connection.prepareStatement(selecrOrariSql);
 
       preparedStatement.setInt(1, idStruttura);
-      preparedStatement.setInt(2,idOperazione);
-      preparedStatement.setDate(3,dataPrenotazione);
+      preparedStatement.setInt(2, idOperazione);
+      preparedStatement.setDate(3, dataPrenotazione);
       ResultSet res = preparedStatement.executeQuery();
 
-      while (res.next()){
-            query.add(res.getString("ora"));
-          }
+      while (res.next()) {
+        query.add(res.getString("ora"));
+      }
 
       //Esempio per testare giorno completamente pieno
       /*query.clear();
@@ -380,7 +386,7 @@ public class PrenotazioneModel implements PrenotazioneDaoInterface {
         query.add(elencoOrari[i]);
       }*/
 
-      if(query.size() > 0) {
+      if (query.size() > 0) {
         for (int i = 0, j = 0; i < elencoOrari.length; i++) {
           if (!elencoOrari[i].equals(query.get(j))) {
             result.add(elencoOrari[i]);
@@ -392,20 +398,20 @@ public class PrenotazioneModel implements PrenotazioneDaoInterface {
             }
           }
         }
-      }else{
+      } else {
         //Se sono liberi tutti gli orari
-        for(int i = 0;  i < elencoOrari.length; i++){
+        for (int i = 0;  i < elencoOrari.length; i++) {
           result.add(elencoOrari[i]);
         }
       }
       //Se sono occupati tutti gli orari
-      if(result.size()==0){
+      if (result.size() == 0) {
         System.exit(400);
       }
 
-    }catch (SQLException e){
+    } catch (SQLException e) {
       e.printStackTrace();
-    }finally {
+    } finally {
       try {
         if (preparedStatement != null) {
           preparedStatement.close();

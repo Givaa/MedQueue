@@ -61,7 +61,7 @@ public class UtenteModel implements UtenteDaoInterface {
       }
     }
 
-    if (tmp.getCodiceFiscale() != null ) {
+    if (tmp.getCodiceFiscale() != null) {
       return tmp;
     } else {
       return null;

@@ -8,8 +8,6 @@ import classes.model.dao.UtenteModel;
 import classes.model.interfaces.UtenteDaoInterface;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
-import java.security.KeyException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;

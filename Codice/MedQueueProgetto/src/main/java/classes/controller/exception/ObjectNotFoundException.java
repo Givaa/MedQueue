@@ -1,8 +1,6 @@
 package classes.controller.exception;
 
-/**
- * Classe per il controllo di errori nei controller, generale per ogni oggetto.
- */
+/** Classe per il controllo di errori nei controller, generale per ogni oggetto. */
 public class ObjectNotFoundException extends RuntimeException {
 
   /**

@@ -57,9 +57,10 @@ public class PrenotazioneController {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("idPrenotazioneGet").getAsString();
 
-    PrenotazioneBean prenotazioneBean = prenotazioneDaoInterface.doRetrieveByKey(Integer.valueOf(id));
+    PrenotazioneBean prenotazioneBean =
+            prenotazioneDaoInterface.doRetrieveByKey(Integer.valueOf(id));
 
-    if(Integer.valueOf(id) > 0 ) {
+    if (Integer.valueOf(id) > 0) {
       if (prenotazioneBean != null) {
         return prenotazioneBean;
       } else {
@@ -141,7 +142,8 @@ public class PrenotazioneController {
   public void deletePrenotazione(@RequestBody String body) throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("deletePrenotazioniId").getAsString();
-    prenotazioneDaoInterface.doDelete(prenotazioneDaoInterface.doRetrieveByKey(Integer.valueOf(id)));
+    int idInt = Integer.valueOf(id);
+    prenotazioneDaoInterface.doDelete(prenotazioneDaoInterface.doRetrieveByKey(idInt));
   }
 
   /**
@@ -234,19 +236,17 @@ public class PrenotazioneController {
     System.out.println(prenotazioneBean);
 
     //Impostazioni variabili data, ora e codice fiscale
-    LocalDateTime now = LocalDateTime.now();
     prenotazioneBean.getDataPrenotazione();
     Date d = prenotazioneBean.getDataPrenotazione();
     String ora = prenotazioneBean.getOra();
     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    Long minHour = df.parse(d.toString()+ " " +ora).getTime();
-    Long maxHour = df.parse(d.toString()+ " " +ora).getTime();
+    Long minHour = df.parse(d.toString() + " " + ora).getTime();
+    Long maxHour = df.parse(d.toString() + " " + ora).getTime();
     Long timeNow = System.currentTimeMillis();
     minHour -= 1800 * 1000;
     maxHour += 600 * 1000;
-    System.out.println("MinHour: "+minHour+" MaxHour: "+maxHour);
-    System.out.println(timeNow);
     boolean checkCodFisc = cf.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
+    LocalDateTime now = LocalDateTime.now();
 
     if ((now.getDayOfMonth() == d.toLocalDate().getDayOfMonth())
             && (now.getMonth() == d.toLocalDate().getMonth())
@@ -261,7 +261,8 @@ public class PrenotazioneController {
 
   /**
    * Metodo per prelevare gli orari di prenotazione liberi.
-   * @body Il contenuto della request
+   *
+   * @param body Il contenuto della request
    * @return Collezione di orari
    * @throws SQLException per problemi di esecuzione della query
    */
@@ -269,7 +270,7 @@ public class PrenotazioneController {
   @PostMapping(value = "/getOrari", produces = MediaType.APPLICATION_JSON_VALUE,
           consumes = MediaType.APPLICATION_JSON_VALUE)
   public List<String> getOrariDisponibili(@RequestBody String body)
-          throws SQLException, ParseException{
+          throws SQLException, ParseException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     int idStruttura = jsonObject.get("idStruttura").getAsInt();
     int idOperazione = jsonObject.get("idOperazione").getAsInt();
@@ -277,7 +278,8 @@ public class PrenotazioneController {
     java.util.Date tmp = new SimpleDateFormat("yyyy-MM-dd").parse(data);
     java.sql.Date dataPrenotazione = new Date(tmp.getTime());
 
-    return prenotazioneDaoInterface.getOrariPrenotazione(idStruttura,idOperazione,dataPrenotazione);
+    return prenotazioneDaoInterface.getOrariPrenotazione(idStruttura,
+            idOperazione, dataPrenotazione);
 
   }
 
