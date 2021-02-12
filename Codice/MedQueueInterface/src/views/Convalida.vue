@@ -51,30 +51,37 @@ export default {
     IonTitle,
     IonToolbar,
   },
-  data(){
-    return{
-      codiceFiscale:""
+  data() {
+    return {
+      codiceFiscale: ""
     };
   },
-  methods:{
-    convalda(){
-      console.log(this.codiceFiscale)
-      prenotazioniAxios.convalida(this.codiceFiscale)
-      .then((response) =>{
-        if(response === true){
-          const toast = alertController
-          .create({
-            header:"Prenotazione Convalidata",
+  methods: {
+    async convalda() {
+      await prenotazioniAxios.convalida(this.codiceFiscale)
+          .then((response) => {
+            if (response === true) {
+              this.alertGood();
+            } else {
+              this.alertBad();
+            }
           })
-          return toast.present();
-        }else{
-          const toast = alertController
-              .create({
-                header:"Prenotazione non convalidata",
-              })
-          return toast.present();
-        }
-      })
+    },
+
+    async alertGood() {
+      const alert = await alertController.create({
+        header: 'Prenotazione Convalidata',
+        buttons: ['OK'],
+      });
+      return alert.present();
+    },
+
+    async alertBad() {
+      const alert = await alertController.create({
+        header: 'Prenotazione non Convalidata',
+        buttons: ['OK'],
+      });
+      return alert.present();
     }
   }
 
@@ -83,7 +90,7 @@ export default {
 
 <style scoped>
 
-label{
+label {
   font-weight: bold;
 }
 

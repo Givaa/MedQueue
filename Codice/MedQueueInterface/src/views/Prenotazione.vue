@@ -1,46 +1,50 @@
 <template>
   <ion-page>
-      <ion-content content="menu">
-        <ion-header :translucent="true">
-          <ion-toolbar>
-            <ion-buttons slot="start">
-              <ion-menu-button color="primary"></ion-menu-button>
-            </ion-buttons>
-            <ion-title>Prenotazione</ion-title>
-          </ion-toolbar>
-        </ion-header>
-        <ion-content class="background">
-          <div id="container">
-            <img src="../../public/assets/logosvg_nobg.svg"/>
-            <br>
-            <strong class="capitalize">Prenota</strong>
-            <br>
-            <br>
-            <br>
-            <ion-label>Seleziona Struttura</ion-label>
-            <ion-select @mouseover="getStrutture" v-model="struttura" placeholder="Struttura">
-              <ion-select-option id="struttura" v-bind:key="struttura" v-for="struttura in listaStrutture">{{struttura}}</ion-select-option>
-            </ion-select>
-            <br>
+    <ion-content content="menu">
+      <ion-header :translucent="true">
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-menu-button color="primary"></ion-menu-button>
+          </ion-buttons>
+          <ion-title>Prenotazione</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="background">
+        <div id="container">
+          <img src="../../public/assets/logosvg_nobg.svg"/>
+          <br>
+          <strong class="capitalize">Prenota</strong>
+          <br>
+          <br>
+          <br>
+          <ion-label>Seleziona Struttura</ion-label>
+          <ion-select @mouseover="getStrutture" v-model="struttura" placeholder="Struttura">
+            <ion-select-option id="struttura" v-bind:key="struttura" v-for="struttura in listaStrutture">
+              {{ struttura }}
+            </ion-select-option>
+          </ion-select>
+          <br>
 
-            <ion-label>Seleziona Operazione</ion-label>
-            <ion-select @mouseover="getOperazioni" v-model="operazione" placeholder="Operazione">
-              <ion-select-option id="operazione" v-bind:key="operazione" v-for="operazione in listaOperazioni">{{operazione}}</ion-select-option>
-            </ion-select>
-            <br>
+          <ion-label>Seleziona Operazione</ion-label>
+          <ion-select @mouseover="getOperazioni" v-model="operazione" placeholder="Operazione">
+            <ion-select-option id="operazione" v-bind:key="operazione" v-for="operazione in listaOperazioni">
+              {{ operazione }}
+            </ion-select-option>
+          </ion-select>
+          <br>
 
-            <ion-label>Seleziona Data</ion-label>
-            <ion-datetime v-model="data" max="2023" displayFormat="DD MM YY" placeholder="Data"></ion-datetime>
-            <br>
-            <ion-label>Seleziona Orario</ion-label>
-            <ion-select @mouseover="getOrari" v-model="ora" placeholder="Orario">
-              <ion-select-option id="ora" v-bind:key="ora" v-for="ora in listaOrari">{{ora}}</ion-select-option>
-            </ion-select>
-            <br>
-            <ion-button @click="addPrenotazione" color="success"> Prenota </ion-button>
-          </div>
-        </ion-content>
+          <ion-label>Seleziona Data</ion-label>
+          <ion-datetime v-model="data" max="2023" displayFormat="DD MM YY" placeholder="Data"></ion-datetime>
+          <br>
+          <ion-label>Seleziona Orario</ion-label>
+          <ion-select @mouseover="getOrari" v-model="ora" placeholder="Orario">
+            <ion-select-option id="ora" v-bind:key="ora" v-for="ora in listaOrari">{{ ora }}</ion-select-option>
+          </ion-select>
+          <br>
+          <ion-button @click="addPrenotazione" color="success"> Prenota</ion-button>
+        </div>
       </ion-content>
+    </ion-content>
   </ion-page>
 </template>
 
@@ -79,115 +83,120 @@ export default {
     IonTitle,
     IonToolbar
   },
-  data(){
-    return{
-      id:1,
-      tmp:[],
-      listaStrutture:[],
-      listaOperazioni:[],
-      listaOrari:[],
-      prova1:"",
-      prova2:"",
-      struttura:"",
-      idStruttura:"",
-      operazione:"",
-      idOperazione:"",
-      data:"",
-      ora:"",
+  data() {
+    return {
+      id: 1,
+      tmp: [],
+      listaStrutture: [],
+      listaOperazioni: [],
+      listaOrari: [],
+      prova1: "",
+      prova2: "",
+      struttura: "",
+      idStruttura: "",
+      operazione: "",
+      idOperazione: "",
+      data: "",
+      ora: "",
       dataOggi: {
         year: new Date().getFullYear(),
         month: new Date().getMonth(),
-        day: new Date().getDay()}
+        day: new Date().getDay()
+      }
     }
   },
   updated() {
     this.struttura = "";
     this.data = "";
-    this.operazione= "";
+    this.operazione = "";
     this.ora = "";
   },
   methods: {
 
-    getIdStruttura(){
-     return new Promise((resolve, reject) => {
-      struttureAxios.getStrutturaByNome(this.struttura)
-          .then((response) =>{
-            this.prova1 = response;
-            this.idStruttura = this.prova1.id;
-            return resolve(true);
-          }).catch(err =>{
-        reject(console.log("Errore!"))
-      })
-    })
-    },
-
-    getIdOperazione(){
+    getIdStruttura() {
       return new Promise((resolve, reject) => {
-            operazioneAxios.getOperazioneByNome(this.operazione)
-                .then((response) =>{
-                  this.prova2 = response;
-                  this.idOperazione = this.prova2.id;
-                  return resolve(true);
-      }).catch(err =>{
-              reject(console.log("Errore!"))
-            })
-    })
-    },
-
-    async addPrenotazione(){
-      const data =this.data.split('T');
-      try {
-        await this.getIdStruttura();
-        await this.getIdOperazione();
-      }catch (err){ return null;}
-
-      prenotazioniAxios.addPrenotazione(sessionStorage.getItem("codiceFiscale"),this.ora, this.idOperazione,this.idStruttura,data[0])
-      .then((response) =>{
-        if(response ===""){
-          console.log("Errore");
-          return null;
-        }else{
-          router.push("/HomeUtente");
-        }
+        struttureAxios.getStrutturaByNome(this.struttura)
+            .then((response) => {
+              this.prova1 = response;
+              this.idStruttura = this.prova1.id;
+              return resolve(true);
+            }).catch(err => {
+          reject(console.log("Errore!"))
+        })
       })
     },
 
-    getStrutture(){
+    getIdOperazione() {
+      return new Promise((resolve, reject) => {
+        operazioneAxios.getOperazioneByNome(this.operazione)
+            .then((response) => {
+              this.prova2 = response;
+              this.idOperazione = this.prova2.id;
+              return resolve(true);
+            }).catch(err => {
+          reject(console.log("Errore!"))
+        })
+      })
+    },
+
+    async addPrenotazione() {
+      const data = this.data.split('T');
+      try {
+        await this.getIdStruttura();
+        await this.getIdOperazione();
+      } catch (err) {
+        return null;
+      }
+
+      prenotazioniAxios.addPrenotazione(sessionStorage.getItem("codiceFiscale"), this.ora, this.idOperazione, this.idStruttura, data[0])
+          .then((response) => {
+            if (response === "") {
+              console.log("Errore");
+              return null;
+            } else {
+              router.push("/HomeUtente");
+            }
+          })
+    },
+
+    getStrutture() {
       struttureAxios.getStrutture()
-      .then((response) =>{
-        this.tmp = response;
+          .then((response) => {
+            this.tmp = response;
 
-        for(let i = 0; i<this.tmp.length; i++){
-          this.listaStrutture[i] = this.tmp[i].nome;
-        }
-      })
+            for (let i = 0; i < this.tmp.length; i++) {
+              this.listaStrutture[i] = this.tmp[i].nome;
+            }
+          })
     },
 
-    getOperazioni(){
+    getOperazioni() {
       operazioneAxios.getOperazioni()
-      .then((response) =>{
-        this.tmp = response;
+          .then((response) => {
+            this.tmp = response;
 
-        for(let i = 0; i<this.tmp.length; i++){
-          this.listaOperazioni[i] = this.tmp[i].tipoOperazione;
-        }
-      })
+            for (let i = 0; i < this.tmp.length; i++) {
+              this.listaOperazioni[i] = this.tmp[i].tipoOperazione;
+            }
+          })
     },
 
-    async getOrari(){
-      const data =this.data.split('T');
+    async getOrari() {
+      const data = this.data.split('T');
       try {
         await this.getIdStruttura();
         await this.getIdOperazione();
-      }catch (err){ return null;}
+      } catch (err) {
+        return null;
+      }
 
-      prenotazioniAxios.getOrariDisponibili(this.idStruttura,this.idOperazione,data[0])
-      .then((response) =>{
-        this.tmp = response;
-        for(let i = 0; i<this.tmp.length; i++){
-          this.listaOrari[i] = this.tmp[i];
-        }
-      })
+      prenotazioniAxios.getOrariDisponibili(this.idStruttura, this.idOperazione, data[0])
+          .then((response) => {
+            this.tmp = response;
+            for (let i = 0; i < this.tmp.length; i++) {
+              this.listaOrari[i] = this.tmp[i];
+            }
+          })
     }
 
   }
@@ -197,14 +206,14 @@ export default {
 
 <style scoped>
 
-img{
+img {
   height: 200px;
   width: 200px;
   position: center;
 }
 
-ion-content.background{
-  --background: url(../../public/assets/CartellinaAllungata.svg)0 0/100% 100% no-repeat;
+ion-content.background {
+  --background: url(../../public/assets/CartellinaAllungata.svg) 0 0/100% 100% no-repeat;
 
 }
 
@@ -354,19 +363,11 @@ ion-item.selected {
   --color: var(--ion-color-primary);
 }
 
-ion-label{
+ion-label {
   color: black;
 }
 
-ion-input{
-  color: black;
-  margin-left: 40%;
-  position: center;
-  min-width: 193px;
-  width: 20%;
-}
-
-ion-select{
+ion-input {
   color: black;
   margin-left: 40%;
   position: center;
@@ -374,7 +375,15 @@ ion-select{
   width: 20%;
 }
 
-ion-datetime{
+ion-select {
+  color: black;
+  margin-left: 40%;
+  position: center;
+  min-width: 193px;
+  width: 20%;
+}
+
+ion-datetime {
   color: black;
   margin-left: 40%;
   position: center;

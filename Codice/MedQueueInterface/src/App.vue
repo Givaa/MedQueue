@@ -1,21 +1,23 @@
 <template>
+  <!-- Pagina per definire il menù a tendina -->
   <IonApp>
     <IonSplitPane content-id="main-content">
       <ion-menu content-id="main-content" type="overlay">
         <ion-content>
           <ion-list id="menu-list">
-            <ion-list-header >Medqueue</ion-list-header>
+            <ion-list-header>Medqueue</ion-list-header>
             <ion-note></ion-note>
 
             <ion-menu-toggle auto-hide="true" v-for="(p, i) in appPages" :key="i">
-              <ion-item @click="selectedIndex = i" router-direction="root" :router-link="p.url" lines="none" detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
+              <ion-item @click="selectedIndex = i" router-direction="root" :router-link="p.url" lines="none"
+                        detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
                 <ion-icon slot="start" :ios="p.iosIcon" :md="p.mdIcon"></ion-icon>
                 <ion-label>{{ p.title }}</ion-label>
               </ion-item>
             </ion-menu-toggle>
           </ion-list>
         </ion-content>
-        <ion-item  @click="logOut">
+        <ion-item @click="logOut">
           <ion-icon slot="start" :ios="logOutOutline" :md="logOutSharp"></ion-icon>
           <ion-label>Logout</ion-label>
         </ion-item>
@@ -26,10 +28,38 @@
 </template>
 
 <script lang="ts">
-import { IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonNote, IonRouterOutlet, IonSplitPane } from '@ionic/vue';
-import { defineComponent, ref } from 'vue';
-import { useRoute } from 'vue-router';
-import { logOutOutline, logOutSharp, businessSharp, businessOutline, calendarOutline, calendarSharp,homeOutline, homeSharp, logInOutline,  logInSharp, pencilOutline, pencilSharp, listOutline, listSharp} from 'ionicons/icons';
+import {
+  IonApp,
+  IonContent,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonListHeader,
+  IonMenu,
+  IonMenuToggle,
+  IonNote,
+  IonRouterOutlet,
+  IonSplitPane
+} from '@ionic/vue';
+import {defineComponent, ref} from 'vue';
+import {useRoute} from 'vue-router';
+import {
+  logOutOutline,
+  logOutSharp,
+  businessSharp,
+  businessOutline,
+  calendarOutline,
+  calendarSharp,
+  homeOutline,
+  homeSharp,
+  logInOutline,
+  logInSharp,
+  pencilOutline,
+  pencilSharp,
+  listOutline,
+  listSharp
+} from 'ionicons/icons';
 import router from "@/router";
 
 export default defineComponent({
@@ -52,8 +82,8 @@ export default defineComponent({
     const selectedIndex = ref(0);
     const appPages = [
       {
-        title:"Home",
-        url:"/HomeUtente",
+        title: "Home",
+        url: "/HomeUtente",
         iosIcon: homeOutline,
         mdIcon: homeSharp
       },
@@ -81,10 +111,10 @@ export default defineComponent({
     if (path !== undefined) {
       selectedIndex.value = appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
-    
+
     const route = useRoute();
-    
-    return { 
+
+    return {
       selectedIndex,
       appPages,
       logOutOutline,
@@ -104,8 +134,8 @@ export default defineComponent({
       isSelected: (url: string) => url === route.path ? 'selected' : ''
     }
   },
-  methods:{
-    logOut(){
+  methods: {
+    logOut() {
       sessionStorage.clear();
       //const x = document.cookie;
       //console.log(x);

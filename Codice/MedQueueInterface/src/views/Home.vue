@@ -17,26 +17,26 @@
         <br>
         <strong class="capitalize">Benvenuto in MedQueue</strong>
         <p>MedQueue fornisce un servizio di prenotazione online
-        presso i cup convenzionati della campanoa in modo da rendere</p>
-       <p> più facile e veloce l'iter burocratico che precede una
-        prestazione ospedaliera</p>
+          presso i cup convenzionati della campanoa in modo da rendere</p>
+        <p> più facile e veloce l'iter burocratico che precede una
+          prestazione ospedaliera</p>
         <br>
         <br>
         <p>Se non hai ancora un account sulla nostra piattaforma </p>
         <p>Registrati subito pre usufruire deinostri servizi da subito</p>
         <p>Altrimenti accedi subito</p>
         <br>
-        <IonButton @click="goReg"  color="primary">Registrati</IonButton>
-        <IonButton @click="goLogin"  color="success">Accedi</IonButton>
+        <IonButton @click="goReg" color="primary">Registrati</IonButton>
+        <IonButton @click="goLogin" color="success">Accedi</IonButton>
         <br>
-        <IonButton @click="goVisualizzazione"  color="warning">Visualizza Coda</IonButton>
+        <IonButton @click="goVisualizzazione" color="warning">Visualizza Coda</IonButton>
       </div>
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts">
-import {IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import {IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/vue';
 import router from "@/router";
 
 export default {
@@ -52,20 +52,21 @@ export default {
   updated() {
     console.log("sono qui ");
     window.history.go(10);
+
     function noBack() {
       window.history.forward();
     }
   },
-  methods:{
-    goLogin(){
+  methods: {
+    goLogin() {
       router.push("/Accesso");
     },
 
-    goReg(){
+    goReg() {
       router.push("/Registrazione");
     },
 
-    goVisualizzazione(){
+    goVisualizzazione() {
       router.push("/VisualizzazioneCoda");
     }
   }
@@ -74,7 +75,7 @@ export default {
 
 <style scoped>
 
-img{
+img {
   height: 200px;
   width: 200px;
   position: center;

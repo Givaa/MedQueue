@@ -13,8 +13,9 @@
         <strong class="capitalize">Visualizza Coda</strong>
         <div class="selezione">
           <label>Seleziona la struttura:</label>
-          <ion-select placeholder="Struttura" v-model="strutturaScelta" >
-            <ion-select-option id="str" v-bind:key="struttura" v-for="struttura in struture" >{{struttura}}</ion-select-option>
+          <ion-select placeholder="Struttura" v-model="strutturaScelta">
+            <ion-select-option id="str" v-bind:key="struttura" v-for="struttura in struture">{{ struttura }}
+            </ion-select-option>
           </ion-select>
           <ion-button @mouseover="getIdStruttura" @click="updatePrenotazioni" color="primary">Visualizza</ion-button>
         </div>
@@ -25,22 +26,23 @@
 
         <div class="titolo1">Data</div>
         <div class="titolo2">Ora</div>
-        <div class="titolo3">Tipo </div>
+        <div class="titolo3">Tipo</div>
         <div class="colonna1">
-          <div id="data" v-bind:key="data" v-for="data in date" >{{data}}</div>
+          <div id="data" v-bind:key="data" v-for="data in date">{{ data }}</div>
         </div>
         <div class="colonna2">
-          <div id="ora" v-bind:key="ora" v-for="ora in ore" >{{ora}}</div>
+          <div id="ora" v-bind:key="ora" v-for="ora in ore">{{ ora }}</div>
         </div>
         <div class="colonna3">
-          <div id="prenotazione" v-bind:key="prenotazione" v-for="prenotazione in nomeOperazioni" >{{prenotazione}}</div>
+          <div id="prenotazione" v-bind:key="prenotazione" v-for="prenotazione in nomeOperazioni">{{ prenotazione }}
+          </div>
         </div>
       </div>
     </ion-content>
   </ion-page>
 </template>
 
-<script >
+<script>
 import prenotazioniAxios from '../axios/prenotazioni'
 import operazioneAxios from '../axios/Operazione'
 import struttureAxios from '../axios/strutture'
@@ -66,72 +68,72 @@ export default {
     IonTitle,
     IonToolbar
   },
-  data(){
-    return{
-      tmp:[],
+  data() {
+    return {
+      tmp: [],
       prenotazioni: [],
-      ore:[],
-      date:[],
-      operazioni:[],
+      ore: [],
+      date: [],
+      operazioni: [],
       nomeOperazioni: [],
-      struture:[],
-      strutturaScelta:"",
-      selectedCod:""
+      struture: [],
+      strutturaScelta: "",
+      selectedCod: ""
     };
   },
   created() {
     this.getStrutture();
   },
-  methods:{
+  methods: {
 
-    getIdStruttura(){
+    getIdStruttura() {
       struttureAxios.getStrutturaByNome(this.strutturaScelta)
-      .then((response) =>{
-        this.selectedCod = response.id;
-      })
+          .then((response) => {
+            this.selectedCod = response.id;
+          })
     },
 
-    updatePrenotazioni(){
-      for(let i = 0; i<this.ore.length; i++){
+    updatePrenotazioni() {
+      for (let i = 0; i < this.ore.length; i++) {
         this.ore.pop();
         this.date.pop();
         this.operazioni.pop();
       }
       prenotazioniAxios.getPrenotazioniByStruttura(this.selectedCod)
           .then((response) => {
-            if(response === ''){
+            if (response === '') {
               this.presentAlert();
               return null;
-            }else {
+            } else {
               this.prenotazioni = response;
 
-              for (let i=0; i<this.prenotazioni.length; i++){
+              for (let i = 0; i < this.prenotazioni.length; i++) {
                 this.ore[i] = this.prenotazioni[i].ora;
                 this.date[i] = this.prenotazioni[i].dataPrenotazione;
-                this.operazioni[i] =  this.prenotazioni[i].idOperazione;
+                this.operazioni[i] = this.prenotazioni[i].idOperazione;
               }
               this.operazioneString();
             }
           })
     },
 
-    operazioneString(){
-      for(let i=0; i<this.operazioni.length; i++) {
+    operazioneString() {
+      for (let i = 0; i < this.operazioni.length; i++) {
         operazioneAxios.getOperazioneById(this.operazioni[i])
-            .then((response) =>{
+            .then((response) => {
               this.nomeOperazioni[i] = response.tipoOperazione;
             })
       }
     },
 
-    getStrutture(){
+    getStrutture() {
       struttureAxios.getStrutture()
-      .then((response) =>{
-        this.tmp = response;
-        for(let i=0; i<this.tmp. length;i++){
-          this.struture[i] = this.tmp[i].nome;
-        }
-      })
+          .then((response) => {
+            this.tmp = response;
+            for (let i = 0; i < this.tmp.length; i++) {
+              this.struture[i] = this.tmp[i].nome;
+            }
+          })
     }
   }
 }
@@ -140,45 +142,45 @@ export default {
 
 <style scoped>
 
-.logout{
+.logout {
   float: right;
 }
 
-.selezione{
+.selezione {
   width: 20%;
 }
 
-ion-button{
+ion-button {
   float: top;
 }
 
-div.colonna1{
+div.colonna1 {
   float: left;
   margin-right: 33%;
   margin-left: 9%;
 }
 
-div.colonna2{
+div.colonna2 {
   float: left;
   margin-right: 33%;
 }
 
-div.colonna3{
+div.colonna3 {
   float: left;
 }
 
-div.titolo1{
+div.titolo1 {
   float: left;
   margin-right: 36%;
   margin-left: 10%;
 }
 
-div.titolo2{
+div.titolo2 {
   float: left;
   margin-right: 38%;
 }
 
-div.titolo3{
+div.titolo3 {
   float: left;
 }
 

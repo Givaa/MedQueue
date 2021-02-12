@@ -2,6 +2,9 @@ import axios from 'axios';
 
 
 export default {
+
+    //Funizone per prelevare tutte le prenotazioni su una struttura
+
     getPrenotazioniByStruttura(getAllPrenotazionyByStruttura) {
         return axios.post('http://localhost:8080/visualizzaCoda/{id}', {
             getAllPrenotazionyByStruttura
@@ -12,6 +15,8 @@ export default {
             }
         }).then(response => response.data)
     },
+
+    //Funzione per aggiungere una prenotazione
 
     addPrenotazione(newPrenotazioniCf, newPrenotazioniOra, newPrenotazioniIdOp, newPrenotazioniIdS, newPrenotazioneData) {
         return axios.post('http://localhost:8080/newPrenotazione', {
@@ -28,6 +33,9 @@ export default {
         }).then(response => response.data)
     },
 
+    //Funzione per prelevare gli orari disponiblili per la prenotazione
+    //in base al giorno, alla struttura e al tipo di operazione
+
     getOrariDisponibili(idStruttura, idOperazione, PrenotazioneData) {
         return axios.post('http://localhost:8080/getOrari', {
             idStruttura,
@@ -41,6 +49,8 @@ export default {
         }).then(response => response.data)
     },
 
+    //Funzione per prelevare tutte le prenotazioni di un utente
+
     getPrenotazioneByCf(getPrenotazioniByCf) {
         return axios.post('http://localhost:8080/prenotazioniUtente/{cf}', {
             getPrenotazioniByCf
@@ -51,6 +61,8 @@ export default {
             }
         }).then(response => response.data)
     },
+
+    //Funzione per eliminare una prenotazione
 
     elimina(deletePrenotazioniId) {
         return axios.post('http://localhost:8080/deletePrenotazione', {
@@ -63,7 +75,9 @@ export default {
         }).then(response => response.data)
     },
 
-    convalida(convalidaPrenotazione){
+    //Funzione per effettuare la convalida della prenotazione
+
+    convalida(convalidaPrenotazione) {
         return axios.post('http://localhost:8080/convalida', {
             convalidaPrenotazione
         }, {

@@ -22,7 +22,7 @@
         <div class="colonna1">
           <div id="data" v-bind:key="data" v-for="data in date">
             <br>
-            <div>{{data}}</div>
+            <div>{{ data }}</div>
             <br>
           </div>
         </div>
@@ -31,7 +31,7 @@
             <br>
             <div>{{ struttura }}</div>
             <br>
-            </div>
+          </div>
         </div>
         <div class="colonna3">
           <div id="tipo" v-bind:key="tipo" v-for="tipo in tipi">
@@ -92,13 +92,13 @@ export default {
   data() {
     return {
       tmp: "",
-      idPrenotazioni:[],
+      idPrenotazioni: [],
       prenotazioni: [],
       date: [],
       idStrutture: [],
       strutture: [],
       idTipi: [],
-      tipi:[],
+      tipi: [],
       ore: [],
     }
   },
@@ -150,7 +150,7 @@ export default {
     async eliminaPrenotazione(id) {
       const toast = await alertController
           .create({
-            header:'Sei sicuro di voler eliminare questa prenotazione ?',
+            header: 'Sei sicuro di voler eliminare questa prenotazione ?',
             position: 'middle',
             buttons: [
               {
@@ -176,16 +176,17 @@ export default {
 
     }
 
-    }
+  }
 
 }
 </script>
 
 <style scoped>
 
-ion-button{
+ion-button {
   height: 30px;
 }
+
 div.colonna1 {
   float: left;
   margin-right: 18%;
@@ -232,7 +233,7 @@ div.titolo4 {
   margin-right: 3%;
 }
 
-div.titolo5{
+div.titolo5 {
   font-weight: bold;
 }
 

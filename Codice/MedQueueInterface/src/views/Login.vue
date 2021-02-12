@@ -12,15 +12,15 @@
           <ion-title size="large">Accesso</ion-title>
         </ion-toolbar>
       </ion-header>
-        <ion-content class="background">
-          <div id="container">
-            <img src="../../public/assets/logosvg_nobg.svg"/>
-            <br>
-            <strong class="capitalize">Accesso</strong>
-            <br>
-            <br>
-            <br>
-            <form>
+      <ion-content class="background">
+        <div id="container">
+          <img src="../../public/assets/logosvg_nobg.svg"/>
+          <br>
+          <strong class="capitalize">Accesso</strong>
+          <br>
+          <br>
+          <br>
+          <form>
             <ion-label>Codice Fiscale</ion-label>
             <ion-input id="username" v-model="loginForm.username" placeholder="Codice Fiscale"></ion-input>
             <br>
@@ -29,26 +29,38 @@
             <ion-input id="password" type="password" v-model="loginForm.password" placeholder="Password"></ion-input>
             <br>
             <br>
-              <ion-button @click="onSubmit()">Accedi</ion-button>
-            </form>
-          </div>
-        </ion-content>
+            <ion-button @click="onSubmit()">Accedi</ion-button>
+          </form>
+        </div>
       </ion-content>
+    </ion-content>
   </ion-page>
 </template>
 
 <script>
 import loginAxios from "../axios/login.js"
-import {alertController, IonButton,IonLabel, IonInput, IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import {
+  alertController,
+  IonButton,
+  IonLabel,
+  IonInput,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonMenuButton,
+  IonPage,
+  IonTitle,
+  IonToolbar
+} from '@ionic/vue';
 import router from "@/router";
 
 export default {
   name: "Login",
-  data(){
+  data() {
     return {
       loginForm: {
         username: "",
-        password:""
+        password: ""
       }
     }
   },
@@ -64,29 +76,29 @@ export default {
   },
   methods: {
 
-    async onSubmit(){
+    async onSubmit() {
       loginAxios.login(this.loginForm.username, this.loginForm.password)
-      .then((response) => {
-        if(response === ''){
-          this.presentAlert();
-          return null;
-        }else {
-          sessionStorage.setItem("codiceFiscale", response.codiceFiscale);
-          sessionStorage.setItem("nome", response.nome);
-          sessionStorage.setItem("cognome", response.cognome);
-          sessionStorage.setItem("dataDiNascita", response.dataDiNascita);
-          sessionStorage.setItem("email", response.email);
-          sessionStorage.setItem("numeroDiTelefono", response.numeroDiTelefono);
+          .then((response) => {
+            if (response === '') {
+              this.presentAlert();
+              return null;
+            } else {
+              sessionStorage.setItem("codiceFiscale", response.codiceFiscale);
+              sessionStorage.setItem("nome", response.nome);
+              sessionStorage.setItem("cognome", response.cognome);
+              sessionStorage.setItem("dataDiNascita", response.dataDiNascita);
+              sessionStorage.setItem("email", response.email);
+              sessionStorage.setItem("numeroDiTelefono", response.numeroDiTelefono);
 
-          router.push("/HomeUtente");
-        }
-      })
+              router.push("/HomeUtente");
+            }
+          })
     },
 
-    async presentAlert(){
+    async presentAlert() {
       const alert = await alertController.create({
-        header:'Attenzione!',
-        message:'Credenziali errate!',
+        header: 'Attenzione!',
+        message: 'Credenziali errate!',
         buttons: ['OK'],
       });
       return alert.present();
@@ -97,14 +109,14 @@ export default {
 
 <style scoped>
 
-img{
+img {
   height: 200px;
   width: 200px;
   position: center;
 }
 
-ion-content.background{
-  --background: url(../../public/assets/CartellinaAllungata.svg)0 0/100% 100% no-repeat;
+ion-content.background {
+  --background: url(../../public/assets/CartellinaAllungata.svg) 0 0/100% 100% no-repeat;
 
 }
 
@@ -133,12 +145,12 @@ ion-content.background{
   text-decoration: none;
 }
 
-ion-label{
+ion-label {
   color: black;
   font-weight: bold;
 }
 
-ion-input{
+ion-input {
   color: black;
   margin-left: 40%;
   position: center;

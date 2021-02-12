@@ -12,31 +12,37 @@
           <ion-title size="large">Registrazione</ion-title>
         </ion-toolbar>
       </ion-header>
-        <ion-content class="background">
-          <div id="container">
-            <img src="../../public/assets/logosvg_nobg.svg"/>
-            <br>
-            <strong class="capitalize">Registrazione</strong>
-            <br>
-            <form>
+      <ion-content class="background">
+        <div id="container">
+          <img src="../../public/assets/logosvg_nobg.svg"/>
+          <br>
+          <strong class="capitalize">Registrazione</strong>
+          <br>
+          <form>
             <ion-label>Nome</ion-label>
             <ion-input id="nome" v-model="nome" placeholder="Nome" required="true"></ion-input>
             <ion-label>Cognome</ion-label>
             <ion-input id="cognome" v-model="cognome" placeholder="Cognome" required="true"></ion-input>
             <ion-label>Codice Fiscale</ion-label>
-            <ion-input id="cf" v-model="codFisc" placeholder="CodiceFiscale" pattern="[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$" required="true"></ion-input>
+            <ion-input id="cf" v-model="codFisc" placeholder="CodiceFiscale"
+                       pattern="[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$" required="true"></ion-input>
             <ion-label>Password</ion-label>
-            <ion-input id="psw" v-model="password" type="password" placeholder="Password" pattern="(?=^.{8,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*$" required="true"></ion-input>
-            <ion-label>Data di Nascita </ion-label>
-            <ion-datetime id="data" v-model="dataDiNascita" displayFormat="DD-MM-YYYY" placeholder="Data di nascita" required="true"></ion-datetime>
+            <ion-input id="psw" v-model="password" type="password" placeholder="Password"
+                       pattern="(?=^.{8,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*$"
+                       required="true"></ion-input>
+            <ion-label>Data di Nascita</ion-label>
+            <ion-datetime id="data" v-model="dataDiNascita" displayFormat="DD-MM-YYYY" placeholder="Data di nascita"
+                          required="true"></ion-datetime>
             <ion-label>Indirizzo e-mail</ion-label>
-            <ion-input id="email" v-model="email" placeholder="Indirizzo e-mail" pattern="\S+@\S+\.\S+" required="true"></ion-input>
+            <ion-input id="email" v-model="email" placeholder="Indirizzo e-mail" pattern="\S+@\S+\.\S+"
+                       required="true"></ion-input>
             <ion-label>Numero di telefono</ion-label>
-            <ion-input id="numero" v-model="numeroTelefono" placeholder="Numero di telefono" patern="^[\+][0-9]{10,12}" required="true"></ion-input>
-            <ion-button @click="autentication()" color="success"> Registrati </ion-button>
-            </form>
-          </div>
-        </ion-content>
+            <ion-input id="numero" v-model="numeroTelefono" placeholder="Numero di telefono" patern="^[\+][0-9]{10,12}"
+                       required="true"></ion-input>
+            <ion-button @click="autentication()" color="success"> Registrati</ion-button>
+          </form>
+        </div>
+      </ion-content>
     </ion-content>
   </ion-page>
 </template>
@@ -59,8 +65,8 @@ import {
 
 export default {
   name: "Registration",
-  data(){
-    return{
+  data() {
+    return {
       nome: "",
       cognome: "",
       codFisc: "",
@@ -83,18 +89,18 @@ export default {
   },
   methods: {
 
-    async autentication(){
-      const data =this.dataDiNascita.split('T');
+    async autentication() {
+      const data = this.dataDiNascita.split('T');
       console.log(data[0]);
-      singupAxios.signup(this.nome,this.cognome,this.codFisc,this.password,data[0],this.email,this.numeroTelefono)
-      .then((response) => {
-        if(response ===""){
-          console.log("Errore");
-          return null;
-        }else{
-          router.push("/Accesso");
-        }
-      })
+      singupAxios.signup(this.nome, this.cognome, this.codFisc, this.password, data[0], this.email, this.numeroTelefono)
+          .then((response) => {
+            if (response === "") {
+              console.log("Errore");
+              return null;
+            } else {
+              router.push("/Accesso");
+            }
+          })
     }
 
   }
@@ -103,16 +109,17 @@ export default {
 
 <style scoped>
 
-img{
+img {
   height: 200px;
   width: 200px;
   position: center;
 }
 
-ion-content.background{
-  --background: url(../../public/assets/CartellinaAllungata.svg)0 0/100% 100% no-repeat;
+ion-content.background {
+  --background: url(../../public/assets/CartellinaAllungata.svg) 0 0/100% 100% no-repeat;
 
 }
+
 #container {
   text-align: center;
   position: relative;
@@ -138,12 +145,12 @@ ion-content.background{
   text-decoration: none;
 }
 
-ion-label{
+ion-label {
   color: black;
   font-weight: bold;
 }
 
-ion-input{
+ion-input {
   color: black;
   margin-left: 40%;
   position: center;
@@ -151,7 +158,7 @@ ion-input{
   width: 20%;
 }
 
-ion-datetime{
+ion-datetime {
   color: black;
 }
 </style>

@@ -1,25 +1,25 @@
 <template>
   <ion-page>
-      <ion-content id="menu">
-        <ion-header :translucent="true">
-          <ion-toolbar>
-            <ion-buttons slot="start">
-              <ion-menu-button color="primary"></ion-menu-button>
-            </ion-buttons>
-            <ion-title>Home</ion-title>
-          </ion-toolbar>
-        </ion-header>
-        <div id="container">
-          <img src="../../public/assets/logosvg_nobg.svg" />
-          <br>
-          <strong class="capitalize">Benvenuto {{nome}}</strong>
-          <p>Da qui puoi raggiungere tutte le funzionalità offerte agli utenti,</p>
-          <p>sia utilizzando questa schermata sia utlizzando il menù al lato</p>
-          <ion-button id="prenota" @click="goPrenotazione"></ion-button>
-          <ion-button id="guarda" @click="goLista"></ion-button>
-          <ion-button id="coda" @click="goCalendar"></ion-button>
-        </div>
-      </ion-content>
+    <ion-content id="menu">
+      <ion-header :translucent="true">
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-menu-button color="primary"></ion-menu-button>
+          </ion-buttons>
+          <ion-title>Home</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <div id="container">
+        <img src="../../public/assets/logosvg_nobg.svg"/>
+        <br>
+        <strong class="capitalize">Benvenuto {{ nome }}</strong>
+        <p>Da qui puoi raggiungere tutte le funzionalità offerte agli utenti,</p>
+        <p>sia utilizzando questa schermata sia utlizzando il menù al lato</p>
+        <ion-button id="prenota" @click="goPrenotazione"></ion-button>
+        <ion-button id="guarda" @click="goLista"></ion-button>
+        <ion-button id="coda" @click="goCalendar"></ion-button>
+      </div>
+    </ion-content>
   </ion-page>
 </template>
 
@@ -47,27 +47,27 @@ export default {
     IonTitle,
     IonToolbar
   },
-  data(){
-    return{
-      nome:sessionStorage.getItem("nome")
+  data() {
+    return {
+      nome: sessionStorage.getItem("nome")
     }
   },
   mounted() {
-      this.verificaSessione();
-    },
-  methods:{
-    goPrenotazione(){
+    this.verificaSessione();
+  },
+  methods: {
+    goPrenotazione() {
       router.push("/Prenotazione")
     },
-    goLista(){
+    goLista() {
       router.push("VisualizzaPrenotazioni")
     },
-    goCalendar(){
+    goCalendar() {
       router.push("/VisualizzazioneCodaUtente")
     },
-    verificaSessione(){
+    verificaSessione() {
       console.log(sessionStorage.getItem("codiceFiscale"))
-      if(sessionStorage.getItem("codiceFiscale")===null){
+      if (sessionStorage.getItem("codiceFiscale") === null) {
         router.push("/Home");
       }
     }
@@ -79,29 +79,32 @@ export default {
 
 <style scoped>
 
-img{
+img {
   height: 200px;
   width: 200px;
   position: center;
 }
 
-ion-button{
+ion-button {
   height: 150px;
   width: 150px;
   padding: 10px;
 }
 
-ion-button#prenota{
-  --background: url(../../public/assets/Prenotazioni.svg)0 0/100% 100% no-repeat;
+ion-button#prenota {
+  --background: url(../../public/assets/Prenotazioni.svg) 0 0/100% 100% no-repeat;
 }
-ion-button#guarda{
-  --background: url(../../public/assets/VisualizzaPrenotazioni.svg)0 0/100% 100% no-repeat;
+
+ion-button#guarda {
+  --background: url(../../public/assets/VisualizzaPrenotazioni.svg) 0 0/100% 100% no-repeat;
 
 }
-ion-button#coda{
-  --background: url(../../public/assets/VisualizzaCoda.svg)0 0/100% 100% no-repeat;
+
+ion-button#coda {
+  --background: url(../../public/assets/VisualizzaCoda.svg) 0 0/100% 100% no-repeat;
 
 }
+
 #container {
   text-align: center;
   position: relative;

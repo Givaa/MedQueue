@@ -247,10 +247,11 @@ public class PrenotazioneController {
     boolean checkCodFisc = cf.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
     LocalDateTime now = LocalDateTime.now();
 
+    System.out.println(minHour  +"-"+ maxHour +"-"+ timeNow);
     if ((now.getDayOfMonth() == d.toLocalDate().getDayOfMonth())
             && (now.getMonth() == d.toLocalDate().getMonth())
             && ((timeNow >= minHour) && (timeNow <= maxHour))
-            && checkCodFisc) {
+      && checkCodFisc) {
       prenotazioneBean.setConvalida(true);
       prenotazioneDaoInterface.doUpdate(prenotazioneBean);
       return true;
