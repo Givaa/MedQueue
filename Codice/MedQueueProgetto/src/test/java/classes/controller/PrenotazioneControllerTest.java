@@ -55,7 +55,7 @@ class PrenotazioneControllerTest {
 
     @Test
     void deletePrenotazione() throws SQLException {
-        jsonElement = parser.parse("{\"deletePrenotazioniId\":\"11\"}");
+        jsonElement = parser.parse("{\"deletePrenotazioniId\":\"12\"}");
         rootObject = jsonElement.getAsJsonObject();
         prenotazioneController.deletePrenotazione(rootObject.toString());
     }

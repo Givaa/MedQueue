@@ -12,18 +12,18 @@ import java.text.SimpleDateFormat;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UtenteDaoInterfaceTest {
-    private UtenteDaoInterface utenteDaoInterface = new UtenteModel();
+class UtenteDaoTest {
+    private UtenteModel utenteModel = new UtenteModel();
     private UtenteBean utenteBean = new UtenteBean();
 
     @Test
     void doRetrieveByKey() throws SQLException {
-        assertNotNull(utenteDaoInterface.doRetrieveByKey("MNDCMN97R22A509S"));
+        assertNotNull(utenteModel.doRetrieveByKey("MNDCMN97R22A509S"));
     }
 
     @Test
     void doRetrieveAll() throws SQLException {
-        assertNotNull(utenteDaoInterface.doRetrieveAll(""));
+        assertNotNull(utenteModel.doRetrieveAll(""));
     }
 
     @Test
@@ -42,19 +42,19 @@ class UtenteDaoInterfaceTest {
             e.printStackTrace();
         }
         utenteBean.setDataDiNascita(date);
-        utenteDaoInterface.doSave(utenteBean);
+        utenteModel.doSave(utenteBean);
     }
 
     @Test
     void doUpdate() throws SQLException {
-        utenteBean = utenteDaoInterface.doRetrieveByKey("CPHMKL98H41I490J");
+        utenteBean = utenteModel.doRetrieveByKey("CPHMKL98H41I490J");
         utenteBean.setCognome("ProvaNto");
-        utenteDaoInterface.doUpdate(utenteBean);
+        utenteModel.doUpdate(utenteBean);
     }
 
     @Test
     void doDelete() throws SQLException {
-        utenteBean = utenteDaoInterface.doRetrieveByKey("CPHMKL98H41I490J");
-        utenteDaoInterface.doDelete(utenteBean);
+        utenteBean = utenteModel.doRetrieveByKey("CPHMKL98H41I490J");
+        utenteModel.doDelete(utenteBean);
     }
 }

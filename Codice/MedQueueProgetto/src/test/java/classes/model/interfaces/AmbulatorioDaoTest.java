@@ -8,34 +8,34 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AmbulatorioDaoInterfaceTest {
-    private AmbulatorioDaoInterface ambulatorioDaoInterface = new AmbulatoriModel();
+class AmbulatorioDaoTest {
+    private AmbulatoriModel ambulatorioModel = new AmbulatoriModel();
 
     @Test
     void doRetrieveByKey() throws SQLException {
-        assertNotNull(ambulatorioDaoInterface.doRetrieveByKey(1));
+        assertNotNull(ambulatorioModel.doRetrieveByKey(1));
     }
 
     @Test
     void doRetrieveAll() throws SQLException {
-        assertNotNull(ambulatorioDaoInterface.doRetrieveAll("nome"));
+        assertNotNull(ambulatorioModel.doRetrieveAll("nome"));
     }
 
     @Test
     void doSave() throws SQLException {
         AmbulatoriBean ambulatoriBean = new AmbulatoriBean("Ababudoju", 1);
-        ambulatorioDaoInterface.doSave(ambulatoriBean);
+        ambulatorioModel.doSave(ambulatoriBean);
     }
 
     @Test
     void doUpdate() throws SQLException {
         AmbulatoriBean ambulatoriBean = new AmbulatoriBean("Ababudoja", 1);
-        ambulatorioDaoInterface.doUpdate(ambulatoriBean);
+        ambulatorioModel.doUpdate(ambulatoriBean);
     }
 
     @Test
     void doDelete() throws SQLException {
         AmbulatoriBean ambulatoriBean = new AmbulatoriBean("Ababudoja", 1);
-        ambulatorioDaoInterface.doDelete(ambulatoriBean);
+        ambulatorioModel.doDelete(ambulatoriBean);
     }
 }

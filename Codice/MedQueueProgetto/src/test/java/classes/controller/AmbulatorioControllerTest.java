@@ -1,9 +1,12 @@
 package classes.controller;
 
 import classes.controller.exception.InvalidKeyException;
+import classes.controller.exception.ObjectNotFoundException;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
@@ -24,9 +27,16 @@ class AmbulatorioControllerTest {
 
         jsonElement = parser.parse("{\"id\":\"0\"}");
         rootObject = jsonElement.getAsJsonObject();
-        JsonObject finalRootObject = rootObject;
+        rootObject = rootObject;
         InvalidKeyException invalidKeyException = assertThrows(InvalidKeyException.class, () -> {
-            ambulatorioController.getById(finalRootObject.toString());
+            ambulatorioController.getById(rootObject.toString());
+        });
+
+        jsonElement = parser.parse("{\"id\":\"54564163\"}");
+        rootObject = jsonElement.getAsJsonObject();
+        rootObject = rootObject;
+        ObjectNotFoundException objectNotFoundException = assertThrows(ObjectNotFoundException.class, () -> {
+            ambulatorioController.getById(rootObject.toString());
         });
     }
 
@@ -41,7 +51,7 @@ class AmbulatorioControllerTest {
         assertNotNull(ambulatorioController.getAllAmbulatori(rootObject.toString()));
     }
 
-    @Test
+    @Test @Before
     void newAmbulatorio() throws SQLException {
         jsonElement = parser.parse(
                 "{\"newAmbulatorioNome\":\"ProvaAiuto\",\"newAmbulatorioIdS\":\"1\"}");
@@ -49,17 +59,19 @@ class AmbulatorioControllerTest {
         assertTrue(ambulatorioController.newAmbulatorio(rootObject.toString()));
     }
 
-    @Test
+    @Test @Before
     void updateAmbulatorio() throws SQLException {
         jsonElement = parser.parse(
-                "{\"idAmbulatorioUpdate\":\"10\",\"AmbulatoriUpdateName\":\"ProvaCiao\",\"AmbulatoriUpdateIdStruttura\":\"1\"}");
+                "{\"idAmbulatorioUpdate\":\"11\",\""
+                        + "AmbulatoriUpdateName\":\"ProvaCiao\",\""
+                        + "AmbulatoriUpdateIdStruttura\":\"1\"}");
         rootObject = jsonElement.getAsJsonObject();
         assertTrue(ambulatorioController.updateAmbulatorio(rootObject.toString()));
     }
 
-    @Test
+    @Test @After
     void deleteAmbulatorio() throws SQLException {
-        jsonElement = parser.parse("{\"idAmbulatorioRemove\":\"10\"}");
+        jsonElement = parser.parse("{\"idAmbulatorioRemove\":\"11\"}");
         rootObject = jsonElement.getAsJsonObject();
         ambulatorioController.deleteAmbulatorio(rootObject.toString());
     }

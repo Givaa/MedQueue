@@ -8,24 +8,24 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class StrutturaDaoInterfaceTest {
-    private StrutturaDaoInterface strutturaDaoInterface = new StrutturaModel();
+class StrutturaDaoTest {
+    private StrutturaModel strutturaModel = new StrutturaModel();
     private StrutturaBean strutturaBean = new StrutturaBean();
 
     @Test
     void doRetrieveByKey() throws SQLException {
-        assertNotNull(strutturaDaoInterface.doRetrieveByKey(1));
-        assertNull(strutturaDaoInterface.doRetrieveByKey(1900428));
+        assertNotNull(strutturaModel.doRetrieveByKey(1));
+        assertNull(strutturaModel.doRetrieveByKey(1900428));
     }
 
     @Test
     void doRetrieveByName() throws SQLException {
-        assertNotNull(strutturaDaoInterface.doRetrieveByName("santobono"));
+        assertNotNull(strutturaModel.doRetrieveByName("santobono"));
     }
 
     @Test
     void doRetrieveAll() throws SQLException {
-        assertNotNull(strutturaDaoInterface.doRetrieveAll(""));
+        assertNotNull(strutturaModel.doRetrieveAll(""));
     }
 
     @Test
@@ -33,20 +33,20 @@ class StrutturaDaoInterfaceTest {
         strutturaBean.setIndirizzo("Via Ababudoju");
         strutturaBean.setNome("Ababudoju Center");
         strutturaBean.setNumeroDiTelefono("0874878584");
-        strutturaDaoInterface.doSave(strutturaBean);
+        strutturaModel.doSave(strutturaBean);
     }
 
     @Test
     void doUpdate() throws SQLException {
-        strutturaBean = strutturaDaoInterface.doRetrieveByName("Ababudoju Center");
+        strutturaBean = strutturaModel.doRetrieveByName("Ababudoju Center");
         strutturaBean.setNome("Rehab Center");
         strutturaBean.setIndirizzo("Via Shady Slim 12");
-        strutturaDaoInterface.doUpdate(strutturaBean);
+        strutturaModel.doUpdate(strutturaBean);
     }
 
     @Test
     void doDelete() throws SQLException {
-        strutturaBean = strutturaDaoInterface.doRetrieveByName("Rehab Center");
-        strutturaDaoInterface.doDelete(strutturaBean);
+        strutturaBean = strutturaModel.doRetrieveByName("Rehab Center");
+        strutturaModel.doDelete(strutturaBean);
     }
 }

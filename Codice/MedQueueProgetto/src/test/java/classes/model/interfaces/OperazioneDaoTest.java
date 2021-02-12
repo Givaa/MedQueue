@@ -9,43 +9,43 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class OperazioneDaoInterfaceTest {
-    private OperazioneDaoInterface operazioneDaoInterface = new OperazioneModel();
+class OperazioneDaoTest {
+    private OperazioneModel operazioneModel = new OperazioneModel();
 
     @Test
     void doRetrieveByKey() throws SQLException {
-        assertNotNull(operazioneDaoInterface.doRetrieveByKey(1));
+        assertNotNull(operazioneModel.doRetrieveByKey(1));
     }
 
     @Test
     void doRetrieveByTipo() throws SQLException {
-        assertNotNull(operazioneDaoInterface.doRetrieveByTipo("Pagamento Ticket"));
+        assertNotNull(operazioneModel.doRetrieveByTipo("Pagamento Ticket"));
         ObjectNotFoundException objectNotFoundException = assertThrows(ObjectNotFoundException.class, () ->{
-            operazioneDaoInterface.doRetrieveByTipo("Tipo errato");
+            operazioneModel.doRetrieveByTipo("Tipo errato");
         });
     }
 
     @Test
     void doRetrieveAll() throws SQLException {
-        assertNotNull(operazioneDaoInterface.doRetrieveAll(""));
+        assertNotNull(operazioneModel.doRetrieveAll(""));
     }
 
     @Test
     void doSave() throws SQLException {
         OperazioneBean operazioneBean = new OperazioneBean("Prova", "Inserita operazine di prova");
-        operazioneDaoInterface.doSave(operazioneBean);
+        operazioneModel.doSave(operazioneBean);
     }
 
     @Test
     void doUpdate() throws SQLException {
-        OperazioneBean operazioneBean = operazioneDaoInterface.doRetrieveByTipo("Prova");
+        OperazioneBean operazioneBean = operazioneModel.doRetrieveByTipo("Prova");
         operazioneBean.setTipoOperazione("ProvaModifica");
-        operazioneDaoInterface.doUpdate(operazioneBean);
+        operazioneModel.doUpdate(operazioneBean);
     }
 
     @Test
     void doDelete() throws SQLException {
-        OperazioneBean operazioneBean = operazioneDaoInterface.doRetrieveByTipo("ProvaModifica");
-        operazioneDaoInterface.doDelete(operazioneBean);
+        OperazioneBean operazioneBean = operazioneModel.doRetrieveByTipo("ProvaModifica");
+        operazioneModel.doDelete(operazioneBean);
     }
 }
