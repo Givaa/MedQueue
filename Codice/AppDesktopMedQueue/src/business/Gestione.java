@@ -11,17 +11,19 @@ import persistence.DataAccess;
 public class Gestione implements GestioneInterface {
   private final DaoInterface dao = new DataAccess();
 
-  /** Metodo di business che permette di accettare una prenotazione convalidata. */
+
   public Gestione() {}
 
   /**
-   * Metodo di business che permette di accettare una prenotazione convalidata.
+   * Implementa la funzionalita di business che permette ad un impiegato di accettare una prenotazione.
    *
-   * @param idOp id dell'operazione della collezione Operazione
-   * @param idStruttura id della struttura della collezione Struttura
-   * @return prenotazione della collezione Prenotazione che ha come idOperazione l'idOperazione
-   *     passato come parametro, come idStruttura l'idStruttura passato come parametro e convalida a
-   *     true
+   * @param idOp id della coda che l'impiegato gestisce
+   * @param idStruttura id della struttura per la quale l'impiegato lavora
+   * @return ritorna le informazioni della prenotazione accettata che l'impiegato dovra servire oppure
+   *        se non ce ne sono null
+   * @throws InvalidKeyException se idOp oppure idStruttura sono minori o uguali di 0
+   * @pre idOperazione>0 && idStruttura>0
+   * @post Prenotazione->Select(p|p.idStruttura==idStruttura && p.idOperazione==idOperazione && p.convalida==true)
    */
   public PrenotazioneBean accettaPrenotazione(Integer idOp, Integer idStruttura) {
     try {
@@ -50,13 +52,14 @@ public class Gestione implements GestioneInterface {
   }
 
   /**
-   * Metodo che restituisce il numero di prenotazioni da accettare.
+   * Implementa la funzionalita di business che permette di sapere il numero di prenotazioni in coda
    *
-   * @param idOperazione id dell'operazione della collezione Operazione
-   * @param idStruttura id della struttura della collezione Struttura
-   * @return size delle prenotazioni della collezione prenotazione che hanno come idStruttura
-   *     l'idStruttura passato come parametro, come idOperazione l'idOperazione passato come
-   *     parametro e convalida a true
+   * @param idOperazione id della coda
+   * @param idStruttura id della struttura che gestisce la coda
+   * @return numero di prenotazioni in coda
+   * @throws InvalidKeyException se l'idOperazione oppure l'idStruttura sono minori o uguali a 0
+   * @pre idOperazione>0 && idStruttura>0
+   * @post Prenotazione->exists(p|p.idStruttura==idStruttura && p.idOperazione==idOperazione).size()
    */
   public int getNumPrenotazioni(int idOperazione, int idStruttura) {
     try {
@@ -72,19 +75,23 @@ public class Gestione implements GestioneInterface {
   }
 
   /**
-   * Metodo di business che mostra all'impiegato le operazioni che puo servire.
+   * Implementa la funzionalita di business che permette all'impiegato di conoscere le code gestibili
    *
-   * @return operazioni della collezione Operazione
+   * @return ritorna una lista di code
+   * @post Operazioni->asSet(Operazioni)
    */
   public ArrayList<OperazioneBean> getListaOperazioni() {
     return dao.getOperazioni();
   }
 
   /**
-   * Metodo di business che permette di scegliere all'impiegato un operazione da gestire.
+   * Implementa la funzionalità di business che restituisce le informazioni su una coda
    *
-   * @param id id dell'operazione della collezione Operazione
-   * @return operazione della collezione Operazione che ha come id, l'id passato come parametro
+   * @param id id della coda
+   * @return ritorna un oggetto contenente le informazioni della coda
+   * @throws InvalidKeyException se l'id e minore o uguale di 0
+   * @pre id>0
+   * @post Operazione->select(o|o.idOperazione==id)
    */
   public OperazioneBean getOperazione(int id) {
     try {

@@ -6,21 +6,23 @@ import java.util.regex.Pattern;
 import persistence.DaoInterface;
 import persistence.DataAccess;
 
-/** Classe per verificare le credenziali di un impiegato. */
+/** Classe che implementa le funzionalita di business relative all'accesso di un impiegato. */
 public class Accesso implements AccessoInterface {
   DaoInterface daoOperation = new DataAccess();
 
-  /** Metodo di business che verifica le credenziali di un impiegato. */
+
   public Accesso() {}
 
   /**
-   * Metodo di business che verifica le credenziali di un impiegato.
+   * Implementa la funzionalita di business che verifica le credenziali dell'impiegato.
    *
    * @param cf codice fiscale dell'impiegato
    * @param pass password dell'impiegato
-   * @return l'impiegato della collezione Impiegato che ha come codice fiscale il codice fiscale
-   *     passato come parametro al metodo e come password la password passata al metodo, oppure null
-   *     se le credenziali sono sbagliate
+   * @return restituise cun oggetto contenente le informazioni di un impiegato se le credenziali sono giuste oppure
+   *         un oggetto null se le credenziali sono sbagliate
+   * @throws InvalidKeyException se il codice fiscale o la password non rispetta il formato o non viene passata una password
+   * @pre codicefiscale!=null && codicefiscale.lenght==16 && password!=null
+   * @post Impiegato->select(i|i.codicefiscale==codicefiscale && i.password==password)
    */
   public ImpiegatoBean verificaCredenziali(String cf, String pass) {
     try {

@@ -24,10 +24,7 @@ public class MostraPrenotazioneAccettataView implements ShowPrenotazioneInterfac
   private JLabel codicefiscale = new JLabel();
   private JPanel panneloCentrale = new JPanel();
 
-  /**
-   * Genera un pannello che mostra l'id della prenotazione accettate dall'impiegato e il codice *
-   * fiscale dell'utente a cui appartiene la prenotazione.
-   */
+  /**Costruttore vuoto*/
   public MostraPrenotazioneAccettataView() {}
 
   /**

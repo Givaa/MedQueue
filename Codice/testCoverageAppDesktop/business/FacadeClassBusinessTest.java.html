@@ -7,41 +7,64 @@ import static org.junit.jupiter.api.Assertions.*;
 
 <span class="fc" id="L8">class FacadeClassBusinessTest {</span>
     private static FacadeClassBusiness test;
+    private static int idValido;
+    private static int idNonValido;
 
     @BeforeAll
     public static void startUp(){
-<span class="fc" id="L13">        test=new FacadeClassBusiness();</span>
-<span class="fc" id="L14">    }</span>
-
-    @Test
-    void getConnessione() {
-<span class="fc" id="L18">        assertNotNull(test.getConnessione());</span>
-<span class="fc" id="L19">    }</span>
-
+<span class="fc" id="L15">        test=new FacadeClassBusiness();</span>
+<span class="fc" id="L16">        idValido=1;</span>
+<span class="fc" id="L17">        idNonValido=0;</span>
+<span class="fc" id="L18">    }</span>
 
     @Test
     void autenticazione() {
-<span class="fc" id="L24">        assertNotNull(test.autenticazione(&quot;FLTNGL99A14L845J&quot;,&quot;angelo99&quot;));</span>
-<span class="fc" id="L25">    }</span>
+<span class="fc" id="L22">        assertNotNull(test.autenticazione(&quot;FLTNGL99A14L845J&quot;,&quot;angelo99&quot;));</span>
+<span class="fc" id="L23">    }</span>
 
     @Test
-    void accettaPrenotazione() {
-<span class="fc" id="L29">        assertNotNull((test.accettaPrenotazione(1,1)));</span>
-<span class="fc" id="L30">    }</span>
+    void autenticazione_codiceFiscaleNonValido() {
+<span class="fc" id="L27">        assertNull(test.autenticazione(&quot;FLTNGL99A14L84J&quot;,&quot;angelo99&quot;));</span>
+<span class="fc" id="L28">    }</span>
+
+    @Test
+    void autenticazione_passwordNonValida() {
+<span class="fc" id="L32">        assertNull(test.autenticazione(&quot;FLTNGL99A14L84J&quot;,null));</span>
+<span class="fc" id="L33">    }</span>
+
+    @Test
+    void accettaPrenotazione_idNonValido() {
+<span class="fc" id="L37">        assertNull(test.accettaPrenotazione(idNonValido,idNonValido));</span>
+<span class="fc" id="L38">    }</span>
+
+    @Test
+    void accettaPrenotazione_idValido() {
+<span class="fc" id="L42">        assertNotNull(test.accettaPrenotazione(idValido,idValido));</span>
+<span class="fc" id="L43">    }</span>
 
     @Test
     void getCode() {
-<span class="fc" id="L34">       assertNotNull(test.getCode());</span>
-<span class="fc" id="L35">    }</span>
+<span class="fc" id="L47">       assertNotNull(test.getCode());</span>
+<span class="fc" id="L48">    }</span>
 
     @Test
-    void getCoda() {
-<span class="fc" id="L39">        assertNotNull(test.getCoda(1));</span>
-<span class="fc" id="L40">    }</span>
+    void getCoda_idNonValido() {
+<span class="fc" id="L52">        assertNull(test.getCoda(idNonValido));</span>
+<span class="fc" id="L53">    }</span>
 
     @Test
-    void getSizeCoda() {
-<span class="fc" id="L44">        assertNotEquals(0,test.getSizeCoda(1,1));</span>
-<span class="fc" id="L45">    }</span>
+    void getCoda_idValido() {
+<span class="fc" id="L57">        assertNotNull(test.getCoda(idValido));</span>
+<span class="fc" id="L58">    }</span>
+
+    @Test
+    void getSizeCoda_idNonValido() {
+<span class="fc" id="L62">        assertEquals(0,test.getSizeCoda(idNonValido,idNonValido));</span>
+<span class="fc" id="L63">    }</span>
+
+    @Test
+    void getSizeCoda_idValido() {
+<span class="fc" id="L67">        assertNotEquals(0, test.getSizeCoda(idValido, idValido));</span>
+<span class="fc" id="L68">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

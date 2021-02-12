@@ -6,47 +6,52 @@ import java.util.regex.Pattern;
 import persistence.DaoInterface;
 import persistence.DataAccess;
 
-/** Classe per verificare le credenziali di un impiegato. */
+/** Classe che implementa le funzionalita di business relative all'accesso di un impiegato. */
 public class Accesso implements AccessoInterface {
 <span class="fc" id="L11">  DaoInterface daoOperation = new DataAccess();</span>
 
-  /**
-   * Metodo di business che verifica le credenziali di un impiegato.
-   */
-<span class="fc" id="L16">  public Accesso() {}</span>
+
+<span class="fc" id="L14">  public Accesso() {}</span>
 
   /**
-   * Metodo di business che verifica le credenziali di un impiegato.
+   * Implementa la funzionalita di business che verifica le credenziali dell'impiegato.
    *
    * @param cf codice fiscale dell'impiegato
    * @param pass password dell'impiegato
-   * @return l'impiegato della collezione Impiegato che ha come codice fiscale il codice fiscale
-   *     passato come parametro al metodo e come password la password passata al metodo, oppure null
-   *     se le credenziali sono sbagliate
+   * @return restituise cun oggetto contenente le informazioni di un impiegato se le credenziali sono giuste oppure
+   *         un oggetto null se le credenziali sono sbagliate
+   * @throws InvalidKeyException se il codice fiscale o la password non rispetta il formato o non viene passata una password
+   * @pre codicefiscale!=null &amp;&amp; codicefiscale.lenght==16 &amp;&amp; password!=null
+   * @post Impiegato-&gt;select(i|i.codicefiscale==codicefiscale &amp;&amp; i.password==password)
    */
   public ImpiegatoBean verificaCredenziali(String cf, String pass) {
     try {
-<span class="fc" id="L29">      if (Pattern.compile(&quot;^[a-zA-Z]{6}[0-9]{2}[abcdehlmprstABCDEHLMPRST]{1}&quot;</span>
-<span class="fc bfc" id="L30" title="All 2 branches covered.">              + &quot;[0-9]{2}([a-zA-Z]{1}[0-9]{3})[a-zA-Z]{1}$&quot;).matcher(cf).matches() == false) {</span>
-<span class="fc" id="L31">        throw new InvalidKeyException(&quot;Codice Fiscale non rispetta il formato.&quot;);</span>
+<span class="fc" id="L29">      if (Pattern.compile(</span>
+                  &quot;^[a-zA-Z]{6}[0-9]{2}[abcdehlmprstABCDEHLMPRST]{1}&quot;
+                      + &quot;[0-9]{2}([a-zA-Z]{1}[0-9]{3})[a-zA-Z]{1}$&quot;)
+<span class="fc" id="L32">              .matcher(cf)</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">              .matches()</span>
+          == false) {
+<span class="fc" id="L35">        throw new InvalidKeyException(&quot;Codice Fiscale non rispetta il formato.&quot;);</span>
       }
-<span class="fc bfc" id="L33" title="All 2 branches covered.">      if(pass==null)</span>
-<span class="fc" id="L34">        throw new InvalidKeyException(&quot;Password non inserita.&quot;);</span>
-<span class="fc" id="L35">      if (Pattern.compile(&quot;^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$&quot;)</span>
-<span class="fc bfc" id="L36" title="All 2 branches covered.">              .matcher(pass).matches() == false) {</span>
-<span class="fc" id="L37">        throw new InvalidKeyException(&quot;Password non rispetta il formato.&quot;);</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">      if (pass == null) {</span>
+<span class="fc" id="L38">        throw new InvalidKeyException(&quot;Password non inserita.&quot;);</span>
+      }
+<span class="fc bfc" id="L40" title="All 2 branches covered.">      if (Pattern.compile(&quot;^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$&quot;).matcher(pass).matches()</span>
+          == false) {
+<span class="fc" id="L42">        throw new InvalidKeyException(&quot;Password non rispetta il formato.&quot;);</span>
       } else {
-<span class="fc" id="L39">        ImpiegatoBean impiegato = daoOperation.getImpiegato(cf);</span>
-<span class="pc bpc" id="L40" title="1 of 2 branches missed.">        if (impiegato != null) {</span>
-<span class="fc bfc" id="L41" title="All 2 branches covered.">          if (impiegato.getPassword().equals(pass)) {</span>
-<span class="fc" id="L42">            return impiegato;</span>
+<span class="fc" id="L44">        ImpiegatoBean impiegato = daoOperation.getImpiegato(cf);</span>
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">        if (impiegato != null) {</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">          if (impiegato.getPassword().equals(pass)) {</span>
+<span class="fc" id="L47">            return impiegato;</span>
           }
         }
       }
-<span class="fc" id="L46">    } catch (InvalidKeyException i) {</span>
-<span class="fc" id="L47">      System.out.println(i.toString());</span>
-<span class="fc" id="L48">    }</span>
-<span class="fc" id="L49">    return null;</span>
+<span class="fc" id="L51">    } catch (InvalidKeyException i) {</span>
+<span class="fc" id="L52">      System.out.println(i.toString());</span>
+<span class="fc" id="L53">    }</span>
+<span class="fc" id="L54">    return null;</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

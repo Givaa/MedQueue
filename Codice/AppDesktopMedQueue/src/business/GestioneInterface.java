@@ -2,45 +2,51 @@ package business;
 
 import bean.OperazioneBean;
 import bean.PrenotazioneBean;
+import eccezioni.InvalidKeyException;
+
 import java.util.ArrayList;
 
 /** Interfaccia che conterrà tutte le operazioni che l'impiegato puo effettuare. * */
 public interface GestioneInterface {
 
   /**
-   * Metodo di business che permette di accettare una prenotazione convalidata.
+   * Permette di accettare una prenotazione.
    *
-   * @param idOp id dell'operazione della collezione Operazione
-   * @param idStruttura id della struttura della collezione Struttura
-   * @return prenotazione della collezione Prenotazione che ha come idOperazione l'idOperazione
-   *     passato come parametro, come idStruttura l'idStruttura passato come parametro e convalida a
-   *     true
+   * @param idOp id della coda che l'impiegato gestisce
+   * @param idStruttura id della struttura per la quale l'impiegato lavora
+   * @return ritorna le informazioni della prenotazione accettata che l'impiegato dovra servire oppure
+   *         se non ce ne sono null
+   * @pre idOperazione>0 && idStruttura>0
+   * @post Prenotazione->Select(p|p.idStruttura==idStruttura && p.idOperazione==idOperazione && p.convalida==true)
    */
   public PrenotazioneBean accettaPrenotazione(Integer idOp, Integer idStruttura);
 
   /**
-   * Metodo che restituisce il numero di prenotazioni da accettare.
+   * Permette di sapre il numero di prenotazioni in coda
    *
-   * @param idOperazione id dell'operazione della collezione Operazione
-   * @param idStruttura id della struttura della collezione Struttura
-   * @return size delle prenotazioni della collezione Prenotazione che hanno come idStruttura
-   *     l'idStruttura passato come parametro, come idOperazione l'idOperazione passato come
-   *     parametro e convalida a true
+   * @param idOperazione id della coda
+   * @param idStruttura id della struttura che gestisce la coda
+   * @return numero di prenotazioni in coda
+   * @pre idOperazione>0 && idStruttura>0
+   * @post Prenotazione->exists(p|p.idStruttura==idStruttura && p.idOperazione==idOperazione).size()
    */
   public int getNumPrenotazioni(int idOperazione, int idStruttura);
 
   /**
-   * Metodo di business che mostra all'impiegato le operazioni che puo servire.
+   * Permette di ottenere le code gestibili
    *
-   * @return operazioni della collezione Operazione
+   * @return ritorna una lista di code
+   * @post Operazioni->asSet(Operazioni)
    */
   public ArrayList<OperazioneBean> getListaOperazioni();
 
   /**
-   * Metodo di business che permette di scegliere all'impiegato un operazione da gestire.
+   * Permette di avere le informazioni di una determinata coda
    *
-   * @param id id dell'operazione della collezione Operazione
-   * @return operazione della collezione Operazione che ha come id, l'id passato come parametro
+   * @param id id della coda
+   * @return ritorna un oggetto contenente le informazioni della coda
+   * @pre id>0
+   * @post Operazione->select(o|o.idOperazione==id)
    */
   public OperazioneBean getOperazione(int id);
 }

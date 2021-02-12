@@ -36,7 +36,7 @@ public class LoginView implements LoginInterface {
   private ControlPanelInterface pannelloDiControllo;
   private ImageIcon immagine;
 
-  /** Metodo che genera il frame che permette all'impiegato di loggarsi. */
+  /** Costruttore vuoto */
   public LoginView() {
     framePannello = new JFrame();
     codiceFiscale = new JTextField(16);
@@ -68,12 +68,6 @@ public class LoginView implements LoginInterface {
 
     accedi.addActionListener(
         l -> { // Action Listener sul bottone di connessione
-            try {
-              if (codiceFiscale.getText() == ""
-                  || codiceFiscale.getText().length() != 16
-                  || password.getText() == "") {
-                throw new InvalidAccesException("Codice fiscale o password non inserita");
-              }
               // Verifico le credenziali dell'impiegato
               ImpiegatoBean impiegato =
                   business.autenticazione(codiceFiscale.getText(), password.getText());
@@ -88,10 +82,6 @@ public class LoginView implements LoginInterface {
                 errore.setText("Credenziali errate");
               } // Messaggio d'errore nel caso in cui le credenziali del
               // impiegato sono sbagliate
-            } catch (InvalidAccesException i) {
-              errore.setText("Credenziali errate");
-              System.out.println(i.toString());
-            }
         });
 
     JCheckBox select = new JCheckBox("Mostra password");

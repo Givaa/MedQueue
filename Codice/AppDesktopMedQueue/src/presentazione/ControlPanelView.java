@@ -55,10 +55,7 @@ public class ControlPanelView implements ControlPanelInterface {
   private boolean servizioPrenotazione;
   private FacadeClassBusiness business;
 
-  /**
-   * Metodo che genera il pannello di controllo che permettera all'impiegato di visualizzare le code
-   * che potra gestire, il numero di prenotazioni per coda da servire e accettare una prenotazione.
-   */
+  /** Costruttore vuoto */
   public ControlPanelView() {
     frame = new JFrame();
     pannelloNord = new JPanel();
@@ -210,18 +207,10 @@ public class ControlPanelView implements ControlPanelInterface {
       JButton coda = new JButton();
       // Setto il testo del button con il formato (tipo operazioni: prenotazioni in attesta di
       // accettazioni)
-      try {
-        if (listaCode.get(i).getId() <= 0 || idStruttura <= 0) {
-          throw new InvalidManagementException("Id non validi");
-        }
         coda.setText(
             listaCode.get(i).getTipoOperazione()
                 + ": "
                 + business.getSizeCoda(listaCode.get(i).getId(), idStruttura));
-      } catch (InvalidManagementException ex) {
-        coda.setText(listaCode.get(i).getTipoOperazione() + ": 0");
-        System.out.println(ex.toString());
-      }
       // Modifico le dimensioni del button
       coda.setPreferredSize(new Dimension(230, 25));
       coda.setMaximumSize(coda.getPreferredSize());
@@ -345,10 +334,6 @@ public class ControlPanelView implements ControlPanelInterface {
     pannelloAccettazione.setOpaque(false); // Setto lo sfondo del panel trasparente
     accetta.addActionListener(
         e -> { // ActionListener sul bottone per accettare una prenotazione
-          try {
-            if (idOperazione <= 0 || idStruttura <= 0) {
-              throw new InvalidManagementException("Id non validi");
-            }
             PrenotazioneBean p =
                 business.accettaPrenotazione(
                     idOperazione,
@@ -369,9 +354,6 @@ public class ControlPanelView implements ControlPanelInterface {
               aggiornoNumPrenotazioni((JPanel) pannelloCentro.getComponent(0), null);
               frame.validate(); // Aggiorno il frame
             }
-          } catch (InvalidManagementException ex) {
-            System.out.println(ex.toString());
-          }
         });
 
     aggiornoNumPrenotazioni(
@@ -525,15 +507,7 @@ public class ControlPanelView implements ControlPanelInterface {
           instanceof
           JButton) { // Se la componente e un JButton aggiorno il testo (TipoOperazione: numero
         // prenotazioni)
-        try {
-          if (listaCode.get(j).getId() <= 0 || idStruttura <= 0) {
-            throw new InvalidManagementException("Id non validi");
-          }
           numeroPrenotazioni.add(business.getSizeCoda(listaCode.get(j).getId(), idStruttura));
-        } catch (InvalidManagementException ex) {
-          numeroPrenotazioni.add(0);
-          System.out.println(ex.toString());
-        }
         ((JButton) comp[i])
             .setText(listaCode.get(j).getTipoOperazione() + ": " + numeroPrenotazioni.get(j));
         j++; // La variabile j viene utilizzata poichè nel pannello non conterrà solo JButton quindi

@@ -25,9 +25,9 @@ public class DriverManagerConnectionPool {
   /**
    * Costruttore che crea l'oggetto con una lista di connessioni.
    */
-<span class="nc" id="L28">  public DriverManagerConnectionPool() {</span>
-<span class="nc" id="L29">    freeDbConnections = new LinkedList&lt;&gt;();</span>
-<span class="nc" id="L30">  }</span>
+<span class="fc" id="L28">  public DriverManagerConnectionPool() {</span>
+<span class="fc" id="L29">    freeDbConnections = new LinkedList&lt;&gt;();</span>
+<span class="fc" id="L30">  }</span>
 
   /**
    * Metodo che permette di creare una connessione al database
@@ -68,18 +68,18 @@ public class DriverManagerConnectionPool {
   public static synchronized Connection getConnection() throws SQLException {
     Connection connection;
 
-<span class="fc bfc" id="L71" title="All 2 branches covered.">    if (!freeDbConnections.isEmpty()) {</span>
-<span class="fc" id="L72">      connection = freeDbConnections.get(0);</span>
-<span class="fc" id="L73">      freeDbConnections.remove(0);</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">    if (!freeDbConnections.isEmpty()) {</span>
+<span class="nc" id="L72">      connection = freeDbConnections.get(0);</span>
+<span class="nc" id="L73">      freeDbConnections.remove(0);</span>
 
       try {
-<span class="pc bpc" id="L76" title="1 of 2 branches missed.">        if (connection.isClosed()) {</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">        if (connection.isClosed()) {</span>
 <span class="nc" id="L77">          connection = getConnection();</span>
         }
 <span class="nc" id="L79">      } catch (SQLException e) {</span>
 <span class="nc" id="L80">        connection.close();</span>
 <span class="nc" id="L81">        connection = getConnection();</span>
-<span class="pc" id="L82">      }</span>
+<span class="nc" id="L82">      }</span>
     } else {
 <span class="fc" id="L84">      connection = createDbConnection();</span>
     }

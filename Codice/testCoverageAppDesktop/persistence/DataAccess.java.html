@@ -13,53 +13,53 @@ import java.util.ArrayList;
 /** Classe che permette operazioni sul database. */
 public class DataAccess implements DaoInterface {
 
-  /**
-   * Metodo che ci permettere di ottenere una prenotazione dal database in base all'id.
-   */
-<span class="fc" id="L19">  public DataAccess() {}</span>
+
+<span class="fc" id="L17">  public DataAccess() {}</span>
 
   /**
    * Metodo che ci permettere di ottenere una prenotazione dal database in base all'id.
    *
    * @param id id della prenotazione che si vuole prelevare dalla collezione Prenotazione
-   * @return prenotazione della collezione Prenotazione che ha come id, l'id passato come parametro
-   *     al metodo
+   * @return ritorna la prenotazione oppure null se non è presente nel database
+   * @pre id&gt;0
+   * @post Prenotazione-&gt;select(p|p.id=id)
    */
   public PrenotazioneBean getPrenotazione(int id) {
-<span class="fc" id="L29">    PrenotazioneBean prenotazione = null;</span>
-<span class="fc" id="L30">    Connection con = null;</span>
+<span class="fc" id="L28">    PrenotazioneBean prenotazione = null;</span>
+<span class="fc" id="L29">    Connection con = null;</span>
     try {
-<span class="fc" id="L32">      String sql = &quot;SELECT * FROM MedQueue.Prenotazione WHERE Prenotazione.Id = ?&quot;;</span>
-<span class="fc" id="L33">      con = DriverManagerConnectionPool.getConnection();</span>
-<span class="fc" id="L34">      PreparedStatement query = con.prepareStatement(sql);</span>
-<span class="fc" id="L35">      query.setInt(1, id);</span>
-<span class="fc" id="L36">      ResultSet rs = query.executeQuery();</span>
-<span class="fc bfc" id="L37" title="All 2 branches covered.">      while (rs.next()) {</span>
-<span class="fc" id="L38">        prenotazione = new PrenotazioneBean();</span>
-<span class="fc" id="L39">        prenotazione.setId(rs.getInt(1));</span>
-<span class="fc" id="L40">        prenotazione.setData(rs.getDate(2));</span>
-<span class="fc" id="L41">        prenotazione.setTime(rs.getTime(3));</span>
-<span class="fc" id="L42">        prenotazione.setConvalida(rs.getBoolean(4));</span>
-<span class="fc" id="L43">        prenotazione.setCodiceFiscale(rs.getString(5));</span>
-<span class="fc" id="L44">        prenotazione.setIdOperazione(rs.getInt(6));</span>
-<span class="fc" id="L45">        prenotazione.setIdStruttura(rs.getInt(7));</span>
+<span class="fc" id="L31">      String sql = &quot;SELECT * FROM MedQueue.Prenotazione WHERE Prenotazione.Id = ?&quot;;</span>
+<span class="fc" id="L32">      con = DriverManagerConnectionPool.getConnection();</span>
+<span class="fc" id="L33">      PreparedStatement query = con.prepareStatement(sql);</span>
+<span class="fc" id="L34">      query.setInt(1, id);</span>
+<span class="fc" id="L35">      ResultSet rs = query.executeQuery();</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">      while (rs.next()) {</span>
+<span class="fc" id="L37">        prenotazione = new PrenotazioneBean();</span>
+<span class="fc" id="L38">        prenotazione.setId(rs.getInt(1));</span>
+<span class="fc" id="L39">        prenotazione.setData(rs.getDate(2));</span>
+<span class="fc" id="L40">        prenotazione.setTime(rs.getTime(3));</span>
+<span class="fc" id="L41">        prenotazione.setConvalida(rs.getBoolean(4));</span>
+<span class="fc" id="L42">        prenotazione.setCodiceFiscale(rs.getString(5));</span>
+<span class="fc" id="L43">        prenotazione.setIdOperazione(rs.getInt(6));</span>
+<span class="fc" id="L44">        prenotazione.setIdStruttura(rs.getInt(7));</span>
       }
-<span class="fc" id="L47">      rs.close();</span>
-<span class="fc" id="L48">      query.close();</span>
-<span class="fc" id="L49">      con.close();</span>
-<span class="nc" id="L50">    } catch (SQLException e) {</span>
-<span class="nc" id="L51">      e.printStackTrace();</span>
-<span class="nc" id="L52">      System.err.println(&quot;SQLException:&quot; + e.getMessage());</span>
-<span class="fc" id="L53">    }</span>
-<span class="fc" id="L54">    return prenotazione;</span>
+<span class="fc" id="L46">      rs.close();</span>
+<span class="fc" id="L47">      query.close();</span>
+<span class="fc" id="L48">      con.close();</span>
+<span class="nc" id="L49">    } catch (SQLException e) {</span>
+<span class="nc" id="L50">      e.printStackTrace();</span>
+<span class="nc" id="L51">      System.err.println(&quot;SQLException:&quot; + e.getMessage());</span>
+<span class="fc" id="L52">    }</span>
+<span class="fc" id="L53">    return prenotazione;</span>
   }
 
   /**
    * Metodo che ci permette di ottenere una struttura ospedaliera dal database in base all'id.
    *
    * @param id id della struttura ospedaliera che si vuole prelevare dalla collezione Struttura
-   * @return struttura ospedaliera della collezione Struttura che ha come id, l'id passato come
-   *     parametro
+   * @return ritorna la struttura ospedaliera oppure null se non è presente nel database
+   * @pre id&gt;0
+   * @post Struttura-&gt;select(s|s.id==id)
    */
   public StrutturaBean getStruttura(int id) {
 <span class="fc" id="L65">    StrutturaBean struttura = null;</span>
@@ -92,32 +92,33 @@ public class DataAccess implements DaoInterface {
    * all'id.
    *
    * @param id id dell'operazione che si vuole prelevare dalla collezione Operazione
-   * @return operazione della collezione Operazione che ha come id, l'id passato come parametro al
-   *     metodo
+   * @return ritorna l'operazione
+   * @pre id&gt;o
+   * @post Operazione-&gt;select(o|o.id==id)
    */
   public OperazioneBean getOperazione(int id) {
-<span class="fc" id="L99">    OperazioneBean operazione = null;</span>
-<span class="fc" id="L100">    Connection con = null;</span>
+<span class="fc" id="L100">    OperazioneBean operazione = null;</span>
+<span class="fc" id="L101">    Connection con = null;</span>
     try {
-<span class="fc" id="L102">      String sql = &quot;SELECT * FROM MedQueue.Operazione WHERE Operazione.Id = ?&quot;;</span>
-<span class="fc" id="L103">      con = DriverManagerConnectionPool.getConnection();</span>
-<span class="fc" id="L104">      PreparedStatement query = con.prepareStatement(sql);</span>
-<span class="fc" id="L105">      query.setInt(1, id);</span>
-<span class="fc" id="L106">      ResultSet rs = query.executeQuery();</span>
-<span class="fc bfc" id="L107" title="All 2 branches covered.">      while (rs.next()) {</span>
-<span class="fc" id="L108">        operazione = new OperazioneBean();</span>
-<span class="fc" id="L109">        operazione.setId(rs.getInt(1));</span>
-<span class="fc" id="L110">        operazione.setTipoOperazione(rs.getString(2));</span>
-<span class="fc" id="L111">        operazione.setDescrizione(rs.getString(3));</span>
+<span class="fc" id="L103">      String sql = &quot;SELECT * FROM MedQueue.Operazione WHERE Operazione.Id = ?&quot;;</span>
+<span class="fc" id="L104">      con = DriverManagerConnectionPool.getConnection();</span>
+<span class="fc" id="L105">      PreparedStatement query = con.prepareStatement(sql);</span>
+<span class="fc" id="L106">      query.setInt(1, id);</span>
+<span class="fc" id="L107">      ResultSet rs = query.executeQuery();</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">      while (rs.next()) {</span>
+<span class="fc" id="L109">        operazione = new OperazioneBean();</span>
+<span class="fc" id="L110">        operazione.setId(rs.getInt(1));</span>
+<span class="fc" id="L111">        operazione.setTipoOperazione(rs.getString(2));</span>
+<span class="fc" id="L112">        operazione.setDescrizione(rs.getString(3));</span>
       }
-<span class="fc" id="L113">      query.close();</span>
-<span class="fc" id="L114">      rs.close();</span>
-<span class="fc" id="L115">      con.close();</span>
-<span class="nc" id="L116">    } catch (SQLException e) {</span>
-<span class="nc" id="L117">      e.printStackTrace();</span>
-<span class="nc" id="L118">      System.err.println(&quot;SQLException:&quot; + e.getMessage());</span>
-<span class="fc" id="L119">    }</span>
-<span class="fc" id="L120">    return operazione;</span>
+<span class="fc" id="L114">      query.close();</span>
+<span class="fc" id="L115">      rs.close();</span>
+<span class="fc" id="L116">      con.close();</span>
+<span class="nc" id="L117">    } catch (SQLException e) {</span>
+<span class="nc" id="L118">      e.printStackTrace();</span>
+<span class="nc" id="L119">      System.err.println(&quot;SQLException:&quot; + e.getMessage());</span>
+<span class="fc" id="L120">    }</span>
+<span class="fc" id="L121">    return operazione;</span>
   }
 
   /**
@@ -125,64 +126,66 @@ public class DataAccess implements DaoInterface {
    *
    * @param codicefiscale codice fiscale dell'impiegato che si vuole prelevare dalla collezione
    *     Impiegato
-   * @return impiegato della collezione Impiegato che ha come codice fiscale, il codice fiscale
-   *     passato come parametro al metodo
+   * @return ritorna l'impiegato ospedaliero
+   * @pre codicefiscale!=null &amp;&amp; codicefiscale.lenght==16
+   * @post Impiegato-&gt;select(i!i.codicefiscale==codicefiscale);
    */
   public ImpiegatoBean getImpiegato(String codicefiscale) {
-<span class="fc" id="L132">    ImpiegatoBean impiegato = null;</span>
-<span class="fc" id="L133">    Connection con = null;</span>
+<span class="fc" id="L134">    ImpiegatoBean impiegato = null;</span>
+<span class="fc" id="L135">    Connection con = null;</span>
     try {
-<span class="fc" id="L135">      String sql = &quot;SELECT * FROM MedQueue.Impiegato WHERE Impiegato.codiceFiscale = ?&quot;;</span>
-<span class="fc" id="L136">      con = DriverManagerConnectionPool.getConnection();</span>
-<span class="fc" id="L137">      PreparedStatement query = con.prepareStatement(sql);</span>
-<span class="fc" id="L138">      query.setString(1, codicefiscale);</span>
-<span class="fc" id="L139">      ResultSet rs = query.executeQuery();</span>
-<span class="fc bfc" id="L140" title="All 2 branches covered.">      while (rs.next()) {</span>
-<span class="fc" id="L141">        impiegato = new ImpiegatoBean();</span>
-<span class="fc" id="L142">        impiegato.setCodicefiscale(rs.getString(1));</span>
-<span class="fc" id="L143">        impiegato.setPassword(rs.getString(2));</span>
-<span class="fc" id="L144">        impiegato.setNome(rs.getString(3));</span>
-<span class="fc" id="L145">        impiegato.setCognome(rs.getString(4));</span>
-<span class="fc" id="L146">        impiegato.setDataDiNascita(rs.getDate(5));</span>
-<span class="fc" id="L147">        impiegato.setIndirizzoEmail(rs.getString(6));</span>
-<span class="fc" id="L148">        impiegato.setNumeroDiTelefono(rs.getString(7));</span>
-<span class="fc" id="L149">        impiegato.setIdStruttura(Integer.parseInt(rs.getString(8)));</span>
+<span class="fc" id="L137">      String sql = &quot;SELECT * FROM MedQueue.Impiegato WHERE Impiegato.codiceFiscale = ?&quot;;</span>
+<span class="fc" id="L138">      con = DriverManagerConnectionPool.getConnection();</span>
+<span class="fc" id="L139">      PreparedStatement query = con.prepareStatement(sql);</span>
+<span class="fc" id="L140">      query.setString(1, codicefiscale);</span>
+<span class="fc" id="L141">      ResultSet rs = query.executeQuery();</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">      while (rs.next()) {</span>
+<span class="fc" id="L143">        impiegato = new ImpiegatoBean();</span>
+<span class="fc" id="L144">        impiegato.setCodicefiscale(rs.getString(1));</span>
+<span class="fc" id="L145">        impiegato.setPassword(rs.getString(2));</span>
+<span class="fc" id="L146">        impiegato.setNome(rs.getString(3));</span>
+<span class="fc" id="L147">        impiegato.setCognome(rs.getString(4));</span>
+<span class="fc" id="L148">        impiegato.setDataDiNascita(rs.getDate(5));</span>
+<span class="fc" id="L149">        impiegato.setIndirizzoEmail(rs.getString(6));</span>
+<span class="fc" id="L150">        impiegato.setNumeroDiTelefono(rs.getString(7));</span>
+<span class="fc" id="L151">        impiegato.setIdStruttura(Integer.parseInt(rs.getString(8)));</span>
       }
-<span class="fc" id="L151">      query.close();</span>
-<span class="fc" id="L152">      rs.close();</span>
-<span class="fc" id="L153">      con.close();</span>
-<span class="nc" id="L154">    } catch (SQLException e) {</span>
-<span class="nc" id="L155">      e.printStackTrace();</span>
-<span class="nc" id="L156">      System.err.println(&quot;SQLException:&quot; + e.getMessage());</span>
-<span class="fc" id="L157">    }</span>
-<span class="fc" id="L158">    return impiegato;</span>
+<span class="fc" id="L153">      query.close();</span>
+<span class="fc" id="L154">      rs.close();</span>
+<span class="fc" id="L155">      con.close();</span>
+<span class="nc" id="L156">    } catch (SQLException e) {</span>
+<span class="nc" id="L157">      e.printStackTrace();</span>
+<span class="nc" id="L158">      System.err.println(&quot;SQLException:&quot; + e.getMessage());</span>
+<span class="fc" id="L159">    }</span>
+<span class="fc" id="L160">    return impiegato;</span>
   }
 
   /**
    * Metodo che restituisce tutte le operazioni per cui è possibile prenotarsi.
    *
-   * @return tutte le operazioni che fanno parte della collezione Operazione
+   * @return ritorna una lista di operazioni
+   * @post Operazioni-&gt;asSet(Operazioni)
    */
   public ArrayList&lt;OperazioneBean&gt; getOperazioni() {
-<span class="fc" id="L167">    ArrayList&lt;OperazioneBean&gt; operazioni = new ArrayList&lt;OperazioneBean&gt;();</span>
-<span class="fc" id="L168">    Connection con = null;</span>
+<span class="fc" id="L170">    ArrayList&lt;OperazioneBean&gt; operazioni = new ArrayList&lt;OperazioneBean&gt;();</span>
+<span class="fc" id="L171">    Connection con = null;</span>
     try {
-<span class="fc" id="L170">      String sql = &quot;SELECT * FROM MedQueue.Operazione&quot;;</span>
-<span class="fc" id="L171">      con = DriverManagerConnectionPool.getConnection();</span>
-<span class="fc" id="L172">      PreparedStatement query = con.prepareStatement(sql);</span>
-<span class="fc" id="L173">      ResultSet rs = query.executeQuery();</span>
-<span class="fc bfc" id="L174" title="All 2 branches covered.">      while (rs.next()) {</span>
-<span class="fc" id="L175">        operazioni.add(new OperazioneBean(rs.getInt(1), rs.getString(2), rs.getString(3)));</span>
+<span class="fc" id="L173">      String sql = &quot;SELECT * FROM MedQueue.Operazione&quot;;</span>
+<span class="fc" id="L174">      con = DriverManagerConnectionPool.getConnection();</span>
+<span class="fc" id="L175">      PreparedStatement query = con.prepareStatement(sql);</span>
+<span class="fc" id="L176">      ResultSet rs = query.executeQuery();</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">      while (rs.next()) {</span>
+<span class="fc" id="L178">        operazioni.add(new OperazioneBean(rs.getInt(1), rs.getString(2), rs.getString(3)));</span>
       }
-<span class="fc" id="L177">      query.close();</span>
-<span class="fc" id="L178">      rs.close();</span>
-<span class="fc" id="L179">      con.close();</span>
-<span class="nc" id="L180">    } catch (SQLException e) {</span>
-<span class="nc" id="L181">      e.printStackTrace();</span>
-<span class="nc" id="L182">      System.err.println(&quot;SQLException:&quot; + e.getMessage());</span>
-<span class="fc" id="L183">    }</span>
+<span class="fc" id="L180">      query.close();</span>
+<span class="fc" id="L181">      rs.close();</span>
+<span class="fc" id="L182">      con.close();</span>
+<span class="nc" id="L183">    } catch (SQLException e) {</span>
+<span class="nc" id="L184">      e.printStackTrace();</span>
+<span class="nc" id="L185">      System.err.println(&quot;SQLException:&quot; + e.getMessage());</span>
+<span class="fc" id="L186">    }</span>
 
-<span class="fc" id="L185">    return operazioni;</span>
+<span class="fc" id="L188">    return operazioni;</span>
   }
 
   /**
@@ -190,59 +193,61 @@ public class DataAccess implements DaoInterface {
    *
    * @param id id della prenotazione della collezione prenotazione da cancellare
    * @return 0 se la prenotazione non è stata cancellata, 1 se la prentoazione è stata cancellata
+   * @pre id&gt;0
+   * @post !Prenotazione-&gt;exists(p|p.id==id)
    */
   public int deletePrenotazione(int id) {
-<span class="fc" id="L195">    int delete = 0;</span>
-<span class="fc" id="L196">    Connection con = null;</span>
+<span class="fc" id="L200">    int delete = 0;</span>
+<span class="fc" id="L201">    Connection con = null;</span>
     try {
-<span class="fc" id="L198">      String sql = &quot;DELETE Prenotazione FROM MedQueue.Prenotazione WHERE Prenotazione.Id = ?&quot;;</span>
-<span class="fc" id="L199">      con = DriverManagerConnectionPool.getConnection();</span>
-<span class="fc" id="L200">      PreparedStatement query = con.prepareStatement(sql);</span>
-<span class="fc" id="L201">      query.setInt(1, id);</span>
-<span class="fc" id="L202">      delete = query.executeUpdate();</span>
-<span class="fc" id="L203">      query.close();</span>
-<span class="fc" id="L204">      con.close();</span>
-<span class="nc" id="L205">    } catch (SQLException e) {</span>
-<span class="nc" id="L206">      e.printStackTrace();</span>
-<span class="nc" id="L207">      System.err.println(&quot;SQLException:&quot; + e.getMessage());</span>
-<span class="fc" id="L208">    }</span>
-<span class="fc" id="L209">    return delete;</span>
+<span class="fc" id="L203">      String sql = &quot;DELETE Prenotazione FROM MedQueue.Prenotazione WHERE Prenotazione.Id = ?&quot;;</span>
+<span class="fc" id="L204">      con = DriverManagerConnectionPool.getConnection();</span>
+<span class="fc" id="L205">      PreparedStatement query = con.prepareStatement(sql);</span>
+<span class="fc" id="L206">      query.setInt(1, id);</span>
+<span class="fc" id="L207">      delete = query.executeUpdate();</span>
+<span class="fc" id="L208">      query.close();</span>
+<span class="fc" id="L209">      con.close();</span>
+<span class="nc" id="L210">    } catch (SQLException e) {</span>
+<span class="nc" id="L211">      e.printStackTrace();</span>
+<span class="nc" id="L212">      System.err.println(&quot;SQLException:&quot; + e.getMessage());</span>
+<span class="fc" id="L213">    }</span>
+<span class="fc" id="L214">    return delete;</span>
   }
 
   /**
-   * Metodo che restituisce il numero di prenotazioni da servire in base all'id dell'oprazione e
+   * Metodo che restituisce il numero di prenotazioni convalidate in base all'id dell'oprazione e
    * l'id della struttura.
    *
    * @param idOperazione id dell'operazione della collezione Operazione
    * @param idStruttura id della struttura della collezione Struttura
-   * @return size delle prenotazioni della collezione Prenotazione che hanno come idStruttura
-   *     l'idStruttura passato come parametro, come idOperazione l'idOperazione passato come
-   *     parametro e con la convalida a true
+   * @return numero prenotazioni convalidate
+   * @pre idOperazione&gt;0 &amp;&amp; idStruttura&gt;0
+   * @post Prenotazione-&gt;exists(p|p.idStruttura==idStruttura &amp;&amp; p.idOperazione==idOperazione &amp;&amp; p.convalida==true).size()
    */
   public int numPrenotazioni(int idOperazione, int idStruttura) {
-<span class="fc" id="L223">    int count = 0;</span>
-<span class="fc" id="L224">    Connection con = null;</span>
+<span class="fc" id="L228">    int count = 0;</span>
+<span class="fc" id="L229">    Connection con = null;</span>
     try {
-<span class="fc" id="L226">      String sql =</span>
+<span class="fc" id="L231">      String sql =</span>
           &quot;SELECT * FROM MedQueue.Prenotazione WHERE Prenotazione.convalida = 1 &quot;
               + &quot;AND Prenotazione.idOperazione = ?&quot;
               + &quot; AND Prenotazione.idStruttura = ?&quot;;
-<span class="fc" id="L230">      con = DriverManagerConnectionPool.getConnection();</span>
-<span class="fc" id="L231">      PreparedStatement query = con.prepareStatement(sql);</span>
-<span class="fc" id="L232">      query.setInt(1, idOperazione);</span>
-<span class="fc" id="L233">      query.setInt(2, idStruttura);</span>
-<span class="fc" id="L234">      ResultSet rs = query.executeQuery();</span>
-<span class="fc bfc" id="L235" title="All 2 branches covered.">      while (rs.next()) {</span>
-<span class="fc" id="L236">        count++;</span>
+<span class="fc" id="L235">      con = DriverManagerConnectionPool.getConnection();</span>
+<span class="fc" id="L236">      PreparedStatement query = con.prepareStatement(sql);</span>
+<span class="fc" id="L237">      query.setInt(1, idOperazione);</span>
+<span class="fc" id="L238">      query.setInt(2, idStruttura);</span>
+<span class="fc" id="L239">      ResultSet rs = query.executeQuery();</span>
+<span class="fc bfc" id="L240" title="All 2 branches covered.">      while (rs.next()) {</span>
+<span class="fc" id="L241">        count++;</span>
       }
-<span class="fc" id="L238">      query.close();</span>
-<span class="fc" id="L239">      rs.close();</span>
-<span class="fc" id="L240">      con.close();</span>
-<span class="nc" id="L241">    } catch (SQLException e) {</span>
-<span class="nc" id="L242">      e.printStackTrace();</span>
-<span class="nc" id="L243">      System.err.println(&quot;SQLException:&quot; + e.getMessage());</span>
-<span class="fc" id="L244">    }</span>
-<span class="fc" id="L245">    return count;</span>
+<span class="fc" id="L243">      query.close();</span>
+<span class="fc" id="L244">      rs.close();</span>
+<span class="fc" id="L245">      con.close();</span>
+<span class="nc" id="L246">    } catch (SQLException e) {</span>
+<span class="nc" id="L247">      e.printStackTrace();</span>
+<span class="nc" id="L248">      System.err.println(&quot;SQLException:&quot; + e.getMessage());</span>
+<span class="fc" id="L249">    }</span>
+<span class="fc" id="L250">    return count;</span>
   }
 
   /**
@@ -250,41 +255,41 @@ public class DataAccess implements DaoInterface {
    *
    * @param idOperazione id dell'operazione della collezione Operazione
    * @param idStruttura id della struttura della collezione Struttura
-   * @return prenotazione della collezione Prenotazione che hanno come idStruttura l'idStruttura
-   *     passato come parametro, come idOperazione l'idOperazione passato come parametro, con
-   *     convalida a true ed e la prima in odrine d'orario
+   * @return prenotazione da servire
+   * @pre idStruttura&gt;0 &amp;&amp; idOperazione&gt;0
+   * @post Prenotazione-&gt;select(p|p.idStruttura==idStruttura &amp;&amp; p.idOperazione==idOperazione &amp;&amp; p.convalida==true)
    */
   public PrenotazioneBean serviPrenotazione(int idOperazione, int idStruttura) {
-<span class="fc" id="L258">    PrenotazioneBean prenotazione = null;</span>
-<span class="fc" id="L259">    Connection con = null;</span>
+<span class="fc" id="L263">    PrenotazioneBean prenotazione = null;</span>
+<span class="fc" id="L264">    Connection con = null;</span>
     try {
-<span class="fc" id="L261">      String sql =</span>
+<span class="fc" id="L266">      String sql =</span>
           &quot;SELECT * FROM MedQueue.Prenotazione WHERE Prenotazione.convalida = 1 AND &quot;
               + &quot;Prenotazione.idOperazione = ? AND Prenotazione.idStruttura = ? ORDER BY ora&quot;;
-<span class="fc" id="L264">      con = DriverManagerConnectionPool.getConnection();</span>
-<span class="fc" id="L265">      PreparedStatement query = con.prepareStatement(sql);</span>
-<span class="fc" id="L266">      query.setInt(1, idOperazione);</span>
-<span class="fc" id="L267">      query.setInt(2, idStruttura);</span>
-<span class="fc" id="L268">      ResultSet rs = query.executeQuery();</span>
-<span class="fc bfc" id="L269" title="All 2 branches covered.">      while (rs.next()) {</span>
-<span class="fc" id="L270">        prenotazione = new PrenotazioneBean();</span>
-<span class="fc" id="L271">        prenotazione.setId(Integer.parseInt(rs.getString(1)));</span>
-<span class="fc" id="L272">        prenotazione.setData(rs.getDate(2));</span>
-<span class="fc" id="L273">        prenotazione.setTime(rs.getTime(3));</span>
-<span class="fc" id="L274">        prenotazione.setConvalida(Boolean.parseBoolean(rs.getString(4)));</span>
-<span class="fc" id="L275">        prenotazione.setCodiceFiscale(rs.getString(5));</span>
-<span class="fc" id="L276">        prenotazione.setIdOperazione(rs.getInt(6));</span>
-<span class="fc" id="L277">        prenotazione.setIdStruttura(rs.getInt(7));</span>
-<span class="fc" id="L278">        query.close();</span>
-<span class="fc" id="L279">        return prenotazione;</span>
+<span class="fc" id="L269">      con = DriverManagerConnectionPool.getConnection();</span>
+<span class="fc" id="L270">      PreparedStatement query = con.prepareStatement(sql);</span>
+<span class="fc" id="L271">      query.setInt(1, idOperazione);</span>
+<span class="fc" id="L272">      query.setInt(2, idStruttura);</span>
+<span class="fc" id="L273">      ResultSet rs = query.executeQuery();</span>
+<span class="fc bfc" id="L274" title="All 2 branches covered.">      while (rs.next()) {</span>
+<span class="fc" id="L275">        prenotazione = new PrenotazioneBean();</span>
+<span class="fc" id="L276">        prenotazione.setId(Integer.parseInt(rs.getString(1)));</span>
+<span class="fc" id="L277">        prenotazione.setData(rs.getDate(2));</span>
+<span class="fc" id="L278">        prenotazione.setTime(rs.getTime(3));</span>
+<span class="fc" id="L279">        prenotazione.setConvalida(Boolean.parseBoolean(rs.getString(4)));</span>
+<span class="fc" id="L280">        prenotazione.setCodiceFiscale(rs.getString(5));</span>
+<span class="fc" id="L281">        prenotazione.setIdOperazione(rs.getInt(6));</span>
+<span class="fc" id="L282">        prenotazione.setIdStruttura(rs.getInt(7));</span>
+<span class="fc" id="L283">        query.close();</span>
+<span class="fc" id="L284">        return prenotazione;</span>
       }
-<span class="fc" id="L281">      query.close();</span>
-<span class="fc" id="L282">      rs.close();</span>
-<span class="nc" id="L283">    } catch (SQLException e) {</span>
-<span class="nc" id="L284">      e.printStackTrace();</span>
-<span class="nc" id="L285">      System.err.println(&quot;SQLException:&quot; + e.getMessage());</span>
-<span class="fc" id="L286">    }</span>
-<span class="fc" id="L287">    return null;</span>
+<span class="fc" id="L286">      query.close();</span>
+<span class="fc" id="L287">      rs.close();</span>
+<span class="nc" id="L288">    } catch (SQLException e) {</span>
+<span class="nc" id="L289">      e.printStackTrace();</span>
+<span class="nc" id="L290">      System.err.println(&quot;SQLException:&quot; + e.getMessage());</span>
+<span class="fc" id="L291">    }</span>
+<span class="fc" id="L292">    return null;</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
