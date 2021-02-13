@@ -24,7 +24,7 @@ public class MostraPrenotazioneAccettataView implements ShowPrenotazioneInterfac
   private JLabel codicefiscale = new JLabel();
   private JPanel panneloCentrale = new JPanel();
 
-  /**Costruttore vuoto*/
+  /**Costruttore vuoto. */
   public MostraPrenotazioneAccettataView() {}
 
   /**

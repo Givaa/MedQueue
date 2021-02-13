@@ -2,7 +2,6 @@ package presentazione;
 
 import bean.ImpiegatoBean;
 import business.FacadeClassBusiness;
-import eccezioni.InvalidAccesException;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -10,7 +9,6 @@ import java.awt.Image;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.sql.Connection;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -22,21 +20,21 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 /**
- * Classe per generare un frame dove e possibile inserire le proprie credenziali ed eseguire un
+ * Classe per generare un frame dove è possibile inserire le proprie credenziali ed eseguire un
  * login.
  */
 public class LoginView implements LoginInterface {
   // Componenti della view
-  private JFrame framePannello;
-  private JTextField codiceFiscale;
-  private JPasswordField password;
-  private JButton accedi;
-  private JLabel errore;
-  private FacadeClassBusiness business;
+  private final JFrame framePannello;
+  private final JTextField codiceFiscale;
+  private final JPasswordField password;
+  private final JButton accedi;
+  private final JLabel errore;
+  private final FacadeClassBusiness business;
   private ControlPanelInterface pannelloDiControllo;
   private ImageIcon immagine;
 
-  /** Costruttore vuoto */
+  /** Costruttore vuoto. */
   public LoginView() {
     framePannello = new JFrame();
     codiceFiscale = new JTextField(16);
@@ -68,20 +66,20 @@ public class LoginView implements LoginInterface {
 
     accedi.addActionListener(
         l -> { // Action Listener sul bottone di connessione
-              // Verifico le credenziali dell'impiegato
-              ImpiegatoBean impiegato =
-                  business.autenticazione(codiceFiscale.getText(), password.getText());
-              if (impiegato != null) {
-                pannelloDiControllo = new ControlPanelView();
-                pannelloDiControllo.showControlPanel(impiegato);
-                codiceFiscale.setText("");
-                password.setText("");
-                errore.setText("");
-                framePannello.dispose();
-              } else { // Creo la prossima view e la rendo visibile
-                errore.setText("Credenziali errate");
-              } // Messaggio d'errore nel caso in cui le credenziali del
-              // impiegato sono sbagliate
+          // Verifico le credenziali dell'impiegato
+          ImpiegatoBean impiegato =
+              business.autenticazione(codiceFiscale.getText(), password.getText());
+          if (impiegato != null) {
+            pannelloDiControllo = new ControlPanelView();
+            pannelloDiControllo.showControlPanel(impiegato);
+            codiceFiscale.setText("");
+            password.setText("");
+            errore.setText("");
+            framePannello.dispose();
+          } else { // Creo la prossima view e la rendo visibile
+            errore.setText("Credenziali errate");
+          } // Messaggio d'errore nel caso in cui le credenziali del
+          // impiegato sono sbagliate
         });
 
     JCheckBox select = new JCheckBox("Mostra password");
@@ -91,7 +89,7 @@ public class LoginView implements LoginInterface {
         e -> {
           if (!(e.getStateChange()
               == ItemEvent.SELECTED)) { // Se la checkbox non e attiva nascondo la password
-            password.setEchoChar('•');
+            password.setEchoChar('*');
           } else {
             password.setEchoChar((char) 0); // Se la checkbox e attiva mostro la password
           }

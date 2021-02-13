@@ -4,7 +4,6 @@ import bean.ImpiegatoBean;
 import bean.OperazioneBean;
 import bean.PrenotazioneBean;
 import business.FacadeClassBusiness;
-import eccezioni.InvalidManagementException;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -14,7 +13,6 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -55,7 +53,7 @@ public class ControlPanelView implements ControlPanelInterface {
   private boolean servizioPrenotazione;
   private FacadeClassBusiness business;
 
-  /** Costruttore vuoto */
+  /** Costruttore vuoto. */
   public ControlPanelView() {
     frame = new JFrame();
     pannelloNord = new JPanel();
@@ -205,9 +203,9 @@ public class ControlPanelView implements ControlPanelInterface {
     for (int i = 0; i < listaCode.size(); i++) {
       // Creo il bottone che corrispondera ad un coda gestibile nel db
       JButton coda = new JButton();
-      // Setto il testo del button con il formato (tipo operazioni: prenotazioni in attesta di
-      // accettazioni)
-        coda.setText(
+      // Setto il testo del button con il formato
+      // (tipo operazioni: prenotazioni in attesta di accettazioni
+      coda.setText(
             listaCode.get(i).getTipoOperazione()
                 + ": "
                 + business.getSizeCoda(listaCode.get(i).getId(), idStruttura));
@@ -507,7 +505,7 @@ public class ControlPanelView implements ControlPanelInterface {
           instanceof
           JButton) { // Se la componente e un JButton aggiorno il testo (TipoOperazione: numero
         // prenotazioni)
-          numeroPrenotazioni.add(business.getSizeCoda(listaCode.get(j).getId(), idStruttura));
+        numeroPrenotazioni.add(business.getSizeCoda(listaCode.get(j).getId(), idStruttura));
         ((JButton) comp[i])
             .setText(listaCode.get(j).getTipoOperazione() + ": " + numeroPrenotazioni.get(j));
         j++; // La variabile j viene utilizzata poichè nel pannello non conterrà solo JButton quindi

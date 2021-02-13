@@ -2,11 +2,9 @@ package business;
 
 import bean.OperazioneBean;
 import bean.PrenotazioneBean;
-import eccezioni.InvalidKeyException;
-
 import java.util.ArrayList;
 
-/** Interfaccia che conterrà tutte le operazioni che l'impiegato puo effettuare. * */
+/** Interfaccia che conterrà tutte le operazioni che l'impiegato puo effettuare. */
 public interface GestioneInterface {
 
   /**
@@ -14,15 +12,16 @@ public interface GestioneInterface {
    *
    * @param idOp id della coda che l'impiegato gestisce
    * @param idStruttura id della struttura per la quale l'impiegato lavora
-   * @return ritorna le informazioni della prenotazione accettata che l'impiegato dovra servire oppure
-   *         se non ce ne sono null
+   * @return ritorna le informazioni della prenotazione accettata
+   *      che l'impiegato dovra servire oppure se non ce ne sono null
    * @pre idOperazione>0 && idStruttura>0
-   * @post Prenotazione->Select(p|p.idStruttura==idStruttura && p.idOperazione==idOperazione && p.convalida==true)
+   * @post Prenotazione->Select(p|p.idStruttura==idStruttura &&
+   *      p.idOperazione==idOperazione && p.convalida==true)
    */
   public PrenotazioneBean accettaPrenotazione(Integer idOp, Integer idStruttura);
 
   /**
-   * Permette di sapre il numero di prenotazioni in coda
+   * Permette di sapere il numero di prenotazioni in coda.
    *
    * @param idOperazione id della coda
    * @param idStruttura id della struttura che gestisce la coda
@@ -33,7 +32,7 @@ public interface GestioneInterface {
   public int getNumPrenotazioni(int idOperazione, int idStruttura);
 
   /**
-   * Permette di ottenere le code gestibili
+   * Permette di ottenere le code gestibili.
    *
    * @return ritorna una lista di code
    * @post Operazioni->asSet(Operazioni)
@@ -41,7 +40,7 @@ public interface GestioneInterface {
   public ArrayList<OperazioneBean> getListaOperazioni();
 
   /**
-   * Permette di avere le informazioni di una determinata coda
+   * Permette di avere le informazioni di una determinata coda.
    *
    * @param id id della coda
    * @return ritorna un oggetto contenente le informazioni della coda

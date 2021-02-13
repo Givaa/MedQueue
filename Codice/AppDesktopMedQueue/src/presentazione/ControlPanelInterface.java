@@ -4,7 +4,7 @@ import bean.ImpiegatoBean;
 import java.sql.Connection;
 
 /**
- * Interfaccia che fornisce il pannello di controllo che permettera all'impiegato di accettare
+ * Interfaccia che fornisce il pannello di controllo che permetterà all'impiegato di accettare
  * prenotazioni.
  */
 public interface ControlPanelInterface {

@@ -222,7 +222,8 @@ public class DataAccess implements DaoInterface {
    * @param idStruttura id della struttura della collezione Struttura
    * @return numero prenotazioni convalidate
    * @pre idOperazione>0 && idStruttura>0
-   * @post Prenotazione->exists(p|p.idStruttura==idStruttura && p.idOperazione==idOperazione && p.convalida==true).size()
+   * @post Prenotazione->exists(p|p.idStruttura==idStruttura &&
+   *      p.idOperazione==idOperazione && p.convalida==true).size()
    */
   public int numPrenotazioni(int idOperazione, int idStruttura) {
     int count = 0;
@@ -257,7 +258,8 @@ public class DataAccess implements DaoInterface {
    * @param idStruttura id della struttura della collezione Struttura
    * @return prenotazione da servire
    * @pre idStruttura>0 && idOperazione>0
-   * @post Prenotazione->select(p|p.idStruttura==idStruttura && p.idOperazione==idOperazione && p.convalida==true)
+   * @post Prenotazione->select(p|p.idStruttura==idStruttura &&
+   *      p.idOperazione==idOperazione && p.convalida==true)
    */
   public PrenotazioneBean serviPrenotazione(int idOperazione, int idStruttura) {
     PrenotazioneBean prenotazione = null;

@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 import persistence.DaoInterface;
 import persistence.DataAccess;
 
-/** Classe che implementa le funzionalita di business relative all'accesso di un impiegato. */
+/** Classe che implementa le funzionalità di business relative all'accesso di un impiegato. */
 public class Accesso implements AccessoInterface {
   DaoInterface daoOperation = new DataAccess();
 
@@ -14,13 +14,14 @@ public class Accesso implements AccessoInterface {
   public Accesso() {}
 
   /**
-   * Implementa la funzionalita di business che verifica le credenziali dell'impiegato.
+   * Implementa la funzionalità di business che verifica le credenziali dell'impiegato.
    *
    * @param cf codice fiscale dell'impiegato
    * @param pass password dell'impiegato
-   * @return restituise cun oggetto contenente le informazioni di un impiegato se le credenziali sono giuste oppure
-   *         un oggetto null se le credenziali sono sbagliate
-   * @throws InvalidKeyException se il codice fiscale o la password non rispetta il formato o non viene passata una password
+   * @return restituisce un oggetto contenente le informazioni di un impiegato
+   *      se le credenziali sono giuste oppure un oggetto null se le credenziali sono sbagliate
+   * @throws InvalidKeyException se il codice fiscale o la password non rispetta il formato
+   *      o non viene passata una password
    * @pre codicefiscale!=null && codicefiscale.lenght==16 && password!=null
    * @post Impiegato->select(i|i.codicefiscale==codicefiscale && i.password==password)
    */

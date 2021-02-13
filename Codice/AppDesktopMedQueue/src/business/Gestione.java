@@ -15,15 +15,18 @@ public class Gestione implements GestioneInterface {
   public Gestione() {}
 
   /**
-   * Implementa la funzionalita di business che permette ad un impiegato di accettare una prenotazione.
+   * Implementa la funzionalita di business che permette
+   *      ad un impiegato di accettare una prenotazione.
    *
    * @param idOp id della coda che l'impiegato gestisce
    * @param idStruttura id della struttura per la quale l'impiegato lavora
-   * @return ritorna le informazioni della prenotazione accettata che l'impiegato dovra servire oppure
+   * @return ritorna le informazioni della prenotazione accettata
+   *      che l'impiegato dovra servire oppure
    *        se non ce ne sono null
    * @throws InvalidKeyException se idOp oppure idStruttura sono minori o uguali di 0
    * @pre idOperazione>0 && idStruttura>0
-   * @post Prenotazione->Select(p|p.idStruttura==idStruttura && p.idOperazione==idOperazione && p.convalida==true)
+   * @post Prenotazione->Select(p|p.idStruttura==idStruttura &&
+   *       p.idOperazione==idOperazione && p.convalida==true)
    */
   public PrenotazioneBean accettaPrenotazione(Integer idOp, Integer idStruttura) {
     try {
@@ -52,7 +55,8 @@ public class Gestione implements GestioneInterface {
   }
 
   /**
-   * Implementa la funzionalita di business che permette di sapere il numero di prenotazioni in coda
+   * Implementa la funzionalità di business che
+   *      permette di sapere il numero di prenotazioni in coda.
    *
    * @param idOperazione id della coda
    * @param idStruttura id della struttura che gestisce la coda
@@ -75,7 +79,8 @@ public class Gestione implements GestioneInterface {
   }
 
   /**
-   * Implementa la funzionalita di business che permette all'impiegato di conoscere le code gestibili
+   * Implementa la funzionalità di business che
+   *      permette all'impiegato di conoscere le code gestibili.
    *
    * @return ritorna una lista di code
    * @post Operazioni->asSet(Operazioni)
@@ -85,7 +90,7 @@ public class Gestione implements GestioneInterface {
   }
 
   /**
-   * Implementa la funzionalità di business che restituisce le informazioni su una coda
+   * Implementa la funzionalità di business che restituisce le informazioni su una coda.
    *
    * @param id id della coda
    * @return ritorna un oggetto contenente le informazioni della coda
