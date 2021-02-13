@@ -26,11 +26,10 @@ public class FacadeClassBusiness {
    * @param pw password inserita dall impiegato
    * @return ritorna un oggetto contenente i dati dell'impiegato se l'autenticazione ha successo
    *     altrimenti null.
-   * @throws InvalidAccesException se il codice fiscale o la password non rispettano il formato
-   *     delle credenziali di un impiegato
    */
   public ImpiegatoBean autenticazione(String cf, String pw) {
     try {
+      //Controlla codice fiscale e password
       if (cf == null || cf.length() != 16 || pw == null) {
         throw new InvalidAccesException("Pre-condition violata");
       }
@@ -48,10 +47,10 @@ public class FacadeClassBusiness {
    * @param idStruttura id della struttura
    * @param idOperazione id della coda
    * @return ritorna un oggetto contenente i dati dell della prenotazione oppure un oggetto null
-   * @throws InvalidManagementException se l'idStruttura o l'idOperazione sono minori o uguale di 0
    */
   public PrenotazioneBean accettaPrenotazione(Integer idStruttura, Integer idOperazione) {
     try {
+      //Controlla l'id struttura e l'id operazione
       if (idStruttura <= 0 || idOperazione <= 0) {
         throw new InvalidManagementException("Pre-condition violata");
       }
@@ -76,10 +75,10 @@ public class FacadeClassBusiness {
    *
    * @param idOperazione id della coda
    * @return ritorna un oggetto contenente le informazioni sulla coda oppure un oggetto null
-   * @throws InvalidManagementException se l'idOperazione e minore o uguale di 0
    */
   public OperazioneBean getCoda(int idOperazione) {
     try {
+      //Controlla l'id operazione
       if (idOperazione <= 0) {
         throw new InvalidManagementException("Pre-condition violata");
       }
@@ -96,10 +95,10 @@ public class FacadeClassBusiness {
    * @param idOperazione id della coda
    * @param idStruttura id della struttura che gestisce la coda
    * @return ritorna il numero di prenotazioni
-   * @throws InvalidManagementException se l'idOperazion o l'idStruttua sono minori o uguali di 0
    */
   public int getSizeCoda(int idOperazione, int idStruttura) {
     try {
+      //Controllo l'id operazione e id struttura
       if (idOperazione <= 0 || idStruttura <= 0) {
         throw new InvalidManagementException("Pre-condition violata");
       }

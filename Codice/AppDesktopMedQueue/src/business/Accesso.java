@@ -10,23 +10,24 @@ import persistence.DataAccess;
 public class Accesso implements AccessoInterface {
   DaoInterface daoOperation = new DataAccess();
 
-
+  /** Costruttore vuoto. */
   public Accesso() {}
 
   /**
    * Implementa la funzionalità di business che verifica le credenziali dell'impiegato.
    *
+   * <p>Pre-condizione: codicefiscale!=null AND codicefiscale.lenght==16 AND password!=null <br>
+   * Post-condizione: Impiegato->select(i|i.codicefiscale==codicefiscale AND
+   * i.password==password)</p>
+   *
    * @param cf codice fiscale dell'impiegato
    * @param pass password dell'impiegato
    * @return restituisce un oggetto contenente le informazioni di un impiegato
    *      se le credenziali sono giuste oppure un oggetto null se le credenziali sono sbagliate
-   * @throws InvalidKeyException se il codice fiscale o la password non rispetta il formato
-   *      o non viene passata una password
-   * @pre codicefiscale!=null && codicefiscale.lenght==16 && password!=null
-   * @post Impiegato->select(i|i.codicefiscale==codicefiscale && i.password==password)
    */
   public ImpiegatoBean verificaCredenziali(String cf, String pass) {
     try {
+      //Controlla il codice fiscale
       if (Pattern.compile(
                   "^[a-zA-Z]{6}[0-9]{2}[abcdehlmprstABCDEHLMPRST]{1}"
                       + "[0-9]{2}([a-zA-Z]{1}[0-9]{3})[a-zA-Z]{1}$")
@@ -38,6 +39,7 @@ public class Accesso implements AccessoInterface {
       if (pass == null) {
         throw new InvalidKeyException("Password non inserita.");
       }
+      //Controlla la password
       if (Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$").matcher(pass).matches()
           == false) {
         throw new InvalidKeyException("Password non rispetta il formato.");

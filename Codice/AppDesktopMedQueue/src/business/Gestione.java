@@ -11,25 +11,25 @@ import persistence.DataAccess;
 public class Gestione implements GestioneInterface {
   private final DaoInterface dao = new DataAccess();
 
-
+  /** Costruttore vuoto. */
   public Gestione() {}
 
   /**
-   * Implementa la funzionalita di business che permette
-   *      ad un impiegato di accettare una prenotazione.
+   * Implementa la funzionalità di business che permette ad un impiegato di accettare una
+   * prenotazione.
+   *
+   * <p>Pre-condizione: idOperazione>0 AND idStruttura>0 <br>
+   * Post-condizione: Prenotazione->Select(p|
+   *    p.idStruttura==idStruttura AND * p.idOperazione==idOperazione AND p.convalida==true)</p>
    *
    * @param idOp id della coda che l'impiegato gestisce
    * @param idStruttura id della struttura per la quale l'impiegato lavora
-   * @return ritorna le informazioni della prenotazione accettata
-   *      che l'impiegato dovra servire oppure
-   *        se non ce ne sono null
-   * @throws InvalidKeyException se idOp oppure idStruttura sono minori o uguali di 0
-   * @pre idOperazione>0 && idStruttura>0
-   * @post Prenotazione->Select(p|p.idStruttura==idStruttura &&
-   *       p.idOperazione==idOperazione && p.convalida==true)
+   * @return ritorna le informazioni della prenotazione accettata che l'impiegato dovra servire
+   *     oppure se non ce ne sono null
    */
   public PrenotazioneBean accettaPrenotazione(Integer idOp, Integer idStruttura) {
     try {
+      //Controllo id operazione e struttura
       if (idOp == null || idStruttura == null) {
         throw new InvalidKeyException("Id non valido, occorre un id>0");
       }
@@ -58,15 +58,17 @@ public class Gestione implements GestioneInterface {
    * Implementa la funzionalità di business che
    *      permette di sapere il numero di prenotazioni in coda.
    *
+   * <p>Pre-condizione: idOperazione>0 AND idStruttura>0 <br>
+   * Post-condizione: Prenotazione->exists(p|p.idStruttura==idStruttura AND
+   *      p.idOperazione==idOperazione).size()</p>
+   *
    * @param idOperazione id della coda
    * @param idStruttura id della struttura che gestisce la coda
    * @return numero di prenotazioni in coda
-   * @throws InvalidKeyException se l'idOperazione oppure l'idStruttura sono minori o uguali a 0
-   * @pre idOperazione>0 && idStruttura>0
-   * @post Prenotazione->exists(p|p.idStruttura==idStruttura && p.idOperazione==idOperazione).size()
    */
   public int getNumPrenotazioni(int idOperazione, int idStruttura) {
     try {
+      //Controllo dell'id operazione e struttura
       if (idOperazione <= 0 || idStruttura <= 0) {
         throw new InvalidKeyException("Id non valido occorre un id>0");
       } else {
@@ -82,8 +84,9 @@ public class Gestione implements GestioneInterface {
    * Implementa la funzionalità di business che
    *      permette all'impiegato di conoscere le code gestibili.
    *
+   * <p>Post-condizione: Operazioni->asSet(Operazioni)</p>
+   *
    * @return ritorna una lista di code
-   * @post Operazioni->asSet(Operazioni)
    */
   public ArrayList<OperazioneBean> getListaOperazioni() {
     return dao.getOperazioni();
@@ -92,14 +95,15 @@ public class Gestione implements GestioneInterface {
   /**
    * Implementa la funzionalità di business che restituisce le informazioni su una coda.
    *
+   * <p>Pre-condizione: id > 0 <br>
+   * Post-condizione: Operazione->select(o|o.idOperazione==id)</p>
+   *
    * @param id id della coda
    * @return ritorna un oggetto contenente le informazioni della coda
-   * @throws InvalidKeyException se l'id e minore o uguale di 0
-   * @pre id>0
-   * @post Operazione->select(o|o.idOperazione==id)
    */
   public OperazioneBean getOperazione(int id) {
     try {
+      //Controllo sull'id
       if (id <= 0) {
         throw new InvalidKeyException("Id non valido occorre un id>0");
       } else {

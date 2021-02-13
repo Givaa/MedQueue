@@ -13,16 +13,19 @@ import java.util.ArrayList;
 /** Classe che permette operazioni sul database. */
 public class DataAccess implements DaoInterface {
 
-
+  /** Costruttore vuoto. */
   public DataAccess() {}
 
   /**
    * Metodo che ci permettere di ottenere una prenotazione dal database in base all'id.
    *
+   * <p>
+   *     Pre-condizione: id>0
+   *     Post-condizione: Prenotazione->select(p|p.id=id)
+   * </p>
+   *
    * @param id id della prenotazione che si vuole prelevare dalla collezione Prenotazione
    * @return ritorna la prenotazione oppure null se non è presente nel database
-   * @pre id>0
-   * @post Prenotazione->select(p|p.id=id)
    */
   public PrenotazioneBean getPrenotazione(int id) {
     PrenotazioneBean prenotazione = null;
@@ -56,10 +59,13 @@ public class DataAccess implements DaoInterface {
   /**
    * Metodo che ci permette di ottenere una struttura ospedaliera dal database in base all'id.
    *
+   * <p>
+   *     Pre-condizione: id>0
+   *     Post-condizione: Struttura->select(s|s.id==id)
+   * </p>
+   *
    * @param id id della struttura ospedaliera che si vuole prelevare dalla collezione Struttura
    * @return ritorna la struttura ospedaliera oppure null se non è presente nel database
-   * @pre id>0
-   * @post Struttura->select(s|s.id==id)
    */
   public StrutturaBean getStruttura(int id) {
     StrutturaBean struttura = null;
@@ -91,10 +97,13 @@ public class DataAccess implements DaoInterface {
    * Metodo che ci permette di ottenere un operazione per cui l'utente si puo prenotare in base
    * all'id.
    *
+   * <p>
+   *     Pre-condizione: id>o
+   *     Post-condizione: Operazione->select(o|o.id==id)
+   * </p>
+   *
    * @param id id dell'operazione che si vuole prelevare dalla collezione Operazione
    * @return ritorna l'operazione
-   * @pre id>o
-   * @post Operazione->select(o|o.id==id)
    */
   public OperazioneBean getOperazione(int id) {
     OperazioneBean operazione = null;
@@ -124,11 +133,14 @@ public class DataAccess implements DaoInterface {
   /**
    * Metodo che restituisce un impiegato di una struttura ospedaliera in base al codice fiscale.
    *
+   * <p>
+   *     Pre-condizione: codicefiscale!=null AND codicefiscale.lenght==16
+   *     Post-condizione: Impiegato->select(i!i.codicefiscale==codicefiscale);
+   * </p>
+   *
    * @param codicefiscale codice fiscale dell'impiegato che si vuole prelevare dalla collezione
    *     Impiegato
    * @return ritorna l'impiegato ospedaliero
-   * @pre codicefiscale!=null && codicefiscale.lenght==16
-   * @post Impiegato->select(i!i.codicefiscale==codicefiscale);
    */
   public ImpiegatoBean getImpiegato(String codicefiscale) {
     ImpiegatoBean impiegato = null;
@@ -163,8 +175,11 @@ public class DataAccess implements DaoInterface {
   /**
    * Metodo che restituisce tutte le operazioni per cui è possibile prenotarsi.
    *
+   * <p>
+   *     Post-condizione: Operazioni->asSet(Operazioni)
+   * </p>
+   *
    * @return ritorna una lista di operazioni
-   * @post Operazioni->asSet(Operazioni)
    */
   public ArrayList<OperazioneBean> getOperazioni() {
     ArrayList<OperazioneBean> operazioni = new ArrayList<OperazioneBean>();
@@ -191,10 +206,13 @@ public class DataAccess implements DaoInterface {
   /**
    * Metodo per cancellare una prenotazione dal database in base all'id.
    *
+   * <p>
+   *     Pre-condizione: id>0
+   *     Post-condizione: !Prenotazione->exists(p|p.id==id)
+   * </p>
+   *
    * @param id id della prenotazione della collezione prenotazione da cancellare
-   * @return 0 se la prenotazione non è stata cancellata, 1 se la prentoazione è stata cancellata
-   * @pre id>0
-   * @post !Prenotazione->exists(p|p.id==id)
+   * @return 0 se la prenotazione non è stata cancellata, 1 se la prenotazione è stata cancellata
    */
   public int deletePrenotazione(int id) {
     int delete = 0;
@@ -218,12 +236,13 @@ public class DataAccess implements DaoInterface {
    * Metodo che restituisce il numero di prenotazioni convalidate in base all'id dell'oprazione e
    * l'id della struttura.
    *
+   * <p>Pre-condizione: idOperazione>0 AND idStruttura>0
+   * Post-condizione: Prenotazione->exists(p|p.idStruttura==idStruttura AND
+   * p.idOperazione==idOperazione AND p.convalida==true).size()</p>
+   *
    * @param idOperazione id dell'operazione della collezione Operazione
    * @param idStruttura id della struttura della collezione Struttura
    * @return numero prenotazioni convalidate
-   * @pre idOperazione>0 && idStruttura>0
-   * @post Prenotazione->exists(p|p.idStruttura==idStruttura &&
-   *      p.idOperazione==idOperazione && p.convalida==true).size()
    */
   public int numPrenotazioni(int idOperazione, int idStruttura) {
     int count = 0;
@@ -254,12 +273,13 @@ public class DataAccess implements DaoInterface {
   /**
    * Metodo che restituisce la prima operazione da servire in base all'ora della prenotazione.
    *
+   * <p>Pre-condizione: idStruttura>0 AND idOperazione>0
+   * Post-condizione: Prenotazione->select(p|p.idStruttura==idStruttura AND
+   * p.idOperazione==idOperazione AND p.convalida==true)</p>
+   *
    * @param idOperazione id dell'operazione della collezione Operazione
    * @param idStruttura id della struttura della collezione Struttura
    * @return prenotazione da servire
-   * @pre idStruttura>0 && idOperazione>0
-   * @post Prenotazione->select(p|p.idStruttura==idStruttura &&
-   *      p.idOperazione==idOperazione && p.convalida==true)
    */
   public PrenotazioneBean serviPrenotazione(int idOperazione, int idStruttura) {
     PrenotazioneBean prenotazione = null;

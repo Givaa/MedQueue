@@ -8,13 +8,14 @@ public interface AccessoInterface {
 
   /**
    * Permette di verificare le credenziali di un impiegato.
+   * <p>Pre-condizione: codicefiscale!=null AND codicefiscale.lenght==16 AND password!=null <br>
+   * Post-condizione: Impiegato->select(i|i.codicefiscale==codicefiscale AND
+   * i.password==password)</p>
    *
    * @param cf codice fiscale dell'impiegato
    * @param password password dell'impiegato
    * @return restituisce un oggetto contenente le informazioni di un impiegato
    *      se le credenziali sono giuste oppure un oggetto null se le credenziali sono sbagliate
-   * @pre codicefiscale!=null && codicefiscale.lenght==16 && password!=null
-   * @post Impiegato->select(i|i.codicefiscale==codicefiscale && i.password==password)
    */
   public ImpiegatoBean verificaCredenziali(String cf, String password);
 }
