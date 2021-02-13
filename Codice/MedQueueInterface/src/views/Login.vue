@@ -82,7 +82,9 @@ export default {
             if (response === '') {
               this.presentAlert();
               return null;
-            } else {
+            } else if(response.codiceFiscale === null){
+              router.push("/Convalida");
+            } else{
               sessionStorage.setItem("codiceFiscale", response.codiceFiscale);
               sessionStorage.setItem("nome", response.nome);
               sessionStorage.setItem("cognome", response.cognome);

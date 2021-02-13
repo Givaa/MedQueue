@@ -105,6 +105,11 @@ export default {
       }
     }
   },
+  created() {
+    if (sessionStorage.getItem("codiceFiscale") === null) {
+      router.push("/Home");
+    }
+  },
   updated() {
     this.struttura = "";
     this.data = "";

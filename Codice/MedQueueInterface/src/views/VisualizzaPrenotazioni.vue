@@ -103,6 +103,9 @@ export default {
     }
   },
   created() {
+    if (sessionStorage.getItem("codiceFiscale") === null) {
+      router.push("/Home");
+    }
     this.getPrenotazioni();
   },
   methods: {

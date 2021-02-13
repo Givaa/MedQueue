@@ -27,14 +27,25 @@
         <div class="titolo1">Data</div>
         <div class="titolo2">Ora</div>
         <div class="titolo3">Tipo</div>
+        <br>
+        <br>
+
         <div class="colonna1">
-          <div id="data" v-bind:key="data" v-for="data in date">{{ data }}</div>
+          <div id="data" v-bind:key="data" v-for="data in date">
+            <div>{{ data }}</div>
+            <br>
+          </div>
         </div>
         <div class="colonna2">
-          <div id="ora" v-bind:key="ora" v-for="ora in ore">{{ ora }}</div>
+          <div id="ora" v-bind:key="ora" v-for="ora in ore">
+            <div>{{ ora }}</div>
+            <br>
+          </div>
         </div>
         <div class="colonna3">
-          <div id="prenotazione" v-bind:key="prenotazione" v-for="prenotazione in nomeOperazioni">{{ prenotazione }}
+          <div id="prenotazione" v-bind:key="prenotazione" v-for="prenotazione in nomeOperazioni">
+            <div>{{ prenotazione }}</div>
+            <br>
           </div>
         </div>
       </div>
@@ -55,6 +66,7 @@ import {
   IonTitle,
   IonToolbar
 } from '@ionic/vue';
+import router from "@/router";
 
 
 export default {
@@ -82,6 +94,9 @@ export default {
     };
   },
   created() {
+    if (sessionStorage.getItem("codiceFiscale") === null) {
+      router.push("/Home");
+    }
     this.getStrutture();
   },
   methods: {
@@ -94,10 +109,12 @@ export default {
     },
 
     updatePrenotazioni() {
-      for (let i = 0; i < this.ore.length; i++) {
+
+      for (let i = 0; i < this.nomeOperazioni.length; i++) {
         this.ore.pop();
         this.date.pop();
         this.operazioni.pop();
+        this.nomeOperazioni.pop();
       }
       prenotazioniAxios.getPrenotazioniByStruttura(this.selectedCod)
           .then((response) => {
@@ -142,10 +159,6 @@ export default {
 
 <style scoped>
 
-.logout {
-  float: right;
-}
-
 .selezione {
   width: 20%;
 }
@@ -170,17 +183,20 @@ div.colonna3 {
 }
 
 div.titolo1 {
+  font-weight: bold;
   float: left;
   margin-right: 36%;
   margin-left: 10%;
 }
 
 div.titolo2 {
+  font-weight: bold;
   float: left;
   margin-right: 38%;
 }
 
 div.titolo3 {
+  font-weight: bold;
   float: left;
 }
 
