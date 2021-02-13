@@ -62,6 +62,7 @@ class PrenotazioneDaoTest {
     @Test
     void getUtentePrenotazioni() throws SQLException {
         assertNotNull(prenotazioneModel.getUtentePrenotazioni("CCCNTN98H02F839V"));
+        assertNull(prenotazioneModel.getUtentePrenotazioni("CCCNTN98H02F839Z"));
     }
 
     @Test

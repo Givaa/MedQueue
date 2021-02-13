@@ -279,6 +279,7 @@ public class PrenotazioneModel implements PrenotazioneDaoInterface {
         result.add(tmp);
       }
     } catch (SQLException e) {
+      System.out.println("Non sto");
       e.printStackTrace();
     } finally {
       try {
@@ -290,6 +291,9 @@ public class PrenotazioneModel implements PrenotazioneDaoInterface {
       }
     }
 
+    if (result.isEmpty()) {
+      return null;
+    }
     return result;
   }
 

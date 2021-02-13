@@ -226,7 +226,7 @@ public class PrenotazioneController {
    */
   @PostMapping(value = "/convalida", produces = MediaType.APPLICATION_JSON_VALUE,
           consumes = MediaType.APPLICATION_JSON_VALUE)
-  public boolean convalidaPrenotazione(@RequestBody String body)
+  public int convalidaPrenotazione(@RequestBody String body)
           throws SQLException, ParseException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String cf = jsonObject.get("convalidaPrenotazione").getAsString();
@@ -247,26 +247,29 @@ public class PrenotazioneController {
             df.parse(d.toString() + " " + ora).getTime() + (600 * 1000);
     Long timeNow = System.currentTimeMillis();
     boolean checkCodFisc = cf.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
-
-    SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
+    
     Date dateNow = new Date(timeNow);
     Date dateMin = new Date(minHour);
     Date dateMax = new Date(maxHour);
 
-    Boolean checkTime = dateNow.after(dateMin) && dateNow.before(dateMax);
-
     if ((dateNow.toLocalDate().getDayOfMonth() == d.toLocalDate().getDayOfMonth())
             && (dateNow.toLocalDate().getMonth() == d.toLocalDate().getMonth())
-            && checkTime && checkCodFisc) {
+            && dateNow.after(dateMin) && dateNow.before(dateMax) && checkCodFisc) {
 
       prenotazioneBean.setConvalida(true);
       prenotazioneDaoInterface.doUpdate(prenotazioneBean);
-      return true;
-    } else if ( !checkCodFisc ) {
-      System.exit(401);
+      return 1;
+    } else if (!((dateNow.toLocalDate().getDayOfMonth() == d.toLocalDate().getDayOfMonth())
+            && (dateNow.toLocalDate().getMonth() == d.toLocalDate().getMonth()))) {
+      return 2;
+    } else if (!dateNow.after(dateMin)) {
+      return 3;
+    } else if (!dateNow.before(dateMax)) {
+      prenotazioneDaoInterface.doDelete(prenotazioneBean);
+      return 4;
     }
 
-    return false;
+    return 0;
   }
 
   /**
