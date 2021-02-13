@@ -103,10 +103,11 @@ export default {
 
     updatePrenotazioni() {
 
-      for (let i = 0; i < this.ore.length; i++) {
+      for (let i = 0; i < this.nomeOperazioni.length; i++) {
         this.ore.pop();
         this.date.pop();
         this.operazioni.pop();
+        this.nomeOperazioni.pop();
       }
       prenotazioniAxios.getPrenotazioniByStruttura(this.selectedCod)
           .then((response) => {

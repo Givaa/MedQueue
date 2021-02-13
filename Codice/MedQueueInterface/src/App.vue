@@ -137,8 +137,6 @@ export default defineComponent({
   methods: {
     logOut() {
       sessionStorage.clear();
-      //const x = document.cookie;
-      //console.log(x);
       router.push("/Home");
     },
 

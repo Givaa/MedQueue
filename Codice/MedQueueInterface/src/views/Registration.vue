@@ -29,7 +29,8 @@
             <ion-label>Password</ion-label>
             <ion-input id="psw" v-model="password" type="password" placeholder="Password"
                        pattern="(?=^.{8,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*$"
-                       required="true"></ion-input>
+                       required="true"
+                       title="Deve contenere almeno 1 lettera maiuscola, 1 numero e 1 carattere speciale e deve essere lunga almeno 8 caratteri"></ion-input>
             <ion-label>Data di Nascita</ion-label>
             <ion-datetime id="data" v-model="dataDiNascita" displayFormat="DD-MM-YYYY" placeholder="Data di nascita"
                           required="true"></ion-datetime>

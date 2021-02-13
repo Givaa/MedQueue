@@ -1,5 +1,5 @@
 <template>
-  <ion-page>
+  <ion-page >
     <ion-content id="menu">
       <ion-header :translucent="true">
         <ion-toolbar>
@@ -50,6 +50,11 @@ export default {
   data() {
     return {
       nome: sessionStorage.getItem("nome")
+    }
+  },
+  created() {
+    if (sessionStorage.getItem("codiceFiscale") === null) {
+      router.push("/Home");
     }
   },
   mounted() {

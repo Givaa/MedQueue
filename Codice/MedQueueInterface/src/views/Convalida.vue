@@ -60,12 +60,18 @@ export default {
     async convalda() {
       await prenotazioniAxios.convalida(this.codiceFiscale)
           .then((response) => {
-            if (response === true) {
+            if (response === 1) {
               this.alertGood();
-            } else if(response === false){
-              this.alertBad();
-            }else if(response.status === 401){
+            } else if (response === 2) {
+              this.alertDay();
+            } else if (response === 0) {
               this.alertCd()
+            } else if (response === 3) {
+              this.alertPre()
+            } else if (response === 4) {
+              this.alertPost()
+            } else if (response === 5) {
+              this.alertConv()
             }
           })
     },
@@ -78,9 +84,9 @@ export default {
       return alert.present();
     },
 
-    async alertBad() {
+    async alertDay() {
       const alert = await alertController.create({
-        header: 'Prenotazione non Convalidata',
+        header: 'Non ci sono prenotazioni per oggi',
         buttons: ['OK'],
       });
       return alert.present();
@@ -88,14 +94,35 @@ export default {
 
     async alertCd() {
       const alert = await alertController.create({
-        header: 'Codice Fiscale non valido',
+        header: 'Codice Fiscale non trovato',
         buttons: ['OK'],
       });
       return alert.present();
+    },
+    async alertPre() {
+      const alert = await alertController.create({
+        header: 'Sei arrivato troppo presto, torna più tardi',
+        buttons: ['OK'],
+      });
+      return alert.present();
+    },
+    async alertPost() {
+      const alert = await alertController.create({
+        header: 'Sei arrivato troppo tardi, la tua prenotazione è scaduta',
+        buttons: ['OK'],
+      });
+      return alert.present();
+    },
+    async alertConv() {
+      const alert = await alertController.create({
+        header: 'Prenotazione già convalidata',
+        buttons: ['OK'],
+      });
+      return alert.present();
+
     }
 
   }
-
 }
 </script>
 
