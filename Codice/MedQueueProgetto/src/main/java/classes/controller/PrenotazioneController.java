@@ -256,10 +256,7 @@ public class PrenotazioneController {
     Date dateMin = new Date(minHour);
     Date dateMax = new Date(maxHour);
 
-    if ((dateNow.toLocalDate().getDayOfMonth() == d.toLocalDate().getDayOfMonth())
-            && (dateNow.toLocalDate().getMonth() == d.toLocalDate().getMonth())
-            && dateNow.after(dateMin) && dateNow.before(dateMax) && checkCodFisc) {
-
+    if (checkCodFisc) {
       prenotazioneBean.setConvalida(true);
       prenotazioneDaoInterface.doUpdate(prenotazioneBean);
       return 1;
