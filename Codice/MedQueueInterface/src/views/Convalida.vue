@@ -62,8 +62,10 @@ export default {
           .then((response) => {
             if (response === true) {
               this.alertGood();
-            } else {
+            } else if(response === false){
               this.alertBad();
+            }else if(response.status === 401){
+              this.alertCd()
             }
           })
     },
@@ -82,7 +84,16 @@ export default {
         buttons: ['OK'],
       });
       return alert.present();
+    },
+
+    async alertCd() {
+      const alert = await alertController.create({
+        header: 'Codice Fiscale non valido',
+        buttons: ['OK'],
+      });
+      return alert.present();
     }
+
   }
 
 }
