@@ -86,7 +86,8 @@ INSERT INTO Utente VALUES
 ('CRLNTN92S15H703Q','antonioc','Antonio','Cirillo','1992/11/15','a.cirilli@docenti.unisa.it','3545251111'),
 ('DRGMRA99D09A509V','mario99','Mario','De Riggi','1999/04/09','mario.deriggi@gmail.com','3435678901'),
 ('SQLRFL97R10F839C','raff97','Raffaele','Squillante','1997/10/10','raffaele.sq@gmail.com','3789292020'),
-('SQLRFL97R10F839D','raff98','Raffaele','Squillante','1998/10/10','raffaele.sq@gmail.com','3789292021');
+('SQLRFL97R10F839D','raff98','Raffaele','Squillante','1998/10/10','raffaele.sq@gmail.com','3789292021'),
+('CRLNTN92S15H703Z', 'Crill1!', 'Antonio', 'Cirillo', '2000/10/10', 'cirilloantonio@gmail.com', '3789292221');
 
 
 INSERT INTO Ambulatorio(nome, idStruttura) VALUES

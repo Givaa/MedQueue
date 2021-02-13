@@ -100,7 +100,7 @@ class UtenteControllerTest {
         assertTrue(utenteController.updateUtente(rootObject.toString()));
 
         jsonElement =
-        parser.parse("{\"updateUtenteCf\":\"DRGMRA99D09A509C\",\""
+        parser.parse("{\"updateUtenteCf\":\"DRGMRA99D09A509R\",\""
                 + "updateUtentePassword\":\"Mario99!\",\""
                 + "updateUtenteCognome\":\"Mario\",\""
                 + "updateUtenteNome\":\"De Riggi\",\""

@@ -3,6 +3,7 @@ package classes.controller;
 import classes.controller.exception.ErrorNewObjectException;
 import classes.controller.exception.InvalidKeyException;
 import classes.controller.exception.ObjectNotFoundException;
+import classes.model.bean.entity.PrenotazioneBean;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -153,8 +155,48 @@ class PrenotazioneControllerTest {
         rootObject = jsonElement.getAsJsonObject();
         assertNotNull(prenotazioneController.convalidaPrenotazione(rootObject.toString()));
 
+        //Convalida già eseguita
+        assertNotNull(prenotazioneController.convalidaPrenotazione(rootObject.toString()));
+
         //Convalida non possibile
         jsonElement = parser.parse("{\"convalidaPrenotazione\":\"CCCNTN98H02F839V\"}");
+        rootObject = jsonElement.getAsJsonObject();
+        assertNotNull(prenotazioneController.convalidaPrenotazione(rootObject.toString()));
+
+        // Convalida dopo la scadenza
+        LocalDateTime dataScaduta = LocalDateTime.now().plusMinutes(40);
+        String scaduta = dataScaduta.getHour() + ":" + dataScaduta.getMinute() + ":" + dataScaduta.getSecond();
+        jsonElement = parser.parse(
+                "{\"newPrenotazioniCf\":\"CRLNTN92S15H703Z\"," +
+                        "\"newPrenotazioniOra\":\""+scaduta+"\"," +
+                        "\"newPrenotazioniIdOp\":\"1\"," +
+                        "\"newPrenotazioniIdS\":\"1\"," +
+                        "\"newPrenotazioneData\":\""+dataScaduta+"\"}");
+        rootObject = jsonElement.getAsJsonObject();
+        assertTrue(prenotazioneController.newPrenotazione(rootObject.toString()));
+
+        jsonElement = parser.parse("{\"convalidaPrenotazione\":\"CRLNTN92S15H703Z\"}");
+        rootObject = jsonElement.getAsJsonObject();
+        assertNotNull(prenotazioneController.convalidaPrenotazione(rootObject.toString()));
+
+        // Convalida dopo la scadenza
+        LocalDateTime dataPrima = LocalDateTime.now().minusMinutes(40);
+        String troppoPrima = dataPrima.getHour() + ":" + dataPrima.getMinute() + ":" + dataPrima.getSecond();
+        jsonElement = parser.parse(
+                "{\"newPrenotazioniCf\":\"CRLNTN92S15H703Z\"," +
+                        "\"newPrenotazioniOra\":\""+troppoPrima+"\"," +
+                        "\"newPrenotazioniIdOp\":\"1\"," +
+                        "\"newPrenotazioniIdS\":\"1\"," +
+                        "\"newPrenotazioneData\":\""+dataPrima+"\"}");
+        rootObject = jsonElement.getAsJsonObject();
+        assertTrue(prenotazioneController.newPrenotazione(rootObject.toString()));
+
+        jsonElement = parser.parse("{\"convalidaPrenotazione\":\"CRLNTN92S15H703Z\"}");
+        rootObject = jsonElement.getAsJsonObject();
+        assertNotNull(prenotazioneController.convalidaPrenotazione(rootObject.toString()));
+
+        //Codice Fiscale falso
+        jsonElement = parser.parse("{\"convalidaPrenotazione\":\"FALSOHAHA\"}");
         rootObject = jsonElement.getAsJsonObject();
         assertNotNull(prenotazioneController.convalidaPrenotazione(rootObject.toString()));
     }

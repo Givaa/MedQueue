@@ -250,15 +250,12 @@ public class PrenotazioneController {
     Long maxHour =
             df.parse(d.toString() + " " + ora).getTime() + (600 * 1000);
     Long timeNow = System.currentTimeMillis();
-    boolean checkCodFisc = cf.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
 
     Date dateNow = new Date(timeNow);
     Date dateMin = new Date(minHour);
     Date dateMax = new Date(maxHour);
 
-    if (!checkCodFisc) {
-      return 0;
-    } else if (!((dateNow.toLocalDate().getDayOfMonth() == d.toLocalDate().getDayOfMonth())
+    if (!((dateNow.toLocalDate().getDayOfMonth() == d.toLocalDate().getDayOfMonth())
             && (dateNow.toLocalDate().getMonth() == d.toLocalDate().getMonth()))) {
       return 2;
     } else if (!dateNow.after(dateMin)) {
