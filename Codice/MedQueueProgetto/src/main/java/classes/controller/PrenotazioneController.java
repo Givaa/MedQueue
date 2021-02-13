@@ -266,6 +266,8 @@ public class PrenotazioneController {
     } else if (!dateNow.before(dateMax)) {
       prenotazioneDaoInterface.doDelete(prenotazioneBean);
       return 4;
+    } else if (prenotazioneBean.isConvalida()) {
+      return 5;
     } else {
       prenotazioneBean.setConvalida(true);
       prenotazioneDaoInterface.doUpdate(prenotazioneBean);
