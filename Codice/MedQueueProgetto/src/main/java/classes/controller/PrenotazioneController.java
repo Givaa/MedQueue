@@ -109,6 +109,7 @@ public class PrenotazioneController {
     String data = jsonObject.get("newPrenotazioneData").getAsString();
     java.util.Date tmp = new SimpleDateFormat("yyyy-MM-dd").parse(data);
     java.sql.Date dataPrenotazione = new Date(tmp.getTime());
+    System.out.println(data + " " + dataPrenotazione);
 
     StrutturaBean strutturaBean;
     OperazioneBean operazioneBean;
@@ -169,9 +170,10 @@ public class PrenotazioneController {
     java.util.Date tmp = new SimpleDateFormat("yyyy-MM-dd").parse(data);
     java.sql.Date dataPrenotazione = new Date(tmp.getTime());
     Boolean cv = jsonObject.get("updatePrenotazioneConvalida").getAsBoolean();
-    PrenotazioneBean p = prenotazioneDaoInterface.doRetrieveByKey(Integer.valueOf(id));
+    PrenotazioneBean prenotazioneBean =
+            prenotazioneDaoInterface.doRetrieveByKey(Integer.valueOf(id));
 
-    if (p != null) {
+    if (prenotazioneBean != null) {
       StrutturaBean strutturaBean;
       OperazioneBean operazioneBean;
       operazioneBean = operazioneDaoInterface.doRetrieveByKey(Integer.valueOf(idOperazione));
@@ -181,16 +183,16 @@ public class PrenotazioneController {
       boolean checkOra = ora.matches("^([0-1][0-9]|[2][0-3]):([0-5][0-9]):([0-5][0-9])$");
 
       if (checkCodFisc && checkOra && operazioneBean != null && strutturaBean != null) {
-        p.setDataPrenotazione(dataPrenotazione);
-        p.setConvalida(cv);
-        p.setCodiceFiscale(cf);
-        p.setIdStruttura(Integer.valueOf(idStruttura));
-        p.setIdOperazione(Integer.valueOf(idOperazione));
-        p.setOra(ora);
-        prenotazioneDaoInterface.doUpdate(p);
+        prenotazioneBean.setDataPrenotazione(dataPrenotazione);
+        prenotazioneBean.setConvalida(cv);
+        prenotazioneBean.setCodiceFiscale(cf);
+        prenotazioneBean.setIdStruttura(Integer.valueOf(idStruttura));
+        prenotazioneBean.setIdOperazione(Integer.valueOf(idOperazione));
+        prenotazioneBean.setOra(ora);
+        prenotazioneDaoInterface.doUpdate(prenotazioneBean);
         return true;
       } else {
-        return false;
+        throw new ErrorNewObjectException("Errore nell'aggiornamento della prenotazione");
       }
     } else {
       throw new ObjectNotFoundException(new PrenotazioneBean());
@@ -232,11 +234,10 @@ public class PrenotazioneController {
     Collection<PrenotazioneBean> collection = prenotazioneDaoInterface.getUtentePrenotazioni(cf);
     Iterator iter = collection.iterator();
     PrenotazioneBean prenotazioneBean = (PrenotazioneBean) iter.next();
-    System.out.println(prenotazioneBean);
 
     //Impostazioni variabili data, ora e codice fiscale
     prenotazioneBean.getDataPrenotazione();
-    Date d = prenotazioneBean.getDataPrenotazione();
+    java.sql.Date d = prenotazioneBean.getDataPrenotazione();
     String ora = prenotazioneBean.getOra();
     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     Long minHour = df.parse(d.toString() + " " + ora).getTime();
@@ -247,11 +248,10 @@ public class PrenotazioneController {
     boolean checkCodFisc = cf.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
     LocalDateTime now = LocalDateTime.now();
 
-    System.out.println(minHour  +"-"+ maxHour +"-"+ timeNow);
+    //System.out.println( now.getDayOfMonth() + " " +  d.toLocalDate().getDayOfMonth() + " " + now.getMonth() + " " +  d.toLocalDate().getMonth());
     if ((now.getDayOfMonth() == d.toLocalDate().getDayOfMonth())
             && (now.getMonth() == d.toLocalDate().getMonth())
-            && ((timeNow >= minHour) && (timeNow <= maxHour))
-      && checkCodFisc) {
+            && ((timeNow >= minHour) && (timeNow <= maxHour)) && checkCodFisc) {
       prenotazioneBean.setConvalida(true);
       prenotazioneDaoInterface.doUpdate(prenotazioneBean);
       return true;

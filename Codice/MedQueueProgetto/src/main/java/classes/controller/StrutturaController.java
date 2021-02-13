@@ -65,7 +65,7 @@ public class StrutturaController {
     if (strutturaBean != null) {
       return strutturaBean;
     } else {
-      throw new ObjectNotFoundException(strutturaBean);
+      throw new ObjectNotFoundException(new StrutturaBean());
     }
   }
 
@@ -147,27 +147,27 @@ public class StrutturaController {
   public boolean updateStruttura(@RequestBody String body) throws SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String id = jsonObject.get("updateStrutturaId").getAsString();
-    StrutturaBean s = strutturaModel.doRetrieveByKey(Integer.valueOf(id));
+    StrutturaBean strutturaBean = strutturaModel.doRetrieveByKey(Integer.valueOf(id));
     String nome = jsonObject.get("updateStrutturaNome").getAsString();
     String indirizzo = jsonObject.get("updateStrutturaInd").getAsString();
     String numeroCell = jsonObject.get("updateStrutturaNumeroCell").getAsString();
 
-    if (s != null) {
+    if (strutturaBean != null) {
       boolean checkNome = nome.matches("[A-Za-z ]+$");
       boolean checkIndirizzo = indirizzo.matches("^[A-Za-z0-9\\-\\s,\\/]*$");
       boolean checkNumeroCell = numeroCell.matches("^[0-9]{10,12}");
 
       if (checkIndirizzo && checkNome && checkNumeroCell) {
-        s.setNumeroDiTelefono(numeroCell);
-        s.setNome(nome);
-        s.setIndirizzo(indirizzo);
-        strutturaModel.doUpdate(s);
+        strutturaBean.setNumeroDiTelefono(numeroCell);
+        strutturaBean.setNome(nome);
+        strutturaBean.setIndirizzo(indirizzo);
+        strutturaModel.doUpdate(strutturaBean);
         return true;
       } else {
         return false;
       }
     } else {
-      throw new ObjectNotFoundException(s);
+      throw new ObjectNotFoundException(new StrutturaBean());
     }
   }
 }

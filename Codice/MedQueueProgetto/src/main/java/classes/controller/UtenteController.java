@@ -88,7 +88,6 @@ public class UtenteController {
     checkPassword =
             password.matches("(?=^.{8,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*$");
 
-
     String cognome = jsonObject.get("newUtenteCognome").getAsString();
     Boolean checkSurname;
     checkSurname = cognome.matches("[A-Za-z]+$");
@@ -166,11 +165,11 @@ public class UtenteController {
 
       String cognome = jsonObject.get("updateUtenteCognome").getAsString();
       Boolean checkSurname;
-      checkSurname = cognome.matches("[A-Za-z]+$");
+      checkSurname = cognome.matches("[A-Za-z ]+$");
 
       String nome = jsonObject.get("updateUtenteNome").getAsString();
       Boolean checkName;
-      checkName = nome.matches("[A-Za-z]+$");
+      checkName = nome.matches("[A-Za-z ]+$");
 
       String phoneNumber = jsonObject.get("updateUtentePhoneNumber").getAsString();
       Boolean checkPhoneNumber;
@@ -194,9 +193,9 @@ public class UtenteController {
         utenteModel.doUpdate(u);
         return true;
       } else {
-        return false;
+        throw new ErrorNewObjectException(new UtenteBean());
       }
     }
-    return false;
+    throw new ObjectNotFoundException(new UtenteBean());
   }
 }

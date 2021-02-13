@@ -1,5 +1,6 @@
 package classes.controller;
 
+import classes.controller.exception.ErrorNewObjectException;
 import classes.controller.exception.InvalidKeyException;
 import classes.controller.exception.ObjectNotFoundException;
 import classes.model.bean.entity.UtenteBean;
@@ -8,6 +9,9 @@ import classes.model.interfaces.UtenteDaoInterface;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
@@ -51,8 +55,7 @@ class UtenteControllerTest {
 
     @Test
     void newUtente() throws SQLException, ParseException {
-    jsonElement =
-        parser.parse(
+        jsonElement = parser.parse(
             "{\"newUtenteCf\":\"JPXZLH58S22L917F\",\""
                 + "newUtentePassword\":\"Prova112!\",\""
                 + "newUtenteCognome\":\"Provinocontrollerc\",\""
@@ -62,25 +65,63 @@ class UtenteControllerTest {
                 + "newUtenteDataN\":\"1999-12-31\"}");
         rootObject = jsonElement.getAsJsonObject();
         assertTrue(utenteController.newUtente(rootObject.toString()));
+
+        jsonElement = parser.parse(
+                "{\"newUtenteCf\":\"ERRORE PROVA1\",\""
+                        + "newUtentePassword\":\"Prova112!\",\""
+                        + "newUtenteCognome\":\"Provinocontrollerc\",\""
+                        + "newUtenteNome\":\"Provinocontrollern\",\""
+                        + "newUtentePhoneNumber\":\"3271219447\",\""
+                        + "newUtenteEmail\":\"provino@live.it\",\""
+                        + "newUtenteDataN\":\"1999-12-31\"}");
+        rootObject = jsonElement.getAsJsonObject();
+        ErrorNewObjectException errorNewObjectException = assertThrows(ErrorNewObjectException.class, () -> {
+            utenteController.newUtente(rootObject.toString());
+        });
     }
 
     @Test
     void deleteUtente() throws SQLException {
-        jsonElement = parser.parse("{\"deleteUtenteId\":\"JPXZLH58S22L917F\"}");
+        jsonElement = parser.parse("{\"deleteUtenteId\":\"SQLRFL97R10F839C\"}");
         rootObject = jsonElement.getAsJsonObject();
         utenteController.deleteUtente(rootObject.toString());
     }
 
     @Test
     void updateUtente() throws SQLException, ParseException {
-        jsonElement = parser.parse(
-                "{\"updateUtenteCf\":\"JPXZLH58S22L917F\",\"updateUtentePassword\":\"Prova123!\",\""
-                        + "updateUtenteCognome\":\"ProvinoControllerC\",\""
-                        + "updateUtenteNome\":\"ProvinoControllerN\",\""
-                        + "updateUtentePhoneNumber\":\"3271219447\",\""
+        jsonElement = parser.parse("{\"updateUtenteCf\":\"DRGMRA99D09A509V\",\""
+                        + "updateUtentePassword\":\"Mario99!\",\""
+                        + "updateUtenteCognome\":\"Mario\",\""
+                        + "updateUtenteNome\":\"De Riggi\",\""
+                        + "updateUtentePhoneNumber\":\"3435678901\",\""
+                        + "updateUtenteEmail\":\"marioderiggi@gmail.com\",\""
+                        + "updateUtenteDataN\":\"2000-06-02\"}");
+        rootObject = jsonElement.getAsJsonObject();
+        assertTrue(utenteController.updateUtente(rootObject.toString()));
+
+        jsonElement =
+        parser.parse("{\"updateUtenteCf\":\"DRGMRA99D09A509C\",\""
+                + "updateUtentePassword\":\"Mario99!\",\""
+                + "updateUtenteCognome\":\"Mario\",\""
+                + "updateUtenteNome\":\"De Riggi\",\""
+                + "updateUtentePhoneNumber\":\"3435678901\",\""
+                + "updateUtenteEmail\":\"marioderiggi@gmail.com\",\""
+                + "updateUtenteDataN\":\"2000-06-02\"}");
+        rootObject = jsonElement.getAsJsonObject();
+        ObjectNotFoundException objectNotFoundException = assertThrows(ObjectNotFoundException.class, () -> {
+            utenteController.updateUtente(rootObject.toString());
+        });
+
+        jsonElement = parser.parse("{\"updateUtenteCf\":\"CCCNTN98H02F839V\",\""
+                        + "updateUtentePassword\":\"No\",\""
+                        + "updateUtenteCognome\":\"12324\",\""
+                        + "updateUtenteNome\":\"13214\",\""
+                        + "updateUtentePhoneNumber\":\"Ciao\",\""
                         + "updateUtenteEmail\":\"provino@live.it\",\""
                         + "updateUtenteDataN\":\"1999-12-31\"}");
         rootObject = jsonElement.getAsJsonObject();
-        assertTrue(utenteController.updateUtente(rootObject.toString()));
+        ErrorNewObjectException errorNewObjectException  = assertThrows(ErrorNewObjectException.class, () -> {
+            utenteController.updateUtente(rootObject.toString());
+        });
     }
 }

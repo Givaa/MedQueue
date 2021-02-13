@@ -61,7 +61,9 @@ foreign key(idStruttura) references Struttura(Id) ON UPDATE CASCADE ON DELETE CA
 
 INSERT INTO Struttura(nome, indirizzo, numeroDiTelefono) VALUES
 ('santobono','Via della Croce Rossa n. 8 Napoli (NA)','0812205111'),
-('San Leonardo','Viale Europa n.8 Castellammare di Stabia NA','081872911');
+('San Leonardo','Viale Europa n.8 Castellammare di Stabia NA','081872911'),
+('Da Rimuovere Dao', 'Da rimuovere dao 8', '0812205111'),
+('Da Rimuovere Controller', 'Da rimuovere Controller 8', '0812205111');
 
 INSERT INTO Impiegato VALUES
 ('FLTNGL99A14L845J','angelo99','angelo','afeltra','1999/01/14','a.afeltra12@studenti.unisa.it','3394487295',1),
@@ -72,15 +74,18 @@ INSERT INTO Impiegato VALUES
 
 INSERT INTO Operazione(tipoOperazione, Descrizione) VALUES
 ('Pagamento Ticket','Pagamento Ticket per visita medica'),
-('Prenotazione Ambulatorio','Richiesta prenotazione ambulatorio');
+('Prenotazione Ambulatorio','Richiesta prenotazione ambulatorio'),
+('Da Rimuovere Dao', 'Da rimuovere dao'),
+('Da Rimuovere Controller', 'Da rimuovere Controller');
 
 
 INSERT INTO Utente VALUES
-('MNDCMN97R22A509S','carmine97','Carmine','Amendola','1997/10/22','carmine.amendola@gmail.com','3394787295'),
+('MNDCMN97R22A509S','carmine97!','Carmine','Amendola','1997/10/22','carmine.amendola@gmail.com','3394787295'),
 ('CCCNTN98H02F839V','antonio98','Antonio','Cacciapuoti','1998/06/02','antonio.cacc@gmail.com','3545253226'),
 ('CRLNTN92S15H703Q','antonioc','Antonio','Cirillo','1992/11/15','a.cirilli@docenti.unisa.it','3545251111'),
 ('DRGMRA99D09A509V','mario99','Mario','De Riggi','1999/04/09','mario.deriggi@gmail.com','3435678901'),
-('SQLRFL97R10F839D','raff97','Raffaele','Squillante','1997/10/10','raffaele.sq@gmail.com','3789292020');
+('SQLRFL97R10F839C','raff97','Raffaele','Squillante','1997/10/10','raffaele.sq@gmail.com','3789292020'),
+('SQLRFL97R10F839D','raff98','Raffaele','Squillante','1998/10/10','raffaele.sq@gmail.com','3789292021');
 
 
 INSERT INTO Ambulatorio(nome, idStruttura) VALUES
@@ -92,14 +97,16 @@ INSERT INTO Ambulatorio(nome, idStruttura) VALUES
 ('Radiologia','1'),
 ('Pediatria','1'),
 ('Oncologia','2'),
-('Cardiologia','1');
+('Cardiologia','1'),
+('RimuoviD', '1'),
+('RimuoviC', '1');
 
 
 INSERT INTO Prenotazione(data, ora, convalida, codiceFiscale, idOperazione, idStruttura) VALUES
 ('2021-01-22','12:30:00','1','MNDCMN97R22A509S','1','1'),
 ('2021-01-22','12:15:00','1','CCCNTN98H02F839V','1','1'),
 ('2021-01-22','12:00:00','1','CRLNTN92S15H703Q','2','1'),
-('2021-01-22','11:45:00','1','DRGMRA99D09A509V','2','2'),
+('2021-01-22','11:45:00','1','CRLNTN92S15H703Q','2','2'),
 ('2021-01-22','11:30:00','1','SQLRFL97R10F839D','1','2'),
 ('2021-01-22','10:30:00','0','MNDCMN97R22A509S','1','2'),
 ('2021-01-22','9:30:00','1','SQLRFL97R10F839D','1','1'),

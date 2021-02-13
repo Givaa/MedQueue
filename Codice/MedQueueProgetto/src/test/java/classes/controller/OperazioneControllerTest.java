@@ -1,10 +1,14 @@
 package classes.controller;
 
+import classes.controller.exception.ErrorNewObjectException;
 import classes.controller.exception.InvalidKeyException;
 import classes.controller.exception.ObjectNotFoundException;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
@@ -38,7 +42,7 @@ class OperazioneControllerTest {
 
     @Test
     void getOperazioneByTipo() throws SQLException {
-        jsonElement = parser.parse("{\"tipoOperazioneGet\":\"Pagamento Ticket\"}");
+        jsonElement = parser.parse("{\"tipoOperazioneGet\":\"Prenotazione Ambulatorio\"}");
         rootObject = jsonElement.getAsJsonObject();
         assertNotNull(operazioneController.getOperazioneByTipo(rootObject.toString()));
 
@@ -59,6 +63,10 @@ class OperazioneControllerTest {
         jsonElement = parser.parse("{\"ordineOperazioni\":\"\"}");
         rootObject = jsonElement.getAsJsonObject();
         assertNotNull(operazioneController.getAllOperazioni(rootObject.toString()));
+
+        jsonElement = parser.parse("{\"ordineOperazioni\":\"{}\"}");
+        rootObject = jsonElement.getAsJsonObject();
+        assertNotNull(operazioneController.getAllOperazioni(rootObject.toString()));
     }
 
     @Test
@@ -68,6 +76,14 @@ class OperazioneControllerTest {
                 + "newOperazioneDesc\":\"Operazione di prova\"}");
         rootObject = jsonElement.getAsJsonObject();
         assertTrue(operazioneController.newOperazione(rootObject.toString()));
+
+        jsonElement = parser.parse(
+                "{\"newOperazioneTipoOp\":\"Operazione ERRATA1325323\",\""
+                        + "newOperazioneDesc\":\"Errore131453\"}");
+        rootObject = jsonElement.getAsJsonObject();
+        ErrorNewObjectException errorNewObjectException = assertThrows(ErrorNewObjectException.class, () -> {
+            operazioneController.newOperazione(rootObject.toString());
+        });
     }
 
     @Test
@@ -80,10 +96,19 @@ class OperazioneControllerTest {
     @Test
     void updateOperazione() throws SQLException {
         jsonElement = parser.parse(
-                "{\"updateOperazioneTipoOp\":\"Nuova Operazione Modificata\",\""
-                        + "updateOperazioneDesc\":\"Operazione di prova modificata\",\""
-                        + "updateOperazioneId\":\"4\"}");
+                "{\"updateOperazioneTipoOp\":\"Pagamento Ticket Sanitario\",\""
+                        + "updateOperazioneDesc\":\"Pagamento Ticket in vista di una visita medica\",\""
+                        + "updateOperazioneId\":\"1\"}");
         rootObject = jsonElement.getAsJsonObject();
         assertTrue(operazioneController.updateOperazione(rootObject.toString()));
+
+        jsonElement = parser.parse(
+                "{\"updateOperazioneTipoOp\":\"Pagamento Ticket Sanitario\",\""
+                        + "updateOperazioneDesc\":\"Pagamento Ticket in vista di una visita medica\",\""
+                        + "updateOperazioneId\":\"7846\"}");
+        rootObject = jsonElement.getAsJsonObject();
+        ObjectNotFoundException objectNotFoundException = assertThrows(ObjectNotFoundException.class, () -> {
+            operazioneController.updateOperazione(rootObject.toString());
+        });
     }
 }

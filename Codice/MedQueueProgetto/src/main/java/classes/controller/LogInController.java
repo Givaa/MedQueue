@@ -1,6 +1,7 @@
 package classes.controller;
 
 import classes.controller.exception.ErrorNewObjectException;
+import classes.controller.exception.InvalidKeyException;
 import classes.model.bean.entity.UtenteBean;
 import classes.model.dao.UtenteModel;
 import classes.model.interfaces.UtenteDaoInterface;
@@ -10,6 +11,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import javax.servlet.http.HttpServlet;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,7 +40,7 @@ public class LogInController extends HttpServlet {
 
     UtenteBean utenteBean = utenteDaoInterface.doRetrieveByKey(username);
 
-    if (password.equals(utenteBean.getPassword())) {
+    if (utenteBean != null && password.equals(utenteBean.getPassword())) {
       return utenteBean;
     } else {
       return null;
@@ -52,11 +54,12 @@ public class LogInController extends HttpServlet {
    * @return conferma o meno della registrazione
    * @throws SQLException per problemi di esecuzione della query
    * @throws ParseException per problemi di conversione di data
+   * @throws InvalidKeyException per problemi con la chiave primaria
    */
   @PostMapping (value = "/signup", produces = MediaType.APPLICATION_JSON_VALUE,
           consumes = MediaType.APPLICATION_JSON_VALUE)
   public UtenteBean signup(@RequestBody String body) throws SQLException,
-          ParseException {
+          ParseException, InvalidKeyException {
 
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
 
@@ -93,8 +96,17 @@ public class LogInController extends HttpServlet {
     );
 
     UtenteBean utenteBean = new UtenteBean();
+
+    Collection<UtenteBean> allUtenti = utenteDaoInterface.doRetrieveAll("");
+
+    for (UtenteBean b: allUtenti) {
+      if (b.getCodiceFiscale().matches(codFisc)) {
+        throw new InvalidKeyException("Codice fiscale duplicato");
+      }
+    }
+
     if (checkName && checkSurname && checkPassword
-            && checkPhoneNumber && checkCodFisc /*&& checkMail*/) {
+            && checkPhoneNumber && checkCodFisc && checkMail) {
       utenteBean = new UtenteBean(codFisc, password, nome, cognome,
               dataDiNascita, email, phoneNumber);
       utenteDaoInterface.doSave(utenteBean);

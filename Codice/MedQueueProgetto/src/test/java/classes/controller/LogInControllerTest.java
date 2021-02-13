@@ -1,5 +1,7 @@
 package classes.controller;
 
+import classes.controller.exception.ErrorNewObjectException;
+import classes.controller.exception.InvalidKeyException;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -18,13 +20,17 @@ class LogInControllerTest {
 
     @Test
     void login() throws SQLException {
-        jsonElement = parser.parse("{\"username\":\"CCCNTN98H02F839V\",\"password\":\"antonio98\"}");
+        jsonElement = parser.parse("{\"username\":\"MNDCMN97R22A509S\",\"password\":\"carmine97!\"}");
         rootObject = jsonElement.getAsJsonObject();
         assertNotNull(logInController.login(rootObject.toString()));
+
+        jsonElement = parser.parse("{\"username\":\"ERRORE\",\"password\":\"ERRORE\"}");
+        rootObject = jsonElement.getAsJsonObject();
+        assertNull(logInController.login(rootObject.toString()));
     }
 
     @Test
-    void signup() throws SQLException, ParseException {
+    void signup() throws SQLException, ParseException, InvalidKeyException {
         jsonElement = parser.parse("{\"nomeNewUtente\":\"Bud\"," +
                 "\"cognomeNewUtente\":\"Spencer\"," +
                 "\"codFiscNewUtente\":\"DTSQJP55R30A119M\"," +
@@ -34,5 +40,29 @@ class LogInControllerTest {
                 "\"emailNewUtente\":\"mazzate@paccari.it\"}");
         rootObject = jsonElement.getAsJsonObject();
         assertNotNull(logInController.signup(rootObject.toString()));
+
+        jsonElement = parser.parse("{\"nomeNewUtente\":\"Bud\"," +
+                "\"cognomeNewUtente\":\"Spencer\"," +
+                "\"codFiscNewUtente\":\"ERRORECF\"," +
+                "\"passwordNewUtente\":\"Fagiolih1!\"," +
+                "\"numeroTelefonoNewUtente\":\"3271219447\"," +
+                "\"dataDiNascitaNewUtente\":\"31-10-1929\"," +
+                "\"emailNewUtente\":\"mazzate@paccari.it\"}");
+        rootObject = jsonElement.getAsJsonObject();
+        ErrorNewObjectException errorNewObjectException = assertThrows(ErrorNewObjectException.class, () -> {
+            logInController.signup(rootObject.toString());
+        });
+
+        jsonElement = parser.parse("{\"nomeNewUtente\":\"Bud\"," +
+                "\"cognomeNewUtente\":\"Spencer\"," +
+                "\"codFiscNewUtente\":\"MNDCMN97R22A509S\"," +
+                "\"passwordNewUtente\":\"Fagiolih1!\"," +
+                "\"numeroTelefonoNewUtente\":\"3271219447\"," +
+                "\"dataDiNascitaNewUtente\":\"31-10-1929\"," +
+                "\"emailNewUtente\":\"mazzate@paccari.it\"}");
+        rootObject = jsonElement.getAsJsonObject();
+        InvalidKeyException invalidKeyException = assertThrows(InvalidKeyException.class, () -> {
+            logInController.signup(rootObject.toString());
+        });
     }
 }

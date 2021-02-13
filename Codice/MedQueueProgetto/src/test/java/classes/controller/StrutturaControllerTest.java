@@ -1,10 +1,14 @@
 package classes.controller;
 
+import classes.controller.exception.ErrorNewObjectException;
 import classes.controller.exception.InvalidKeyException;
 import classes.controller.exception.ObjectNotFoundException;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
@@ -19,11 +23,11 @@ class StrutturaControllerTest {
 
     @Test
     void getStrutturaById() throws SQLException, InvalidKeyException {
-        jsonElement = parser.parse("{\"id\":\"1\"}");
+        jsonElement = parser.parse("{\"idStrutturaGet\":\"1\"}");
         rootObject = jsonElement.getAsJsonObject();
         assertNotNull(strutturaController.getStrutturaById(rootObject.toString()));
 
-        jsonElement = parser.parse("{\"id\":\"0\"}");
+        jsonElement = parser.parse("{\"idStrutturaGet\":\"0\"}");
         rootObject = jsonElement.getAsJsonObject();
         JsonObject finalRootObject = rootObject;
         InvalidKeyException invalidKeyException = assertThrows(InvalidKeyException.class, () -> {
@@ -33,13 +37,13 @@ class StrutturaControllerTest {
 
     @Test
     void getStrutturaByNome() throws SQLException {
-        jsonElement = parser.parse("{\"nomeStrutturaGet\":\"indirizzo\"}");
+        jsonElement = parser.parse("{\"nomeStrutturaGet\":\"Rehab Center\"}");
         rootObject = jsonElement.getAsJsonObject();
         strutturaController.getStrutturaByNome(rootObject.toString());
 
-        jsonElement = parser.parse("{\"nomeStrutturaGet\":\"\"}");
+        jsonElement = parser.parse("{\"nomeStrutturaGet\":\"Non trovato\"}");
         rootObject = jsonElement.getAsJsonObject();
-        assertThrows(ObjectNotFoundException.class, () -> {
+        ObjectNotFoundException objectNotFoundException = assertThrows(ObjectNotFoundException.class, () -> {
             strutturaController.getStrutturaByNome(rootObject.toString());
         });
     }
@@ -48,9 +52,13 @@ class StrutturaControllerTest {
     void getAllStrutture() throws SQLException {
         jsonElement = parser.parse("{\"ordineStrutture\":\"indirizzo\"}");
         rootObject = jsonElement.getAsJsonObject();
-        strutturaController.getAllStrutture(rootObject.toString());
+        assertNotNull(strutturaController.getAllStrutture(rootObject.toString()));
 
         jsonElement = parser.parse("{\"ordineStrutture\":\"\"}");
+        rootObject = jsonElement.getAsJsonObject();
+        assertNotNull(strutturaController.getAllStrutture(rootObject.toString()));
+
+        jsonElement = parser.parse("{}");
         rootObject = jsonElement.getAsJsonObject();
         assertNotNull(strutturaController.getAllStrutture(rootObject.toString()));
     }
@@ -58,16 +66,25 @@ class StrutturaControllerTest {
     @Test
     void newStruttura() throws SQLException {
         jsonElement = parser.parse(
-                "{\"newStrutturaNome\":\"StrutturaProva\"," +
-                        "\"newStrutturaIndirizzo\":\"Via Prova 14\"," +
-                        "\"newStrutturaNumeroCell\":\"0878878584\"}");
+                "{\"newStrutturaNome\":\"San Donatello\"," +
+                        "\"newStrutturaIndirizzo\":\"Via Italia 10, Milano MI\"," +
+                        "\"newStrutturaNumeroCell\":\"0818729112\"}");
         rootObject = jsonElement.getAsJsonObject();
         assertTrue(strutturaController.newStruttura(rootObject.toString()));
+
+        jsonElement = parser.parse(
+                "{\"newStrutturaNome\":\"ERRORE !\"," +
+                        "\"newStrutturaIndirizzo\":\"!!!!!!\"," +
+                        "\"newStrutturaNumeroCell\":\"081872911584651\"}");
+        rootObject = jsonElement.getAsJsonObject();
+        ErrorNewObjectException errorNewObjectException = assertThrows(ErrorNewObjectException.class, () -> {
+            strutturaController.newStruttura(rootObject.toString());
+        });
     }
 
     @Test
     void deleteStruttura() throws SQLException {
-        jsonElement = parser.parse("{\"deleteStrutturaId\":\"5\"}");
+        jsonElement = parser.parse("{\"deleteStrutturaId\":\"4\"}");
         rootObject = jsonElement.getAsJsonObject();
         strutturaController.deleteStruttura(rootObject.toString());
     }
@@ -75,11 +92,29 @@ class StrutturaControllerTest {
     @Test
     void updateStruttura() throws SQLException {
         jsonElement = parser.parse(
-                "{\"updateStrutturaId\":\"5\"," +
-                        "\"updateStrutturaNome\":\"Struttura Prova\"," +
-                        "\"updateStrutturaInd\":\"Via Prova 14\"," +
-                        "\"updateStrutturaNumeroCell\":\"0878878584\"}");
+                "{\"updateStrutturaId\":\"1\"," +
+                        "\"updateStrutturaNome\":\"Santo Buono\"," +
+                        "\"updateStrutturaInd\":\"Via Croce Verde 14, Napoli NA\"," +
+                        "\"updateStrutturaNumeroCell\":\"0812205111\"}");
         rootObject = jsonElement.getAsJsonObject();
         assertTrue(strutturaController.updateStruttura(rootObject.toString()));
+
+        jsonElement = parser.parse(
+                "{\"updateStrutturaId\":\"1\"," +
+                        "\"updateStrutturaNome\":\"Errore 123\"," +
+                        "\"updateStrutturaInd\":\"Via Croce Verde 14, Napoli NA\"," +
+                        "\"updateStrutturaNumeroCell\":\"0812205111\"}");
+        rootObject = jsonElement.getAsJsonObject();
+        assertFalse(strutturaController.updateStruttura(rootObject.toString()));
+
+        jsonElement = parser.parse(
+                "{\"updateStrutturaId\":\"789456\"," +
+                        "\"updateStrutturaNome\":\"Santo Buono\"," +
+                        "\"updateStrutturaInd\":\"Via Croce Verde 14, Napoli NA\"," +
+                        "\"updateStrutturaNumeroCell\":\"0812205111\"}");
+        rootObject = jsonElement.getAsJsonObject();
+        ObjectNotFoundException objectNotFoundException = assertThrows(ObjectNotFoundException.class, () -> {
+            strutturaController.updateStruttura(rootObject.toString());
+        });
     }
 }

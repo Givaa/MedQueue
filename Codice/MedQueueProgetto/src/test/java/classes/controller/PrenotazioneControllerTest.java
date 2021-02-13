@@ -1,12 +1,19 @@
 package classes.controller;
 
+import classes.controller.exception.ErrorNewObjectException;
 import classes.controller.exception.InvalidKeyException;
+import classes.controller.exception.ObjectNotFoundException;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.apache.tomcat.jni.Time;
 import org.junit.jupiter.api.Test;
+
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,6 +22,7 @@ class PrenotazioneControllerTest {
     private PrenotazioneController prenotazioneController = new PrenotazioneController();
     private JsonElement jsonElement;
     private JsonObject rootObject;
+    private JsonObject finalRootObject;
 
     @Test
     void getPrenotazioneById() throws SQLException, InvalidKeyException {
@@ -24,8 +32,15 @@ class PrenotazioneControllerTest {
 
         jsonElement = parser.parse("{\"idPrenotazioneGet\":\"0\"}");
         rootObject = jsonElement.getAsJsonObject();
-        JsonObject finalRootObject = rootObject;
+        finalRootObject = rootObject;
         InvalidKeyException invalidKeyException = assertThrows(InvalidKeyException.class, () -> {
+            prenotazioneController.getPrenotazioneById(finalRootObject.toString());
+        });
+
+        jsonElement = parser.parse("{\"idPrenotazioneGet\":\"79813\"}");
+        rootObject = jsonElement.getAsJsonObject();
+        finalRootObject = rootObject;
+        ObjectNotFoundException objectNotFoundException = assertThrows(ObjectNotFoundException.class, () -> {
             prenotazioneController.getPrenotazioneById(finalRootObject.toString());
         });
     }
@@ -48,14 +63,25 @@ class PrenotazioneControllerTest {
                         "\"newPrenotazioniOra\":\"15:30:00\"," +
                         "\"newPrenotazioniIdOp\":\"1\"," +
                         "\"newPrenotazioniIdS\":\"1\"," +
-                        "\"newPrenotazioneData\":\"2021-02-12\"}");
+                        "\"newPrenotazioneData\":\"2021-02-13\"}");
         rootObject = jsonElement.getAsJsonObject();
         assertTrue(prenotazioneController.newPrenotazione(rootObject.toString()));
+
+        jsonElement = parser.parse(
+                "{\"newPrenotazioniCf\":\"ERRORE 1294571507\"," +
+                        "\"newPrenotazioniOra\":\"15:30:00\"," +
+                        "\"newPrenotazioniIdOp\":\"1\"," +
+                        "\"newPrenotazioniIdS\":\"1\"," +
+                        "\"newPrenotazioneData\":\"2021-02-12\"}");
+        rootObject = jsonElement.getAsJsonObject();
+        ErrorNewObjectException errorNewObjectException = assertThrows(ErrorNewObjectException.class, () -> {
+            prenotazioneController.newPrenotazione(rootObject.toString());
+        });
     }
 
     @Test
     void deletePrenotazione() throws SQLException {
-        jsonElement = parser.parse("{\"deletePrenotazioniId\":\"12\"}");
+        jsonElement = parser.parse("{\"deletePrenotazioniId\":\"9\"}");
         rootObject = jsonElement.getAsJsonObject();
         prenotazioneController.deletePrenotazione(rootObject.toString());
     }
@@ -63,15 +89,41 @@ class PrenotazioneControllerTest {
     @Test
     void updatePrenotazione() throws SQLException, ParseException {
         jsonElement = parser.parse(
-                "{\"updatePrenotazioniId\":\"11\"," +
-                        "\"updatePrenotazioniCf\":\"MNDCMN97R22A509S\"," +
+                "{\"updatePrenotazioniId\":\"7\"," +
+                        "\"updatePrenotazioniCf\":\"SQLRFL97R10F839D\"," +
+                        "\"updatePrenotazioniOra\":\"09:30:00\"," +
+                        "\"updatePrenotazioniIdOp\":\"1\"," +
+                        "\"updatePrenotazioniIdS\":\"1\"," +
+                        "\"updatePrenotazioneData\":\"2021-03-11\","+
+                        "\"updatePrenotazioneConvalida\":\"false\"}");
+        rootObject = jsonElement.getAsJsonObject();
+        assertTrue(prenotazioneController.updatePrenotazione(rootObject.toString()));
+
+        jsonElement = parser.parse(
+                "{\"updatePrenotazioniId\":\"7\"," +
+                        "\"updatePrenotazioniCf\":\"SQLRFL97R10F839D\"," +
+                        "\"updatePrenotazioniOra\":\"9:30:00\"," +
+                        "\"updatePrenotazioniIdOp\":\"1\"," +
+                        "\"updatePrenotazioniIdS\":\"1\"," +
+                        "\"updatePrenotazioneData\":\"2021-03-11\","+
+                        "\"updatePrenotazioneConvalida\":\"false\"}");
+        rootObject = jsonElement.getAsJsonObject();
+        ErrorNewObjectException errorNewObjectException = assertThrows(ErrorNewObjectException.class, () -> {
+            prenotazioneController.updatePrenotazione(rootObject.toString());
+        });
+
+        jsonElement = parser.parse(
+                "{\"updatePrenotazioniId\":\"789456\"," +
+                        "\"updatePrenotazioniCf\":\"DRGMRA99D09A509V\"," +
                         "\"updatePrenotazioniOra\":\"12:00:00\"," +
                         "\"updatePrenotazioniIdOp\":\"1\"," +
                         "\"updatePrenotazioniIdS\":\"1\"," +
-                        "\"updatePrenotazioneData\":\"2022-02-11\","+
-                        "\"updatePrenotazioneConvalida\":\"true\"}");
+                        "\"updatePrenotazioneData\":\"13-02-2021\","+
+                        "\"updatePrenotazioneConvalida\":\"false\"}");
         rootObject = jsonElement.getAsJsonObject();
-        assertTrue(prenotazioneController.updatePrenotazione(rootObject.toString()));
+        ObjectNotFoundException objectNotFoundException = assertThrows(ObjectNotFoundException.class, () -> {
+            prenotazioneController.updatePrenotazione(rootObject.toString());
+        });
     }
 
     @Test
@@ -83,9 +135,22 @@ class PrenotazioneControllerTest {
 
     @Test
     void convalidaPrenotazione() throws SQLException, ParseException {
+        LocalDateTime dataPerOra = LocalDateTime.now();
+        String data = dataPerOra.getYear() + "-" + dataPerOra.getMonthValue()
+                + "-" + dataPerOra.getDayOfYear();
+        String now = dataPerOra.getHour() + ":" + dataPerOra.getMinute() + ":" + dataPerOra.getSecond();
+        jsonElement = parser.parse(
+                "{\"newPrenotazioniCf\":\"MNDCMN97R22A509S\"," +
+                        "\"newPrenotazioniOra\":\"14:00:00\"," +
+                        "\"newPrenotazioniIdOp\":\"1\"," +
+                        "\"newPrenotazioniIdS\":\"1\"," +
+                        "\"newPrenotazioneData\":\"2021-02-13\"}");
+        rootObject = jsonElement.getAsJsonObject();
+        assertTrue(prenotazioneController.newPrenotazione(rootObject.toString()));
+
         jsonElement = parser.parse("{\"convalidaPrenotazione\":\"MNDCMN97R22A509S\"}");
         rootObject = jsonElement.getAsJsonObject();
-        assertTrue(prenotazioneController.convalidaPrenotazione(rootObject.toString()));
+        assertFalse(prenotazioneController.convalidaPrenotazione(rootObject.toString()));
     }
 
     @Test
