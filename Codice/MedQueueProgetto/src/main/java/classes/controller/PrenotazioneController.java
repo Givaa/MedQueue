@@ -256,10 +256,8 @@ public class PrenotazioneController {
     Date dateMin = new Date(minHour);
     Date dateMax = new Date(maxHour);
 
-    if (checkCodFisc) {
-      prenotazioneBean.setConvalida(true);
-      prenotazioneDaoInterface.doUpdate(prenotazioneBean);
-      return 1;
+    if (!checkCodFisc) {
+      return 0;
     } else if (!((dateNow.toLocalDate().getDayOfMonth() == d.toLocalDate().getDayOfMonth())
             && (dateNow.toLocalDate().getMonth() == d.toLocalDate().getMonth()))) {
       return 2;
@@ -268,9 +266,11 @@ public class PrenotazioneController {
     } else if (!dateNow.before(dateMax)) {
       prenotazioneDaoInterface.doDelete(prenotazioneBean);
       return 4;
+    } else {
+      prenotazioneBean.setConvalida(true);
+      prenotazioneDaoInterface.doUpdate(prenotazioneBean);
+      return 1;
     }
-
-    return 0;
   }
 
   /**
