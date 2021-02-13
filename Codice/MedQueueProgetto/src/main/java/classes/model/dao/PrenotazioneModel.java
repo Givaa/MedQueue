@@ -291,9 +291,6 @@ public class PrenotazioneModel implements PrenotazioneDaoInterface {
       }
     }
 
-    if (result.isEmpty()) {
-      return null;
-    }
     return result;
   }
 

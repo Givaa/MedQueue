@@ -233,6 +233,10 @@ public class PrenotazioneController {
 
     //Prendo la prenotazione
     Collection<PrenotazioneBean> collection = prenotazioneDaoInterface.getUtentePrenotazioni(cf);
+    if(collection == null) {
+      return 0;
+    }
+
     Iterator iter = collection.iterator();
     PrenotazioneBean prenotazioneBean = (PrenotazioneBean) iter.next();
 
@@ -247,7 +251,7 @@ public class PrenotazioneController {
             df.parse(d.toString() + " " + ora).getTime() + (600 * 1000);
     Long timeNow = System.currentTimeMillis();
     boolean checkCodFisc = cf.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
-    
+
     Date dateNow = new Date(timeNow);
     Date dateMin = new Date(minHour);
     Date dateMax = new Date(maxHour);
