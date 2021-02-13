@@ -409,7 +409,6 @@ public class PrenotazioneModel implements PrenotazioneDaoInterface {
       if (result.size() == 0) {
         System.exit(400);
       }
-
     } catch (SQLException e) {
       e.printStackTrace();
     } finally {

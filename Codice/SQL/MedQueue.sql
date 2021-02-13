@@ -85,7 +85,6 @@ INSERT INTO Utente VALUES
 ('CCCNTN98H02F839V','antonio98','Antonio','Cacciapuoti','1998/06/02','antonio.cacc@gmail.com','3545253226'),
 ('CRLNTN92S15H703Q','antonioc','Antonio','Cirillo','1992/11/15','a.cirilli@docenti.unisa.it','3545251111'),
 ('DRGMRA99D09A509V','mario99','Mario','De Riggi','1999/04/09','mario.deriggi@gmail.com','3435678901'),
-('VYRTSG48A53B605I','Prova123!', 'Prova', 'ProvaC', '1999/04/09','prova@gmail.com','3435678901'),
 ('SQLRFL97R10F839C','raff97','Raffaele','Squillante','1997/10/10','raffaele.sq@gmail.com','3789292020'),
 ('SQLRFL97R10F839D','raff98','Raffaele','Squillante','1998/10/10','raffaele.sq@gmail.com','3789292021');
 

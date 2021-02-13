@@ -254,13 +254,7 @@ public class PrenotazioneController {
     Date dateMax = new Date(maxHour);
 
     Boolean checkTime = dateNow.after(dateMin) && dateNow.before(dateMax);
-    /*System.out.println("Date min: " + sdf.format(dateMin) + " data now " + sdf.format(dateNow) + " data max " + sdf.format(dateMax) );
-    System.out.println((dateMin.toLocalDate().getDayOfMonth() == d.toLocalDate().getDayOfMonth())
-            + " " + (dateMin.toLocalDate().getMonth() == d.toLocalDate().getMonth())
-            + " " + checkTime + " " + checkCodFisc);
-    System.out.println(checkTime);
-    System.out.println(sdf.format(dateMin)+ "---" +sdf.format(dateNow) + "---" + sdf.format(dateMax));
-    System.out.println(minHour + " " + timeNow + " " +  ( (timeNow >= minHour) ) ); ((timeNow >= minHour) && (timeNow <= maxHour)) */
+
     if ((dateNow.toLocalDate().getDayOfMonth() == d.toLocalDate().getDayOfMonth())
             && (dateNow.toLocalDate().getMonth() == d.toLocalDate().getMonth())
             && checkTime && checkCodFisc) {
@@ -268,7 +262,10 @@ public class PrenotazioneController {
       prenotazioneBean.setConvalida(true);
       prenotazioneDaoInterface.doUpdate(prenotazioneBean);
       return true;
+    } else if ( !checkCodFisc ) {
+      System.exit(401);
     }
+
     return false;
   }
 
