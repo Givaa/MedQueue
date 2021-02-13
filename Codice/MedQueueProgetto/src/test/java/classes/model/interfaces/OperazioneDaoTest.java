@@ -45,7 +45,7 @@ class OperazioneDaoTest {
 
     @Test
     void doDelete() throws SQLException {
-        OperazioneBean operazioneBean = operazioneModel.doRetrieveByTipo("ProvaModifica");
+        OperazioneBean operazioneBean = operazioneModel.doRetrieveByTipo("Da Rimuovere Dao");
         operazioneModel.doDelete(operazioneBean);
     }
 }

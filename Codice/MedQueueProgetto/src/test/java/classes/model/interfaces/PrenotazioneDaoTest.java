@@ -39,7 +39,7 @@ class PrenotazioneDaoTest {
         }
         prenotazioneBean.setDataPrenotazione(date);
         prenotazioneBean.setOra("11:00:00");
-        prenotazioneBean.setCodiceFiscale("CPHMKL98H41I490J");
+        prenotazioneBean.setCodiceFiscale("MNDCMN97R22A509S");
         prenotazioneBean.setConvalida(false);
         prenotazioneBean.setIdStruttura(1);
         prenotazioneBean.setIdOperazione(1);
@@ -48,14 +48,14 @@ class PrenotazioneDaoTest {
 
     @Test
     void doUpdate() throws SQLException {
-        prenotazioneBean = prenotazioneModel.doRetrieveByKey(11);
+        prenotazioneBean = prenotazioneModel.doRetrieveByKey(2);
         prenotazioneBean.setIdStruttura(2);
         prenotazioneModel.doUpdate(prenotazioneBean);
     }
 
     @Test
     void doDelete() throws SQLException {
-        prenotazioneBean = prenotazioneModel.doRetrieveByKey(18);
+        prenotazioneBean = prenotazioneModel.doRetrieveByKey(8);
         prenotazioneModel.doDelete(prenotazioneBean);
     }
 
@@ -79,5 +79,13 @@ class PrenotazioneDaoTest {
             e.printStackTrace();
         }
         assertNotNull(prenotazioneModel.getOrariPrenotazione(1, 2, date));
+
+        date = null;
+        try {
+            date = new Date(df.parse("01-22-2021").getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        assertNotNull(prenotazioneModel.getOrariPrenotazione(5, 2, date));
     }
 }

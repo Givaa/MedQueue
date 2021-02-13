@@ -24,6 +24,7 @@ class UtenteDaoTest {
     @Test
     void doRetrieveAll() throws SQLException {
         assertNotNull(utenteModel.doRetrieveAll(""));
+        assertNotNull(utenteModel.doRetrieveAll("nome"));
     }
 
     @Test
@@ -47,8 +48,8 @@ class UtenteDaoTest {
 
     @Test
     void doUpdate() throws SQLException {
-        utenteBean = utenteModel.doRetrieveByKey("CPHMKL98H41I490J");
-        utenteBean.setCognome("ProvaNto");
+        utenteBean = utenteModel.doRetrieveByKey("CRLNTN92S15H703Q");
+        utenteBean.setNome("Tony");
         utenteModel.doUpdate(utenteBean);
     }
 

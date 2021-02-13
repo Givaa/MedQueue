@@ -20,7 +20,7 @@ class StrutturaDaoTest {
 
     @Test
     void doRetrieveByName() throws SQLException {
-        assertNotNull(strutturaModel.doRetrieveByName("santobono"));
+        assertNotNull(strutturaModel.doRetrieveByName("San Leonardo"));
     }
 
     @Test
@@ -46,7 +46,7 @@ class StrutturaDaoTest {
 
     @Test
     void doDelete() throws SQLException {
-        strutturaBean = strutturaModel.doRetrieveByName("Rehab Center");
+        strutturaBean = strutturaModel.doRetrieveByName("Da Rimuovere Dao");
         strutturaModel.doDelete(strutturaBean);
     }
 }

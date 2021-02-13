@@ -25,6 +25,8 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -109,7 +111,6 @@ public class PrenotazioneController {
     String data = jsonObject.get("newPrenotazioneData").getAsString();
     java.util.Date tmp = new SimpleDateFormat("yyyy-MM-dd").parse(data);
     java.sql.Date dataPrenotazione = new Date(tmp.getTime());
-    System.out.println(data + " " + dataPrenotazione);
 
     StrutturaBean strutturaBean;
     OperazioneBean operazioneBean;
@@ -240,18 +241,30 @@ public class PrenotazioneController {
     java.sql.Date d = prenotazioneBean.getDataPrenotazione();
     String ora = prenotazioneBean.getOra();
     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    Long minHour = df.parse(d.toString() + " " + ora).getTime();
-    Long maxHour = df.parse(d.toString() + " " + ora).getTime();
+    Long minHour =
+            df.parse(d.toString() + " " + ora).getTime() - (1800 * 1000) ;
+    Long maxHour =
+            df.parse(d.toString() + " " + ora).getTime() + (600 * 1000);
     Long timeNow = System.currentTimeMillis();
-    minHour -= 1800 * 1000;
-    maxHour += 600 * 1000;
     boolean checkCodFisc = cf.matches("[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$");
-    LocalDateTime now = LocalDateTime.now();
 
-    //System.out.println( now.getDayOfMonth() + " " +  d.toLocalDate().getDayOfMonth() + " " + now.getMonth() + " " +  d.toLocalDate().getMonth());
-    if ((now.getDayOfMonth() == d.toLocalDate().getDayOfMonth())
-            && (now.getMonth() == d.toLocalDate().getMonth())
-            && ((timeNow >= minHour) && (timeNow <= maxHour)) && checkCodFisc) {
+    SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
+    Date dateNow = new Date(timeNow);
+    Date dateMin = new Date(minHour);
+    Date dateMax = new Date(maxHour);
+
+    Boolean checkTime = dateNow.after(dateMin) && dateNow.before(dateMax);
+    /*System.out.println("Date min: " + sdf.format(dateMin) + " data now " + sdf.format(dateNow) + " data max " + sdf.format(dateMax) );
+    System.out.println((dateMin.toLocalDate().getDayOfMonth() == d.toLocalDate().getDayOfMonth())
+            + " " + (dateMin.toLocalDate().getMonth() == d.toLocalDate().getMonth())
+            + " " + checkTime + " " + checkCodFisc);
+    System.out.println(checkTime);
+    System.out.println(sdf.format(dateMin)+ "---" +sdf.format(dateNow) + "---" + sdf.format(dateMax));
+    System.out.println(minHour + " " + timeNow + " " +  ( (timeNow >= minHour) ) ); ((timeNow >= minHour) && (timeNow <= maxHour)) */
+    if ((dateNow.toLocalDate().getDayOfMonth() == d.toLocalDate().getDayOfMonth())
+            && (dateNow.toLocalDate().getMonth() == d.toLocalDate().getMonth())
+            && checkTime && checkCodFisc) {
+
       prenotazioneBean.setConvalida(true);
       prenotazioneDaoInterface.doUpdate(prenotazioneBean);
       return true;

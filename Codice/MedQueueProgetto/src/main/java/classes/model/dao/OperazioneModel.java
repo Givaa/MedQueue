@@ -71,6 +71,7 @@ public class OperazioneModel implements OperazioneDaoInterface {
    * @param tipo tipo dell'operazione
    * @return Operazione avente quell'id
    * @throws SQLException per problemi di esecuzione della query
+   * @throws ObjectNotFoundException per problemi di oggetto non trovato
    */
   @Override
   public OperazioneBean doRetrieveByTipo(String tipo) throws SQLException, ObjectNotFoundException {
@@ -108,7 +109,7 @@ public class OperazioneModel implements OperazioneDaoInterface {
     if (tmp.getTipoOperazione() != null) {
       return tmp;
     } else {
-      return null;
+      throw new ObjectNotFoundException(new OperazioneBean());
     }
   }
 

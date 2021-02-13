@@ -135,20 +135,26 @@ class PrenotazioneControllerTest {
 
     @Test
     void convalidaPrenotazione() throws SQLException, ParseException {
+        //Convalida possibile
         LocalDateTime dataPerOra = LocalDateTime.now();
         String data = dataPerOra.getYear() + "-" + dataPerOra.getMonthValue()
-                + "-" + dataPerOra.getDayOfYear();
+                + "-" + dataPerOra.getDayOfMonth();
         String now = dataPerOra.getHour() + ":" + dataPerOra.getMinute() + ":" + dataPerOra.getSecond();
         jsonElement = parser.parse(
-                "{\"newPrenotazioniCf\":\"MNDCMN97R22A509S\"," +
-                        "\"newPrenotazioniOra\":\"14:00:00\"," +
+                "{\"newPrenotazioniCf\":\"DRGMRA99D09A509V\"," +
+                        "\"newPrenotazioniOra\":\""+now+"\"," +
                         "\"newPrenotazioniIdOp\":\"1\"," +
                         "\"newPrenotazioniIdS\":\"1\"," +
-                        "\"newPrenotazioneData\":\"2021-02-13\"}");
+                        "\"newPrenotazioneData\":\""+data+"\"}");
         rootObject = jsonElement.getAsJsonObject();
         assertTrue(prenotazioneController.newPrenotazione(rootObject.toString()));
 
-        jsonElement = parser.parse("{\"convalidaPrenotazione\":\"MNDCMN97R22A509S\"}");
+        jsonElement = parser.parse("{\"convalidaPrenotazione\":\"DRGMRA99D09A509V\"}");
+        rootObject = jsonElement.getAsJsonObject();
+        assertTrue(prenotazioneController.convalidaPrenotazione(rootObject.toString()));
+
+        //Convalida non possibile
+        jsonElement = parser.parse("{\"convalidaPrenotazione\":\"CCCNTN98H02F839V\"}");
         rootObject = jsonElement.getAsJsonObject();
         assertFalse(prenotazioneController.convalidaPrenotazione(rootObject.toString()));
     }
