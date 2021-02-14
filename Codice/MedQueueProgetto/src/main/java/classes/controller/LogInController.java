@@ -121,9 +121,11 @@ public class LogInController extends HttpServlet {
 
     if (!checkPassword) {
       return 0;
+    } else if (!checkDataDiNascita){
+      return 4;
     } else {
       if (checkName && checkSurname && checkPhoneNumber
-              && checkCodFisc && checkMail && checkDataDiNascita) {
+              && checkCodFisc && checkMail) {
         utenteBean = new UtenteBean(codFisc, password, nome, cognome,
                 dataDiNascita, email, phoneNumber);
         utenteDaoInterface.doSave(utenteBean);
