@@ -163,15 +163,15 @@ class PrenotazioneControllerTest {
         rootObject = jsonElement.getAsJsonObject();
         assertNotNull(prenotazioneController.convalidaPrenotazione(rootObject.toString()));
 
-        // Convalida dopo la scadenza
-        LocalDateTime dataScaduta = LocalDateTime.now().plusMinutes(40);
-        String scaduta = dataScaduta.getHour() + ":" + dataScaduta.getMinute() + ":" + dataScaduta.getSecond();
+        // Convalida troppo presto
+        LocalDateTime dataScadutaLocal = LocalDateTime.now().plusMinutes(40);
+        String presto = dataScadutaLocal.getHour() + ":" + dataScadutaLocal.getMinute() + ":" + dataScadutaLocal.getSecond();
         jsonElement = parser.parse(
                 "{\"newPrenotazioniCf\":\"CRLNTN92S15H703Z\"," +
-                        "\"newPrenotazioniOra\":\""+scaduta+"\"," +
+                        "\"newPrenotazioniOra\":\""+presto+"\"," +
                         "\"newPrenotazioniIdOp\":\"1\"," +
                         "\"newPrenotazioniIdS\":\"1\"," +
-                        "\"newPrenotazioneData\":\""+dataScaduta+"\"}");
+                        "\"newPrenotazioneData\":\""+data+"\"}");
         rootObject = jsonElement.getAsJsonObject();
         assertTrue(prenotazioneController.newPrenotazione(rootObject.toString()));
 
@@ -179,19 +179,19 @@ class PrenotazioneControllerTest {
         rootObject = jsonElement.getAsJsonObject();
         assertNotNull(prenotazioneController.convalidaPrenotazione(rootObject.toString()));
 
-        // Convalida dopo la scadenza
-        LocalDateTime dataPrima = LocalDateTime.now().minusMinutes(40);
-        String troppoPrima = dataPrima.getHour() + ":" + dataPrima.getMinute() + ":" + dataPrima.getSecond();
+        // Convalida troppo tardi
+        LocalDateTime dataTardi = LocalDateTime.now().minusMinutes(25);
+        String troppoTardi = dataTardi.getHour() + ":" + dataTardi.getMinute() + ":" + dataTardi.getSecond();
         jsonElement = parser.parse(
-                "{\"newPrenotazioniCf\":\"CRLNTN92S15H703Z\"," +
-                        "\"newPrenotazioniOra\":\""+troppoPrima+"\"," +
+                "{\"newPrenotazioniCf\":\"MNDCMN97R22A509Y\"," +
+                        "\"newPrenotazioniOra\":\""+troppoTardi+"\"," +
                         "\"newPrenotazioniIdOp\":\"1\"," +
                         "\"newPrenotazioniIdS\":\"1\"," +
-                        "\"newPrenotazioneData\":\""+dataPrima+"\"}");
+                        "\"newPrenotazioneData\":\""+data+"\"}");
         rootObject = jsonElement.getAsJsonObject();
         assertTrue(prenotazioneController.newPrenotazione(rootObject.toString()));
 
-        jsonElement = parser.parse("{\"convalidaPrenotazione\":\"CRLNTN92S15H703Z\"}");
+        jsonElement = parser.parse("{\"convalidaPrenotazione\":\"MNDCMN97R22A509Y\"}");
         rootObject = jsonElement.getAsJsonObject();
         assertNotNull(prenotazioneController.convalidaPrenotazione(rootObject.toString()));
 

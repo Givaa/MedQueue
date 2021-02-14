@@ -111,16 +111,20 @@ public class LogInController extends HttpServlet {
       }
     }
 
-    if (checkName && checkSurname && checkPassword
-            && checkPhoneNumber && checkCodFisc && checkMail) {
-      utenteBean = new UtenteBean(codFisc, password, nome, cognome,
-              dataDiNascita, email, phoneNumber);
-      utenteDaoInterface.doSave(utenteBean);
-
-      return utenteBean;
+    if (!checkPassword) {
+      UtenteBean errorePassword = new UtenteBean();
+      errorePassword.setNome("ErrorePassword");
+      return errorePassword;
     } else {
-      throw new ErrorNewObjectException(utenteBean);
+      if (checkName && checkSurname && checkPhoneNumber
+              && checkCodFisc && checkMail) {
+        utenteBean = new UtenteBean(codFisc, password, nome, cognome,
+                dataDiNascita, email, phoneNumber);
+        utenteDaoInterface.doSave(utenteBean);
+        return utenteBean;
+      } else {
+        throw new ErrorNewObjectException(utenteBean);
+      }
     }
-
   }
 }

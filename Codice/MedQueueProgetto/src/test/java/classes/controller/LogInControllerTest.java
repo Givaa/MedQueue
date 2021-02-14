@@ -27,6 +27,10 @@ class LogInControllerTest {
         jsonElement = parser.parse("{\"username\":\"ERRORE\",\"password\":\"ERRORE\"}");
         rootObject = jsonElement.getAsJsonObject();
         assertNull(logInController.login(rootObject.toString()));
+
+        jsonElement = parser.parse("{\"username\":\"convalidaPortale\",\"password\":\"convalidaPortale1!\"}");
+        rootObject = jsonElement.getAsJsonObject();
+        assertNotNull(logInController.login(rootObject.toString()));
     }
 
     @Test
