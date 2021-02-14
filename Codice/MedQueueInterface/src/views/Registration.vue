@@ -32,7 +32,7 @@
                        required="true"
                        title="Deve contenere almeno 1 lettera maiuscola, 1 numero e 1 carattere speciale e deve essere lunga almeno 8 caratteri"></ion-input>
             <ion-label>Data di Nascita</ion-label>
-            <ion-datetime id="data" v-model="dataDiNascita" displayFormat="DD-MM-YYYY" placeholder="Data di nascita"
+            <ion-datetime id="data" v-model="dataDiNascita" displayFormat="DD-MM-YYYY" placeholder="Data di nascita" max="2003"
                           required="true"></ion-datetime>
             <ion-label>Indirizzo e-mail</ion-label>
             <ion-input id="email" v-model="email" placeholder="Indirizzo e-mail" pattern="\S+@\S+\.\S+"
@@ -40,7 +40,7 @@
             <ion-label>Numero di telefono</ion-label>
             <ion-input id="numero" v-model="numeroTelefono" placeholder="Numero di telefono" patern="^[\+][0-9]{10,12}"
                        required="true"></ion-input>
-            <ion-button @click="autentication()" color="success"> Registrati</ion-button>
+            <ion-button id="registrazione" @click="autentication()" color="success"> Registrati</ion-button>
           </form>
         </div>
       </ion-content>

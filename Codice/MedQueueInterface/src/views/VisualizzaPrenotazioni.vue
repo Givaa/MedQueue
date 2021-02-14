@@ -50,7 +50,7 @@
         <div class="colonna5">
 
           <div id="id" v-bind:key="id" v-for="id in idPrenotazioni">
-            <ion-button @click="eliminaPrenotazione(id)" color="danger">premi</ion-button>
+            <ion-button id="elimina" @click="eliminaPrenotazione(id)" color="danger">premi</ion-button>
             <br>
             <br>
           </div>

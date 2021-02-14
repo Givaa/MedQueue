@@ -14,7 +14,7 @@
             <ion-select-option id="str" v-bind:key="struttura" v-for="struttura in struture">{{ struttura }}
             </ion-select-option>
           </ion-select>
-          <ion-button @mouseover="getIdStruttura" @click="updatePrenotazioni" color="primary">Visualizza</ion-button>
+          <ion-button id="visualizza" @mouseover="getIdStruttura" @click="updatePrenotazioni" color="primary">Visualizza</ion-button>
         </div>
 
         <br>

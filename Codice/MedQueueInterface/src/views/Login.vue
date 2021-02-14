@@ -29,7 +29,7 @@
             <ion-input id="password" type="password" v-model="loginForm.password" placeholder="Password"></ion-input>
             <br>
             <br>
-            <ion-button @click="onSubmit()">Accedi</ion-button>
+            <ion-button id="accedi" @click="onSubmit()">Accedi</ion-button>
           </form>
         </div>
       </ion-content>
