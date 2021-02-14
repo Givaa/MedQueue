@@ -11,6 +11,9 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.Collection;
 import javax.servlet.http.HttpServlet;
 import org.springframework.http.MediaType;
@@ -94,6 +97,11 @@ public class LogInController extends HttpServlet {
     String dataNascita = jsonObject.get("dataDiNascitaNewUtente").getAsString();
     java.util.Date tmp = new SimpleDateFormat("yyyy-MM-dd").parse(dataNascita);
     java.sql.Date dataDiNascita = new Date(tmp.getTime());
+    LocalDate dataNascitaTest = LocalDate.of(dataDiNascita.toLocalDate().getYear(),
+            dataDiNascita.toLocalDate().getMonthValue(),
+            dataDiNascita.toLocalDate().getDayOfMonth());
+    LocalDate oggi = LocalDate.now();
+    Boolean checkDataDiNascita = (Period.between(dataNascitaTest, oggi).getYears()) > 17;
 
     String email = jsonObject.get("emailNewUtente").getAsString();
     Boolean checkMail;
@@ -107,7 +115,7 @@ public class LogInController extends HttpServlet {
 
     for (UtenteBean b: allUtenti) {
       if (b.getCodiceFiscale().matches(codFisc)) {
-        throw new InvalidKeyException("Codice fiscale duplicato");
+        return 2;
       }
     }
 
@@ -115,13 +123,13 @@ public class LogInController extends HttpServlet {
       return 0;
     } else {
       if (checkName && checkSurname && checkPhoneNumber
-              && checkCodFisc && checkMail) {
+              && checkCodFisc && checkMail && checkDataDiNascita) {
         utenteBean = new UtenteBean(codFisc, password, nome, cognome,
                 dataDiNascita, email, phoneNumber);
         utenteDaoInterface.doSave(utenteBean);
         return 1;
       } else {
-        throw new ErrorNewObjectException(utenteBean);
+        return 3;
       }
     }
   }
