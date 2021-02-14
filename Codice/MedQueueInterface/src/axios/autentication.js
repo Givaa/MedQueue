@@ -4,16 +4,16 @@ export default {
 
     //Funzione per la registrazione
 
-    signup(nome, cognome, codFisc, password, dataDiNascita, email, numeroTelefono) {
+    signup(nomeNewUtente, cognomeNewUtente, codFiscNewUtente, passwordNewUtente, dataDiNascitaNewUtente, emailNewUtente, numeroTelefonoNewUtente) {
         return axios
             .post('http://localhost:8080/signup', {
-                    nome,
-                    cognome,
-                    codFisc,
-                    password,
-                    dataDiNascita,
-                    email,
-                    numeroTelefono
+                nomeNewUtente,
+                cognomeNewUtente,
+                codFiscNewUtente,
+                passwordNewUtente,
+                dataDiNascitaNewUtente,
+                emailNewUtente,
+                numeroTelefonoNewUtente
                 }, {
                     crossDomain: true,
                     headers: {

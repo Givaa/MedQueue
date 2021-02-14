@@ -61,7 +61,7 @@ import {
   IonMenuButton,
   IonPage,
   IonTitle,
-  IonToolbar
+  IonToolbar, alertController
 } from '@ionic/vue';
 
 export default {
@@ -95,14 +95,57 @@ export default {
       console.log(data[0]);
       singupAxios.signup(this.nome, this.cognome, this.codFisc, this.password, data[0], this.email, this.numeroTelefono)
           .then((response) => {
-            if (response === "") {
-              console.log("Errore");
-              return null;
-            } else {
+            if (response === 0) {
+              this.alertPsw();
+            } else if (response === 1){
               router.push("/Accesso");
+            } else if (response === 2){
+              this.alertCf();
+            } else if (response === 3){
+              this.alert()
+            } else if (response === 4){
+              this.alertAge();
             }
           })
+    },
+
+    async alertPsw() {
+      const alert = await alertController.create({
+        header: 'Password non conforme allo standard',
+        message:'Deve contenere almeno 1 lettera maiuscola, 1 numero e 1 carattere speciale e deve essere lunga almeno 8 caratteri',
+        buttons: ['OK'],
+      });
+      return alert.present();
+
+    },
+
+    async alertCf() {
+      const alert = await alertController.create({
+        header: 'Codice Fiscale già esistente',
+        buttons: ['OK'],
+      });
+      return alert.present();
+
+    },
+    async alert() {
+      const alert = await alertController.create({
+        header: 'Alcuni campi sono errati',
+        buttons: ['OK'],
+      });
+      return alert.present();
+
+    },
+
+    async alertAge() {
+      const alert = await alertController.create({
+        header: 'Bisogna essere maggiorenni per registrarsi',
+        buttons: ['OK'],
+      });
+      return alert.present();
+
     }
+
+
 
   }
 }
