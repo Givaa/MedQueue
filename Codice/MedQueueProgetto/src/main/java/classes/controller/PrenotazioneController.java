@@ -21,12 +21,10 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -123,7 +121,13 @@ public class PrenotazioneController {
     boolean checkOperazione = operazioneBean != null;
     boolean checkUtente = utenteBean != null;
 
-    if (checkOperazione && checkStruttura && checkUtente) {
+    LocalDate oggi = LocalDate.now();
+    boolean checkDate = dataPrenotazione.toLocalDate().isBefore(oggi);
+
+
+    if (checkDate) {
+      return false;
+    } else if (checkOperazione && checkStruttura && checkUtente) {
       prenotazioneDaoInterface.doSave(new PrenotazioneBean(ora, dataPrenotazione, cf,
               Integer.valueOf(idOperazione), Integer.valueOf(idStruttura), false));
       return true;
@@ -233,7 +237,7 @@ public class PrenotazioneController {
 
     //Prendo la prenotazione
     Collection<PrenotazioneBean> collection = prenotazioneDaoInterface.getUtentePrenotazioni(cf);
-    if(collection == null) {
+    if (collection == null) {
       return 0;
     }
 
@@ -246,7 +250,7 @@ public class PrenotazioneController {
     String ora = prenotazioneBean.getOra();
     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     Long minHour =
-            df.parse(d.toString() + " " + ora).getTime() - (1800 * 1000) ;
+            df.parse(d.toString() + " " + ora).getTime() - (1800 * 1000);
     Long maxHour =
             df.parse(d.toString() + " " + ora).getTime() + (600 * 1000);
     Long timeNow = System.currentTimeMillis();

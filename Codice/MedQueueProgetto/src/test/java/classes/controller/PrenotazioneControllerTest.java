@@ -67,6 +67,18 @@ class PrenotazioneControllerTest {
                         "\"newPrenotazioniIdS\":\"1\"," +
                         "\"newPrenotazioneData\":\"2021-02-13\"}");
         rootObject = jsonElement.getAsJsonObject();
+        assertFalse(prenotazioneController.newPrenotazione(rootObject.toString()));
+
+        LocalDateTime dataPerOra = LocalDateTime.now();
+        String data = dataPerOra.getYear() + "-" + dataPerOra.getMonthValue()
+                + "-" + dataPerOra.getDayOfMonth();
+        jsonElement = parser.parse(
+                "{\"newPrenotazioniCf\":\"CNDVKM62S23B586F\"," +
+                        "\"newPrenotazioniOra\":\"15:30:00\"," +
+                        "\"newPrenotazioniIdOp\":\"1\"," +
+                        "\"newPrenotazioniIdS\":\"1\"," +
+                        "\"newPrenotazioneData\":\""+data+"\"}");
+        rootObject = jsonElement.getAsJsonObject();
         assertTrue(prenotazioneController.newPrenotazione(rootObject.toString()));
 
         jsonElement = parser.parse(
@@ -74,7 +86,7 @@ class PrenotazioneControllerTest {
                         "\"newPrenotazioniOra\":\"15:30:00\"," +
                         "\"newPrenotazioniIdOp\":\"1\"," +
                         "\"newPrenotazioniIdS\":\"1\"," +
-                        "\"newPrenotazioneData\":\"2021-02-12\"}");
+                        "\"newPrenotazioneData\":\""+data+"\"}");
         rootObject = jsonElement.getAsJsonObject();
         ErrorNewObjectException errorNewObjectException = assertThrows(ErrorNewObjectException.class, () -> {
             prenotazioneController.newPrenotazione(rootObject.toString());
