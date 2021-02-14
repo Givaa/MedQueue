@@ -64,7 +64,7 @@ public class LogInController extends HttpServlet {
    */
   @PostMapping (value = "/signup", produces = MediaType.APPLICATION_JSON_VALUE,
           consumes = MediaType.APPLICATION_JSON_VALUE)
-  public UtenteBean signup(@RequestBody String body) throws SQLException,
+  public int signup(@RequestBody String body) throws SQLException,
           ParseException, InvalidKeyException {
 
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
@@ -112,16 +112,14 @@ public class LogInController extends HttpServlet {
     }
 
     if (!checkPassword) {
-      UtenteBean errorePassword = new UtenteBean();
-      errorePassword.setNome("ErrorePassword");
-      return errorePassword;
+      return 0;
     } else {
       if (checkName && checkSurname && checkPhoneNumber
               && checkCodFisc && checkMail) {
         utenteBean = new UtenteBean(codFisc, password, nome, cognome,
                 dataDiNascita, email, phoneNumber);
         utenteDaoInterface.doSave(utenteBean);
-        return utenteBean;
+        return 1;
       } else {
         throw new ErrorNewObjectException(utenteBean);
       }
