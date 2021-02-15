@@ -7,10 +7,10 @@ import classes.model.bean.entity.OperazioneBean;
 import classes.model.bean.entity.PrenotazioneBean;
 import classes.model.bean.entity.StrutturaBean;
 import classes.model.bean.entity.UtenteBean;
-import classes.model.dao.OperazioneModel;
-import classes.model.dao.PrenotazioneModel;
-import classes.model.dao.StrutturaModel;
-import classes.model.dao.UtenteModel;
+import classes.model.dao.OperazioneDao;
+import classes.model.dao.PrenotazioneDao;
+import classes.model.dao.StrutturaDao;
+import classes.model.dao.UtenteDao;
 import classes.model.interfaces.OperazioneDaoInterface;
 import classes.model.interfaces.PrenotazioneDaoInterface;
 import classes.model.interfaces.StrutturaDaoInterface;
@@ -36,10 +36,10 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class PrenotazioneController {
-  private final PrenotazioneDaoInterface prenotazioneDaoInterface = new PrenotazioneModel();
-  private final StrutturaDaoInterface strutturaDaoInterface = new StrutturaModel();
-  private final OperazioneDaoInterface operazioneDaoInterface = new OperazioneModel();
-  private final UtenteDaoInterface utenteDaoInterface = new UtenteModel();
+  private final PrenotazioneDaoInterface prenotazioneDaoInterface = new PrenotazioneDao();
+  private final StrutturaDaoInterface strutturaDaoInterface = new StrutturaDao();
+  private final OperazioneDaoInterface operazioneDaoInterface = new OperazioneDao();
+  private final UtenteDaoInterface utenteDaoInterface = new UtenteDao();
 
   /**
    * Metodo che permette di utilizzare il prelevamento per id del PrenotazioneModel.

@@ -3,15 +3,9 @@ package classes.controller;
 import classes.controller.exception.ErrorNewObjectException;
 import classes.controller.exception.InvalidKeyException;
 import classes.controller.exception.ObjectNotFoundException;
-import classes.model.bean.entity.UtenteBean;
-import classes.model.dao.UtenteModel;
-import classes.model.interfaces.UtenteDaoInterface;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;

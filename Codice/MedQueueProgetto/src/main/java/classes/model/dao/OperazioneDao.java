@@ -1,8 +1,8 @@
 package classes.model.dao;
 
 import classes.model.DriverManagerConnectionPool;
-import classes.model.bean.entity.StrutturaBean;
-import classes.model.interfaces.StrutturaDaoInterface;
+import classes.model.bean.entity.OperazioneBean;
+import classes.model.interfaces.OperazioneDaoInterface;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,24 +11,25 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 /**
- * Model per collegare la tabella "Struttura" al backend.
+ * Model per collegare la tabella "Operazione" al backend.
  */
-public class StrutturaModel implements StrutturaDaoInterface {
-  private static final String nomeTabella = "struttura";
+public class OperazioneDao implements OperazioneDaoInterface {
+
+  private static final String nomeTabella = "operazione";
 
   /**
-   * Prelevamento singola struttura.
+   * Prelevamento singola operazione.
    *
-   * @param id chiave primaria della struttura
-   * @return Struttura avente quell'id
+   * @param id chiave primaria dell'operazione
+   * @return Operazione avente quell'id
    * @throws SQLException per problemi di esecuzione della query
    */
   @Override
-  public StrutturaBean doRetrieveByKey(int id) throws SQLException{
+  public OperazioneBean doRetrieveByKey(int id) throws SQLException {
     Connection con = null;
     PreparedStatement ps = null;
 
-    StrutturaBean tmp = new StrutturaBean();
+    OperazioneBean tmp = new OperazioneBean();
 
     String selectSql = "SELECT * FROM " + nomeTabella + " WHERE id = ?";
 
@@ -41,9 +42,8 @@ public class StrutturaModel implements StrutturaDaoInterface {
 
       while (rs.next()) {
         tmp.setId(rs.getInt("id"));
-        tmp.setNome(rs.getString("nome"));
-        tmp.setIndirizzo(rs.getString("indirizzo"));
-        tmp.setNumeroDiTelefono(rs.getString("numeroDiTelefono"));
+        tmp.setTipoOperazione(rs.getString("tipoOperazione"));
+        tmp.setDescrizione(rs.getString("descrizione"));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -57,7 +57,7 @@ public class StrutturaModel implements StrutturaDaoInterface {
       }
     }
 
-    if (tmp.getNome() != null) {
+    if (tmp.getTipoOperazione() != null) {
       return tmp;
     } else {
       return null;
@@ -65,33 +65,32 @@ public class StrutturaModel implements StrutturaDaoInterface {
   }
 
   /**
-   * Prelevamento singola struttura.
+   * Prelevamento singola operazione.
    *
-   * @param nome nome della struttura
-   * @return Struttura avente quell'id
+   * @param tipo tipo dell'operazione
+   * @return Operazione avente quell'id
    * @throws SQLException per problemi di esecuzione della query
    */
   @Override
-  public StrutturaBean doRetrieveByName(String nome) throws SQLException {
+  public OperazioneBean doRetrieveByTipo(String tipo) throws SQLException{
     Connection con = null;
     PreparedStatement ps = null;
 
-    StrutturaBean tmp = new StrutturaBean();
+    OperazioneBean tmp = new OperazioneBean();
 
-    String selectSql = "SELECT * FROM " + nomeTabella + " WHERE nome = ?";
+    String selectSql = "SELECT * FROM " + nomeTabella + " WHERE tipoOperazione = ?";
 
     try {
       con = DriverManagerConnectionPool.getConnection();
       ps = con.prepareStatement(selectSql);
-      ps.setString(1, nome);
+      ps.setString(1, tipo);
 
       ResultSet rs = ps.executeQuery();
 
       while (rs.next()) {
         tmp.setId(rs.getInt("id"));
-        tmp.setNome(rs.getString("nome"));
-        tmp.setIndirizzo(rs.getString("indirizzo"));
-        tmp.setNumeroDiTelefono(rs.getString("numeroDiTelefono"));
+        tmp.setTipoOperazione(rs.getString("tipoOperazione"));
+        tmp.setDescrizione(rs.getString("descrizione"));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -105,7 +104,7 @@ public class StrutturaModel implements StrutturaDaoInterface {
       }
     }
 
-    if (tmp.getNome() != null) {
+    if (tmp.getTipoOperazione() != null) {
       return tmp;
     } else {
       return null;
@@ -113,18 +112,18 @@ public class StrutturaModel implements StrutturaDaoInterface {
   }
 
   /**
-   * Prelevamento di tutte le Strutture nel DB.
+   * Prelevamento di tutte le operazioni presenti nel DB.
    *
    * @param order Ordine per la visualizzazione della collezione
-   * @return Collezione di Strutture
+   * @return Collezione di tutte le operazioni
    * @throws SQLException per problemi di esecuzione della query
    */
   @Override
-  public Collection<StrutturaBean> doRetrieveAll(String order) throws SQLException {
+  public Collection<OperazioneBean> doRetrieveAll(String order) throws SQLException {
     Connection con = null;
     PreparedStatement ps = null;
 
-    Collection<StrutturaBean> result = new LinkedList<StrutturaBean>();
+    Collection<OperazioneBean> result = new LinkedList<OperazioneBean>();
 
     String selectSql = "SELECT * FROM " + nomeTabella;
 
@@ -141,11 +140,10 @@ public class StrutturaModel implements StrutturaDaoInterface {
 
 
       while (rs.next()) {
-        StrutturaBean tmp = new StrutturaBean();
+        OperazioneBean tmp = new OperazioneBean();
         tmp.setId(rs.getInt("id"));
-        tmp.setNome(rs.getString("nome"));
-        tmp.setIndirizzo(rs.getString("indirizzo"));
-        tmp.setNumeroDiTelefono(rs.getString("numeroDiTelefono"));
+        tmp.setTipoOperazione(rs.getString("tipoOperazione"));
+        tmp.setDescrizione(rs.getString("descrizione"));
         result.add(tmp);
       }
 
@@ -165,25 +163,24 @@ public class StrutturaModel implements StrutturaDaoInterface {
   }
 
   /**
-   * Inserimento nuova struttura nel DB.
+   * Inserimento di una nuova operazione nel DB.
    *
-   * @param param Nuovo Struttura
+   * @param param Nuova operazione
    * @throws SQLException per problemi di esecuzione della query
    */
   @Override
-  public void doSave(StrutturaBean param) throws SQLException {
+  public void doSave(OperazioneBean param) throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
-    String insertSql = "INSERT INTO " + nomeTabella + " (nome, indirizzo, numeroDiTelefono) "
-            + "VALUES (?, ?, ?)";
+    String insertSql = "INSERT INTO " + nomeTabella
+            + " (tipoOperazione, descrizione) VALUES (?, ?)";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();
       preparedStatement = connection.prepareStatement(insertSql);
-      preparedStatement.setString(1, param.getNome());
-      preparedStatement.setString(2, param.getIndirizzo());
-      preparedStatement.setString(3, param.getNumeroDiTelefono());
+      preparedStatement.setString(1, param.getTipoOperazione());
+      preparedStatement.setString(2, param.getDescrizione());
 
       preparedStatement.executeUpdate();
     } finally {
@@ -198,26 +195,27 @@ public class StrutturaModel implements StrutturaDaoInterface {
   }
 
   /**
-   * Aggiornamento di una struttura presente nel DB.
+   * Aggiornamento di un operazione sul DB.
    *
-   * @param param Struttura da aggiornare
+   * @param param Operazione da aggiornare
    * @throws SQLException per problemi di esecuzione della query
    */
   @Override
-  public void doUpdate(StrutturaBean param) throws SQLException {
+  public void doUpdate(OperazioneBean param) throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
     String deleteSql =
-        "UPDATE " + nomeTabella + " SET nome = ?, indirizzo = ?, numeroDiTelefono = ? WHERE id = ?";
+        "UPDATE "
+            + nomeTabella
+            + " SET tipoOperazione = ?, descrizione = ? WHERE id = ?";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();
       preparedStatement = connection.prepareStatement(deleteSql);
-      preparedStatement.setString(1, param.getNome());
-      preparedStatement.setString(2, param.getIndirizzo());
-      preparedStatement.setString(3, param.getNumeroDiTelefono());
-      preparedStatement.setInt(4, param.getId());
+      preparedStatement.setString(1, param.getTipoOperazione());
+      preparedStatement.setString(2, param.getDescrizione());
+      preparedStatement.setInt(3, param.getId());
 
       preparedStatement.executeUpdate();
 
@@ -234,13 +232,13 @@ public class StrutturaModel implements StrutturaDaoInterface {
   }
 
   /**
-   * Rimozione di una struttura presente nel DB.
+   * Rimozione di un operazione presente sul DB.
    *
-   * @param param Struttura da rimuovere
+   * @param param Operazione da rimuovere
    * @throws SQLException per problemi di esecuzione della query
    */
   @Override
-  public void doDelete(StrutturaBean param) throws SQLException {
+  public void doDelete(OperazioneBean param) throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 

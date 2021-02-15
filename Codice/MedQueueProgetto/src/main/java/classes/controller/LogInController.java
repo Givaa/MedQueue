@@ -1,7 +1,7 @@
 package classes.controller;
 
 import classes.model.bean.entity.UtenteBean;
-import classes.model.dao.UtenteModel;
+import classes.model.dao.UtenteDao;
 import classes.model.interfaces.UtenteDaoInterface;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LogInController extends HttpServlet {
 
-  private final UtenteDaoInterface utenteDaoInterface = new UtenteModel();
+  private final UtenteDaoInterface utenteDaoInterface = new UtenteDao();
   private final String username = "convalidaPortale";
   private final String password = "convalidaPortale1!";
 

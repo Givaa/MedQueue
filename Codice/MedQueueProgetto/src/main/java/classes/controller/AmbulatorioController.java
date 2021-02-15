@@ -5,8 +5,8 @@ import classes.controller.exception.InvalidKeyException;
 import classes.controller.exception.ObjectNotFoundException;
 import classes.model.bean.entity.AmbulatoriBean;
 import classes.model.bean.entity.StrutturaBean;
-import classes.model.dao.AmbulatoriModel;
-import classes.model.dao.StrutturaModel;
+import classes.model.dao.AmbulatoriDao;
+import classes.model.dao.StrutturaDao;
 import classes.model.interfaces.AmbulatorioDaoInterface;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AmbulatorioController {
 
-  private final AmbulatorioDaoInterface ambulatorioModel = new AmbulatoriModel();
-  private final StrutturaModel strutturaModel = new StrutturaModel();
+  private final AmbulatorioDaoInterface ambulatorioModel = new AmbulatoriDao();
+  private final StrutturaDao strutturaDao = new StrutturaDao();
 
   /**
    * Metodo che permette di utilizzare il prelevamento per id dell'AmbulatoriModel.
@@ -88,7 +88,7 @@ public class AmbulatorioController {
     String idStruttura = jsonObject.get("newAmbulatorioIdS").getAsString();
     String nome = jsonObject.get("newAmbulatorioNome").getAsString();
 
-    StrutturaBean strutturaBean = strutturaModel.doRetrieveByKey(Integer.valueOf(idStruttura));
+    StrutturaBean strutturaBean = strutturaDao.doRetrieveByKey(Integer.valueOf(idStruttura));
 
     boolean checkNome = nome.matches("^[a-z A-Z ,.'-]+$");
     boolean checkIdStruttura = strutturaBean != null;
@@ -137,7 +137,7 @@ public class AmbulatorioController {
 
     if (a != null) {
       StrutturaBean strutturaBean;
-      strutturaBean = strutturaModel.doRetrieveByKey(Integer.valueOf(idStruttura));
+      strutturaBean = strutturaDao.doRetrieveByKey(Integer.valueOf(idStruttura));
 
       Boolean checkNome = nome.matches("^[a-z A-Z 0-9 ,.'-]+$");
       Boolean checkIdStruttura = strutturaBean != null;

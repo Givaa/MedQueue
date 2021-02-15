@@ -1,7 +1,7 @@
 package classes.model.interfaces;
 
 import classes.model.bean.entity.AmbulatoriBean;
-import classes.model.dao.AmbulatoriModel;
+import classes.model.dao.AmbulatoriDao;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
@@ -9,33 +9,33 @@ import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AmbulatorioDaoTest {
-    private AmbulatoriModel ambulatorioModel = new AmbulatoriModel();
+    private AmbulatoriDao ambulatorioDao = new AmbulatoriDao();
 
     @Test
     void doRetrieveByKey() throws SQLException {
-        assertNotNull(ambulatorioModel.doRetrieveByKey(1));
+        assertNotNull(ambulatorioDao.doRetrieveByKey(1));
     }
 
     @Test
     void doRetrieveAll() throws SQLException {
-        assertNotNull(ambulatorioModel.doRetrieveAll("nome"));
+        assertNotNull(ambulatorioDao.doRetrieveAll("nome"));
     }
 
     @Test
     void doSave() throws SQLException {
         AmbulatoriBean ambulatoriBean = new AmbulatoriBean("Ababudoju", 1);
-        ambulatorioModel.doSave(ambulatoriBean);
+        ambulatorioDao.doSave(ambulatoriBean);
     }
 
     @Test
     void doUpdate() throws SQLException {
         AmbulatoriBean ambulatoriBean = new AmbulatoriBean("Ababudoja", 1);
-        ambulatorioModel.doUpdate(ambulatoriBean);
+        ambulatorioDao.doUpdate(ambulatoriBean);
     }
 
     @Test
     void doDelete() throws SQLException {
         AmbulatoriBean ambulatoriBean = new AmbulatoriBean("Ababudoja", 1);
-        ambulatorioModel.doDelete(ambulatoriBean);
+        ambulatorioDao.doDelete(ambulatoriBean);
     }
 }

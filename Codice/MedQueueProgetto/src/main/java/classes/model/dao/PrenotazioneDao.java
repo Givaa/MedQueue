@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Model per collegare la tabella "Prenotazione" al backend.
  */
-public class PrenotazioneModel implements PrenotazioneDaoInterface {
+public class PrenotazioneDao implements PrenotazioneDaoInterface {
   private static final String nomeTabella = "prenotazione";
   private String[] elencoOrari = {"09:00:00", "09:15:00", "09:30:00", "09:45:00",
                                   "10:00:00", "10:15:00", "10:30:00", "10:45:00",

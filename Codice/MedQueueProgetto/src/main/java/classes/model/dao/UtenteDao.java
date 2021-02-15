@@ -13,7 +13,7 @@ import java.util.LinkedList;
 /**
  * Model per collegare la tabella "Utente" al backend.
  */
-public class UtenteModel implements UtenteDaoInterface {
+public class UtenteDao implements UtenteDaoInterface {
   private static final String nomeTabella = "medqueue.utente";
 
   /**

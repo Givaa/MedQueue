@@ -4,7 +4,7 @@ import classes.controller.exception.ErrorNewObjectException;
 import classes.controller.exception.InvalidKeyException;
 import classes.controller.exception.ObjectNotFoundException;
 import classes.model.bean.entity.StrutturaBean;
-import classes.model.dao.StrutturaModel;
+import classes.model.dao.StrutturaDao;
 import classes.model.interfaces.StrutturaDaoInterface;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 /** Classe per controllare i metodi del Model di Struttura. */
 @RestController
 public class StrutturaController {
-  private final StrutturaDaoInterface strutturaModel = new StrutturaModel();
+  private final StrutturaDaoInterface strutturaModel = new StrutturaDao();
 
   /**
    * Metodo che permette di utilizzare il prelevamento per id dello StrutturaModel.

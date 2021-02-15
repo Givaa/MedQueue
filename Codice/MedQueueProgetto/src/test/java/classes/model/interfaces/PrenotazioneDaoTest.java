@@ -2,7 +2,7 @@ package classes.model.interfaces;
 
 import classes.controller.exception.ObjectNotFoundException;
 import classes.model.bean.entity.PrenotazioneBean;
-import classes.model.dao.PrenotazioneModel;
+import classes.model.dao.PrenotazioneDao;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Date;
@@ -14,18 +14,18 @@ import java.text.SimpleDateFormat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PrenotazioneDaoTest {
-    private PrenotazioneModel prenotazioneModel = new PrenotazioneModel();
+    private PrenotazioneDao prenotazioneDao = new PrenotazioneDao();
     private PrenotazioneBean prenotazioneBean = new PrenotazioneBean();
 
     @Test
     void doRetrieveByKey() throws SQLException, ObjectNotFoundException {
-        assertNotNull(prenotazioneModel.doRetrieveByKey(1));
-        assertNull(prenotazioneModel.doRetrieveByKey(48389572));
+        assertNotNull(prenotazioneDao.doRetrieveByKey(1));
+        assertNull(prenotazioneDao.doRetrieveByKey(48389572));
     }
 
     @Test
     void doRetrieveAll() throws SQLException {
-        assertNotNull(prenotazioneModel.doRetrieveAll(""));
+        assertNotNull(prenotazioneDao.doRetrieveAll(""));
     }
 
     @Test
@@ -43,31 +43,31 @@ class PrenotazioneDaoTest {
         prenotazioneBean.setConvalida(false);
         prenotazioneBean.setIdStruttura(1);
         prenotazioneBean.setIdOperazione(1);
-        prenotazioneModel.doSave(prenotazioneBean);
+        prenotazioneDao.doSave(prenotazioneBean);
     }
 
     @Test
     void doUpdate() throws SQLException {
-        prenotazioneBean = prenotazioneModel.doRetrieveByKey(2);
+        prenotazioneBean = prenotazioneDao.doRetrieveByKey(2);
         prenotazioneBean.setIdStruttura(2);
-        prenotazioneModel.doUpdate(prenotazioneBean);
+        prenotazioneDao.doUpdate(prenotazioneBean);
     }
 
     @Test
     void doDelete() throws SQLException {
-        prenotazioneBean = prenotazioneModel.doRetrieveByKey(8);
-        prenotazioneModel.doDelete(prenotazioneBean);
+        prenotazioneBean = prenotazioneDao.doRetrieveByKey(8);
+        prenotazioneDao.doDelete(prenotazioneBean);
     }
 
     @Test
     void getUtentePrenotazioni() throws SQLException {
-        assertNotNull(prenotazioneModel.getUtentePrenotazioni("CCCNTN98H02F839V"));
-        assertNull(prenotazioneModel.getUtentePrenotazioni("CCCNTN98H02F839Z"));
+        assertNotNull(prenotazioneDao.getUtentePrenotazioni("CCCNTN98H02F839V"));
+        assertNull(prenotazioneDao.getUtentePrenotazioni("CCCNTN98H02F839Z"));
     }
 
     @Test
     void getCodaStruttura() throws SQLException {
-        assertNotNull(prenotazioneModel.getCodaStruttura(1));
+        assertNotNull(prenotazioneDao.getCodaStruttura(1));
     }
 
     @Test
@@ -79,7 +79,7 @@ class PrenotazioneDaoTest {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        assertNotNull(prenotazioneModel.getOrariPrenotazione(1, 2, date));
+        assertNotNull(prenotazioneDao.getOrariPrenotazione(1, 2, date));
 
         date = null;
         try {
@@ -87,6 +87,6 @@ class PrenotazioneDaoTest {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        assertNotNull(prenotazioneModel.getOrariPrenotazione(5, 2, date));
+        assertNotNull(prenotazioneDao.getOrariPrenotazione(5, 2, date));
     }
 }

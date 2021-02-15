@@ -1,8 +1,8 @@
 package classes.model.dao;
 
 import classes.model.DriverManagerConnectionPool;
-import classes.model.bean.entity.OperazioneBean;
-import classes.model.interfaces.OperazioneDaoInterface;
+import classes.model.bean.entity.AmbulatoriBean;
+import classes.model.interfaces.AmbulatorioDaoInterface;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,25 +11,25 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 /**
- * Model per collegare la tabella "Operazione" al backend.
+ * Model per collegare la tabella "Ambulatori" al backend.
  */
-public class OperazioneModel implements OperazioneDaoInterface {
+public class AmbulatoriDao implements AmbulatorioDaoInterface {
 
-  private static final String nomeTabella = "operazione";
+  private static final String nomeTabella = "ambulatorio";
 
   /**
-   * Prelevamento singola operazione.
+   * Prelevamento singolo ambulatorio.
    *
-   * @param id chiave primaria dell'operazione
-   * @return Operazione avente quell'id
+   * @param id chiave primaria dell'ambulatorio
+   * @return Ambulatorio avente quell'id
    * @throws SQLException per problemi di esecuzione della query
    */
   @Override
-  public OperazioneBean doRetrieveByKey(int id) throws SQLException {
+  public AmbulatoriBean doRetrieveByKey(int id) throws SQLException {
     Connection con = null;
     PreparedStatement ps = null;
 
-    OperazioneBean tmp = new OperazioneBean();
+    AmbulatoriBean tmp = new AmbulatoriBean();
 
     String selectSql = "SELECT * FROM " + nomeTabella + " WHERE id = ?";
 
@@ -41,9 +41,9 @@ public class OperazioneModel implements OperazioneDaoInterface {
       ResultSet rs = ps.executeQuery();
 
       while (rs.next()) {
-        tmp.setId(rs.getInt("id"));
-        tmp.setTipoOperazione(rs.getString("tipoOperazione"));
-        tmp.setDescrizione(rs.getString("descrizione"));
+        tmp.setId(rs.getInt("Id"));
+        tmp.setNome(rs.getString("Nome"));
+        tmp.setIdStruttura(rs.getInt("idStruttura"));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -57,7 +57,7 @@ public class OperazioneModel implements OperazioneDaoInterface {
       }
     }
 
-    if (tmp.getTipoOperazione() != null) {
+    if (tmp.getNome() != null) {
       return tmp;
     } else {
       return null;
@@ -65,65 +65,18 @@ public class OperazioneModel implements OperazioneDaoInterface {
   }
 
   /**
-   * Prelevamento singola operazione.
-   *
-   * @param tipo tipo dell'operazione
-   * @return Operazione avente quell'id
-   * @throws SQLException per problemi di esecuzione della query
-   */
-  @Override
-  public OperazioneBean doRetrieveByTipo(String tipo) throws SQLException{
-    Connection con = null;
-    PreparedStatement ps = null;
-
-    OperazioneBean tmp = new OperazioneBean();
-
-    String selectSql = "SELECT * FROM " + nomeTabella + " WHERE tipoOperazione = ?";
-
-    try {
-      con = DriverManagerConnectionPool.getConnection();
-      ps = con.prepareStatement(selectSql);
-      ps.setString(1, tipo);
-
-      ResultSet rs = ps.executeQuery();
-
-      while (rs.next()) {
-        tmp.setId(rs.getInt("id"));
-        tmp.setTipoOperazione(rs.getString("tipoOperazione"));
-        tmp.setDescrizione(rs.getString("descrizione"));
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    } finally {
-      try {
-        if (ps != null) {
-          ps.close();
-        }
-      } finally {
-        DriverManagerConnectionPool.releaseConnection(con);
-      }
-    }
-
-    if (tmp.getTipoOperazione() != null) {
-      return tmp;
-    } else {
-      return null;
-    }
-  }
-
-  /**
-   * Prelevamento di tutte le operazioni presenti nel DB.
+   * Prelevamento di tutti gli ambulatori presenti nel DB.
    *
    * @param order Ordine per la visualizzazione della collezione
-   * @return Collezione di tutte le operazioni
+   * @return Collezione di ambulatori
    * @throws SQLException per problemi di esecuzione della query
    */
   @Override
-  public Collection<OperazioneBean> doRetrieveAll(String order) throws SQLException {
+  public Collection<AmbulatoriBean> doRetrieveAll(String order) throws SQLException {
     Connection con = null;
     PreparedStatement ps = null;
 
-    Collection<OperazioneBean> result = new LinkedList<OperazioneBean>();
+    Collection<AmbulatoriBean> result = new LinkedList<AmbulatoriBean>();
 
     String selectSql = "SELECT * FROM " + nomeTabella;
 
@@ -135,15 +88,13 @@ public class OperazioneModel implements OperazioneDaoInterface {
 
       con = DriverManagerConnectionPool.getConnection();
       ps = con.prepareStatement(selectSql);
-
       ResultSet rs = ps.executeQuery();
 
-
       while (rs.next()) {
-        OperazioneBean tmp = new OperazioneBean();
+        AmbulatoriBean tmp = new AmbulatoriBean();
         tmp.setId(rs.getInt("id"));
-        tmp.setTipoOperazione(rs.getString("tipoOperazione"));
-        tmp.setDescrizione(rs.getString("descrizione"));
+        tmp.setNome(rs.getString("nome"));
+        tmp.setIdStruttura(rs.getInt("idStruttura"));
         result.add(tmp);
       }
 
@@ -163,24 +114,24 @@ public class OperazioneModel implements OperazioneDaoInterface {
   }
 
   /**
-   * Inserimento di una nuova operazione nel DB.
+   * Insierimento di un nuovo ambulatorio nel DB.
    *
-   * @param param Nuova operazione
+   * @param param Nuovo ambulatorio
    * @throws SQLException per problemi di esecuzione della query
    */
   @Override
-  public void doSave(OperazioneBean param) throws SQLException {
+  public void doSave(AmbulatoriBean param) throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
-    String insertSql = "INSERT INTO " + nomeTabella
-            + " (tipoOperazione, descrizione) VALUES (?, ?)";
+    String insertSql = "INSERT INTO " + nomeTabella + " VALUES (?, ?, ?)";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();
       preparedStatement = connection.prepareStatement(insertSql);
-      preparedStatement.setString(1, param.getTipoOperazione());
-      preparedStatement.setString(2, param.getDescrizione());
+      preparedStatement.setInt(1, param.getId());
+      preparedStatement.setString(2, param.getNome());
+      preparedStatement.setInt(3, param.getIdStruttura());
 
       preparedStatement.executeUpdate();
     } finally {
@@ -195,26 +146,23 @@ public class OperazioneModel implements OperazioneDaoInterface {
   }
 
   /**
-   * Aggiornamento di un operazione sul DB.
+   * Aggiornamento di un ambulatorio presente nel DB.
    *
-   * @param param Operazione da aggiornare
+   * @param param Ambulatorio da aggiornare
    * @throws SQLException per problemi di esecuzione della query
    */
   @Override
-  public void doUpdate(OperazioneBean param) throws SQLException {
+  public void doUpdate(AmbulatoriBean param) throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
-    String deleteSql =
-        "UPDATE "
-            + nomeTabella
-            + " SET tipoOperazione = ?, descrizione = ? WHERE id = ?";
+    String deleteSql = "UPDATE " + nomeTabella + " SET nome = ?, idStruttura = ? WHERE id = ?";
 
     try {
       connection = DriverManagerConnectionPool.getConnection();
       preparedStatement = connection.prepareStatement(deleteSql);
-      preparedStatement.setString(1, param.getTipoOperazione());
-      preparedStatement.setString(2, param.getDescrizione());
+      preparedStatement.setString(1, param.getNome());
+      preparedStatement.setInt(2, param.getIdStruttura());
       preparedStatement.setInt(3, param.getId());
 
       preparedStatement.executeUpdate();
@@ -232,13 +180,13 @@ public class OperazioneModel implements OperazioneDaoInterface {
   }
 
   /**
-   * Rimozione di un operazione presente sul DB.
+   * Rimozione di un ambulatorio presente nel DB.
    *
-   * @param param Operazione da rimuovere
+   * @param param Ambulatorio da rimuovere
    * @throws SQLException per problemi di esecuzione della query
    */
   @Override
-  public void doDelete(OperazioneBean param) throws SQLException {
+  public void doDelete(AmbulatoriBean param) throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
