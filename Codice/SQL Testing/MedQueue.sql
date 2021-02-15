@@ -61,8 +61,10 @@ foreign key(idStruttura) references Struttura(Id) ON UPDATE CASCADE ON DELETE CA
 
 INSERT INTO Struttura(nome, indirizzo, numeroDiTelefono) VALUES
 ('santobono','Via della Croce Rossa n. 8 Napoli (NA)','0812205111'),
-('San Leonardo','Viale Europa n.8 Castellammare di Stabia NA','081872911');
-
+('San Leonardo','Viale Europa n.8 Castellammare di Stabia NA','081872911'),
+('Da Rimuovere Dao', 'Da rimuovere dao 8', '0812205111'),
+('Da Rimuovere Controller', 'Da rimuovere Controller 8', '0812205111'),
+('San Luca', 'Via Squinzi, Vallo Della Lucania', '0812205111');
 
 INSERT INTO Impiegato VALUES
 ('FLTNGL99A14L845J','angelo99','angelo','afeltra','1999/01/14','a.afeltra12@studenti.unisa.it','3394487295',1),
@@ -73,7 +75,9 @@ INSERT INTO Impiegato VALUES
 
 INSERT INTO Operazione(tipoOperazione, Descrizione) VALUES
 ('Pagamento Ticket','Pagamento Ticket per visita medica'),
-('Prenotazione Ambulatorio','Richiesta prenotazione ambulatorio');
+('Prenotazione Ambulatorio','Richiesta prenotazione ambulatorio'),
+('Da Rimuovere Dao', 'Da rimuovere dao'),
+('Da Rimuovere Controller', 'Da rimuovere Controller');
 
 
 INSERT INTO Utente VALUES
@@ -81,7 +85,11 @@ INSERT INTO Utente VALUES
 ('CCCNTN98H02F839V','antonio98','Antonio','Cacciapuoti','1998/06/02','antonio.cacc@gmail.com','3545253226'),
 ('CRLNTN92S15H703Q','antonioc','Antonio','Cirillo','1992/11/15','a.cirilli@docenti.unisa.it','3545251111'),
 ('DRGMRA99D09A509V','mario99','Mario','De Riggi','1999/04/09','mario.deriggi@gmail.com','3435678901'),
-('SQLRFL97R10F839C','raff97','Raffaele','Squillante','1997/10/10','raffaele.sq@gmail.com','3789292020');
+('SQLRFL97R10F839C','raff97','Raffaele','Squillante','1997/10/10','raffaele.sq@gmail.com','3789292020'),
+('SQLRFL97R10F839D','raff98','Raffaele','Squillante','1998/10/10','raffaele.sq@gmail.com','3789292021'),
+('CRLNTN92S15H703Z', 'Crill1!', 'Antonio', 'Cirillo', '2000/10/10', 'cirilloantonio@gmail.com', '3789292221'),
+('MNDCMN97R22A509Y','carmine97!','Carmine','Amendola','1997/10/22','carmine.amendola@gmail.com','3394787295'),
+('CNDVKM62S23B586F', 'Ciao123!', 'Carmine', 'Iaucci', '2000/02/02', 'sonoscarsoarainbow@gmail.com', '1234567890');
 
 INSERT INTO Ambulatorio(nome, idStruttura) VALUES
 ('Ortopedia','1'),
@@ -92,8 +100,9 @@ INSERT INTO Ambulatorio(nome, idStruttura) VALUES
 ('Radiologia','1'),
 ('Pediatria','1'),
 ('Oncologia','2'),
-('Cardiologia','1');
-
+('Cardiologia','1'),
+('RimuoviD', '1'),
+('RimuoviC', '1');
 
 
 INSERT INTO Prenotazione(data, ora, convalida, codiceFiscale, idOperazione, idStruttura) VALUES

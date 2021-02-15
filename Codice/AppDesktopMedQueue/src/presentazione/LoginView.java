@@ -70,6 +70,7 @@ public class LoginView implements LoginInterface {
           ImpiegatoBean impiegato =
               business.autenticazione(codiceFiscale.getText(), password.getText());
           if (impiegato != null) {
+            business.eliminaPrenotazioniScadute();
             pannelloDiControllo = new ControlPanelView();
             pannelloDiControllo.showControlPanel(impiegato);
             codiceFiscale.setText("");

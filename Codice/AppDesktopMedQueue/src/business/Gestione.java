@@ -114,4 +114,8 @@ public class Gestione implements GestioneInterface {
     }
     return null;
   }
+
+  public int deletePrentoazioniScadute(){
+    return dao.deleteOldPrenotation();
+  }
 }

@@ -57,4 +57,6 @@ public interface GestioneInterface {
    * @return ritorna un oggetto contenente le informazioni della coda
    */
   public OperazioneBean getOperazione(int id);
+
+  public int deletePrentoazioniScadute();
 }

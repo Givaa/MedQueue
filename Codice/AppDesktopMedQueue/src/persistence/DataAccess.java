@@ -313,4 +313,25 @@ public class DataAccess implements DaoInterface {
     }
     return null;
   }
+
+  /**
+   * Metodo che elimina le prenotazioni scadute dal db
+   * @return numero prenotazioni scadute
+   */
+  public int deleteOldPrenotation(){
+    int delete = 0;
+    Connection con = null;
+    try {
+      String sql = "DELETE FROM Prenotazione p WHERE data < CURDATE()";
+      con = DriverManagerConnectionPool.getConnection();
+      PreparedStatement query = con.prepareStatement(sql);
+      delete = query.executeUpdate();
+      query.close();
+      con.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+      System.err.println("SQLException:" + e.getMessage());
+    }
+    return delete;
+  }
 }

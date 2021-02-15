@@ -108,4 +108,8 @@ public class FacadeClassBusiness {
     }
     return 0;
   }
+
+  public void eliminaPrenotazioniScadute(){
+    gestione.deletePrentoazioniScadute();
+  }
 }

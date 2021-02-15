@@ -4,6 +4,10 @@ import bean.ImpiegatoBean;
 import bean.OperazioneBean;
 import bean.PrenotazioneBean;
 import bean.StrutturaBean;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /** Interfaccia che permette operazioni sul database. */
@@ -76,4 +80,10 @@ public interface DaoInterface {
    * @return prenotazione da servire
    */
   public PrenotazioneBean serviPrenotazione(int idOperazione, int idStruttura);
+
+  /**
+   * Metodo che elimina le prenotazioni scadute dal db
+   * @return numero prenotazioni scadute
+   */
+  public int deleteOldPrenotation();
 }
