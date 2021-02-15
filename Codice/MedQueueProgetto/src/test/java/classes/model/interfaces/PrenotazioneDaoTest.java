@@ -33,7 +33,7 @@ class PrenotazioneDaoTest {
         DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
         Date date = null;
         try {
-            date = new Date(df.parse("02-04-2022").getTime());
+            date = new Date(df.parse("05-04-2022").getTime());
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -75,7 +75,7 @@ class PrenotazioneDaoTest {
         DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
         Date date = null;
         try {
-            date = new Date(df.parse("01-22-2021").getTime());
+            date = new Date(df.parse("03-22-2021").getTime());
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -83,7 +83,7 @@ class PrenotazioneDaoTest {
 
         date = null;
         try {
-            date = new Date(df.parse("01-22-2021").getTime());
+            date = new Date(df.parse("03-22-2021").getTime());
         } catch (ParseException e) {
             e.printStackTrace();
         }

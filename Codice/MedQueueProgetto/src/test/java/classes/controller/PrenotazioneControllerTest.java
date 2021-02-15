@@ -3,19 +3,13 @@ package classes.controller;
 import classes.controller.exception.ErrorNewObjectException;
 import classes.controller.exception.InvalidKeyException;
 import classes.controller.exception.ObjectNotFoundException;
-import classes.model.bean.entity.PrenotazioneBean;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.apache.tomcat.jni.Time;
 import org.junit.jupiter.api.Test;
-
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
