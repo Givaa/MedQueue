@@ -63,7 +63,7 @@ import {
   IonMenuButton,
   IonPage,
   IonTitle,
-  IonToolbar
+  IonToolbar, alertController
 } from '@ionic/vue';
 import router from "@/router";
 
@@ -158,10 +158,19 @@ export default {
             if (response === "") {
               console.log("Errore");
               return null;
+            }else if(response === false){
+              this.presentAlert();
             } else {
               router.push("/HomeUtente");
             }
           })
+    },
+    async presentAlert() {
+      const alert = await alertController.create({
+        header: 'Data antecedente ad oggi',
+        buttons: ['OK'],
+      });
+      return alert.present();
     },
 
     getStrutture() {
