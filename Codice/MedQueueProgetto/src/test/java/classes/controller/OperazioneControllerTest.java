@@ -63,7 +63,7 @@ class OperazioneControllerTest {
         jsonElement = parser.parse("{\"ordineOperazioni\":\"\"}");
         rootObject = jsonElement.getAsJsonObject();
         assertNotNull(operazioneController.getAllOperazioni(rootObject.toString()));
-        
+
         jsonElement = parser.parse("{}");
         rootObject = jsonElement.getAsJsonObject();
         assertNotNull(operazioneController.getAllOperazioni(rootObject.toString()));
