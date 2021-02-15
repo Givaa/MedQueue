@@ -90,7 +90,7 @@ public class LoginView implements LoginInterface {
         e -> {
           if (!(e.getStateChange()
               == ItemEvent.SELECTED)) { // Se la checkbox non e attiva nascondo la password
-            password.setEchoChar('*');
+            password.setEchoChar('•');
           } else {
             password.setEchoChar((char) 0); // Se la checkbox e attiva mostro la password
           }

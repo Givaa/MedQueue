@@ -315,10 +315,11 @@ public class DataAccess implements DaoInterface {
   }
 
   /**
-   * Metodo che elimina le prenotazioni scadute dal db
+   * Metodo che elimina le prenotazioni scadute dal db.
+   *
    * @return numero prenotazioni scadute
    */
-  public int deleteOldPrenotation(){
+  public int deleteOldPrenotation() {
     int delete = 0;
     Connection con = null;
     try {

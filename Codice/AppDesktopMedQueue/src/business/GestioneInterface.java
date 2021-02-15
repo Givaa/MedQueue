@@ -58,5 +58,10 @@ public interface GestioneInterface {
    */
   public OperazioneBean getOperazione(int id);
 
-  public int deletePrentoazioniScadute();
+  /**
+   * Metodo per rimuovere le prenotazioni scadute.
+   *
+   * @return numero di prenotazioni eliminate
+   */
+  public int deletePrenotazioniScadute();
 }

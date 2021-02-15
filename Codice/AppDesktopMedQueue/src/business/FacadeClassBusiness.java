@@ -109,7 +109,10 @@ public class FacadeClassBusiness {
     return 0;
   }
 
-  public void eliminaPrenotazioniScadute(){
-    gestione.deletePrentoazioniScadute();
+  /**
+   * Metodo che elimina le prenotazioni scadute.
+   */
+  public void eliminaPrenotazioniScadute() {
+    gestione.deletePrenotazioniScadute();
   }
 }
