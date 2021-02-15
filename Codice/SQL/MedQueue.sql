@@ -63,18 +63,15 @@ INSERT INTO Struttura(nome, indirizzo, numeroDiTelefono) VALUES
 ('santobono','Via della Croce Rossa n. 8 Napoli (NA)','0812205111'),
 ('San Leonardo','Viale Europa n.8 Castellammare di Stabia NA','081872911');
 
-
 INSERT INTO Impiegato VALUES
 ('FLTNGL99A14L845J','angelo99','angelo','afeltra','1999/01/14','a.afeltra12@studenti.unisa.it','3394487295',1),
 ('FCLNDR99C12B963C','andrea99','andrea','fucile','1999/03/12','andrea.fucile@studenti.unisa.it','3394487394',1),
 ('RPAGNN95D11A509B','givaa22','giovanni','rapa','1995/01/16','g.rapa95@gmail.com','3394487293', 1),
 ('ADRAMT99D13A587J','amato99','adriano','amato','1999/07/23','amatoadriano@gmail.com','3457892239',2);
 
-
 INSERT INTO Operazione(tipoOperazione, Descrizione) VALUES
 ('Pagamento Ticket','Pagamento Ticket per visita medica'),
 ('Prenotazione Ambulatorio','Richiesta prenotazione ambulatorio');
-
 
 INSERT INTO Utente VALUES
 ('MNDCMN97R22A509S','carmine97!','Carmine','Amendola','1997/10/22','carmine.amendola@gmail.com','3394787295'),
@@ -94,15 +91,10 @@ INSERT INTO Ambulatorio(nome, idStruttura) VALUES
 ('Oncologia','2'),
 ('Cardiologia','1');
 
-
-
 INSERT INTO Prenotazione(data, ora, convalida, codiceFiscale, idOperazione, idStruttura) VALUES
 ('2021-01-22','12:30:00','1','MNDCMN97R22A509S','1','1'),
-('2021-01-22','12:15:00','1','CCCNTN98H02F839V','1','1'),
 ('2021-01-22','12:00:00','1','CRLNTN92S15H703Q','2','1'),
 ('2021-01-22','11:45:00','1','CRLNTN92S15H703Q','2','2'),
-('2021-01-22','11:30:00','1','SQLRFL97R10F839D','1','2'),
+('2021-01-22','11:30:00','1','SQLRFL97R10F839C','1','2'),
 ('2021-01-22','10:30:00','0','MNDCMN97R22A509S','1','2'),
-('2021-01-22','9:30:00','1','SQLRFL97R10F839D','1','1'),
-('2021-01-22','12:30:00','1','CRLNTN92S15H703Q','2','1'),
-('2021-01-23','11:00:00','1','CCCNTN98H02F839V','1','1');
+('2021-01-22','9:30:00','1','SQLRFL97R10F839C','1','1');
