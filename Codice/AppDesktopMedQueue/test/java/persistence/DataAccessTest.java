@@ -41,7 +41,7 @@ class DataAccessTest {
 
   @Test
   void getPrenotazioione_idValido() {
-    String str = "2021-01-22";
+    String str = "2021-03-22";
     String str1 = "13:30:00";
     Date date = Date.valueOf(str);
     Time time = Time.valueOf(str1);
@@ -160,5 +160,10 @@ class DataAccessTest {
   @Test
   void getOperazioni() {
     assertNotNull(test.getOperazioni());
+  }
+
+  @Test
+  void deleteOldPrenotation() {
+    assertEquals(0,test.deleteOldPrenotation());
   }
 }

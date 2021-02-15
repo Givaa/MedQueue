@@ -66,4 +66,9 @@ class FacadeClassBusinessTest {
     void getSizeCoda_idValido() {
         assertNotEquals(0, test.getSizeCoda(idValido, idValido));
     }
+
+    @Test
+    void eliminaPrenotazioniScadute() {
+        test.eliminaPrenotazioniScadute();
+    }
 }

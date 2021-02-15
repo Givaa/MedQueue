@@ -68,4 +68,9 @@ class GestioneTest {
   void getOperazione_idValido(){
     assertNotNull(test.getOperazione(1));
   }
+
+    @Test
+    void deletePrenotazioniScadute() {
+    assertEquals(0,test.deletePrenotazioniScadute());
+    }
 }
