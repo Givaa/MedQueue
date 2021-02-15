@@ -62,4 +62,8 @@
         </plugins>
     </build>
 
+    <listener>
+        <listener-class>fully.qaulified.path.ContextListener</listener-class>
+    </listener>
+
 </project>

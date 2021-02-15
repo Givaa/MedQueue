@@ -148,6 +148,8 @@ public class UtenteController {
    * @param body corpo della richiesta preso in input
    * @throws SQLException per problemi di esecuzione della query
    * @throws ParseException per problemi di parsing
+   * @throws ErrorNewObjectException per problemi di creazione oggetti
+   * @throws ObjectNotFoundException per problemi di chiave primaria
    */
   @PostMapping(value = "/updateUtente", produces = MediaType.APPLICATION_JSON_VALUE,
           consumes = MediaType.APPLICATION_JSON_VALUE)

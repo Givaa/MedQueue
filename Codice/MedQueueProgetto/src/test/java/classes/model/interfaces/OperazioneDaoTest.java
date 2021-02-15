@@ -20,9 +20,7 @@ class OperazioneDaoTest {
     @Test
     void doRetrieveByTipo() throws SQLException {
         assertNotNull(operazioneModel.doRetrieveByTipo("Pagamento Ticket"));
-        ObjectNotFoundException objectNotFoundException = assertThrows(ObjectNotFoundException.class, () ->{
-            operazioneModel.doRetrieveByTipo("Tipo errato");
-        });
+        assertNull(operazioneModel.doRetrieveByTipo("Tipo errato"));
     }
 
     @Test

@@ -34,30 +34,7 @@ class LogInControllerTest {
     }
 
     @Test
-    void signup() throws SQLException, ParseException, InvalidKeyException {
-        //Nuovo utente
-        jsonElement = parser.parse("{\"nomeNewUtente\":\"Bud\"," +
-                "\"cognomeNewUtente\":\"Spencer\"," +
-                "\"codFiscNewUtente\":\"DTSQJP55R30A119M\"," +
-                "\"passwordNewUtente\":\"Fagiolih1!\"," +
-                "\"numeroTelefonoNewUtente\":\"3271219447\"," +
-                "\"dataDiNascitaNewUtente\":\"1929-10-31\"," +
-                "\"emailNewUtente\":\"mazzate@paccari.it\"}");
-        rootObject = jsonElement.getAsJsonObject();
-        assertNotNull(logInController.signup(rootObject.toString()));
-
-
-        //Utente Duplicato
-        jsonElement = parser.parse("{\"nomeNewUtente\":\"Bud\"," +
-                "\"cognomeNewUtente\":\"Spencer\"," +
-                "\"codFiscNewUtente\":\"MNDCMN97R22A509S\"," +
-                "\"passwordNewUtente\":\"Fagiolih1!\"," +
-                "\"numeroTelefonoNewUtente\":\"3271219447\"," +
-                "\"dataDiNascitaNewUtente\":\"1929-10-31\"," +
-                "\"emailNewUtente\":\"mazzate@paccari.it\"}");
-        rootObject = jsonElement.getAsJsonObject();
-        assertNotNull(logInController.signup(rootObject.toString()));
-
+    void signup() throws SQLException, ParseException{
         //Errore Password
         jsonElement = parser.parse("{\"nomeNewUtente\":\"Antonio\"," +
                 "\"cognomeNewUtente\":\"Esposito\"," +
@@ -80,5 +57,27 @@ class LogInControllerTest {
         rootObject = jsonElement.getAsJsonObject();
         assertNotNull(logInController.signup(rootObject.toString()));
 
+        //Nuovo utente
+        jsonElement = parser.parse("{\"nomeNewUtente\":\"Bud\"," +
+                "\"cognomeNewUtente\":\"Spencer\"," +
+                "\"codFiscNewUtente\":\"DTSQJP55R30A119M\"," +
+                "\"passwordNewUtente\":\"Fagiolih1!\"," +
+                "\"numeroTelefonoNewUtente\":\"3271219447\"," +
+                "\"dataDiNascitaNewUtente\":\"1929-10-31\"," +
+                "\"emailNewUtente\":\"mazzate@paccari.it\"}");
+        rootObject = jsonElement.getAsJsonObject();
+        assertNotNull(logInController.signup(rootObject.toString()));
+
+
+        //Utente Duplicato
+        jsonElement = parser.parse("{\"nomeNewUtente\":\"Bud\"," +
+                "\"cognomeNewUtente\":\"Spencer\"," +
+                "\"codFiscNewUtente\":\"MNDCMN97R22A509S\"," +
+                "\"passwordNewUtente\":\"Fagiolih1!\"," +
+                "\"numeroTelefonoNewUtente\":\"3271219447\"," +
+                "\"dataDiNascitaNewUtente\":\"1929-10-31\"," +
+                "\"emailNewUtente\":\"mazzate@paccari.it\"}");
+        rootObject = jsonElement.getAsJsonObject();
+        assertNotNull(logInController.signup(rootObject.toString()));
     }
 }

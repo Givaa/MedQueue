@@ -106,9 +106,6 @@ public class PrenotazioneController {
     String ora = jsonObject.get("newPrenotazioniOra").getAsString();
     String idOperazione = jsonObject.get("newPrenotazioniIdOp").getAsString();
     String idStruttura = jsonObject.get("newPrenotazioniIdS").getAsString();
-    String data = jsonObject.get("newPrenotazioneData").getAsString();
-    java.util.Date tmp = new SimpleDateFormat("yyyy-MM-dd").parse(data);
-    java.sql.Date dataPrenotazione = new Date(tmp.getTime());
 
     StrutturaBean strutturaBean;
     OperazioneBean operazioneBean;
@@ -121,6 +118,9 @@ public class PrenotazioneController {
     boolean checkOperazione = operazioneBean != null;
     boolean checkUtente = utenteBean != null;
 
+    String data = jsonObject.get("newPrenotazioneData").getAsString();
+    java.util.Date tmp = new SimpleDateFormat("yyyy-MM-dd").parse(data);
+    java.sql.Date dataPrenotazione = new Date(tmp.getTime());
     LocalDate oggi = LocalDate.now();
     boolean checkDate = dataPrenotazione.toLocalDate().isBefore(oggi);
 
@@ -159,6 +159,8 @@ public class PrenotazioneController {
    * @param body corpo della richiesta preso in input
    * @throws SQLException per problemi di esecuzione della query
    * @throws ParseException per problemi di parse
+   * @throws ErrorNewObjectException per problemi di creazione dell'oggetto
+   * @throws ObjectNotFoundException per problemi di oggetto non trovato
    * @return conferma/non conferma dell'aggiornamento
    */
   @PostMapping(value = "/updatePrenotazione", produces = MediaType.APPLICATION_JSON_VALUE,
@@ -300,5 +302,4 @@ public class PrenotazioneController {
             idOperazione, dataPrenotazione);
 
   }
-
 }

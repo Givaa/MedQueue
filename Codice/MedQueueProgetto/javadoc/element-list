@@ -1,6 +1,6 @@
 classes.controller
 classes.controller.exception
-classes.MedQueue
+classes.medqueue
 classes.model
 classes.model.bean.entity
 classes.model.dao

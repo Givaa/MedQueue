@@ -24,7 +24,7 @@ public interface OperazioneDaoInterface {
    * @return Operazione avente quell'id
    * @throws SQLException per problemi di esecuzione della query
    */
-  OperazioneBean doRetrieveByTipo(String tipo) throws SQLException, ObjectNotFoundException;
+  OperazioneBean doRetrieveByTipo(String tipo) throws SQLException;
 
   /**
    * Prelevamento di tutte le operazioni presenti nel DB.

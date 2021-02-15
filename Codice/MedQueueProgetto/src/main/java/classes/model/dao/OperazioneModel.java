@@ -1,6 +1,5 @@
 package classes.model.dao;
 
-import classes.controller.exception.ObjectNotFoundException;
 import classes.model.DriverManagerConnectionPool;
 import classes.model.bean.entity.OperazioneBean;
 import classes.model.interfaces.OperazioneDaoInterface;
@@ -71,10 +70,9 @@ public class OperazioneModel implements OperazioneDaoInterface {
    * @param tipo tipo dell'operazione
    * @return Operazione avente quell'id
    * @throws SQLException per problemi di esecuzione della query
-   * @throws ObjectNotFoundException per problemi di oggetto non trovato
    */
   @Override
-  public OperazioneBean doRetrieveByTipo(String tipo) throws SQLException, ObjectNotFoundException {
+  public OperazioneBean doRetrieveByTipo(String tipo) throws SQLException{
     Connection con = null;
     PreparedStatement ps = null;
 
@@ -109,7 +107,7 @@ public class OperazioneModel implements OperazioneDaoInterface {
     if (tmp.getTipoOperazione() != null) {
       return tmp;
     } else {
-      throw new ObjectNotFoundException(new OperazioneBean());
+      return null;
     }
   }
 

@@ -1,7 +1,5 @@
 package classes.controller;
 
-import classes.controller.exception.ErrorNewObjectException;
-import classes.controller.exception.InvalidKeyException;
 import classes.model.bean.entity.UtenteBean;
 import classes.model.dao.UtenteModel;
 import classes.model.interfaces.UtenteDaoInterface;
@@ -12,7 +10,6 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.Collection;
 import javax.servlet.http.HttpServlet;
@@ -63,12 +60,11 @@ public class LogInController extends HttpServlet {
    * @return conferma o meno della registrazione
    * @throws SQLException per problemi di esecuzione della query
    * @throws ParseException per problemi di conversione di data
-   * @throws InvalidKeyException per problemi con la chiave primaria
    */
   @PostMapping (value = "/signup", produces = MediaType.APPLICATION_JSON_VALUE,
           consumes = MediaType.APPLICATION_JSON_VALUE)
   public int signup(@RequestBody String body) throws SQLException,
-          ParseException, InvalidKeyException {
+          ParseException {
 
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
 
@@ -109,11 +105,11 @@ public class LogInController extends HttpServlet {
             "^(?=.{8,255}$)[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$"
     );
 
-    UtenteBean utenteBean = new UtenteBean();
+    UtenteBean utenteBean;
 
     Collection<UtenteBean> allUtenti = utenteDaoInterface.doRetrieveAll("");
 
-    for (UtenteBean b: allUtenti) {
+    for (UtenteBean b : allUtenti) {
       if (b.getCodiceFiscale().matches(codFisc)) {
         return 2;
       }
@@ -121,7 +117,7 @@ public class LogInController extends HttpServlet {
 
     if (!checkPassword) {
       return 0;
-    } else if (!checkDataDiNascita){
+    } else if (!checkDataDiNascita) {
       return 4;
     } else {
       if (checkName && checkSurname && checkPhoneNumber

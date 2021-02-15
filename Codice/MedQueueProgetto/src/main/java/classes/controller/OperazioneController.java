@@ -87,7 +87,7 @@ public class OperazioneController {
           SQLException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
 
-    if(! jsonObject.toString().equals("{}") ) {
+    if (!jsonObject.toString().equals("{}")) {
       String order = jsonObject.get("ordineOperazioni").getAsString();
       return operazioneModel.doRetrieveAll(order);
     } else {
@@ -145,11 +145,13 @@ public class OperazioneController {
    *
    * @param body corpo della richiesta preso in input
    * @throws SQLException per problemi di esecuzione della query
+   * @throws ObjectNotFoundException per problemi di oggetto non trovato
    * @return conferma/non conferma dell'aggiornamento dell'operazione
    */
   @PostMapping(value = "/updateOperazione", produces = MediaType.APPLICATION_JSON_VALUE,
           consumes = MediaType.APPLICATION_JSON_VALUE)
-  public boolean updateOperazione(@RequestBody String body) throws SQLException {
+  public boolean updateOperazione(@RequestBody String body) throws SQLException,
+          ObjectNotFoundException{
 
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
 

@@ -1,6 +1,5 @@
 package classes.model.dao;
 
-import classes.controller.exception.ObjectNotFoundException;
 import classes.model.DriverManagerConnectionPool;
 import classes.model.bean.entity.PrenotazioneBean;
 import classes.model.interfaces.PrenotazioneDaoInterface;
@@ -33,8 +32,7 @@ public class PrenotazioneModel implements PrenotazioneDaoInterface {
    * @throws SQLException per problemi di esecuzione della query
    */
   @Override
-  public PrenotazioneBean doRetrieveByKey(int id) throws SQLException,
-          ObjectNotFoundException {
+  public PrenotazioneBean doRetrieveByKey(int id) throws SQLException {
     Connection con = null;
     PreparedStatement ps = null;
 

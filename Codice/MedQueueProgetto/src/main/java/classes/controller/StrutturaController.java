@@ -140,6 +140,7 @@ public class StrutturaController {
    *
    * @param body corpo della richiesta preso in input
    * @throws SQLException per problemi di esecuzione della query
+   * @throws ObjectNotFoundException per problemi di oggetto non trovato
    * @return conferma/non conferma della modifica della struttura
    */
   @PostMapping(value = "/updateStruttura", produces = MediaType.APPLICATION_JSON_VALUE,

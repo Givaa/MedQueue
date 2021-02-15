@@ -1,6 +1,5 @@
 package classes.model.dao;
 
-import classes.controller.exception.ObjectNotFoundException;
 import classes.model.DriverManagerConnectionPool;
 import classes.model.bean.entity.StrutturaBean;
 import classes.model.interfaces.StrutturaDaoInterface;
@@ -25,7 +24,7 @@ public class StrutturaModel implements StrutturaDaoInterface {
    * @throws SQLException per problemi di esecuzione della query
    */
   @Override
-  public StrutturaBean doRetrieveByKey(int id) throws SQLException, ObjectNotFoundException {
+  public StrutturaBean doRetrieveByKey(int id) throws SQLException{
     Connection con = null;
     PreparedStatement ps = null;
 
