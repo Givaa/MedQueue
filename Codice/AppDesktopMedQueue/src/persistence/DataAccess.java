@@ -7,6 +7,7 @@ import bean.StrutturaBean;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Time;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -40,7 +41,9 @@ public class DataAccess implements DaoInterface {
         prenotazione = new PrenotazioneBean();
         prenotazione.setId(rs.getInt(1));
         prenotazione.setData(rs.getDate(2));
-        prenotazione.setTime(rs.getTime(3));
+        Long tmp=rs.getTime(3).getTime();
+        String time = String.format("%02d:%02d:%02d", (tmp / (1000 * 60 * 60)) % 24, (tmp/ (1000 * 60)) % 60, (tmp / 1000) % 60);
+        prenotazione.setTime(Time.valueOf(time));
         prenotazione.setConvalida(rs.getBoolean(4));
         prenotazione.setCodiceFiscale(rs.getString(5));
         prenotazione.setIdOperazione(rs.getInt(6));
@@ -295,10 +298,12 @@ public class DataAccess implements DaoInterface {
       ResultSet rs = query.executeQuery();
       while (rs.next()) {
         prenotazione = new PrenotazioneBean();
-        prenotazione.setId(Integer.parseInt(rs.getString(1)));
+        prenotazione.setId(rs.getInt(1));
         prenotazione.setData(rs.getDate(2));
-        prenotazione.setTime(rs.getTime(3));
-        prenotazione.setConvalida(Boolean.parseBoolean(rs.getString(4)));
+        Long tmp=rs.getTime(3).getTime();
+        String time = String.format("%02d:%02d:%02d", (tmp / (1000 * 60 * 60)) % 24, (tmp/ (1000 * 60)) % 60, (tmp / 1000) % 60);
+        prenotazione.setTime(Time.valueOf(time));
+        prenotazione.setConvalida(rs.getBoolean(4));
         prenotazione.setCodiceFiscale(rs.getString(5));
         prenotazione.setIdOperazione(rs.getInt(6));
         prenotazione.setIdStruttura(rs.getInt(7));

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -42,11 +43,11 @@ class DataAccessTest {
   @Test
   void getPrenotazioione_idValido() {
     String str = "2021-03-22";
-    String str1 = "13:30:00";
+    String str1 = "12:30:00";
     Date date = Date.valueOf(str);
     Time time = Time.valueOf(str1);
     PrenotazioneBean p = new PrenotazioneBean(1, date, time, true, "MNDCMN97R22A509S", 1, 1);
-    assertEquals(p, test.getPrenotazione(idValido));
+    assertEquals(p, test.getPrenotazione(1));
   }
 
   @Test
@@ -138,7 +139,7 @@ class DataAccessTest {
 
   @Test
   void numPrenotazioni_idValido() {
-    assertNotEquals(0, test.numPrenotazioni(idValido, idValido));
+    assertEquals(3, test.numPrenotazioni(idValido, idValido));
   }
 
   @Test
@@ -153,13 +154,23 @@ class DataAccessTest {
 
   @Test
   void serviPrenotazione_idValido() {
-    assertNotEquals(null, test.serviPrenotazione(idValido, idValido));
+    String str = "2021-03-22";
+    String str1 = "11:30:00";
+    Date date = Date.valueOf(str);
+    Time time = Time.valueOf(str1);
+    PrenotazioneBean p = new PrenotazioneBean(5, date, time, true, "SQLRFL97R10F839D", 1, 2);
+    assertEquals(p, test.serviPrenotazione(1, 2));
   }
 
 
   @Test
   void getOperazioni() {
-    assertNotNull(test.getOperazioni());
+    ArrayList<OperazioneBean> result=new ArrayList<OperazioneBean>();
+    result.add(new OperazioneBean(1, "Pagamento Ticket", "Pagamento Ticket per visita medica"));
+    result.add(new OperazioneBean(2, "Prenotazione Ambulatorio", "Richiesta prenotazione ambulatorio"));
+    result.add(new OperazioneBean(3, "Da Rimuovere Dao", "Da rimuovere dao"));
+    result.add(new OperazioneBean(4, "Da Rimuovere Controller", "Da rimuovere Controller"));
+    assertEquals(result,test.getOperazioni());
   }
 
   @Test
