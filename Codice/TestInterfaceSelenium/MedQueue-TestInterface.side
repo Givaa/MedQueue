@@ -241,7 +241,7 @@
         ["xpath=//ion-input[@id='password']/input", "xpath:idRelative"],
         ["xpath=//ion-input[2]/input", "xpath:position"]
       ],
-      "value": "antonio98"
+      "value": "Antonio98!"
     }, {
       "id": "7f54f444-385f-41a0-b377-bc5e837ffcc8",
       "comment": "",
@@ -1443,7 +1443,7 @@
         ["xpath=//ion-input[@id='password']/input", "xpath:idRelative"],
         ["xpath=//ion-input[2]/input", "xpath:position"]
       ],
-      "value": "antonio98"
+      "value": "Antonio98!"
     }, {
       "id": "23dd2517-1215-4493-91c1-ab8b8972fff2",
       "comment": "",
@@ -1709,7 +1709,7 @@
         ["xpath=//ion-input[@id='password']/input", "xpath:idRelative"],
         ["xpath=//ion-input[2]/input", "xpath:position"]
       ],
-      "value": "antonio98"
+      "value": "Antonio98!"
     }, {
       "id": "8dffce8a-af55-4982-8f18-f90fc544249b",
       "comment": "",
@@ -1816,7 +1816,7 @@
         ["xpath=//ion-input[@id='password']/input", "xpath:idRelative"],
         ["xpath=//ion-input[2]/input", "xpath:position"]
       ],
-      "value": "antonio98"
+      "value": "Antonio98!"
     }, {
       "id": "963b1424-5895-4bac-ba0d-fbb955b41a81",
       "comment": "",
@@ -1946,7 +1946,7 @@
         ["xpath=//ion-input[@id='password']/input", "xpath:idRelative"],
         ["xpath=//ion-input[2]/input", "xpath:position"]
       ],
-      "value": "antonio98"
+      "value": "Antonio98!"
     }, {
       "id": "5e51113a-8b86-475d-8ffa-1adf4b8e896a",
       "comment": "",
@@ -2214,7 +2214,7 @@
         ["xpath=//ion-input[@id='password']/input", "xpath:idRelative"],
         ["xpath=//ion-input[2]/input", "xpath:position"]
       ],
-      "value": "antonio98"
+      "value": "Antonio98!"
     }, {
       "id": "08d13793-f6e1-4668-870e-15a4c7d4cae9",
       "comment": "",
@@ -2497,7 +2497,7 @@
         ["xpath=//ion-input[@id='password']/input", "xpath:idRelative"],
         ["xpath=//ion-input[2]/input", "xpath:position"]
       ],
-      "value": "antonio98"
+      "value": "Antonio98!"
     }, {
       "id": "d6bdf45c-6131-459d-bb0e-0d4c27c7cc0c",
       "comment": "",
