@@ -61,8 +61,8 @@
 </template>
 
 <script>
-import prenotazioniAxios from '../axios/prenotazioni'
-import struttureAxios from '../axios/strutture'
+import prenotazioniAxios from '../axios/Prenotazioni'
+import struttureAxios from '../axios/Strutture'
 import operazioneAxios from '../axios/Operazione'
 import {
   IonButton,

@@ -48,7 +48,7 @@
   </ion-page>
 </template>
 <script>
-import singupAxios from "../axios/autentication.js"
+import singupAxios from "../axios/Autentication.js"
 import router from "@/router";
 import {
   IonDatetime,

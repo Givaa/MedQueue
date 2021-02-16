@@ -54,9 +54,9 @@
 </template>
 
 <script>
-import prenotazioniAxios from '../axios/prenotazioni'
+import prenotazioniAxios from '../axios/Prenotazioni'
 import operazioneAxios from '../axios/Operazione'
-import struttureAxios from '../axios/strutture'
+import struttureAxios from '../axios/Strutture'
 import {
   IonSelect,
   IonSelectOption,
