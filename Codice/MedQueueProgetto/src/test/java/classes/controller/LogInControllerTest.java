@@ -20,7 +20,7 @@ class LogInControllerTest {
 
     @Test
     void login() throws SQLException {
-        jsonElement = parser.parse("{\"username\":\"MNDCMN97R22A509S\",\"password\":\"carmine97!\"}");
+        jsonElement = parser.parse("{\"username\":\"MNDCMN97R22A509S\",\"password\":\"Carmine97!\"}");
         rootObject = jsonElement.getAsJsonObject();
         assertNotNull(logInController.login(rootObject.toString()));
 
