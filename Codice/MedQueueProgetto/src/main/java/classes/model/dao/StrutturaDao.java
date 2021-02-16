@@ -24,7 +24,7 @@ public class StrutturaDao implements StrutturaDaoInterface {
    * @throws SQLException per problemi di esecuzione della query
    */
   @Override
-  public StrutturaBean doRetrieveByKey(int id) throws SQLException{
+  public StrutturaBean doRetrieveByKey(int id) throws SQLException {
     Connection con = null;
     PreparedStatement ps = null;
 

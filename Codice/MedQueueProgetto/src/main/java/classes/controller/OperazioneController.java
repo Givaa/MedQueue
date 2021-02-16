@@ -151,7 +151,7 @@ public class OperazioneController {
   @PostMapping(value = "/updateOperazione", produces = MediaType.APPLICATION_JSON_VALUE,
           consumes = MediaType.APPLICATION_JSON_VALUE)
   public boolean updateOperazione(@RequestBody String body) throws SQLException,
-          ObjectNotFoundException{
+          ObjectNotFoundException {
 
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
 

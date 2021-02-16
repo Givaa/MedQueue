@@ -72,7 +72,7 @@ public class OperazioneDao implements OperazioneDaoInterface {
    * @throws SQLException per problemi di esecuzione della query
    */
   @Override
-  public OperazioneBean doRetrieveByTipo(String tipo) throws SQLException{
+  public OperazioneBean doRetrieveByTipo(String tipo) throws SQLException {
     Connection con = null;
     PreparedStatement ps = null;
 
