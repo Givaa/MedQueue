@@ -2,6 +2,7 @@
 
 import bean.ImpiegatoBean;
 import bean.PrenotazioneBean;
+import eccezioni.InvalidKeyException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -10,42 +11,42 @@ import java.sql.Time;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-<span class="fc" id="L13">class AccessoTest {</span>
-<span class="fc" id="L14">  private static Accesso test=new Accesso();</span>
+<span class="fc" id="L14">class AccessoTest {</span>
+<span class="fc" id="L15">  private static Accesso test=new Accesso();</span>
 
   @BeforeAll
   public static void setUp(){
 
-<span class="fc" id="L19">  }</span>
+<span class="fc" id="L20">  }</span>
 
 
   @Test
-  void AutenticazioneImpiegato_CodiceFiscale_NonValido_1() {
-<span class="fc" id="L24">    assertNull(test.verificaCredenziali(&quot;mario&quot;, null));</span>
-<span class="fc" id="L25">  }</span>
+  void AutenticazioneImpiegato_CodiceFiscale_NonValido_1()  {
+<span class="fc" id="L25">    assertNull(test.verificaCredenziali(&quot;mario&quot;, null));</span>
+<span class="fc" id="L26">  }</span>
 
   @Test
   void AutenticazioneImpiegato_CodiceFiscale_NonEsistenteNelDatabase_2() {
-<span class="fc" id="L29">    assertNull(test.verificaCredenziali(&quot;MNDCMN97R22A509S&quot;, null));</span>
-<span class="fc" id="L30">  }</span>
+<span class="fc" id="L30">    assertNull(test.verificaCredenziali(&quot;MNDCMN97R22A509S&quot;, null));</span>
+<span class="fc" id="L31">  }</span>
 
   @Test
   void AutenticazioneImpiegato_Password_NonRispettaIlFormato_3() {
-<span class="fc" id="L34">    assertNull(test.verificaCredenziali(&quot;FLTNGL99A14L845J&quot;, &quot;a&quot;));</span>
-<span class="fc" id="L35">  }</span>
+<span class="fc" id="L35">    assertNull(test.verificaCredenziali(&quot;FLTNGL99A14L845J&quot;, &quot;a&quot;));</span>
+<span class="fc" id="L36">  }</span>
 
   @Test
   void AutenticazioneImpiegato_Password_Errata_4() {
-<span class="fc" id="L39">    assertNull(test.verificaCredenziali(&quot;FLTNGL99A14L845J&quot;, &quot;angelo9&quot;));</span>
-<span class="fc" id="L40">  }</span>
+<span class="fc" id="L40">    assertNull(test.verificaCredenziali(&quot;FLTNGL99A14L845J&quot;, &quot;angelo9&quot;));</span>
+<span class="fc" id="L41">  }</span>
 
   @Test
   void AutenticazioneImpiegato_Successo_5() {
-<span class="fc" id="L44">    String strdate=&quot;1999-01-14&quot;;</span>
-<span class="fc" id="L45">    Date data=Date.valueOf(strdate);</span>
-<span class="fc" id="L46">    ImpiegatoBean impiegato=new ImpiegatoBean(&quot;FLTNGL99A14L845J&quot;,&quot;angelo99&quot;,&quot;angelo&quot;,&quot;afeltra&quot;,data,&quot;a.afeltra12@studenti.unisa.it&quot;,&quot;3394487295&quot;,1);</span>
-<span class="fc" id="L47">    assertEquals(impiegato,test.verificaCredenziali(&quot;FLTNGL99A14L845J&quot;, &quot;angelo99&quot;));</span>
-<span class="fc" id="L48">  }</span>
+<span class="fc" id="L45">    String strdate=&quot;1999-01-14&quot;;</span>
+<span class="fc" id="L46">    Date data=Date.valueOf(strdate);</span>
+<span class="fc" id="L47">    ImpiegatoBean impiegato=new ImpiegatoBean(&quot;FLTNGL99A14L845J&quot;,&quot;angelo99&quot;,&quot;angelo&quot;,&quot;afeltra&quot;,data,&quot;a.afeltra12@studenti.unisa.it&quot;,&quot;3394487295&quot;,1);</span>
+<span class="fc" id="L48">    assertEquals(impiegato,test.verificaCredenziali(&quot;FLTNGL99A14L845J&quot;, &quot;angelo99&quot;));</span>
+<span class="fc" id="L49">  }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

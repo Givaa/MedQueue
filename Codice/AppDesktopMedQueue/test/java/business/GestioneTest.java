@@ -89,6 +89,6 @@ class GestioneTest {
 
     @Test
     void deletePrenotazioniScadute() {
-    assertEquals(1,test.deletePrenotazioniScadute());
+    assertEquals(0,test.deletePrenotazioniScadute());
     }
 }
