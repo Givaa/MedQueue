@@ -103,9 +103,9 @@ public class PrenotazioneController {
           ParseException, ErrorNewObjectException {
     JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
     String cf = jsonObject.get("newPrenotazioniCf").getAsString();
-    String ora = jsonObject.get("newPrenotazioniOra").getAsString();
     String idOperazione = jsonObject.get("newPrenotazioniIdOp").getAsString();
     String idStruttura = jsonObject.get("newPrenotazioniIdS").getAsString();
+
 
     StrutturaBean strutturaBean;
     OperazioneBean operazioneBean;
@@ -124,10 +124,11 @@ public class PrenotazioneController {
     LocalDate oggi = LocalDate.now();
     boolean checkDate = dataPrenotazione.toLocalDate().isBefore(oggi);
 
-
+    String ora = jsonObject.get("newPrenotazioniOra").getAsString();
+    boolean checkOra = ora.matches("^(?:2[0-3]|[01][0-9]):[0-5][0-9]:[0-5][0-9]$");
     if (checkDate) {
       return false;
-    } if (!(ora.matches("^(?:2[0-3]|[01][0-9]):[0-5][0-9]:[0-5][0-9]$")) && ora.equals("00:00:00")) {
+    } else if (!checkOra && ora.equals("00:00:00")) {
       return false;
     } else if (checkOperazione && checkStruttura && checkUtente) {
       prenotazioneDaoInterface.doSave(new PrenotazioneBean(ora, dataPrenotazione, cf,
