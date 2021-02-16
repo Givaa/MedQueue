@@ -37,7 +37,7 @@
           <ion-datetime v-model="data" max="2023" displayFormat="DD MM YY" placeholder="Data"></ion-datetime>
           <br>
           <ion-label>Seleziona Orario</ion-label>
-          <ion-select @mouseover="getOrari" v-model="ora" placeholder="Orario" >
+          <ion-select @mouseover="getOrari" v-model="ora" placeholder="Orario">
             <ion-select-option id="ora" v-bind:key="ora" v-for="ora in listaOrari">{{ ora }}</ion-select-option>
           </ion-select>
           <br>
@@ -49,8 +49,8 @@
 </template>
 
 <script>
-import prenotazioniAxios from '../axios/prenotazioni'
-import struttureAxios from '../axios/strutture'
+import prenotazioniAxios from '../axios/Prenotazioni'
+import struttureAxios from '../axios/Strutture'
 import operazioneAxios from '../axios/Operazione'
 import {
   IonButton,
@@ -63,7 +63,8 @@ import {
   IonMenuButton,
   IonPage,
   IonTitle,
-  IonToolbar, alertController
+  IonToolbar,
+  alertController
 } from '@ionic/vue';
 import router from "@/router";
 
@@ -158,7 +159,7 @@ export default {
             if (response === "") {
               console.log("Errore");
               return null;
-            }else if(response === false){
+            } else if (response === false) {
               this.presentAlert();
             } else {
               router.push("/HomeUtente");

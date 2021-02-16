@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import prenotazioniAxios from '../axios/prenotazioni'
+import prenotazioniAxios from '../axios/Prenotazioni'
 import {
   IonInput,
   IonButton,
