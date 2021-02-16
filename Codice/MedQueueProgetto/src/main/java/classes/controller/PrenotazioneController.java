@@ -127,6 +127,8 @@ public class PrenotazioneController {
 
     if (checkDate) {
       return false;
+    } if (!(ora.matches("^(?:2[0-3]|[01][0-9]):[0-5][0-9]:[0-5][0-9]$")) && ora.equals("00:00:00")) {
+      return false;
     } else if (checkOperazione && checkStruttura && checkUtente) {
       prenotazioneDaoInterface.doSave(new PrenotazioneBean(ora, dataPrenotazione, cf,
               Integer.valueOf(idOperazione), Integer.valueOf(idStruttura), false));
