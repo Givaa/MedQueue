@@ -44,8 +44,7 @@ public class DriverManagerConnectionPool {
                   + "useUnicode=true&useJDBCCompliantTimezoneShift="
                   + "true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&useSSL=false";
       String username = "root";
-      String password = "angelo99";
-      //String password= "kingzoro99";
+      String password = "root";
 
       newConnection =
           DriverManager.getConnection(
