@@ -37,7 +37,7 @@
           <ion-datetime v-model="data" max="2023" displayFormat="DD MM YY" placeholder="Data"></ion-datetime>
           <br>
           <ion-label>Seleziona Orario</ion-label>
-          <ion-select @mouseover="getOrari" v-model="ora" placeholder="Orario">
+          <ion-select @mouseover="getOrari" v-model="ora" placeholder="Orario" >
             <ion-select-option id="ora" v-bind:key="ora" v-for="ora in listaOrari">{{ ora }}</ion-select-option>
           </ion-select>
           <br>
@@ -167,7 +167,7 @@ export default {
     },
     async presentAlert() {
       const alert = await alertController.create({
-        header: 'Data antecedente ad oggi',
+        header: "Errore nella data o nell'ora",
         buttons: ['OK'],
       });
       return alert.present();
