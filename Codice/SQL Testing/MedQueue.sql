@@ -81,14 +81,14 @@ INSERT INTO Operazione(tipoOperazione, Descrizione) VALUES
 
 
 INSERT INTO Utente VALUES
-('MNDCMN97R22A509S','carmine97!','Carmine','Amendola','1997/10/22','carmine.amendola@gmail.com','3394787295'),
-('CCCNTN98H02F839V','antonio98','Antonio','Cacciapuoti','1998/06/02','antonio.cacc@gmail.com','3545253226'),
-('CRLNTN92S15H703Q','antonioc','Antonio','Cirillo','1992/11/15','a.cirilli@docenti.unisa.it','3545251111'),
-('DRGMRA99D09A509V','mario99','Mario','De Riggi','1999/04/09','mario.deriggi@gmail.com','3435678901'),
-('SQLRFL97R10F839C','raff97','Raffaele','Squillante','1997/10/10','raffaele.sq@gmail.com','3789292020'),
-('SQLRFL97R10F839D','raff98','Raffaele','Squillante','1998/10/10','raffaele.sq@gmail.com','3789292021'),
+('MNDCMN97R22A509S','Carmine97!','Carmine','Amendola','1997/10/22','carmine.amendola@gmail.com','3394787295'),
+('CCCNTN98H02F839V','Antonio98!','Antonio','Cacciapuoti','1998/06/02','antonio.cacc@gmail.com','3545253226'),
+('CRLNTN92S15H703Q','Antonioc1!','Antonio','Cirillo','1992/11/15','a.cirilli@docenti.unisa.it','3545251111'),
+('DRGMRA99D09A509V','Mario99!','Mario','De Riggi','1999/04/09','mario.deriggi@gmail.com','3435678901'),
+('SQLRFL97R10F839C','Raff97!','Raffaele','Squillante','1997/10/10','raffaele.sq@gmail.com','3789292020'),
+('SQLRFL97R10F839D','Raff98!','Raffaele','Squillante','1998/10/10','raffaele.sq@gmail.com','3789292021'),
 ('CRLNTN92S15H703Z', 'Crill1!', 'Antonio', 'Cirillo', '2000/10/10', 'cirilloantonio@gmail.com', '3789292221'),
-('MNDCMN97R22A509Y','carmine97!','Carmine','Amendola','1997/10/22','carmine.amendola@gmail.com','3394787295'),
+('MNDCMN97R22A509Y','Carmine97!','Carmine','Amendola','1997/10/22','carmine.amendola@gmail.com','3394787295'),
 ('CNDVKM62S23B586F', 'Ciao123!', 'Carmine', 'Iaucci', '2000/02/02', 'sonoscarsoarainbow@gmail.com', '1234567890');
 
 INSERT INTO Ambulatorio(nome, idStruttura) VALUES
