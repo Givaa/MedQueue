@@ -125,10 +125,9 @@ public class PrenotazioneController {
     boolean checkDate = dataPrenotazione.toLocalDate().isBefore(oggi);
 
     String ora = jsonObject.get("newPrenotazioniOra").getAsString();
-    boolean checkOra = ora.matches("^(?:2[0-3]|[01][0-9]):[0-5][0-9]:[0-5][0-9]$");
     if (checkDate) {
       return false;
-    } else if (!checkOra || ora.equals("00:00:00")) {
+    } else if (ora.equals("00:00:00")) {
       return false;
     } else if (checkOperazione && checkStruttura && checkUtente) {
       prenotazioneDaoInterface.doSave(new PrenotazioneBean(ora, dataPrenotazione, cf,
