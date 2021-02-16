@@ -7,8 +7,8 @@ import bean.StrutturaBean;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Time;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ArrayList;
 
 /** Classe che permette operazioni sul database. */
@@ -20,10 +20,7 @@ public class DataAccess implements DaoInterface {
   /**
    * Metodo che ci permettere di ottenere una prenotazione dal database in base all'id.
    *
-   * <p>
-   *     Pre-condizione: id>0
-   *     Post-condizione: Prenotazione->select(p|p.id=id)
-   * </p>
+   * <p>Pre-condizione: id>0 Post-condizione: Prenotazione->select(p|p.id=id)
    *
    * @param id id della prenotazione che si vuole prelevare dalla collezione Prenotazione
    * @return ritorna la prenotazione oppure null se non è presente nel database
@@ -41,8 +38,11 @@ public class DataAccess implements DaoInterface {
         prenotazione = new PrenotazioneBean();
         prenotazione.setId(rs.getInt(1));
         prenotazione.setData(rs.getDate(2));
-        Long tmp=rs.getTime(3).getTime();
-        String time = String.format("%02d:%02d:%02d", (tmp / (1000 * 60 * 60)) % 24, (tmp/ (1000 * 60)) % 60, (tmp / 1000) % 60);
+        Long tmp = rs.getTime(3).getTime();
+        String time =
+            String.format(
+                "%02d:%02d:%02d",
+                (tmp / (1000 * 60 * 60)) % 24, (tmp / (1000 * 60)) % 60, (tmp / 1000) % 60);
         prenotazione.setTime(Time.valueOf(time));
         prenotazione.setConvalida(rs.getBoolean(4));
         prenotazione.setCodiceFiscale(rs.getString(5));
@@ -62,10 +62,7 @@ public class DataAccess implements DaoInterface {
   /**
    * Metodo che ci permette di ottenere una struttura ospedaliera dal database in base all'id.
    *
-   * <p>
-   *     Pre-condizione: id>0
-   *     Post-condizione: Struttura->select(s|s.id==id)
-   * </p>
+   * <p>Pre-condizione: id>0 Post-condizione: Struttura->select(s|s.id==id)
    *
    * @param id id della struttura ospedaliera che si vuole prelevare dalla collezione Struttura
    * @return ritorna la struttura ospedaliera oppure null se non è presente nel database
@@ -100,10 +97,7 @@ public class DataAccess implements DaoInterface {
    * Metodo che ci permette di ottenere un operazione per cui l'utente si puo prenotare in base
    * all'id.
    *
-   * <p>
-   *     Pre-condizione: id>o
-   *     Post-condizione: Operazione->select(o|o.id==id)
-   * </p>
+   * <p>Pre-condizione: id>o Post-condizione: Operazione->select(o|o.id==id)
    *
    * @param id id dell'operazione che si vuole prelevare dalla collezione Operazione
    * @return ritorna l'operazione
@@ -136,10 +130,8 @@ public class DataAccess implements DaoInterface {
   /**
    * Metodo che restituisce un impiegato di una struttura ospedaliera in base al codice fiscale.
    *
-   * <p>
-   *     Pre-condizione: codicefiscale!=null AND codicefiscale.lenght==16
-   *     Post-condizione: Impiegato->select(i!i.codicefiscale==codicefiscale);
-   * </p>
+   * <p>Pre-condizione: codicefiscale!=null AND codicefiscale.lenght==16 Post-condizione:
+   * Impiegato->select(i!i.codicefiscale==codicefiscale);
    *
    * @param codicefiscale codice fiscale dell'impiegato che si vuole prelevare dalla collezione
    *     Impiegato
@@ -178,9 +170,7 @@ public class DataAccess implements DaoInterface {
   /**
    * Metodo che restituisce tutte le operazioni per cui è possibile prenotarsi.
    *
-   * <p>
-   *     Post-condizione: Operazioni->asSet(Operazioni)
-   * </p>
+   * <p>Post-condizione: Operazioni->asSet(Operazioni)
    *
    * @return ritorna una lista di operazioni
    */
@@ -209,10 +199,7 @@ public class DataAccess implements DaoInterface {
   /**
    * Metodo per cancellare una prenotazione dal database in base all'id.
    *
-   * <p>
-   *     Pre-condizione: id>0
-   *     Post-condizione: !Prenotazione->exists(p|p.id==id)
-   * </p>
+   * <p>Pre-condizione: id>0 Post-condizione: !Prenotazione->exists(p|p.id==id)
    *
    * @param id id della prenotazione della collezione prenotazione da cancellare
    * @return 0 se la prenotazione non è stata cancellata, 1 se la prenotazione è stata cancellata
@@ -239,9 +226,9 @@ public class DataAccess implements DaoInterface {
    * Metodo che restituisce il numero di prenotazioni convalidate in base all'id dell'oprazione e
    * l'id della struttura.
    *
-   * <p>Pre-condizione: idOperazione>0 AND idStruttura>0
-   * Post-condizione: Prenotazione->exists(p|p.idStruttura==idStruttura AND
-   * p.idOperazione==idOperazione AND p.convalida==true).size()</p>
+   * <p>Pre-condizione: idOperazione>0 AND idStruttura>0 Post-condizione:
+   * Prenotazione->exists(p|p.idStruttura==idStruttura AND p.idOperazione==idOperazione AND
+   * p.convalida==true).size()
    *
    * @param idOperazione id dell'operazione della collezione Operazione
    * @param idStruttura id della struttura della collezione Struttura
@@ -276,9 +263,9 @@ public class DataAccess implements DaoInterface {
   /**
    * Metodo che restituisce la prima operazione da servire in base all'ora della prenotazione.
    *
-   * <p>Pre-condizione: idStruttura>0 AND idOperazione>0
-   * Post-condizione: Prenotazione->select(p|p.idStruttura==idStruttura AND
-   * p.idOperazione==idOperazione AND p.convalida==true)</p>
+   * <p>Pre-condizione: idStruttura>0 AND idOperazione>0 Post-condizione:
+   * Prenotazione->select(p|p.idStruttura==idStruttura AND p.idOperazione==idOperazione AND
+   * p.convalida==true)
    *
    * @param idOperazione id dell'operazione della collezione Operazione
    * @param idStruttura id della struttura della collezione Struttura
@@ -300,8 +287,11 @@ public class DataAccess implements DaoInterface {
         prenotazione = new PrenotazioneBean();
         prenotazione.setId(rs.getInt(1));
         prenotazione.setData(rs.getDate(2));
-        Long tmp=rs.getTime(3).getTime();
-        String time = String.format("%02d:%02d:%02d", (tmp / (1000 * 60 * 60)) % 24, (tmp/ (1000 * 60)) % 60, (tmp / 1000) % 60);
+        Long tmp = rs.getTime(3).getTime();
+        String time =
+            String.format(
+                "%02d:%02d:%02d",
+                (tmp / (1000 * 60 * 60)) % 24, (tmp / (1000 * 60)) % 60, (tmp / 1000) % 60);
         prenotazione.setTime(Time.valueOf(time));
         prenotazione.setConvalida(rs.getBoolean(4));
         prenotazione.setCodiceFiscale(rs.getString(5));
