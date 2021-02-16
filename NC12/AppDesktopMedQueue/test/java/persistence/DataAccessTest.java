@@ -173,8 +173,5 @@ class DataAccessTest {
     assertEquals(result,test.getOperazioni());
   }
 
-  @Test
-  void deleteOldPrenotation() {
-    assertEquals(0,test.deleteOldPrenotation());
-  }
+
 }
