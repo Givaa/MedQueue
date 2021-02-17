@@ -74,11 +74,11 @@ INSERT INTO Operazione(tipoOperazione, Descrizione) VALUES
 ('Prenotazione Ambulatorio','Richiesta prenotazione ambulatorio');
 
 INSERT INTO Utente VALUES
-('MNDCMN97R22A509S','carmine97!','Carmine','Amendola','1997/10/22','carmine.amendola@gmail.com','3394787295'),
-('CCCNTN98H02F839V','antonio98','Antonio','Cacciapuoti','1998/06/02','antonio.cacc@gmail.com','3545253226'),
-('CRLNTN92S15H703Q','antonioc','Antonio','Cirillo','1992/11/15','a.cirilli@docenti.unisa.it','3545251111'),
-('DRGMRA99D09A509V','mario99','Mario','De Riggi','1999/04/09','mario.deriggi@gmail.com','3435678901'),
-('SQLRFL97R10F839C','raff97','Raffaele','Squillante','1997/10/10','raffaele.sq@gmail.com','3789292020');
+('MNDCMN97R22A509S','Carmine97!','Carmine','Amendola','1997/10/22','carmine.amendola@gmail.com','3394787295'),
+('CCCNTN98H02F839V','Antonio98!','Antonio','Cacciapuoti','1998/06/02','antonio.cacc@gmail.com','3545253226'),
+('CRLNTN92S15H703Q','Antonioc1!','Antonio','Cirillo','1992/11/15','a.cirilli@docenti.unisa.it','3545251111'),
+('DRGMRA99D09A509V','Mario99!','Mario','De Riggi','1999/04/09','mario.deriggi@gmail.com','3435678901'),
+('SQLRFL97R10F839C','Raffe97!','Raffaele','Squillante','1997/10/10','raffaele.sq@gmail.com','3789292020');
 
 INSERT INTO Ambulatorio(nome, idStruttura) VALUES
 ('Ortopedia','1'),
