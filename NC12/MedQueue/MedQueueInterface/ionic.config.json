@@ -1,8 +1,0 @@
-{
-  "name": "MedQueueInterface",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "vue",
-  "id": "25e43b25"
-}

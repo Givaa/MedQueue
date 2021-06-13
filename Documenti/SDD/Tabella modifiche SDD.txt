@@ -1,8 +1,0 @@
-28/11/2020 v0.1 Prima stesura con obiettivi di sistema Giovanni Rapa
-29/11/2020 v0.2 Aggiunta la suddivisione in sottosistemi Adriano Amato
-29/11/2020 v0.3 Aggiunta architettura client server e Database Angelo Afeltra
-30/11/2020 v0.3.1 Revisione del lavoro fatto fin ora Angelo Afeltra
-02/12/2020 v1 Aggiunta di Design Goals & Trade-offs, Diagramma di deployment [Tutti]
-02/12/2020 v1.1 Modifica Database Andrea Fucile
-03/12/2020 v1.2 Aggiunte Condizioni limite Angelo Afeltra
-03/12/2020 v1.3 Aggiunta Servizi dei Sottosistemi Adriano Amato
